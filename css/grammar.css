@@ -1,1 +1,73 @@
 /* Grammar screen (task 03). Uses tokens and components from base.css. */
+
+.grammar-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: calc(-1 * var(--space-2)); margin-bottom: var(--space-5); }
+.grammar-badges[hidden] { display: none; }
+
+.grammar { display: grid; gap: var(--space-6); min-width: 0; }
+.grammar-section { display: grid; gap: var(--space-3); min-width: 0; }
+.grammar-section__title {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.25;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+/* Wide tables scroll inside their own block; the page never scrolls sideways. */
+.grammar-section .table-wrap { max-width: 100%; }
+.grammar-section .table-wrap:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.grammar-table td, .grammar-table thead th { white-space: nowrap; }
+.grammar-table thead th:empty { min-width: 0; }
+
+.grammar-examples { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); max-width: 66ch; }
+
+/* ---------- quiz ---------- */
+.grammar-quiz { margin-top: var(--space-7); display: grid; gap: var(--space-4); min-width: 0; }
+.grammar-quiz__title {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.2;
+  font-weight: 600;
+}
+.grammar-quiz__body { display: grid; gap: var(--space-4); }
+.grammar-quiz__lead { color: var(--ink-soft); max-width: 60ch; }
+.grammar-quiz__progress { color: var(--ink-soft); font-size: var(--step--1); font-variant-numeric: tabular-nums; }
+.grammar-quiz__keys { color: var(--ink-soft); font-size: var(--step--1); }
+@media (hover: none) { .grammar-quiz__keys { display: none; } }
+
+.grammar-question { display: grid; gap: var(--space-2); border-radius: var(--radius-s); }
+.grammar-question:focus { outline: none; }
+.grammar-question:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+.grammar-question__prompt { color: var(--ink-soft); }
+.grammar-question__es { font-size: var(--step-1); font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+
+.grammar-quiz .option { gap: var(--space-3); text-align: start; }
+.grammar-option__key {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.grammar-quiz .option.is-correct .grammar-option__key { background: var(--ok); color: var(--surface); }
+.grammar-quiz .option.is-wrong .grammar-option__key { background: var(--bad); color: var(--surface); }
+
+.grammar-quiz .feedback { display: grid; gap: var(--space-2); }
+.grammar-feedback__explain { font-weight: 400; line-height: 1.55; }
+
+.grammar-result__score {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.grammar-result__score:focus { outline: none; }
+.grammar-result__score:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+.grammar-result__best { color: var(--ink-soft); }
+.grammar-result__best:empty { display: none; }
