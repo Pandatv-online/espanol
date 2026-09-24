@@ -47,7 +47,7 @@ ECA.data.addVocab('B2', [
         ex: { es: 'Mucha gente no fue a votar.', ru: 'Многие не пошли голосовать.', en: "Many people didn't turn out to vote." } },
       { es: 'el escaño', ru: 'место в парламенте', en: 'seat (in parliament)',
         ex: { es: 'La coalición obtuvo cuarenta escaños.', ru: 'Коалиция получила сорок мест в парламенте.', en: 'The coalition won forty seats.' } },
-      { es: 'el ciudadano / la ciudadana', ru: 'гражданин, гражданка', en: 'citizen',
+      { es: 'el ciudadano / la ciudadana', ru: 'гражданин / гражданка', en: 'citizen',
         ex: { es: 'Todo ciudadano tiene derecho a expresar su opinión.', ru: 'Каждый гражданин имеет право высказывать своё мнение.', en: 'Every citizen has the right to express their opinion.' } },
       { es: 'la ley', ru: 'закон', en: 'law',
         ex: { es: 'El Parlamento aprobó la ley por amplia mayoría.', ru: 'Парламент принял закон подавляющим большинством.', en: 'Parliament passed the law by a large majority.' } },
