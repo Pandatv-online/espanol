@@ -34,10 +34,13 @@
       }));
   }
 
-  function wordCard(levelId, topic) {
+  // Word cards take turns through the old pages' category colours.
+  var CARD_COLORS = ['teal', 'blue', 'coral', 'amber', 'purple'];
+
+  function wordCard(levelId, topic, i) {
     var el = ui.el;
     var learned = store.learnedCount(topic.id, topic.words);
-    return el('li', null, el('a', { class: 'topic-card', href: ui.href(levelId, 'words', topic.id) }, [
+    return el('li', null, el('a', { class: 'topic-card c-' + CARD_COLORS[i % CARD_COLORS.length], href: ui.href(levelId, 'words', topic.id) }, [
       el('span', { class: 'topic-card__icon', 'aria-hidden': 'true', text: topic.icon || '•' }),
       el('span', { class: 'topic-card__title', text: i18n.pick(topic.title) }),
       el('span', { class: 'topic-card__meta' }, [
@@ -46,13 +49,15 @@
     ]));
   }
 
-  function grammarRow(levelId, topic) {
+  function grammarRow(levelId, topic, i) {
     var el = ui.el;
     var badges = ui.quizBadges('grammar:' + topic.id).concat(ui.doneBadge('grammar', topic) || []);
+    var summary = topic.summary || (topic.hero && topic.hero.sub);
     return el('li', null, el('a', { class: 'topic-row', href: ui.href(levelId, 'grammar', topic.id) }, [
+      el('span', { class: 'topic-row__num', 'aria-hidden': 'true', text: String(i + 1) }),
       el('span', { class: 'topic-row__text' }, [
         el('span', { class: 'topic-row__title', text: i18n.pick(topic.title) }),
-        el('span', { class: 'topic-row__summary', text: i18n.pick(topic.summary) })
+        summary ? el('span', { class: 'topic-row__summary', text: i18n.pick(summary) }) : null
       ]),
       badges.length ? el('span', { class: 'topic-row__meta' }, badges) : null
     ]));
@@ -108,12 +113,13 @@
       return;
     }
 
-    container.appendChild(section('words', vocab.length, vocab.length
-      ? el('ul', { class: 'topic-grid', role: 'list' }, vocab.map(function (t) { return wordCard(level.id, t); }))
+    // Grammar first, then words.
+    container.appendChild(section('grammar', grammar.length, grammar.length
+      ? el('ul', { class: 'topic-list', role: 'list' }, grammar.map(function (t, i) { return grammarRow(level.id, t, i); }))
       : ui.emptyState({ title: i18n.t('empty.level'), telegram: true })));
 
-    container.appendChild(section('grammar', grammar.length, grammar.length
-      ? el('ul', { class: 'topic-list', role: 'list' }, grammar.map(function (t) { return grammarRow(level.id, t); }))
+    container.appendChild(section('words', vocab.length, vocab.length
+      ? el('ul', { class: 'topic-grid', role: 'list' }, vocab.map(function (t, i) { return wordCard(level.id, t, i); }))
       : ui.emptyState({ title: i18n.t('empty.level'), telegram: true })));
   });
 })(typeof window !== 'undefined' ? window : globalThis);

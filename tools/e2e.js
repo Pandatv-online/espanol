@@ -196,7 +196,7 @@ check('dark theme: follows the system, toggle is remembered', async (page) => {
   assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
   const themeColor = await page.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')]
     .filter((m) => matchMedia(m.media).matches).map((m) => m.content));
-  assert.deepEqual(themeColor, ['#f3f4ef'], 'theme-color follows the manual choice');
+  assert.deepEqual(themeColor, ['#0d2b4e'], 'theme-color follows the manual choice');
 }, { colorScheme: 'dark' });
 
 check('Spanish text and brand names are protected from auto-translate', async (page) => {

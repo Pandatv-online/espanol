@@ -1,4 +1,4 @@
-/* Words screens (task 02): flash cards, test, word list. Tokens and components come from base.css. */
+/* Words screens: flash cards, test, word list — in the old pages' paper-and-navy style. Tokens and components come from base.css. */
 
 .vocab-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .kbd-hint { color: var(--ink-soft); font-size: var(--step--1); }
@@ -38,7 +38,7 @@
   gap: var(--space-3);
   min-height: 15rem;
   padding: var(--space-6) var(--space-5) var(--space-5);
-  border: 2px solid var(--line-strong);
+  border: 1px solid var(--line);
   border-radius: var(--radius-l);
   background: var(--surface);
   box-shadow: var(--shadow-lift);
@@ -46,23 +46,24 @@
   -webkit-backface-visibility: hidden;
   overflow-wrap: anywhere;
 }
-/* a saffron edge on the Spanish side, olive on the answer side */
-.flashcard__face--front { border-top: 6px solid var(--sun); }
-.flashcard__face--back { transform: rotateY(180deg); border-top: 6px solid var(--ok); }
-.flashcard:hover .flashcard__face { border-left-color: var(--ink); border-right-color: var(--ink); border-bottom-color: var(--ink); }
+/* an amber edge on the Spanish side, teal on the answer side */
+.flashcard__face--front { border-top: 4px solid var(--sun); }
+.flashcard__face--back { transform: rotateY(180deg); border-top: 4px solid var(--ok); }
+.flashcard:hover .flashcard__face { border-left-color: var(--heading); border-right-color: var(--heading); border-bottom-color: var(--heading); }
 
 .flashcard__word {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 900;
+  color: var(--heading);
   font-size: clamp(var(--step-2), 1rem + 4.5vw, var(--step-4));
-  letter-spacing: -0.02em;
   line-height: 1.1;
 }
 .flashcard__hint { color: var(--ink-soft); font-size: 0.9375rem; }
 .flashcard__es { color: var(--ink-soft); font-weight: 600; }
 .flashcard__tr {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--heading);
   font-size: clamp(var(--step-1), 0.9rem + 2.5vw, var(--step-3));
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -78,7 +79,7 @@
   gap: var(--space-3);
   max-width: 40rem;
   padding: var(--space-5);
-  border: 2px solid var(--ok);
+  border: 1.5px solid var(--ok);
   border-radius: var(--radius-l);
   background: var(--ok-soft);
 }
@@ -92,7 +93,7 @@
   color: var(--surface);
 }
 .deck-done__mark .icon { width: 1.6rem; height: 1.6rem; }
-.deck-done__title { font-family: var(--font-display); font-weight: 700; font-size: var(--step-2); letter-spacing: -0.015em; }
+.deck-done__title { font-family: var(--font-display); font-weight: 900; font-size: var(--step-2); color: var(--heading); }
 .deck-done__text { max-width: 52ch; }
 .deck-done .btn-row { margin-top: var(--space-2); }
 
@@ -105,17 +106,17 @@
   display: grid;
   gap: var(--space-2);
   padding: var(--space-5);
-  border: 1.5px solid var(--line);
+  border: 1px solid var(--line);
   border-radius: var(--radius-l);
-  border-top: 6px solid var(--sun);
+  border-top: 4px solid var(--sun);
   background: var(--surface);
 }
 .quiz__ask { color: var(--ink-soft); font-weight: 500; }
 .quiz__prompt {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 900;
+  color: var(--heading);
   font-size: clamp(var(--step-2), 1rem + 3vw, var(--step-3));
-  letter-spacing: -0.02em;
   line-height: 1.15;
   overflow-wrap: anywhere;
 }
@@ -127,8 +128,8 @@
   width: 1.75rem;
   height: 1.75rem;
   border-radius: var(--radius-s);
-  background: var(--surface-2);
-  color: var(--ink-soft);
+  background: var(--hero-bg);
+  color: var(--hero-accent);
   font-size: var(--step--1);
   font-weight: 700;
 }
@@ -141,16 +142,18 @@
   display: grid;
   gap: var(--space-2);
   padding: var(--space-5);
-  border: 2px solid var(--line-strong);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--hero-bg);
   border-radius: var(--radius-l);
   background: var(--surface);
 }
-.quiz-result.is-passed .quiz-result__top { border-color: var(--ok); background: var(--ok-soft); }
+.quiz-result.is-passed .quiz-result__top { border-color: var(--ok); border-top-color: var(--ok); background: var(--ok-soft); }
 .quiz-result__title { display: grid; gap: var(--space-1); }
 .quiz-result__label { font-family: var(--font-body); font-size: var(--step-0); font-weight: 600; color: var(--ink-soft); }
 .quiz-result__score {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 900;
+  color: var(--heading);
   font-size: clamp(var(--step-3), 1.2rem + 4vw, 3rem);
   letter-spacing: -0.03em;
   line-height: 1;
@@ -175,7 +178,7 @@
 .word-list { display: grid; gap: var(--space-3); max-width: 48rem; }
 .word-list__count { color: var(--ink-soft); }
 .words-table td { vertical-align: middle; }
-.words-table__es { font-weight: 600; }
+.words-table__es { font-weight: 600; color: var(--heading); }
 .words-table__tr { color: var(--ink-soft); }
 .words-table .words-table__mark { width: 1%; text-align: center; white-space: nowrap; }
 .words-table td.words-table__mark { padding-block: 0; }

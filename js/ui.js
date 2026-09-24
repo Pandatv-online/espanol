@@ -185,18 +185,21 @@
   function doneBadge(kind, topic) { return isTopicDone(kind, topic) ? badge(t('badge.passed'), 'done') : null; }
 
   // Accessible tabs: [{id, label}], roving tabindex, arrow keys.
+  // Drawn as the numbered navy strip of the old pages; `numbered: false` drops the number circles.
   function tabs(opts) {
     var list = el('div', { class: 'tabs', role: 'tablist', 'aria-label': opts.label || null });
-    var buttons = opts.items.map(function (item) {
+    var buttons = opts.items.map(function (item, i) {
       var selected = item.id === opts.active;
       return el('button', {
         class: 'tab', type: 'button', role: 'tab', id: 'tab-' + item.id,
         'aria-selected': selected ? 'true' : 'false',
         'aria-controls': opts.panelId || null,
         tabindex: selected ? '0' : '-1',
-        text: item.label,
         on: { click: function () { opts.onSelect(item.id); } }
-      });
+      }, [
+        opts.numbered === false ? null : el('span', { class: 'tab__num', 'aria-hidden': 'true', text: String(i + 1) }),
+        el('span', { class: 'tab__label', text: item.label })
+      ]);
     });
     list.addEventListener('keydown', function (e) {
       var i = buttons.indexOf(document.activeElement);
