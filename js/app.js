@@ -15,8 +15,8 @@
     if (parts[1] === 'words' && parts[2] && (parts.length === 3 || (parts.length === 4 && parts[3] === 'quiz'))) {
       return { name: 'words', level: level, topicId: parts[2], tab: parts[3] || null };
     }
-    if (parts[1] === 'grammar' && parts[2] && parts.length === 3) {
-      return { name: 'grammar', level: level, topicId: parts[2] };
+    if (parts[1] === 'grammar' && parts[2] && (parts.length === 3 || (parts.length === 4 && parts[3]))) {
+      return { name: 'grammar', level: level, topicId: parts[2], tab: parts[3] || null };
     }
     return { name: 'notfound', level: level };
   }
@@ -153,9 +153,11 @@
       try { root.history.replaceState(null, '', hash); } catch (e) { /* file:// in some browsers */ }
     }
 
-    var sameScreen = prev && prev.hash === hash;
+    // A grammar tab lives in the address, but the screen state (e.g. a test in progress) belongs to the topic.
+    var key = route.name === 'grammar' ? [route.level, route.topicId].join('/') : hash;
+    var sameScreen = prev && prev.key === key;
     var state = sameScreen ? prev.state : {};
-    current = { hash: hash, route: route, state: state };
+    current = { hash: hash, key: key, route: route, state: state };
 
     var level = route.level ? levelById(route.level) : null;
     var ctx = { route: route, levelId: route.level, level: level, topic: null, state: state, rerender: !!opts.rerender };

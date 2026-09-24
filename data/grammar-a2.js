@@ -3,147 +3,176 @@ ECA.data.addGrammar('A2', [
   {
     id: 'a2-perfecto-indefinido', level: 'A2',
     title: { ru: 'Pretérito perfecto или indefinido', en: 'Pretérito perfecto vs indefinido' },
-    summary: { ru: 'Два прошедших времени: когда говорить «he comido», а когда «comí». Правила, спряжение, неправильные глаголы и слова-маркеры.',
-               en: 'Two past tenses: when to say “he comido” and when “comí”. Rules, conjugation, irregular verbs and time markers.' },
-    sections: [
+    hero: {
+      es: 'Perfecto <b>vs</b> Indefinido',
+      sub: { ru: 'Прошедшие времена испанского — справочник с примерами и спряжением',
+             en: 'Spanish past tenses — a reference with examples and conjugation' }
+    },
+    tabs: [
       {
-        heading: { ru: 'Два прошедших времени', en: 'Two past tenses' },
-        body: {
-          ru: ['<b>Pretérito perfecto</b> = <b>haber</b> (в настоящем) + <b>participio</b>: <i>he comido</i>. Действие в прошлом, связанное с настоящим: период ещё не завершён или результат ощущается сейчас.',
-               '<b>Pretérito indefinido</b> — собственные окончания: <i>comí</i>. Завершённое действие в прошлом, отдалённое от настоящего: конкретный момент или период, который уже закончился.'],
-          en: ['<b>Pretérito perfecto</b> = <b>haber</b> (in the present) + <b>past participle</b>: <i>he comido</i>. A past action connected to the present: the time period is not over yet, or the result is felt now.',
-               '<b>Pretérito indefinido</b> has its own endings: <i>comí</i>. A finished action in the past, cut off from the present: a specific moment or a period that is already over.']
-        }
-      },
-      {
-        heading: { ru: 'Сравнение', en: 'Side by side' },
-        body: {
-          ru: ['<b>Связь с настоящим.</b> Perfecto — есть, результат важен сейчас. Indefinido — нет, действие полностью в прошлом.',
-               '<b>Период.</b> Perfecto — незавершённый (сегодня, эта неделя). Indefinido — завершённый (вчера, в прошлом году).',
-               '<b>Вопрос.</b> Perfecto отвечает на «Что ты сделал сегодня / в жизни?». Indefinido — на «Что случилось тогда?».'],
-          en: ['<b>Link to the present.</b> Perfecto: yes, the result matters now. Indefinido: no, the action is completely in the past.',
-               '<b>Time period.</b> Perfecto: unfinished (today, this week). Indefinido: finished (yesterday, last year).',
-               '<b>Question it answers.</b> Perfecto: “What have you done today / in your life?”. Indefinido: “What happened back then?”.']
-        },
-        table: {
-          head: ['', 'perfecto', 'indefinido'],
-          rows: [
-            ['forma', 'he / has / ha / hemos / habéis / han + participio', '-é, -aste, -ó / -í, -iste, -ió'],
-            ['señal', 'Esta semana he trabajado mucho.', 'El año pasado trabajé mucho.']
-          ]
-        }
-      },
-      {
-        heading: { ru: 'Примеры попарно', en: 'Examples in pairs' },
-        body: {
-          ru: ['В каждой паре сначала Perfecto, потом Indefinido.'],
-          en: ['In each pair, Perfecto comes first, then Indefinido.']
-        },
-        examples: [
-          { es: 'He comido hoy.', ru: 'Я поел сегодня. (сегодня ещё длится)', en: 'I have eaten today. (today is not over)' },
-          { es: 'Comí ayer.', ru: 'Я поел вчера. (вчера уже прошло)', en: 'I ate yesterday. (yesterday is over)' },
-          { es: '¿Has estado en Madrid?', ru: 'Ты когда-нибудь был в Мадриде?', en: 'Have you ever been to Madrid?' },
-          { es: 'Estuve en Madrid en 2015.', ru: 'Я был в Мадриде в 2015 году.', en: 'I was in Madrid in 2015.' },
-          { es: 'Este mes he trabajado mucho.', ru: 'В этом месяце я много работал. (месяц не кончился)', en: 'I have worked a lot this month. (the month is not over)' },
-          { es: 'El año pasado trabajé mucho.', ru: 'В прошлом году я много работал. (год завершён)', en: 'I worked a lot last year. (the year is over)' },
-          { es: 'Hoy he visto a María.', ru: 'Сегодня я видел Марию.', en: 'I have seen María today.' },
-          { es: 'Ayer vi a María.', ru: 'Вчера я видел Марию.', en: 'I saw María yesterday.' }
+        id: 'diff', label: { ru: 'Разница', en: 'Difference' },
+        blocks: [
+          { type: 'rules', items: [
+            { color: 'blue', label: { ru: 'Претерито', en: 'Pretérito' }, title: { ru: 'Perfecto', en: 'Perfecto' }, es: 'haber + participio',
+              body: { ru: 'Действие в прошлом, <b>связанное с настоящим</b>: период ещё не завершён или результат ощущается сейчас. <i>He comido.</i>',
+                      en: 'A past action <b>connected to the present</b>: the time period is not over yet, or the result is felt now. <i>He comido.</i>' } },
+            { color: 'amber', label: { ru: 'Претерито', en: 'Pretérito' }, title: { ru: 'Indefinido', en: 'Indefinido' }, es: '-é, -aste, -ó / -í, -iste, -ió',
+              body: { ru: '<b>Завершённое действие</b> в прошлом, отдалённое от настоящего: конкретный момент или период, который уже закончился. <i>Comí.</i>',
+                      en: 'A <b>finished action</b> in the past, cut off from the present: a specific moment or a period that is already over. <i>Comí.</i>' } }
+          ] },
+          { type: 'table', heading: { ru: 'Сравнение', en: 'Side by side' },
+            head: [{ ru: 'Критерий', en: 'Criterion' }, 'Perfecto', 'Indefinido'],
+            rows: [
+              [{ ru: 'Связь с настоящим', en: 'Link to the present' }, { ru: 'есть — важен результат', en: 'yes — the result matters' }, { ru: 'нет — всё в прошлом', en: 'no — all in the past' }],
+              [{ ru: 'Период', en: 'Time period' }, { ru: 'незавершённый', en: 'not over yet' }, { ru: 'завершённый', en: 'already over' }],
+              [{ ru: 'Пример периода', en: 'Period, e.g.' }, { ru: 'сегодня, эта неделя', en: 'today, this week' }, { ru: 'вчера, прошлый год', en: 'yesterday, last year' }],
+              [{ ru: 'Образование', en: 'How it is formed' }, 'he / has / ha… + participio', '-é, -aste, -ó / -í, -iste, -ió'],
+              [{ ru: 'Отвечает на вопрос', en: 'Answers the question' }, { ru: 'Что сделал сегодня / в жизни?', en: 'What have you done so far?' }, { ru: 'Что случилось тогда?', en: 'What happened back then?' }],
+              [{ ru: 'Пример сигнала', en: 'Signal, e.g.' }, 'Esta semana he trabajado.', 'El año pasado trabajé.']
+            ] },
+          { type: 'examples', heading: { ru: 'Примеры попарно', en: 'Examples in pairs' }, items: [
+            { badge: 'P', color: 'blue', es: '<b>He comido</b> hoy.', ru: 'Я поел сегодня. (день ещё длится)', en: 'I have eaten today. (today is not over)' },
+            { badge: 'I', color: 'amber', es: '<b>Comí</b> ayer.', ru: 'Я поел вчера. (вчера уже прошло)', en: 'I ate yesterday. (yesterday is over)' },
+            { badge: 'P', color: 'blue', es: '¿<b>Has estado</b> en Madrid?', ru: 'Ты когда-нибудь был в Мадриде?', en: 'Have you ever been to Madrid?' },
+            { badge: 'I', color: 'amber', es: '<b>Estuve</b> en Madrid en 2015.', ru: 'Я был в Мадриде в 2015 году.', en: 'I was in Madrid in 2015.' },
+            { badge: 'P', color: 'blue', es: 'Este mes <b>he trabajado</b> mucho.', ru: 'В этом месяце я много работал. (месяц не кончился)', en: 'I have worked a lot this month. (the month is not over)' },
+            { badge: 'I', color: 'amber', es: 'El año pasado <b>trabajé</b> mucho.', ru: 'В прошлом году я много работал. (год завершён)', en: 'I worked a lot last year. (the year is over)' },
+            { badge: 'P', color: 'blue', es: 'Hoy <b>he visto</b> a María.', ru: 'Сегодня я видел Марию.', en: 'I have seen María today.' },
+            { badge: 'I', color: 'amber', es: 'Ayer <b>vi</b> a María.', ru: 'Вчера я видел Марию.', en: 'I saw María yesterday.' }
+          ] }
         ]
       },
       {
-        heading: { ru: 'Pretérito perfecto: haber + participio', en: 'Pretérito perfecto: haber + participle' },
-        body: {
-          ru: ['Participio: глаголы на <b>-ar → -ado</b> (<i>hablar → hablado</i>), на <b>-er / -ir → -ido</b> (<i>comer → comido</i>, <i>vivir → vivido</i>).',
-               'Важнейшие неправильные participios: <i>hacer → hecho</i> · <i>decir → dicho</i> · <i>ver → visto</i> · <i>volver → vuelto</i> · <i>poner → puesto</i> · <i>escribir → escrito</i> · <i>abrir → abierto</i> · <i>romper → roto</i>.'],
-          en: ['Participle: <b>-ar verbs → -ado</b> (<i>hablar → hablado</i>), <b>-er / -ir verbs → -ido</b> (<i>comer → comido</i>, <i>vivir → vivido</i>).',
-               'The key irregular participles: <i>hacer → hecho</i> · <i>decir → dicho</i> · <i>ver → visto</i> · <i>volver → vuelto</i> · <i>poner → puesto</i> · <i>escribir → escrito</i> · <i>abrir → abierto</i> · <i>romper → roto</i>.']
-        },
-        table: {
-          head: ['', 'hablar', 'comer', 'vivir'],
-          rows: [
-            ['yo', 'he hablado', 'he comido', 'he vivido'],
-            ['tú', 'has hablado', 'has comido', 'has vivido'],
-            ['él / ella', 'ha hablado', 'ha comido', 'ha vivido'],
-            ['nosotros', 'hemos hablado', 'hemos comido', 'hemos vivido'],
-            ['vosotros', 'habéis hablado', 'habéis comido', 'habéis vivido'],
-            ['ellos', 'han hablado', 'han comido', 'han vivido']
-          ]
-        }
-      },
-      {
-        heading: { ru: 'Indefinido: правильные глаголы', en: 'Indefinido: regular verbs' },
-        body: {
-          ru: ['Окончания <b>-ar</b>: -é, -aste, -ó, -amos, -asteis, -aron. Окончания <b>-er / -ir</b> одинаковые: -í, -iste, -ió, -imos, -isteis, -ieron.'],
-          en: ['<b>-ar</b> endings: -é, -aste, -ó, -amos, -asteis, -aron. <b>-er / -ir</b> endings are the same: -í, -iste, -ió, -imos, -isteis, -ieron.']
-        },
-        table: {
-          head: ['', 'hablar', 'comer', 'vivir'],
-          rows: [
-            ['yo', 'hablé', 'comí', 'viví'],
-            ['tú', 'hablaste', 'comiste', 'viviste'],
-            ['él / ella', 'habló', 'comió', 'vivió'],
-            ['nosotros', 'hablamos', 'comimos', 'vivimos'],
-            ['vosotros', 'hablasteis', 'comisteis', 'vivisteis'],
-            ['ellos', 'hablaron', 'comieron', 'vivieron']
-          ]
-        }
-      },
-      {
-        heading: { ru: 'Неправильные глаголы в Indefinido', en: 'Irregular verbs in the indefinido' },
-        body: {
-          ru: ['<b>Ser</b> и <b>ir</b> в Indefinido совпадают полностью — смысл определяет только контекст.',
-               'Группа «-uv-» и похожие: <i>tener → tuv-</i>, <i>estar → estuv-</i>, <i>poder → pud-</i>, <i>saber → sup-</i>, <i>poner → pus-</i>. Запомните основу — окончания у всех одинаковые: <b>-e, -iste, -o, -imos, -isteis, -ieron</b>. Ударных окончаний (-é, -ó) у этих глаголов нет.'],
-          en: ['<b>Ser</b> and <b>ir</b> are identical in the indefinido — only the context tells you which one it is.',
-               'The “-uv-” group and similar verbs: <i>tener → tuv-</i>, <i>estar → estuv-</i>, <i>poder → pud-</i>, <i>saber → sup-</i>, <i>poner → pus-</i>. Learn the stem — the endings are the same for all of them: <b>-e, -iste, -o, -imos, -isteis, -ieron</b>. These verbs have no stressed endings (-é, -ó).']
-        },
-        table: {
-          head: ['', 'yo', 'tú', 'él / ella', 'nosotros', 'vosotros', 'ellos'],
-          rows: [
-            ['ser / ir', 'fui', 'fuiste', 'fue', 'fuimos', 'fuisteis', 'fueron'],
-            ['tener', 'tuve', 'tuviste', 'tuvo', 'tuvimos', 'tuvisteis', 'tuvieron'],
-            ['estar', 'estuve', 'estuviste', 'estuvo', 'estuvimos', 'estuvisteis', 'estuvieron'],
-            ['hacer', 'hice', 'hiciste', 'hizo', 'hicimos', 'hicisteis', 'hicieron'],
-            ['poder', 'pude', 'pudiste', 'pudo', 'pudimos', 'pudisteis', 'pudieron'],
-            ['querer', 'quise', 'quisiste', 'quiso', 'quisimos', 'quisisteis', 'quisieron'],
-            ['venir', 'vine', 'viniste', 'vino', 'vinimos', 'vinisteis', 'vinieron'],
-            ['decir', 'dije', 'dijiste', 'dijo', 'dijimos', 'dijisteis', 'dijeron'],
-            ['poner', 'puse', 'pusiste', 'puso', 'pusimos', 'pusisteis', 'pusieron'],
-            ['saber', 'supe', 'supiste', 'supo', 'supimos', 'supisteis', 'supieron'],
-            ['dar', 'di', 'diste', 'dio', 'dimos', 'disteis', 'dieron'],
-            ['ver', 'vi', 'viste', 'vio', 'vimos', 'visteis', 'vieron']
-          ]
-        },
-        examples: [
-          { es: 'Fui al mercado.', ru: 'Я пошёл на рынок. (ir)', en: 'I went to the market. (ir)' },
-          { es: 'Fui estudiante.', ru: 'Я был студентом. (ser)', en: 'I was a student. (ser)' }
+        id: 'conj', label: { ru: 'Спряжение', en: 'Conjugation' },
+        blocks: [
+          { type: 'text', body: {
+            ru: ['Переключайте <b>Perfecto</b> / <b>Indefinido</b> у каждого глагола. Окончания <b>-er</b> и <b>-ir</b> в Indefinido одинаковые.'],
+            en: ['Switch between <b>Perfecto</b> and <b>Indefinido</b> for each verb. In the Indefinido, <b>-er</b> and <b>-ir</b> verbs share the same endings.'] } },
+          { type: 'conj', verbs: [
+            { inf: 'hablar', tr: { ru: '-ar · говорить', en: '-ar · to speak' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he habl<b>ado</b>'], ['tú', 'has habl<b>ado</b>'], ['él / ella', 'ha habl<b>ado</b>'], ['nosotros', 'hemos habl<b>ado</b>'], ['vosotros', 'habéis habl<b>ado</b>'], ['ellos', 'han habl<b>ado</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', 'habl<b>é</b>'], ['tú', 'habl<b>aste</b>'], ['él / ella', 'habl<b>ó</b>'], ['nosotros', 'habl<b>amos</b>'], ['vosotros', 'habl<b>asteis</b>'], ['ellos', 'habl<b>aron</b>']] }
+            ] },
+            { inf: 'comer', tr: { ru: '-er · есть', en: '-er · to eat' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he com<b>ido</b>'], ['tú', 'has com<b>ido</b>'], ['él / ella', 'ha com<b>ido</b>'], ['nosotros', 'hemos com<b>ido</b>'], ['vosotros', 'habéis com<b>ido</b>'], ['ellos', 'han com<b>ido</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', 'com<b>í</b>'], ['tú', 'com<b>iste</b>'], ['él / ella', 'com<b>ió</b>'], ['nosotros', 'com<b>imos</b>'], ['vosotros', 'com<b>isteis</b>'], ['ellos', 'com<b>ieron</b>']] }
+            ] },
+            { inf: 'vivir', tr: { ru: '-ir · жить', en: '-ir · to live' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he viv<b>ido</b>'], ['tú', 'has viv<b>ido</b>'], ['él / ella', 'ha viv<b>ido</b>'], ['nosotros', 'hemos viv<b>ido</b>'], ['vosotros', 'habéis viv<b>ido</b>'], ['ellos', 'han viv<b>ido</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', 'viv<b>í</b>'], ['tú', 'viv<b>iste</b>'], ['él / ella', 'viv<b>ió</b>'], ['nosotros', 'viv<b>imos</b>'], ['vosotros', 'viv<b>isteis</b>'], ['ellos', 'viv<b>ieron</b>']] }
+            ] }
+          ] },
+          { type: 'text', color: 'blue', body: {
+            ru: ['<b>Participio:</b> глаголы на <b>-ar → -ado</b> (<i>hablar → hablado</i>), на <b>-er / -ir → -ido</b> (<i>comer → comido</i>, <i>vivir → vivido</i>).'],
+            en: ['<b>Participle:</b> <b>-ar verbs → -ado</b> (<i>hablar → hablado</i>), <b>-er / -ir verbs → -ido</b> (<i>comer → comido</i>, <i>vivir → vivido</i>).'] } },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<b>Неправильные participios:</b> <i>hacer → hecho</i> · <i>decir → dicho</i> · <i>ver → visto</i> · <i>volver → vuelto</i> · <i>poner → puesto</i> · <i>escribir → escrito</i> · <i>abrir → abierto</i> · <i>romper → roto</i>.'],
+            en: ['<b>Irregular participles:</b> <i>hacer → hecho</i> · <i>decir → dicho</i> · <i>ver → visto</i> · <i>volver → vuelto</i> · <i>poner → puesto</i> · <i>escribir → escrito</i> · <i>abrir → abierto</i> · <i>romper → roto</i>.'] } },
+          { type: 'examples', heading: { ru: 'Неправильный participio в речи', en: 'Irregular participles in use' }, items: [
+            { color: 'blue', es: '¿Qué <b>has hecho</b> este fin de semana?', ru: 'Что ты делал в эти выходные?', en: 'What have you done this weekend?' },
+            { color: 'blue', es: 'Todavía no <b>hemos abierto</b> la tienda.', ru: 'Мы ещё не открыли магазин.', en: 'We haven’t opened the shop yet.' },
+            { color: 'blue', es: 'Mi hijo <b>ha roto</b> un vaso.', ru: 'Мой сын разбил стакан.', en: 'My son has broken a glass.' },
+            { color: 'blue', es: '¿<b>Habéis vuelto</b> ya de Italia?', ru: 'Вы уже вернулись из Италии?', en: 'Are you back from Italy yet?' }
+          ] }
         ]
       },
       {
-        heading: { ru: 'Слова-маркеры', en: 'Time markers' },
-        body: {
-          ru: ['<b>Главное правило:</b> если период ещё не закончился (сегодня, эта неделя) — Perfecto. Если период завершён (вчера, в прошлом году) — Indefinido.',
-               '<b>Исключение — Латинская Америка:</b> там Indefinido часто используют вместо Perfecto даже с <i>hoy</i>, и это нормально для разговорной речи. В Испании правило соблюдают строже.'],
-          en: ['<b>The main rule:</b> if the time period is not over yet (today, this week), use Perfecto. If it is finished (yesterday, last year), use Indefinido.',
-               '<b>Exception — Latin America:</b> people there often use Indefinido instead of Perfecto even with <i>hoy</i>, and that is normal in everyday speech. Spain follows the rule more strictly.']
-        },
-        table: {
-          head: ['perfecto', 'indefinido'],
-          rows: [
-            ['hoy', 'ayer'],
-            ['esta mañana', 'anteayer'],
-            ['esta tarde', 'el lunes'],
-            ['esta semana', 'la semana pasada'],
-            ['este mes', 'el mes pasado'],
-            ['este año', 'el año pasado'],
-            ['ya', 'en 2010'],
-            ['todavía no', 'hace 3 días'],
-            ['alguna vez', 'entonces'],
-            ['nunca', 'de repente'],
-            ['siempre', 'aquella vez'],
-            ['últimamente', ''],
-            ['recientemente', '']
-          ]
-        }
+        id: 'irreg', label: { ru: 'Неправильные', en: 'Irregular' },
+        blocks: [
+          { type: 'table', heading: { ru: 'Неправильные глаголы в Indefinido', en: 'Irregular verbs in the Indefinido' },
+            head: ['', 'yo', 'tú', 'él / ella', 'nosotros', 'vosotros', 'ellos'],
+            rows: [
+              ['ser / ir', 'fui', 'fuiste', 'fue', 'fuimos', 'fuisteis', 'fueron'],
+              ['tener', 'tuve', 'tuviste', 'tuvo', 'tuvimos', 'tuvisteis', 'tuvieron'],
+              ['estar', 'estuve', 'estuviste', 'estuvo', 'estuvimos', 'estuvisteis', 'estuvieron'],
+              ['hacer', 'hice', 'hiciste', 'hizo', 'hicimos', 'hicisteis', 'hicieron'],
+              ['poder', 'pude', 'pudiste', 'pudo', 'pudimos', 'pudisteis', 'pudieron'],
+              ['querer', 'quise', 'quisiste', 'quiso', 'quisimos', 'quisisteis', 'quisieron'],
+              ['venir', 'vine', 'viniste', 'vino', 'vinimos', 'vinisteis', 'vinieron'],
+              ['decir', 'dije', 'dijiste', 'dijo', 'dijimos', 'dijisteis', 'dijeron'],
+              ['poner', 'puse', 'pusiste', 'puso', 'pusimos', 'pusisteis', 'pusieron'],
+              ['saber', 'supe', 'supiste', 'supo', 'supimos', 'supisteis', 'supieron'],
+              ['dar', 'di', 'diste', 'dio', 'dimos', 'disteis', 'dieron'],
+              ['ver', 'vi', 'viste', 'vio', 'vimos', 'visteis', 'vieron']
+            ] },
+          { type: 'text', color: 'blue', body: {
+            ru: ['<b>Подсказка:</b> <b>ser</b> и <b>ir</b> в Indefinido совпадают полностью — смысл определяет только контекст.'],
+            en: ['<b>Hint:</b> <b>ser</b> and <b>ir</b> are identical in the Indefinido — only the context tells you which one it is.'] } },
+          { type: 'examples', items: [
+            { badge: 'ir', color: 'amber', es: '<b>Fui</b> al mercado.', ru: 'Я пошёл на рынок. (ir)', en: 'I went to the market. (ir)' },
+            { badge: 'ser', color: 'amber', es: '<b>Fui</b> estudiante.', ru: 'Я был студентом. (ser)', en: 'I was a student. (ser)' }
+          ] },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<b>Группа «-uv-» и похожие:</b> <i>tener → tuv-</i>, <i>estar → estuv-</i>, <i>poder → pud-</i>, <i>saber → sup-</i>, <i>poner → pus-</i>. Запомните основу — окончания у всех одинаковые: <b>-e, -iste, -o, -imos, -isteis, -ieron</b>. Ударных окончаний (-é, -ó) у этих глаголов нет.'],
+            en: ['<b>The “-uv-” group and similar verbs:</b> <i>tener → tuv-</i>, <i>estar → estuv-</i>, <i>poder → pud-</i>, <i>saber → sup-</i>, <i>poner → pus-</i>. Learn the stem — the endings are the same for all of them: <b>-e, -iste, -o, -imos, -isteis, -ieron</b>. These verbs have no stressed endings (-é, -ó).'] } },
+          { type: 'conj', heading: { ru: 'Неправильные в обоих временах', en: 'Irregular in both tenses' }, verbs: [
+            { inf: 'hacer', tr: { ru: 'делать', en: 'to do, make' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he <b>hecho</b>'], ['tú', 'has <b>hecho</b>'], ['él / ella', 'ha <b>hecho</b>'], ['nosotros', 'hemos <b>hecho</b>'], ['vosotros', 'habéis <b>hecho</b>'], ['ellos', 'han <b>hecho</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>hice</b>'], ['tú', '<b>hiciste</b>'], ['él / ella', '<b>hizo</b>'], ['nosotros', '<b>hicimos</b>'], ['vosotros', '<b>hicisteis</b>'], ['ellos', '<b>hicieron</b>']] }
+            ] },
+            { inf: 'decir', tr: { ru: 'сказать', en: 'to say' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he <b>dicho</b>'], ['tú', 'has <b>dicho</b>'], ['él / ella', 'ha <b>dicho</b>'], ['nosotros', 'hemos <b>dicho</b>'], ['vosotros', 'habéis <b>dicho</b>'], ['ellos', 'han <b>dicho</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>dije</b>'], ['tú', '<b>dijiste</b>'], ['él / ella', '<b>dijo</b>'], ['nosotros', '<b>dijimos</b>'], ['vosotros', '<b>dijisteis</b>'], ['ellos', '<b>dijeron</b>']] }
+            ] },
+            { inf: 'poner', tr: { ru: 'класть, ставить', en: 'to put' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he <b>puesto</b>'], ['tú', 'has <b>puesto</b>'], ['él / ella', 'ha <b>puesto</b>'], ['nosotros', 'hemos <b>puesto</b>'], ['vosotros', 'habéis <b>puesto</b>'], ['ellos', 'han <b>puesto</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>puse</b>'], ['tú', '<b>pusiste</b>'], ['él / ella', '<b>puso</b>'], ['nosotros', '<b>pusimos</b>'], ['vosotros', '<b>pusisteis</b>'], ['ellos', '<b>pusieron</b>']] }
+            ] },
+            { inf: 'ver', tr: { ru: 'видеть', en: 'to see' }, variants: [
+              { label: 'Perfecto', color: 'blue', rows: [['yo', 'he <b>visto</b>'], ['tú', 'has <b>visto</b>'], ['él / ella', 'ha <b>visto</b>'], ['nosotros', 'hemos <b>visto</b>'], ['vosotros', 'habéis <b>visto</b>'], ['ellos', 'han <b>visto</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>vi</b>'], ['tú', '<b>viste</b>'], ['él / ella', '<b>vio</b>'], ['nosotros', '<b>vimos</b>'], ['vosotros', '<b>visteis</b>'], ['ellos', '<b>vieron</b>']] }
+            ] }
+          ] }
+        ]
+      },
+      {
+        id: 'keys', label: { ru: 'Маркеры', en: 'Markers' },
+        blocks: [
+          { type: 'markers', groups: [
+            { color: 'blue', title: { ru: 'Perfecto', en: 'Perfecto' },
+              tags: ['hoy', 'esta mañana', 'esta tarde', 'esta semana', 'este mes', 'este año', 'ya', 'todavía no', 'alguna vez', 'nunca', 'siempre', 'últimamente', 'recientemente'] },
+            { color: 'amber', title: { ru: 'Indefinido', en: 'Indefinido' },
+              tags: ['ayer', 'anteayer', 'el lunes', 'la semana pasada', 'el mes pasado', 'el año pasado', 'en 2010', 'hace 3 días', 'entonces', 'de repente', 'aquella vez'] }
+          ] },
+          { type: 'text', color: 'blue', body: {
+            ru: ['<b>Главное правило:</b> если период ещё не закончился (сегодня, эта неделя) — Perfecto. Если период завершён (вчера, в прошлом году) — Indefinido.'],
+            en: ['<b>The main rule:</b> if the time period is not over yet (today, this week), use Perfecto. If it is finished (yesterday, last year), use Indefinido.'] } },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<b>Исключение — Латинская Америка:</b> там Indefinido часто используют вместо Perfecto даже с <i>hoy</i>, и это нормально для разговорной речи. В Испании правило соблюдают строже.'],
+            en: ['<b>Exception — Latin America:</b> people there often use Indefinido instead of Perfecto even with <i>hoy</i>, and that is normal in everyday speech. Spain follows the rule more strictly.'] } },
+          { type: 'tip', title: { ru: 'Как выбрать за три секунды', en: 'Choose in three seconds' }, body: {
+            ru: ['Найдите слово-маркер и спросите себя: <b>период ещё идёт?</b> Да → <i>he + participio</i>. Нет → форма Indefinido.',
+                 'Маркера нет? Спросите: <b>важен результат сейчас</b> (<i>¡He perdido las llaves!</i>) или это <b>история о прошлом</b> (<i>Perdí las llaves en el tren.</i>)?'],
+            en: ['Find the time marker and ask yourself: <b>is the period still going on?</b> Yes → <i>he + participle</i>. No → the Indefinido form.',
+                 'No marker? Ask: <b>does the result matter now</b> (<i>¡He perdido las llaves!</i>) or is it <b>a story about the past</b> (<i>Perdí las llaves en el tren.</i>)?'] } }
+        ]
+      },
+      {
+        id: 'examples', label: { ru: 'Примеры', en: 'Examples' },
+        blocks: [
+          { type: 'examples', heading: { ru: 'Perfecto: период ещё идёт или важен результат', en: 'Perfecto: the period goes on, or the result matters' }, items: [
+            { color: 'blue', es: 'Esta mañana <b>he desayunado</b> tostadas.', ru: 'Сегодня утром я позавтракал тостами.', en: 'This morning I had toast for breakfast.' },
+            { color: 'blue', es: '¿<b>Habéis terminado</b> ya los deberes?', ru: 'Вы уже сделали домашнее задание?', en: 'Have you finished your homework yet?' },
+            { color: 'blue', es: 'Nunca <b>he montado</b> a caballo.', ru: 'Я никогда не ездил верхом.', en: 'I have never ridden a horse.' },
+            { color: 'blue', es: 'Últimamente Carlos <b>ha dormido</b> muy poco.', ru: 'В последнее время Карлос очень мало спит.', en: 'Carlos has slept very little lately.' },
+            { color: 'blue', es: 'Este año <b>hemos viajado</b> dos veces a Portugal.', ru: 'В этом году мы два раза ездили в Португалию.', en: 'We have travelled to Portugal twice this year.' },
+            { color: 'blue', es: '¡<b>He perdido</b> las llaves!', ru: 'Я потерял ключи! (и сейчас их нет)', en: 'I have lost my keys! (and I don’t have them now)' },
+            { color: 'blue', es: 'Mis padres todavía no <b>han visto</b> la película.', ru: 'Мои родители ещё не посмотрели фильм.', en: 'My parents haven’t seen the film yet.' },
+            { color: 'blue', es: '¿Alguna vez <b>has comido</b> pulpo?', ru: 'Ты когда-нибудь ел осьминога?', en: 'Have you ever eaten octopus?' },
+            { color: 'blue', es: 'Esta semana <b>ha llovido</b> todos los días.', ru: 'На этой неделе каждый день шёл дождь.', en: 'It has rained every day this week.' }
+          ] },
+          { type: 'examples', heading: { ru: 'Indefinido: период закончился', en: 'Indefinido: the period is over' }, items: [
+            { color: 'amber', es: 'Anteayer <b>llamé</b> a mi abuela.', ru: 'Позавчера я позвонил бабушке.', en: 'The day before yesterday I called my grandmother.' },
+            { color: 'amber', es: 'El lunes Ana <b>empezó</b> un curso de italiano.', ru: 'В понедельник Ана начала курс итальянского.', en: 'On Monday Ana started an Italian course.' },
+            { color: 'amber', es: 'La semana pasada <b>fuimos</b> al teatro.', ru: 'На прошлой неделе мы ходили в театр.', en: 'Last week we went to the theatre.' },
+            { color: 'amber', es: 'En 2019 mis amigos <b>se mudaron</b> a Valencia.', ru: 'В 2019 году мои друзья переехали в Валенсию.', en: 'In 2019 my friends moved to Valencia.' },
+            { color: 'amber', es: 'Hace tres días <b>tuve</b> una entrevista de trabajo.', ru: 'Три дня назад у меня было собеседование.', en: 'Three days ago I had a job interview.' },
+            { color: 'amber', es: '¿Qué <b>hiciste</b> el sábado por la noche?', ru: 'Что ты делал в субботу вечером?', en: 'What did you do on Saturday night?' },
+            { color: 'amber', es: 'De repente <b>se fue</b> la luz.', ru: 'Вдруг выключили свет.', en: 'Suddenly the power went out.' },
+            { color: 'amber', es: 'El mes pasado <b>pudimos</b> descansar por fin.', ru: 'В прошлом месяце мы наконец смогли отдохнуть.', en: 'Last month we were finally able to rest.' },
+            { color: 'amber', es: 'Aquella vez <b>dijisteis</b> la verdad.', ru: 'В тот раз вы сказали правду.', en: 'That time you told the truth.' }
+          ] }
+        ]
       }
     ],
     quiz: [

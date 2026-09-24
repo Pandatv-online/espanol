@@ -30,6 +30,7 @@ const check = (name, fn, opts) => checks.push([name, fn, opts || {}]);
 
 const WORDS = '#/a1/words/a1-greetings';
 const GRAMMAR = '#/a1/grammar/a1-presente-ar';
+const TABBED = '#/a2/grammar/a2-perfecto-indefinido';
 
 async function noHorizontalScroll(page, label) {
   const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -206,10 +207,111 @@ check('Spanish text and brand names are protected from auto-translate', async (p
   assert.equal(await page.getAttribute('.footer-meta__by a', 'translate'), 'no');
 });
 
+// ---------- tabbed grammar topic ----------
+
+const tabState = (page) => page.$$eval('.grammar-tabs [role="tab"]', (bs) => bs.map((b) => [b.id, b.getAttribute('aria-selected'), b.textContent]));
+
+check('tabbed grammar: hero, numbered tabs with "Test" last, tab in the address, arrows, unknown tab → first', async (page) => {
+  await page.goto(url + TABBED);
+  assert.match(await page.textContent('.hero h1'), /Perfecto vs Indefinido/);
+  assert.equal(await page.getAttribute('.hero h1', 'lang'), 'es');
+  let tabs = await tabState(page);
+  assert.deepEqual(tabs.map((t) => t[2]), ['1Разница', '2Спряжение', '3Неправильные', '4Маркеры', '5Примеры', '6Тест']);
+  assert.equal(tabs[0][1], 'true');
+  assert.equal(await page.getAttribute('#grammar-panel', 'role'), 'tabpanel');
+  assert.equal(await page.getAttribute('#grammar-panel', 'aria-labelledby'), 'tab-diff');
+  await page.evaluate(() => window.scrollTo(0, 300));
+  await page.click('#tab-irreg');
+  assert.equal(new URL(page.url()).hash, TABBED + '/irreg');
+  assert.ok(await page.evaluate(() => window.scrollY) > 0, 'switching a tab does not jump to the top');
+  assert.ok(await page.locator('#grammar-panel .table').count() > 0, 'irregular table shown');
+  await page.focus('#tab-irreg');
+  await page.keyboard.press('ArrowRight');
+  assert.equal(await page.getAttribute('#tab-keys', 'aria-selected'), 'true');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'tab-keys');
+  assert.ok(await page.locator('#grammar-panel .kw-tag').count() >= 20, 'markers shown');
+  await page.click('[data-lang="en"]');
+  assert.equal(new URL(page.url()).hash, TABBED + '/keys', 'tab survives the language switch');
+  assert.equal(await page.getAttribute('#tab-keys', 'aria-selected'), 'true');
+  assert.match(await page.textContent('#tab-keys'), /Markers/);
+  await page.goto(url + TABBED + '/nope');
+  await page.waitForFunction(() => location.hash.endsWith('a2-perfecto-indefinido'));
+  tabs = await tabState(page);
+  assert.equal(tabs[0][1], 'true', 'unknown tab → first tab');
+  await page.goto(url + TABBED + '/examples');
+  assert.ok(await page.locator('#grammar-panel .ex-row').count() >= 18, 'examples tab');
+  assert.equal(await page.locator('#grammar-panel .ex-row__es b').count() >= 18, true, 'the form is highlighted');
+});
+
+check('tabbed grammar: mini-tabs switch one verb only, by mouse and keyboard', async (page) => {
+  await page.goto(url + TABBED + '/conj');
+  const cards = page.locator('.conj-card');
+  const visible = (i) => cards.nth(i).locator('.conj-forms:not([hidden]) .form-row__word').first().textContent();
+  assert.equal(await visible(0), 'he hablado');
+  assert.equal(await visible(1), 'he comido');
+  await cards.nth(0).locator('.mini-tab').nth(1).click();
+  assert.equal(await visible(0), 'hablé');
+  assert.equal(await visible(1), 'he comido', 'the other verb is untouched');
+  assert.equal(await cards.nth(0).locator('.mini-tab').nth(1).getAttribute('aria-selected'), 'true');
+  await cards.nth(1).locator('.mini-tab').first().focus();
+  await page.keyboard.press('ArrowRight');
+  assert.equal(await visible(1), 'comí');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Indefinido');
+  await page.keyboard.press('ArrowRight');
+  assert.equal(await visible(1), 'he comido', 'arrows wrap around');
+});
+
+check('tabbed grammar: the test is the last tab and survives switching tabs', async (page) => {
+  await page.goto(url + TABBED + '/test');
+  await page.locator('.grammar-quiz .btn--primary').click();
+  await page.locator('.grammar-quiz .option').first().click();
+  await page.locator('[data-next]').click();
+  const progress = await page.textContent('.grammar-quiz__progress');
+  assert.match(progress, /Вопрос 2 из 10/);
+  await page.click('#tab-diff');
+  await page.click('#tab-test');
+  assert.equal(await page.textContent('.grammar-quiz__progress'), progress, 'the attempt goes on');
+  for (let i = 0; i < 20 && (await page.locator('#grammar-result').count()) === 0; i++) {
+    await page.locator('.grammar-quiz .option').first().click();
+    await page.locator('[data-next]').click();
+  }
+  assert.match(await page.textContent('#grammar-result'), /Результат: \d+ из 10/);
+  const best = await page.evaluate(() => JSON.parse(localStorage.getItem('eca:v1')).scores['grammar:a2-perfecto-indefinido']);
+  assert.equal(best.total, 10, 'progress key unchanged');
+  assert.ok(await page.locator('.hero .badge').count() > 0, 'score badge in the hero');
+});
+
+check('grammarBlocks.render draws every block type from the schema', async (page) => {
+  await page.goto(url + TABBED);
+  const out = await page.evaluate(() => {
+    const topic = ECA.data.find('grammar', 'a2-perfecto-indefinido');
+    const seen = {};
+    topic.tabs.forEach((tab) => tab.blocks.forEach((b) => { if (!seen[b.type]) seen[b.type] = b; }));
+    seen.triggers = { type: 'triggers', items: [{ num: 'W', title: { ru: 'Желание', en: 'Wish' }, phrases: ['quiero que'],
+      ex: { es: 'Quiero que <b>vengas</b>.', ru: 'Хочу, чтобы ты пришёл.', en: 'I want you to come.' } }] };
+    const r = {};
+    Object.keys(seen).forEach((type) => {
+      const node = ECA.grammarBlocks.render(seen[type], 'en');
+      r[type] = { cls: node.firstElementChild && node.lastElementChild.className, es: !!node.querySelector('[lang="es"]'),
+        text: node.textContent.slice(0, 40), script: !!node.querySelector('script, a') };
+    });
+    return { types: ECA.grammarBlocks.types, r };
+  });
+  assert.deepEqual(out.types.sort(), ['conj', 'examples', 'markers', 'rules', 'table', 'text', 'tip', 'triggers']);
+  const want = { text: /prose|rule-box/, rules: /rule-grid/, triggers: /trigger-list/, conj: /conj-grid/, table: /table-wrap/, markers: /kw-grid/, examples: /ex-box/, tip: /^tip$/ };
+  for (const [type, re] of Object.entries(want)) {
+    assert.ok(out.r[type], `${type} rendered`);
+    assert.match(out.r[type].cls, re, type);
+    assert.equal(out.r[type].script, false, `${type}: no unsafe markup`);
+  }
+  for (const type of ['rules', 'triggers', 'conj', 'table', 'markers', 'examples']) assert.ok(out.r[type].es, `${type}: Spanish in lang="es"`);
+  assert.match(out.r.tip.text, /Choose in three seconds/, 'lang argument picks English');
+});
+
 // ---------- 320px ----------
 
 check('no horizontal scroll at 320px on every screen', async (page) => {
-  const screens = ['#/a1', '#/c2', WORDS, WORDS + '/quiz', '#/a2/grammar/a2-perfecto-indefinido', '#/zz'];
+  const screens = ['#/a1', '#/c2', WORDS, WORDS + '/quiz', TABBED, TABBED + '/conj', TABBED + '/irreg', TABBED + '/keys', TABBED + '/examples', TABBED + '/test', '#/zz'];
   for (const hash of screens) {
     await page.goto(url + hash);
     await noHorizontalScroll(page, hash);
@@ -295,7 +397,7 @@ check('all 6 levels have word and grammar topics; each topic opens cleanly', asy
   const topics = await page.evaluate(() => ECA.data.levels().map((l) => ({
     level: l.id,
     words: ECA.data.vocab(l.id).map((t) => [t.id, ECA.i18n.pick(t.title)]),
-    grammar: ECA.data.grammar(l.id).map((t) => [t.id, ECA.i18n.pick(t.title)])
+    grammar: ECA.data.grammar(l.id).map((t) => [t.id, t.hero ? t.hero.es.replace(/<[^>]*>/g, '') : ECA.i18n.pick(t.title)])
   })));
   assert.equal(topics.length, 6);
   for (const t of topics) {
@@ -310,7 +412,7 @@ check('all 6 levels have word and grammar topics; each topic opens cleanly', asy
         }, title, { timeout: 5000 }).catch(() => { throw new Error(`${id}: heading never became "${title}"`); });
         const text = await page.textContent('#screen');
         assert.ok(!/Такой темы нет|скоро откроется|Что-то пошло не так/.test(text), `${id} renders`);
-        assert.equal(await page.locator(kind === 'words' ? '.flashcard' : '.grammar-section').count() > 0, true, `${id} content`);
+        assert.equal(await page.locator(kind === 'words' ? '.flashcard' : '.grammar-section, .gblock').count() > 0, true, `${id} content`);
       }
     }
   }
@@ -328,7 +430,12 @@ async function shots(browser) {
     ['words-result', async (p) => { await p.goto(url + WORDS + '/quiz'); await finishWordsQuiz(p); }],
     ['grammar-topic', async (p) => p.goto(url + GRAMMAR)],
     ['grammar-quiz', async (p) => { await p.goto(url + GRAMMAR); await p.locator('.grammar-quiz .btn--primary').click(); await p.locator('.grammar-quiz .option').nth(1).click(); await p.locator('#grammar-prompt').scrollIntoViewIfNeeded(); }],
-    ['grammar-result', async (p) => { await p.goto(url + GRAMMAR); await finishGrammarQuiz(p); }]
+    ['grammar-result', async (p) => { await p.goto(url + GRAMMAR); await finishGrammarQuiz(p); }],
+    ['tabbed-diff', async (p) => p.goto(url + TABBED)],
+    ['tabbed-conj', async (p) => { await p.goto(url + TABBED + '/conj'); await p.locator('.conj-card .mini-tab').nth(1).click(); }],
+    ['tabbed-irreg', async (p) => p.goto(url + TABBED + '/irreg')],
+    ['tabbed-keys', async (p) => p.goto(url + TABBED + '/keys')],
+    ['tabbed-test', async (p) => { await p.goto(url + TABBED + '/test'); await p.locator('.grammar-quiz .btn--primary').click(); }]
   ];
   for (const scheme of ['light', 'dark']) {
     for (const width of [375, 1280]) {
