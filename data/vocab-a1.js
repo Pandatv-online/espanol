@@ -39,11 +39,11 @@ ECA.data.addVocab('A1', [
     title: { ru: 'Числа', en: 'Numbers' },
     words: [
       { es: 'uno', ru: 'один', en: 'one',
-        ex: { es: 'Tengo un hermano.', ru: 'У меня один брат.', en: 'I have one brother.' } },
+        ex: { es: '¿Cuántos hijos tienes? — Uno.', ru: 'Сколько у тебя детей? — Один.', en: 'How many children do you have? — One.' } },
       { es: 'dos', ru: 'два', en: 'two',
         ex: { es: 'Dos cafés, por favor.', ru: 'Два кофе, пожалуйста.', en: 'Two coffees, please.' } },
       { es: 'tres', ru: 'три', en: 'three',
-        ex: { es: 'Vivo en el tercer piso, número tres.', ru: 'Я живу на третьем этаже, номер три.', en: 'I live on the third floor, number three.' } },
+        ex: { es: 'Tengo tres gatos.', ru: 'У меня три кошки.', en: 'I have three cats.' } },
       { es: 'cuatro', ru: 'четыре', en: 'four' },
       { es: 'cinco', ru: 'пять', en: 'five',
         ex: { es: 'Son las cinco.', ru: 'Сейчас пять часов.', en: "It's five o'clock." } },
