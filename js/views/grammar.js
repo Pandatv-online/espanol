@@ -99,6 +99,8 @@
     if (e.altKey || e.ctrlKey || e.metaKey || e.defaultPrevented) return;
     var target = e.target;
     if (target && target.closest && target.closest('input, textarea, select, [contenteditable]')) return;
+    // Only with focus inside the test or nowhere (body): keys pressed on header/footer controls stay theirs.
+    if (target && target !== document.body && target !== document.documentElement && !activeKeys.node.contains(target)) return;
     // Enter on a link or an ordinary button keeps its native click.
     if (e.key === 'Enter' && target && target.closest && target.closest('a, button:not(.option)')) return;
     if (activeKeys.handle(e.key)) e.preventDefault();

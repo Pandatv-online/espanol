@@ -6,6 +6,7 @@
   var KEEP_ON_RESET = ['lang', 'theme'];
   var backend = null;
   var state = blank();
+  var failListeners = [];
 
   function blank() { return { prefs: {}, learned: {}, scores: {} }; }
 
@@ -42,7 +43,11 @@
 
   function save() {
     if (!api.available) return;
-    try { backend.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage full or blocked */ }
+    try { backend.setItem(KEY, JSON.stringify(state)); } catch (e) {
+      // storage full or blocked mid-session: keep working in memory and tell the UI
+      api.available = false;
+      failListeners.slice().forEach(function (fn) { try { fn(); } catch (err) { /* listener bug */ } });
+    }
   }
 
   function wordKey(topicId, es) { return topicId + '|' + es; }
@@ -88,6 +93,10 @@
       state = blank();
       state.prefs = prefs;
       save();
+    },
+    onUnavailable: function (fn) {
+      failListeners.push(fn);
+      return function () { failListeners = failListeners.filter(function (f) { return f !== fn; }); };
     },
     _setBackend: function (b) {
       backend = b || null;

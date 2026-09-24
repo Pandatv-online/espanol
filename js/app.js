@@ -42,7 +42,9 @@
       'notfound.page': 'Такой страницы нет',
       'notfound.topic': 'Такой темы нет',
       'notfound.text': 'Возможно, ссылка устарела или в ней опечатка.',
-      'notfound.toLevel': 'К уровню {level}'
+      'notfound.toLevel': 'К уровню {level}',
+      'error.title': 'Что-то пошло не так',
+      'error.text': 'Эта страница не открылась из-за ошибки. Обновите страницу или выберите другую тему.'
     },
     en: {
       'site.tagline': 'Learn Spanish words and grammar level by level, from A1 to C2.',
@@ -58,7 +60,9 @@
       'notfound.page': 'This page doesn’t exist',
       'notfound.topic': 'This topic doesn’t exist',
       'notfound.text': 'The link may be outdated or mistyped.',
-      'notfound.toLevel': 'Go to level {level}'
+      'notfound.toLevel': 'Go to level {level}',
+      'error.title': 'Something went wrong',
+      'error.text': 'This page failed to open because of an error. Reload the page or pick another topic.'
     }
   });
 
@@ -74,6 +78,12 @@
     var p = store.pref('theme');
     if (p === 'dark' || p === 'light') html.setAttribute('data-theme', p);
     else html.removeAttribute('data-theme');
+    // A manual choice overrides the system-based <meta name="theme-color"> pair.
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+      if (!m.hasAttribute('data-media')) m.setAttribute('data-media', m.getAttribute('media') || '');
+      if (p === 'dark' || p === 'light') m.setAttribute('media', m.getAttribute('data-media').indexOf(p) >= 0 ? 'all' : 'not all');
+      else m.setAttribute('media', m.getAttribute('data-media'));
+    });
   }
   applyTheme();
 
@@ -125,6 +135,13 @@
     container.appendChild(ui.emptyState({ title: i18n.t('soon.title'), text: i18n.t('soon.text') }));
   }
 
+  function broken(container, ctx) {
+    container.appendChild(ui.el('section', { class: 'notfound' }, [
+      ui.screenHead({ back: ui.backLink(ctx.levelId, ctx.route.name), title: i18n.t('error.title'), lead: i18n.t('error.text') }),
+      ui.el('a', { class: 'btn btn--primary', href: ui.href(ctx.levelId), text: i18n.t('notfound.toLevel', { level: ctx.levelId }) })
+    ]));
+  }
+
   function render(opts) {
     opts = opts || {};
     var hash = root.location.hash;
@@ -167,7 +184,7 @@
           } catch (e) {
             if (root.console) console.error(e);
             ui.clear(screenEl);
-            soon(screenEl, ctx);
+            broken(screenEl, ctx);
           }
         }
       }
@@ -232,6 +249,7 @@
       ui.announce(i18n.t('footer.resetDone'));
     });
 
+    store.onUnavailable(function () { document.getElementById('storage-note').hidden = false; });
     root.addEventListener('hashchange', function () { render(); });
     render();
   }

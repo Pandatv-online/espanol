@@ -1,7 +1,6 @@
 /* Words screens (task 02): flash cards, test, word list. Tokens and components come from base.css. */
 
 .vocab-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.vocab-panel:focus { outline: none; }
 .kbd-hint { color: var(--ink-soft); font-size: var(--step--1); }
 @media (hover: none) { .kbd-hint { display: none; } }
 
@@ -120,7 +119,6 @@
   line-height: 1.15;
   overflow-wrap: anywhere;
 }
-.quiz__prompt:focus { outline: none; }
 .option { gap: var(--space-3); }
 .option__key {
   display: inline-grid;
@@ -149,7 +147,6 @@
 }
 .quiz-result.is-passed .quiz-result__top { border-color: var(--ok); background: var(--ok-soft); }
 .quiz-result__title { display: grid; gap: var(--space-1); }
-.quiz-result__title:focus { outline: none; }
 .quiz-result__label { font-family: var(--font-body); font-size: var(--step-0); font-weight: 600; color: var(--ink-soft); }
 .quiz-result__score {
   font-family: var(--font-display);
@@ -192,9 +189,6 @@
 .learn-toggle input { width: 1.375rem; height: 1.375rem; margin: 0; accent-color: var(--ok); cursor: pointer; }
 .words-table tr.is-learned .words-table__es { color: var(--ok); }
 
-@media (max-width: 400px) {
-  .vocab .tab { flex: 1 1 auto; padding-inline: var(--space-2); font-size: 0.9375rem; }
-}
 @media (max-width: 420px) {
   .flashcard__face { min-height: 13rem; padding: var(--space-5) var(--space-4) var(--space-4); }
   .quiz__card, .quiz-result__top, .deck-done { padding: var(--space-4); }

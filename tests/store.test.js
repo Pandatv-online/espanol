@@ -87,3 +87,24 @@ test('store: resetProgress keeps language and theme only', () => {
   assert.equal(store.isLearned('t', 'uno'), false);
   assert.equal(store.best('grammar:t'), null);
 });
+
+test('store: a failed write after a good probe marks storage unavailable and notifies', () => {
+  const backend = memory();
+  const flaky = {
+    getItem: backend.getItem,
+    removeItem: backend.removeItem,
+    setItem: (k, v) => { if (k === 'eca:v1') throw new Error('QuotaExceededError'); backend.setItem(k, v); }
+  };
+  store._setBackend(flaky);
+  assert.equal(store.available, true);
+  let notified = 0;
+  const off = store.onUnavailable(() => { notified++; });
+  store.setLearned('a1-greetings', 'hola', true);
+  assert.equal(store.available, false);
+  assert.equal(notified, 1);
+  assert.equal(store.isLearned('a1-greetings', 'hola'), true); // still works for this session
+  store.setPref('lang', 'en');
+  assert.equal(notified, 1);
+  off();
+  store._setBackend(memory());
+});

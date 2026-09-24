@@ -70,6 +70,8 @@
       else if (k === 'dataset') for (var d in v) node.dataset[d] = v[d];
       else node.setAttribute(k, v === true ? '' : v);
     }
+    // Spanish is the subject of study: browser auto-translate must leave it alone.
+    if (props.lang === 'es' && props.translate == null) node.setAttribute('translate', 'no');
     append(node, children);
     return node;
   }

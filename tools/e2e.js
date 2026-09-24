@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Dev-only smoke check of the shell in a real browser (file://).
-// Run: npx -y -p playwright@1.63.0 node tools/e2e.js
+// Dev-only end-to-end check of the whole site in a real browser (file://).
+// Run: npx -y -p playwright@1.63.0 node tools/e2e.js [--shots <dir>]
+// --shots also saves screenshots of the key screens (375/1280, light/dark).
 'use strict';
 const path = require('node:path');
 const fs = require('node:fs');
@@ -16,11 +17,48 @@ function loadPlaywright() {
 }
 const { chromium } = loadPlaywright();
 const url = 'file://' + path.join(__dirname, '..', 'index.html');
+const shotsIdx = process.argv.indexOf('--shots');
+const shotsDir = shotsIdx > 0 ? process.argv[shotsIdx + 1] : null;
 
 const checks = [];
-const check = (name, fn) => checks.push([name, fn]);
+// opts: { locale, colorScheme, width, expectConsoleError }
+const check = (name, fn, opts) => checks.push([name, fn, opts || {}]);
 
-check('first visit: language from browser, A1 selected, hash #/a1', async (page) => {
+const WORDS = '#/a1/words/a1-greetings';
+const GRAMMAR = '#/a1/grammar/a1-presente-ar';
+
+async function noHorizontalScroll(page, label) {
+  const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  assert.ok(over <= 0, `${label}: horizontal overflow ${over}px`);
+}
+
+async function learnedCount(page) {
+  const lead = await page.textContent('.screen-lead');
+  const m = lead.match(/(?:выучено|·)\s*(\d+)/);
+  return Number(m[1]);
+}
+
+// Answers every question of a vocab quiz; returns the result text.
+async function finishWordsQuiz(page) {
+  for (let i = 0; i < 40 && (await page.locator('.quiz-result').count()) === 0; i++) {
+    await page.locator('.options .option').first().click();
+    await page.locator('[data-next]').click();
+  }
+  return page.textContent('.quiz-result');
+}
+
+async function finishGrammarQuiz(page) {
+  await page.locator('.grammar-quiz .btn--primary').click();
+  for (let i = 0; i < 20 && (await page.locator('#grammar-result').count()) === 0; i++) {
+    await page.locator('.grammar-quiz .option').first().click();
+    await page.locator('[data-next]').click();
+  }
+  return page.textContent('#grammar-result');
+}
+
+// ---------- first visit, language, level ----------
+
+check('first visit (ru browser): RU interface, A1 selected, hash #/a1', async (page) => {
   await page.goto(url);
   assert.equal(await page.getAttribute('html', 'lang'), 'ru');
   assert.equal(new URL(page.url()).hash, '#/a1');
@@ -28,7 +66,24 @@ check('first visit: language from browser, A1 selected, hash #/a1', async (page)
   assert.equal(await page.locator('.level-tile[aria-pressed="true"]').count(), 1);
 });
 
-check('level click: B1 in address, pressed, remembered after reload', async (page) => {
+check('first visit (en browser): EN interface', async (page) => {
+  await page.goto(url);
+  assert.equal(await page.getAttribute('html', 'lang'), 'en');
+  assert.match(await page.textContent('#reset-progress'), /Reset progress/);
+}, { locale: 'en-US' });
+
+check('RU/EN switch on a topic screen keeps the screen and tab, and is remembered', async (page) => {
+  await page.goto(url + WORDS + '/quiz');
+  await page.click('[data-lang="en"]');
+  assert.equal(await page.getAttribute('html', 'lang'), 'en');
+  assert.equal(new URL(page.url()).hash, WORDS + '/quiz');
+  assert.equal(await page.getAttribute('#tab-quiz', 'aria-selected'), 'true');
+  assert.match(await page.textContent('.backlink'), /A1 · Words/);
+  await page.reload();
+  assert.equal(await page.getAttribute('html', 'lang'), 'en');
+});
+
+check('level change: B1 in address and remembered after reload', async (page) => {
   await page.goto(url + '#/a1');
   await page.click('[data-level="B1"]');
   await page.waitForFunction(() => location.hash === '#/b1');
@@ -37,25 +92,52 @@ check('level click: B1 in address, pressed, remembered after reload', async (pag
   assert.equal(new URL(page.url()).hash, '#/b1');
 });
 
-check('language switch keeps the screen and is remembered', async (page) => {
-  await page.goto(url + '#/a1/grammar/a1-presente-ar');
-  await page.click('[data-lang="en"]');
-  assert.equal(await page.getAttribute('html', 'lang'), 'en');
-  assert.equal(new URL(page.url()).hash, '#/a1/grammar/a1-presente-ar');
-  assert.match(await page.textContent('.backlink'), /A1 · Grammar/);
+// ---------- words ----------
+
+check('cards: Know / Again, learned words survive a reload', async (page) => {
+  await page.goto(url + WORDS);
+  assert.equal(await learnedCount(page), 0);
+  const first = await page.textContent('.flashcard__word');
+  await page.click('[data-action="again"]');
+  assert.notEqual(await page.textContent('.flashcard__word'), first);
+  await page.click('[data-action="know"]');
+  await page.click('[data-action="know"]');
   await page.reload();
-  assert.equal(await page.getAttribute('html', 'lang'), 'en');
-  assert.match(await page.textContent('#reset-progress'), /Reset progress/);
+  assert.equal(await learnedCount(page), 2);
+  const total = Number((await page.textContent('.screen-lead')).match(/^(\d+)/)[1]);
+  assert.equal(await page.textContent('.deck__left'), `Осталось ${total - 2} из ${total}`);
 });
 
-check('theme toggle sets data-theme and survives reload', async (page) => {
-  await page.goto(url + '#/a1');
-  await page.click('#theme-toggle');
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark');
+check('words test to the result; best score shown as a badge', async (page) => {
+  await page.goto(url + WORDS + '/quiz');
+  const result = await finishWordsQuiz(page);
+  assert.match(result, /\d+\s*\/\s*10|\d+ из 10/);
   await page.reload();
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark');
-  assert.equal(await page.getAttribute('#theme-toggle', 'aria-pressed'), 'true');
+  assert.equal(await page.locator('.vocab-badges .badge--score').count(), 1);
 });
+
+check('grammar test to the result', async (page) => {
+  await page.goto(url + GRAMMAR);
+  assert.ok(await page.locator('.grammar-table, .table').count() > 0, 'topic has a table');
+  const result = await finishGrammarQuiz(page);
+  assert.match(result, /\d+/);
+  assert.equal(await page.locator('.grammar-badges .badge--score').count(), 1);
+});
+
+check('reset progress clears learned words and scores, keeps language', async (page) => {
+  await page.goto(url + WORDS);
+  await page.click('[data-action="know"]');
+  await page.click('[data-lang="en"]');
+  page.once('dialog', (d) => d.accept());
+  await page.click('#reset-progress');
+  assert.equal(await page.getAttribute('html', 'lang'), 'en');
+  assert.equal(await learnedCount(page), 0);
+  await page.reload();
+  assert.equal(await learnedCount(page), 0);
+  assert.equal(await page.getAttribute('html', 'lang'), 'en');
+});
+
+// ---------- navigation, errors ----------
 
 check('unknown address and topic show the not-found screen with a way back', async (page) => {
   await page.goto(url + '#/a2/words/nope');
@@ -76,31 +158,203 @@ check('back button returns to the previous screen; focus lands on the heading', 
   assert.equal(await page.locator('.level-steps').count(), 1);
 });
 
-check('footer: Telegram and verzo.pro links, reset keeps language', async (page) => {
+check('footer: Telegram and verzo.pro links', async (page) => {
   await page.goto(url + '#/a1');
   const tg = page.locator('.site-footer a.tg-link');
   assert.equal(await tg.getAttribute('href'), 'https://t.me/espanolconamigos');
   assert.equal(await tg.getAttribute('target'), '_blank');
   assert.equal(await tg.getAttribute('rel'), 'noopener');
   assert.equal(await page.getAttribute('.footer-meta__by a', 'href'), 'https://verzo.pro');
-  await page.click('[data-lang="en"]');
-  page.once('dialog', (d) => d.accept());
-  await page.click('#reset-progress');
-  assert.equal(await page.getAttribute('html', 'lang'), 'en');
   assert.equal(await page.locator('#storage-note').isHidden(), true);
 });
+
+// ---------- theme ----------
+
+check('dark theme: follows the system, toggle is remembered', async (page) => {
+  await page.goto(url + '#/a1');
+  const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  const lum = (c) => c.match(/\d+/g).slice(0, 3).reduce((a, b) => a + Number(b), 0);
+  assert.ok(lum(await bg()) < 200, 'system dark gives a dark page');
+  assert.equal(await page.getAttribute('#theme-toggle', 'aria-pressed'), 'true');
+  await page.click('#theme-toggle');
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
+  assert.ok(lum(await bg()) > 600, 'light after toggle');
+  await page.reload();
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
+  const themeColor = await page.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')]
+    .filter((m) => matchMedia(m.media).matches).map((m) => m.content));
+  assert.deepEqual(themeColor, ['#f3f4ef'], 'theme-color follows the manual choice');
+}, { colorScheme: 'dark' });
+
+check('Spanish text and brand names are protected from auto-translate', async (page) => {
+  await page.goto(url + WORDS);
+  const bad = await page.evaluate(() => [...document.querySelectorAll('[lang="es"]')].filter((n) => n.getAttribute('translate') !== 'no').length);
+  assert.equal(bad, 0);
+  assert.equal(await page.getAttribute('.footer-meta__by a', 'translate'), 'no');
+});
+
+// ---------- 320px ----------
+
+check('no horizontal scroll at 320px on every screen', async (page) => {
+  const screens = ['#/a1', '#/c2', WORDS, WORDS + '/quiz', '#/a2/grammar/a2-perfecto-indefinido', '#/zz'];
+  for (const hash of screens) {
+    await page.goto(url + hash);
+    await noHorizontalScroll(page, hash);
+  }
+  await page.goto(url + WORDS);
+  await page.click('.flashcard');
+  await noHorizontalScroll(page, 'flipped card');
+  await page.click('#tab-list');
+  await noHorizontalScroll(page, 'word list');
+  await page.goto(url + WORDS + '/quiz');
+  await finishWordsQuiz(page);
+  await noHorizontalScroll(page, 'words result');
+  await page.goto(url + GRAMMAR);
+  await finishGrammarQuiz(page);
+  await noHorizontalScroll(page, 'grammar result');
+}, { width: 320 });
+
+check('tabs component fits 320px outside the words screen (base .tabs)', async (page) => {
+  await page.goto(url + '#/a1');
+  const clipped = await page.evaluate(() => {
+    const t = ECA.ui.tabs({ label: 'x', active: 'a', onSelect() {}, items: [
+      { id: 'a', label: 'Карточки' }, { id: 'b', label: 'Тест' }, { id: 'c', label: 'Список слов' }] });
+    document.getElementById('screen').prepend(t);
+    const box = t.getBoundingClientRect();
+    return [...t.children].some((b) => b.getBoundingClientRect().right > box.right + 0.5) || t.scrollWidth > t.clientWidth;
+  });
+  assert.equal(clipped, false);
+}, { width: 320 });
+
+// ---------- defects from review ----------
+
+check('arrow keys mark words only with focus in the deck or on body', async (page) => {
+  await page.goto(url + WORDS);
+  for (const sel of ['[data-lang="en"]', '#theme-toggle', '.backlink', '#reset-progress']) {
+    await page.focus(sel);
+    await page.keyboard.press('ArrowRight');
+  }
+  await page.reload();
+  assert.equal(await learnedCount(page), 0, 'arrows outside the deck must not mark words');
+  await page.focus('[data-action="know"]');
+  await page.keyboard.press('ArrowRight');
+  await page.evaluate(() => document.activeElement.blur());
+  await page.keyboard.press('ArrowRight');
+  await page.reload();
+  assert.equal(await learnedCount(page), 2);
+});
+
+check('grammar digit keys pick an answer only with focus in the test or on body', async (page) => {
+  await page.goto(url + GRAMMAR);
+  await page.locator('.grammar-quiz .btn--primary').click();
+  await page.focus('[data-lang="en"]');
+  await page.keyboard.press('1');
+  assert.equal(await page.locator('.grammar-quiz .option.is-correct, .grammar-quiz .option.is-wrong').count(), 0);
+  await page.evaluate(() => document.activeElement.blur());
+  await page.keyboard.press('1');
+  assert.ok(await page.locator('.grammar-quiz .option.is-correct').count() > 0);
+});
+
+check('an exception inside a screen shows "something went wrong" and logs it', async (page) => {
+  await page.goto(url + '#/a1');
+  await page.evaluate(() => ECA.views.register('grammar', () => { throw new Error('boom'); }));
+  const logged = page.waitForEvent('console', (m) => m.type() === 'error');
+  await page.evaluate(() => { location.hash = '#/a1/grammar/a1-presente-ar'; });
+  await logged;
+  assert.match(await page.textContent('#screen'), /Что-то пошло не так/);
+  assert.doesNotMatch(await page.textContent('#screen'), /скоро/);
+  await page.click('[data-lang="en"]');
+  assert.match(await page.textContent('#screen'), /Something went wrong/);
+}, { expectConsoleError: true });
+
+check('a storage write failing mid-session shows "progress is not saved"', async (page) => {
+  await page.goto(url + WORDS);
+  assert.equal(await page.locator('#storage-note').isHidden(), true);
+  await page.evaluate(() => { Storage.prototype.setItem = function () { throw new Error('QuotaExceededError'); }; });
+  await page.click('[data-action="know"]');
+  assert.equal(await page.locator('#storage-note').isVisible(), true);
+});
+
+// ---------- every topic of every level opens ----------
+
+check('all 6 levels have word and grammar topics; each topic opens cleanly', async (page) => {
+  await page.goto(url + '#/a1');
+  const topics = await page.evaluate(() => ECA.data.levels().map((l) => ({
+    level: l.id, words: ECA.data.vocab(l.id).map((t) => t.id), grammar: ECA.data.grammar(l.id).map((t) => t.id)
+  })));
+  assert.equal(topics.length, 6);
+  for (const t of topics) {
+    assert.ok(t.words.length > 0 && t.grammar.length > 0, `${t.level} has words and grammar`);
+    for (const [kind, ids] of [['words', t.words], ['grammar', t.grammar]]) {
+      for (const id of ids) {
+        await page.evaluate((h) => { location.hash = h; }, `#/${t.level.toLowerCase()}/${kind}/${id}`);
+        await page.waitForFunction((h) => location.hash === h, `#/${t.level.toLowerCase()}/${kind}/${id}`);
+        const text = await page.textContent('#screen');
+        assert.ok(!/Такой темы нет|скоро откроется|Что-то пошло не так/.test(text), `${id} renders`);
+        assert.equal(await page.locator(kind === 'words' ? '.flashcard' : '.grammar-section').count() > 0, true, `${id} content`);
+      }
+    }
+  }
+});
+
+// ---------- screenshots (optional) ----------
+
+async function shots(browser) {
+  fs.mkdirSync(shotsDir, { recursive: true });
+  const steps = [
+    ['home', async (p) => p.goto(url + '#/a1')],
+    ['level-c1', async (p) => p.goto(url + '#/c1')],
+    ['card', async (p) => { await p.goto(url + WORDS); await p.click('.flashcard'); }],
+    ['words-quiz', async (p) => { await p.goto(url + WORDS + '/quiz'); await p.locator('.options .option').nth(1).click(); }],
+    ['words-result', async (p) => { await p.goto(url + WORDS + '/quiz'); await finishWordsQuiz(p); }],
+    ['grammar-topic', async (p) => p.goto(url + GRAMMAR)],
+    ['grammar-quiz', async (p) => { await p.goto(url + GRAMMAR); await p.locator('.grammar-quiz .btn--primary').click(); await p.locator('.grammar-quiz .option').nth(1).click(); await p.locator('#grammar-prompt').scrollIntoViewIfNeeded(); }],
+    ['grammar-result', async (p) => { await p.goto(url + GRAMMAR); await finishGrammarQuiz(p); }]
+  ];
+  for (const scheme of ['light', 'dark']) {
+    for (const width of [375, 1280]) {
+      const ctx = await browser.newContext({ locale: 'ru-RU', colorScheme: scheme, viewport: { width, height: 860 } });
+      const page = await ctx.newPage();
+      const files = [];
+      for (const [name, go] of steps) {
+        await page.goto('about:blank'); // a real load per step: hash-only navigation would keep screen state
+        await go(page);
+        await page.waitForTimeout(250);
+        if (name === 'grammar-topic') await page.locator('.table-wrap').first().scrollIntoViewIfNeeded();
+        const file = path.join(shotsDir, `${name}-${scheme}-${width}.png`);
+        await page.screenshot({ path: file });
+        files.push([name, file]);
+      }
+      // One contact sheet per scheme and width, so all screens can be reviewed at a glance.
+      const cols = width < 600 ? 4 : 2;
+      await page.setViewportSize({ width: cols * (width < 600 ? 390 : 1290), height: 900 });
+      await page.setContent('<body style="margin:0;background:#888;display:grid;grid-template-columns:repeat(' + cols + ',auto);gap:10px;font:14px sans-serif">' +
+        files.map(([n, f]) => `<figure style="margin:0"><figcaption>${n}</figcaption><img src="data:image/png;base64,${fs.readFileSync(f).toString('base64')}"></figure>`).join('') + '</body>');
+      await page.screenshot({ path: path.join(shotsDir, `sheet-${scheme}-${width}.png`), fullPage: true });
+      await ctx.close();
+    }
+  }
+  console.log('screenshots → ' + shotsDir);
+}
 
 (async () => {
   const browser = await chromium.launch();
   let failed = 0;
-  for (const [name, fn] of checks) {
-    const context = await browser.newContext({ locale: 'ru-RU', colorScheme: 'light' });
+  for (const [name, fn, opts] of checks) {
+    const context = await browser.newContext({
+      locale: opts.locale || 'ru-RU', colorScheme: opts.colorScheme || 'light',
+      viewport: { width: opts.width || 1280, height: 800 }
+    });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
+    page.on('console', (m) => {
+      // Google Fonts may be unreachable offline; that is a network note, not a site error.
+      if (m.type() === 'error' && !/fonts\.g|net::ERR/.test(m.text()) && !opts.expectConsoleError) errors.push(m.text());
+    });
     try {
       await fn(page);
-      assert.deepEqual(errors, []);
+      assert.deepEqual(errors, [], 'console errors');
       console.log('ok   ' + name);
     } catch (e) {
       failed++;
@@ -108,6 +362,7 @@ check('footer: Telegram and verzo.pro links, reset keeps language', async (page)
     }
     await context.close();
   }
+  if (shotsDir) await shots(browser);
   await browser.close();
   console.log(failed ? `${failed} failed` : 'all passed');
   process.exit(failed ? 1 : 0);

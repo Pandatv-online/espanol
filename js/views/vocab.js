@@ -166,8 +166,16 @@
     if (e.altKey || e.ctrlKey || e.metaKey || e.defaultPrevented) return;
     var tag = e.target && e.target.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
+    if (!inScope(e.target, active)) return;
     active.onKey(e);
   });
+  // Shortcuts act only when focus is inside the deck/quiz, on the screen heading or nowhere (body):
+  // an arrow pressed on RU/EN, the theme button or a footer link must not mark a word.
+  function inScope(node, a) {
+    if (!node || node === document.body || node === document.documentElement) return true;
+    if (a.scope && a.scope.contains(node)) return true;
+    return node.tagName === 'H1' && a.root.contains(node);
+  }
   function inTabs(node) { return !!(node && node.closest && node.closest('[role="tablist"]')); }
   function isControl(node) { return !!(node && node.closest && node.closest('a, button')); }
 
@@ -238,7 +246,7 @@
         }),
         panel
       ]);
-      active = { root: view, onKey: function () {} };
+      active = { root: view, scope: panel, onKey: function () {} };
       if (state.tab === 'quiz') paintQuiz(panel);
       else if (state.tab === 'list') paintList(panel);
       else paintCards(panel);
@@ -326,7 +334,7 @@
       }
 
       var done = deck.total - left;
-      panel.appendChild(el('div', { class: 'deck' }, [
+      active.scope = panel.appendChild(el('div', { class: 'deck' }, [
         el('div', { class: 'deck__status' }, [
           el('p', { class: 'deck__left', text: t('vocab.left', { n: left, m: deck.total }) }),
           el('div', { class: 'meter deck__meter', 'aria-hidden': 'true' },
