@@ -1,7 +1,7 @@
 window.STATE =
 {
   "slug": "spanish-learning-site",
-  "dir": "2026-09-24-spanish-learning-site--wip",
+  "dir": "2026-09-24-spanish-learning-site",
   "title": "Интерактивный сайт для изучения испанского (RU/EN, A1–C2)",
   "mode": "interview",
   "depth": "deep",
@@ -11,8 +11,8 @@ window.STATE =
   "memoryFile": "CLAUDE.md",
   "skillDir": "/Users/roman/.agents/skills/autopilot",
   "startedAt": "2026-09-24T02:12:53+03:00",
-  "updatedAt": "2026-09-24T12:58:36+03:00",
-  "finishedAt": null,
+  "updatedAt": "2026-09-24T17:32:55+03:00",
+  "finishedAt": "2026-09-24T17:32:55+03:00",
   "stages": [
     {
       "id": "preflight",
@@ -22,33 +22,40 @@ window.STATE =
     },
     {
       "id": "manifest",
-      "status": "active",
-      "startedAt": "2026-09-24T02:13:40+03:00"
+      "status": "done",
+      "startedAt": "2026-09-24T02:13:40+03:00",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     },
     {
       "id": "briefing",
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     },
     {
       "id": "spec",
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     },
     {
       "id": "plan",
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     },
     {
       "id": "build",
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     },
     {
       "id": "review",
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     },
     {
       "id": "final",
-      "status": "pending",
-      "note": "приёмка; 2 таска по итогам разбора замечаний"
+      "status": "done",
+      "note": "слепая приёмка: 16 реализовано, 2 частично, расхождений с манифестом нет",
+      "finishedAt": "2026-09-24T17:32:55+03:00"
     }
   ],
   "requirements": {
