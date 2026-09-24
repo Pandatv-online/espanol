@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Español con amigos</title>
+  <meta name="description" content="Español con amigos — бесплатный сайт для изучения испанского: слова с карточками и тестами, грамматика с объяснениями. Уровни A1–C2, интерфейс на русском и английском.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Español con amigos">
+  <meta property="og:description" content="Учите испанский по уровням A1–C2: карточки слов, тесты и понятная грамматика. На русском и английском. Learn Spanish words and grammar, level by level.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23B8321F'/%3E%3Ctext x='32' y='47' font-family='Arial,Helvetica,sans-serif' font-size='44' font-weight='700' text-anchor='middle' fill='%23ffffff'%3E%C3%B1%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/vocab.css">
+  <link rel="stylesheet" href="css/grammar.css">
+
+  <!-- Order matters: shared modules, data, helpers, views, app (see interfaces). -->
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="data/levels.js"></script>
+  <script src="data/vocab-a1.js"></script>
+  <script src="data/vocab-a2.js"></script>
+  <script src="data/vocab-b1.js"></script>
+  <script src="data/vocab-b2.js"></script>
+  <script src="data/vocab-c1.js"></script>
+  <script src="data/vocab-c2.js"></script>
+  <script src="data/grammar-a1.js"></script>
+  <script src="data/grammar-a2.js"></script>
+  <script src="data/grammar-a2-more.js"></script>
+  <script src="data/grammar-b1.js"></script>
+  <script src="data/grammar-b1-more.js"></script>
+  <script src="data/grammar-b2.js"></script>
+  <script src="data/grammar-c1.js"></script>
+  <script src="data/grammar-c2.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/views/level.js"></script>
+  <script src="js/views/vocab.js"></script>
+  <script src="js/views/grammar.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="nav.skip">К содержанию</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__row">
+      <a class="brand" href="#/" data-level-home>
+        <span class="brand__mark" aria-hidden="true">ñ</span>
+        <span class="brand__name" lang="es">Español con amigos</span>
+      </a>
+      <div class="site-controls">
+        <div class="segmented" role="group" data-i18n-aria="lang.group" aria-label="Язык интерфейса">
+          <button type="button" class="segmented__btn" data-lang="ru" aria-pressed="true">RU</button>
+          <button type="button" class="segmented__btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" data-i18n-aria="theme.label" aria-label="Тёмная тема">
+          <span class="theme-toggle__icon" aria-hidden="true">☾</span>
+          <span class="theme-toggle__text" data-i18n="theme.short">Тема</span>
+        </button>
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="tagline" data-i18n="site.tagline">Учите испанские слова и грамматику по уровням, от A1 до C2.</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap site-main" tabindex="-1">
+    <noscript>
+      <div class="noscript">
+        <p><b>Для этого сайта нужен JavaScript.</b> Включите его в настройках браузера, чтобы учить слова и грамматику. А учебные материалы есть в нашем Telegram-канале: <a href="https://t.me/espanolconamigos" target="_blank" rel="noopener">Español con amigos</a>.</p>
+        <p lang="en"><b>This site needs JavaScript.</b> Turn it on in your browser settings to study words and grammar. You can also find learning materials in our Telegram channel: <a href="https://t.me/espanolconamigos" target="_blank" rel="noopener">Español con amigos</a>.</p>
+      </div>
+    </noscript>
+    <div id="screen"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div class="footer-tg">
+        <div id="footer-tg-slot"></div>
+        <p class="footer-tg__caption" data-i18n="tg.caption">Больше учебных материалов — в нашем Telegram-канале</p>
+      </div>
+      <div class="footer-meta">
+        <p class="footer-meta__by"><span data-i18n="footer.by">Сайт сделал</span> <a href="https://verzo.pro" target="_blank" rel="noopener">verzo.pro</a></p>
+        <button type="button" class="linkish" id="reset-progress" data-i18n="footer.reset">Сбросить прогресс</button>
+        <p class="footer-meta__note" id="storage-note" hidden data-i18n="footer.noStorage">Прогресс не сохраняется в этом браузере</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
