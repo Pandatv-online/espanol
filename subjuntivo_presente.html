@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский — Subjuntivo Presente</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark:   #0D2B4E;
+    --blue-mid:    #1A4F8A;
+    --blue-light:  #3A7FCC;
+    --blue-pale:   #D6E8FA;
+    --amber:       #E8A020;
+    --amber-light: #FEF3DA;
+    --amber-dark:  #7A4800;
+    --teal:        #0E7A6A;
+    --teal-light:  #D4F0EB;
+    --teal-dark:   #063D34;
+    --coral:       #C94040;
+    --coral-light: #FAE5E5;
+    --coral-dark:  #6B1A1A;
+    --purple:      #7A4FA0;
+    --purple-light:#EDE2F5;
+    --purple-dark: #3E2657;
+    --bg:          #F5F0E8;
+    --paper:       #FFFDF8;
+    --ink:         #1A1510;
+    --muted:       #6B6258;
+    --border:      #D8CFC0;
+  }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 2.8rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent 0, transparent 18px, rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 20px);
+  }
+  .hero-flag { font-size: 2rem; margin-bottom: 0.4rem; position: relative; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; line-height: 1.15;
+    position: relative; margin-bottom: 0.3rem;
+  }
+  .hero h1 span { color: var(--amber); }
+  .hero p { font-size: 0.9rem; color: rgba(255,255,255,0.55); position: relative; font-weight: 300; }
+
+  /* ─── TABS NAV ─── */
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+  .tabs-nav {
+    display: flex; gap: 0; flex-wrap: wrap;
+    background: var(--blue-dark);
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .tab-btn {
+    flex: 1 1 20%; min-width: 64px; padding: 12px 6px;
+    background: transparent; border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); background: rgba(255,255,255,0.04); }
+  .tab-btn .num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); font-size: 0.68rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .num { background: var(--amber); color: var(--blue-dark); }
+
+  /* ─── SECTIONS ─── */
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+  .section-intro { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+  /* ─── COMPARE CARDS ─── */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+  .tense-card { border-radius: 14px; padding: 1.4rem 1.3rem; border: 1.5px solid transparent; }
+  .tense-card.blue { background: var(--blue-dark); border-color: var(--blue-mid); color: #fff; }
+  .tense-card.amber { background: var(--amber-light); border-color: var(--amber); color: var(--ink); }
+  .tense-card.purple { background: var(--purple-light); border-color: var(--purple); color: var(--ink); }
+  .tense-card .tc-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; margin-bottom: 2px; }
+  .tense-card .tc-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
+  .tense-card.blue .tc-name { color: var(--amber); }
+  .tense-card.amber .tc-name { color: var(--amber-dark); }
+  .tense-card.purple .tc-name { color: var(--purple-dark); }
+  .tense-card .formula { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .tense-card.blue .formula { background: rgba(255,255,255,0.13); color: #fff; }
+  .tense-card.amber .formula { background: var(--amber); color: var(--amber-dark); }
+  .tense-card.purple .formula { background: var(--purple); color: #fff; }
+  .tense-card p { font-size: 0.87rem; line-height: 1.55; }
+  .tense-card.blue p { color: rgba(255,255,255,0.8); }
+  .tense-card.amber p, .tense-card.purple p { color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .tag { font-size: 0.74rem; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .tense-card.blue .tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); }
+  .tense-card.amber .tag { background: rgba(232,160,32,0.25); color: var(--amber-dark); }
+  .tense-card.purple .tag { background: rgba(122,79,160,0.2); color: var(--purple-dark); }
+
+  /* ─── TRIGGER CATEGORY CARDS ─── */
+  .trigger-list { display: flex; flex-direction: column; gap: 12px; }
+  .trigger-card { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .trigger-head { padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+  .trigger-num { width: 24px; height: 24px; border-radius: 50%; background: var(--blue-dark); color: var(--amber); font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .trigger-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.02rem; color: var(--blue-dark); }
+  .trigger-sub { font-size: 0.76rem; color: var(--muted); margin-left: auto; text-align: right; }
+  .trigger-body { padding: 0 16px 12px; }
+  .trigger-phrases { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .tphrase { font-size: 0.79rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--blue-pale); color: var(--blue-dark); font-style: italic; }
+  .trigger-ex { font-size: 0.85rem; border-top: 1px dashed var(--border); padding-top: 8px; margin-top: 6px; }
+  .trigger-ex .sp { color: var(--ink); font-weight: 500; }
+  .trigger-ex .sp .subj { color: var(--coral-dark); font-weight: 700; }
+  .trigger-ex .ru { color: var(--muted); font-size: 0.82rem; }
+
+  /* ─── DIFF TABLE ─── */
+  .diff-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.87rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .diff-table th { padding: 10px 14px; font-weight: 700; font-size: 0.78rem; text-align: left; }
+  .diff-table th:first-child { background: var(--bg); color: var(--muted); }
+  .diff-table th:nth-child(2) { background: var(--blue-dark); color: var(--amber); }
+  .diff-table th:nth-child(3) { background: var(--amber); color: var(--amber-dark); }
+  .diff-table td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; }
+  .diff-table tr:nth-child(even) td { background: rgba(0,0,0,0.025); }
+  .diff-table td:first-child { font-weight: 500; color: var(--muted); font-size: 0.8rem; }
+
+  /* ─── EXAMPLES ─── */
+  .examples-box { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 1.2rem; }
+  .ex-row { display: grid; grid-template-columns: auto 1fr 1fr; border-bottom: 1px solid var(--border); align-items: stretch; }
+  .ex-row:last-child { border-bottom: none; }
+  .ex-badge { writing-mode: vertical-lr; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; padding: 12px 5px; text-align: center; display: flex; align-items: center; justify-content: center; }
+  .ex-badge.b { background: var(--blue-dark); color: var(--amber); }
+  .ex-badge.a { background: var(--amber); color: var(--amber-dark); }
+  .ex-sp { padding: 10px 14px; font-size: 0.9rem; font-weight: 500; border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .ex-sp .hl { color: var(--blue-light); }
+  .ex-sp .hl.a { color: var(--amber-dark); }
+  .ex-ru { padding: 10px 14px; font-size: 0.84rem; color: var(--muted); display: flex; align-items: center; }
+
+  /* ─── CONJUGATION ─── */
+  .conj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .conj-card { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .conj-card.c-ar { border-top: 3px solid var(--teal); }
+  .conj-card.c-er { border-top: 3px solid var(--blue-mid); }
+  .conj-card.c-ir { border-top: 3px solid var(--coral); }
+  .conj-header { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .conj-verb { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+  .conj-type { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 20px; }
+  .type-ar { background: var(--teal-light); color: var(--teal-dark); }
+  .type-er { background: var(--blue-pale); color: var(--blue-dark); }
+  .type-ir { background: var(--coral-light); color: var(--coral-dark); }
+
+  .conj-forms { padding: 8px 14px 12px; }
+  .form-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .form-row:last-child { border-bottom: none; }
+  .form-pron { color: var(--muted); }
+  .form-word { font-weight: 600; color: var(--blue-mid); }
+
+  /* ─── RULE BOXES ─── */
+  .rule-box { background: var(--paper); border-left: 4px solid var(--blue-light); border-radius: 0 10px 10px 0; padding: 0.9rem 1.2rem; margin-top: 12px; font-size: 0.87rem; line-height: 1.6; }
+  .rule-box strong { color: var(--blue-dark); }
+  .rule-box.amber-b { border-left-color: var(--amber); }
+  .rule-box.amber-b strong { color: var(--amber-dark); }
+  .rule-box.coral-b { border-left-color: var(--coral); }
+  .rule-box.coral-b strong { color: var(--coral-dark); }
+  .rule-box.purple-b { border-left-color: var(--purple); }
+  .rule-box.purple-b strong { color: var(--purple-dark); }
+
+  /* ─── IRREGULAR TABLE ─── */
+  .irreg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.82rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 1rem; }
+  .irreg-table th { background: var(--blue-dark); color: rgba(255,255,255,0.65); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 9px 10px; text-align: left; }
+  .irreg-table th:first-child { color: var(--amber); }
+  .irreg-table td { padding: 8px 10px; border-top: 1px solid var(--border); }
+  .irreg-table tr:nth-child(even) td { background: var(--bg); }
+  .irreg-table td:first-child { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--blue-mid); font-size: 0.88rem; }
+  .irreg-table td:not(:first-child) { font-weight: 600; color: var(--amber-dark); }
+  .irreg-note { font-size: 0.68rem; color: var(--muted); font-weight: 400; font-family: 'Noto Sans', sans-serif; }
+
+  .stem-group-title { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple-dark); margin: 1.1rem 0 0.5rem; display: flex; align-items: center; gap: 8px; }
+  .stem-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ─── KEYWORD BOXES ─── */
+  .keyword-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .kw-box { border-radius: 12px; padding: 1rem 1.2rem; }
+  .kw-box.blue { background: var(--blue-dark); }
+  .kw-box.amber { background: var(--amber-light); border: 1.5px solid var(--amber); }
+  .kw-box.purple { background: var(--purple-light); border: 1.5px solid var(--purple); }
+  .kw-box.coral { background: var(--coral-light); border: 1.5px solid var(--coral); }
+  .kw-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .kw-box.blue .kw-title { color: var(--amber); }
+  .kw-box.amber .kw-title { color: var(--amber-dark); }
+  .kw-box.purple .kw-title { color: var(--purple-dark); }
+  .kw-box.coral .kw-title { color: var(--coral-dark); }
+  .kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw-tag { font-size: 0.79rem; font-weight: 600; padding: 4px 11px; border-radius: 20px; font-style: italic; }
+  .kw-box.blue .kw-tag { background: rgba(255,255,255,0.12); color: #fff; }
+  .kw-box.amber .kw-tag { background: rgba(232,160,32,0.22); color: var(--amber-dark); }
+  .kw-box.purple .kw-tag { background: rgba(122,79,160,0.18); color: var(--purple-dark); }
+  .kw-box.coral .kw-tag { background: rgba(201,64,64,0.18); color: var(--coral-dark); }
+
+  /* ─── FOOTER ─── */
+  .footer { margin-top: 2.5rem; text-align: center; font-size: 0.74rem; color: var(--muted); }
+  .footer span { color: var(--blue-mid); font-weight: 700; }
+
+  @media (max-width: 620px) {
+    .compare-grid, .keyword-grid, .conj-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.6rem; }
+    .tab-btn span.label { display: none; }
+    .ex-badge { writing-mode: horizontal-tb; font-size: 0.55rem; padding: 4px 5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-flag">🇪🇸</div>
+  <h1>Modo <span>Subjuntivo</span> Presente</h1>
+  <p>Полное пособие: когда используется, спряжение, неправильные формы.</p>
+</div>
+
+<div class="wrapper">
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('cuando', this)">
+      <span class="num">1</span><span class="label">Когда</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('markers', this)">
+      <span class="num">2</span><span class="label">Фразы</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('conj', this)">
+      <span class="num">3</span><span class="label">Спряжение</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('irreg', this)">
+      <span class="num">4</span><span class="label">Неправ.</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('examples', this)">
+      <span class="num">5</span><span class="label">Примеры</span>
+    </button>
+  </div>
+
+  <!-- TAB 1: КОГДА ИСПОЛЬЗУЕТСЯ -->
+  <div id="cuando" class="tab-section active">
+
+    <div class="compare-grid">
+      <div class="tense-card blue">
+        <div class="tc-label">Modo</div>
+        <div class="tc-name">Indicativo</div>
+        <div class="formula">факт, реальность</div>
+        <p>Говорим о том, что реально, объективно, известно точно. «Sé que...», «Es verdad que...», «Creo que...»</p>
+      </div>
+      <div class="tense-card amber">
+        <div class="tc-label">Modo</div>
+        <div class="tc-name">Subjuntivo</div>
+        <div class="formula">не факт, а отношение</div>
+        <p>Говорим не о факте, а о желании, эмоции, сомнении, оценке или ещё не свершившемся действии.</p>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      <strong>Главная формула:</strong> [Глагол 1 в Indicativo] + <strong>que</strong> + [Глагол 2 в Subjuntivo] — и только если подлежащее в первой и второй части <strong>разное</strong>. Если субъект один и тот же — используется инфинитив, а не subjuntivo: <em>Quiero salir</em> (не «que salga»), но <em>Quiero que salgas</em>.
+    </div>
+
+    <div class="trigger-list" style="margin-top:1.3rem">
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">1</div>
+          <div class="trigger-title">Желание / воля</div>
+          <div class="trigger-sub">deseo, voluntad</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">querer que</span><span class="tphrase">esperar que</span>
+            <span class="tphrase">desear que</span><span class="tphrase">necesitar que</span>
+            <span class="tphrase">preferir que</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Quiero que <span class="subj">vengas</span> a la fiesta.</div>
+            <div class="ru">Хочу, чтобы ты пришёл на вечеринку.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">2</div>
+          <div class="trigger-title">Эмоции</div>
+          <div class="trigger-sub">emoción, sentimiento</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">me alegra que</span><span class="tphrase">siento que</span>
+            <span class="tphrase">temo que</span><span class="tphrase">me sorprende que</span>
+            <span class="tphrase">es una pena que</span><span class="tphrase">me molesta que</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Me alegra que <span class="subj">estés</span> aquí.</div>
+            <div class="ru">Я рад, что ты здесь.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">3</div>
+          <div class="trigger-title">Сомнение / отрицание</div>
+          <div class="trigger-sub">duda, negación</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">dudar que</span><span class="tphrase">no creer que</span>
+            <span class="tphrase">no pensar que</span><span class="tphrase">no estar seguro de que</span>
+            <span class="tphrase">no es verdad que</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">No creo que <span class="subj">tenga</span> razón.</div>
+            <div class="ru">Не думаю, что он прав.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">4</div>
+          <div class="trigger-title">Безличные оценочные выражения</div>
+          <div class="trigger-sub">expresiones impersonales</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">es importante que</span><span class="tphrase">es necesario que</span>
+            <span class="tphrase">es posible que</span><span class="tphrase">es mejor que</span>
+            <span class="tphrase">es raro que</span><span class="tphrase">es normal que</span>
+            <span class="tphrase">más vale que</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Es importante que <span class="subj">estudies</span> cada día.</div>
+            <div class="ru">Важно, чтобы ты занимался каждый день.</div>
+          </div>
+          <div class="trigger-ex" style="margin-top:6px">
+            <div class="sp" style="color:var(--muted)">⚠️ Es verdad / es cierto / es obvio que → <strong>Indicativo</strong> (это факты!)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">5</div>
+          <div class="trigger-title">Просьбы, советы, приказы</div>
+          <div class="trigger-sub">petición, consejo, mandato</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">pedir que</span><span class="tphrase">recomendar que</span>
+            <span class="tphrase">sugerir que</span><span class="tphrase">aconsejar que</span>
+            <span class="tphrase">prohibir que</span><span class="tphrase">permitir que</span>
+            <span class="tphrase">exigir que</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Te recomiendo que <span class="subj">descanses</span> más.</div>
+            <div class="ru">Советую тебе больше отдыхать.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">6</div>
+          <div class="trigger-title">Ojalá</div>
+          <div class="trigger-sub">как бы хотелось, лишь бы</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">ojalá (que)</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Ojalá <span class="subj">haga</span> buen tiempo mañana.</div>
+            <div class="ru">Хоть бы завтра была хорошая погода.</div>
+          </div>
+          <div class="trigger-ex" style="margin-top:6px">
+            <div class="sp" style="color:var(--muted)">«que» после ojalá необязательно — оба варианта верны.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">7</div>
+          <div class="trigger-title">Союзы цели / условия / уступки</div>
+          <div class="trigger-sub">conjunciones</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">para que</span><span class="tphrase">a fin de que</span>
+            <span class="tphrase">antes de que</span><span class="tphrase">sin que</span>
+            <span class="tphrase">con tal de que</span><span class="tphrase">a menos que</span>
+            <span class="tphrase">en caso de que</span><span class="tphrase">aunque*</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Te lo explico para que lo <span class="subj">entiendas</span>.</div>
+            <div class="ru">Объясняю тебе, чтобы ты это понял.</div>
+          </div>
+          <div class="trigger-ex" style="margin-top:6px">
+            <div class="sp" style="color:var(--muted)">*aunque + subjuntivo — если факт не подтверждён / гипотеза («хотя бы даже»); aunque + indicativo — если факт известен.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trigger-card">
+        <div class="trigger-head">
+          <div class="trigger-num">8</div>
+          <div class="trigger-title">Союзы времени о будущем</div>
+          <div class="trigger-sub">tiempo + acción futura</div>
+        </div>
+        <div class="trigger-body">
+          <div class="trigger-phrases">
+            <span class="tphrase">cuando</span><span class="tphrase">en cuanto</span>
+            <span class="tphrase">tan pronto como</span><span class="tphrase">hasta que</span>
+            <span class="tphrase">mientras</span><span class="tphrase">después de que</span>
+          </div>
+          <div class="trigger-ex">
+            <div class="sp">Cuando <span class="subj">llegues</span>, cenaremos.</div>
+            <div class="ru">Когда ты придёшь, поужинаем. <em>(ещё не случилось)</em></div>
+          </div>
+          <div class="trigger-ex" style="margin-top:6px">
+            <div class="sp" style="color:var(--muted)">Если действие привычное/повторяющееся — Indicativo: <em>Cuando llego, ceno.</em> (Когда я прихожу [обычно], ужинаю)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 2: ФРАЗЫ-МАРКЕРЫ -->
+  <div id="markers" class="tab-section">
+    <div class="section-intro">Все фразы, после которых почти всегда идёт subjuntivo — сгруппированы по смыслу для быстрого запоминания.</div>
+
+    <div class="keyword-grid">
+      <div class="kw-box blue">
+        <div class="kw-title">🔵 Желание / просьба</div>
+        <div class="kw-tags">
+          <span class="kw-tag">quiero que</span><span class="kw-tag">espero que</span>
+          <span class="kw-tag">deseo que</span><span class="kw-tag">necesito que</span>
+          <span class="kw-tag">prefiero que</span><span class="kw-tag">pido que</span>
+          <span class="kw-tag">exijo que</span><span class="kw-tag">insisto en que</span>
+        </div>
+      </div>
+      <div class="kw-box coral">
+        <div class="kw-title">🔴 Эмоции</div>
+        <div class="kw-tags">
+          <span class="kw-tag">me alegra que</span><span class="kw-tag">siento que</span>
+          <span class="kw-tag">temo que</span><span class="kw-tag">me sorprende que</span>
+          <span class="kw-tag">es una pena que</span><span class="kw-tag">me da miedo que</span>
+          <span class="kw-tag">me molesta que</span><span class="kw-tag">qué bueno que</span>
+        </div>
+      </div>
+      <div class="kw-box purple">
+        <div class="kw-title">🟣 Сомнение / отрицание</div>
+        <div class="kw-tags">
+          <span class="kw-tag">dudo que</span><span class="kw-tag">no creo que</span>
+          <span class="kw-tag">no pienso que</span><span class="kw-tag">no es verdad que</span>
+          <span class="kw-tag">no está claro que</span><span class="kw-tag">no es seguro que</span>
+          <span class="kw-tag">es imposible que</span>
+        </div>
+      </div>
+      <div class="kw-box amber">
+        <div class="kw-title">🟡 Безличные (оценка/возможность)</div>
+        <div class="kw-tags">
+          <span class="kw-tag">es importante que</span><span class="kw-tag">es necesario que</span>
+          <span class="kw-tag">es posible que</span><span class="kw-tag">es probable que</span>
+          <span class="kw-tag">es mejor que</span><span class="kw-tag">es raro que</span>
+          <span class="kw-tag">es una lástima que</span><span class="kw-tag">puede que</span>
+          <span class="kw-tag">ojalá (que)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stem-group-title">Союзы (conjunciones)</div>
+    <div class="keyword-grid">
+      <div class="kw-box blue">
+        <div class="kw-title">🔵 Цель / условие</div>
+        <div class="kw-tags">
+          <span class="kw-tag">para que</span><span class="kw-tag">a fin de que</span>
+          <span class="kw-tag">sin que</span><span class="kw-tag">con tal de que</span>
+          <span class="kw-tag">a menos que</span><span class="kw-tag">en caso de que</span>
+          <span class="kw-tag">a no ser que</span>
+        </div>
+      </div>
+      <div class="kw-box coral">
+        <div class="kw-title">🔴 Время (будущее) / уступка</div>
+        <div class="kw-tags">
+          <span class="kw-tag">cuando</span><span class="kw-tag">en cuanto</span>
+          <span class="kw-tag">tan pronto como</span><span class="kw-tag">hasta que</span>
+          <span class="kw-tag">antes de que</span><span class="kw-tag">mientras</span>
+          <span class="kw-tag">aunque</span><span class="kw-tag">por más que</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box amber-b" style="margin-top:1.2rem">
+      <strong>Совет для экзамена:</strong> выучите список фраз группами, а не по одной — на B1 обычно проверяют именно узнавание триггера + правильное спряжение после него.
+    </div>
+    <div class="rule-box coral-b">
+      <strong>Ловушка:</strong> глаголы мнения/уверенности в утвердительной форме (creo, pienso, es verdad, es seguro, sé que) требуют <strong>Indicativo</strong>. Subjuntivo появляется, только когда их отрицают: <em>no creo que</em>, <em>no es verdad que</em>.
+    </div>
+  </div>
+
+  <!-- TAB 3: СПРЯЖЕНИЕ -->
+  <div id="conj" class="tab-section">
+
+    <div class="rule-box">
+      <strong>Как образуется:</strong> берём форму <em>yo</em> в Presente de Indicativo, убираем <strong>-o</strong> и добавляем «противоположные» окончания: глаголы на <strong>-ar</strong> получают окончания на <strong>-e</strong>, а глаголы на <strong>-er/-ir</strong> — окончания на <strong>-a</strong>.
+    </div>
+
+    <div class="conj-grid" style="margin-top:1.2rem">
+
+      <div class="conj-card c-ar">
+        <div class="conj-header">
+          <div class="conj-verb">hablar</div>
+          <div class="conj-type type-ar">-ar → -e</div>
+        </div>
+        <div class="conj-forms">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">hable</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">hables</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">hable</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">hablemos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">habléis</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">hablen</span></div>
+        </div>
+      </div>
+
+      <div class="conj-card c-er">
+        <div class="conj-header">
+          <div class="conj-verb">comer</div>
+          <div class="conj-type type-er">-er → -a</div>
+        </div>
+        <div class="conj-forms">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">coma</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">comas</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">coma</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">comamos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">comáis</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">coman</span></div>
+        </div>
+      </div>
+
+      <div class="conj-card c-ir">
+        <div class="conj-header">
+          <div class="conj-verb">vivir</div>
+          <div class="conj-type type-ir">-ir → -a</div>
+        </div>
+        <div class="conj-forms">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">viva</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">vivas</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">viva</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">vivamos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">viváis</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">vivan</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rule-box amber-b" style="margin-top:1.2rem">
+      <strong>Запомнить:</strong> у -er и -ir глаголов в subjuntivo окончания <strong>совпадают</strong> — это упрощает дело, надо выучить только один набор для обеих групп.
+    </div>
+
+    <div class="stem-group-title">Орфографические изменения (для сохранения звука)</div>
+    <table class="diff-table">
+      <thead>
+        <tr><th>Окончание</th><th>Меняется на</th><th>Пример</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>-car</td><td>qu</td><td>sacar → saque, saques...</td></tr>
+        <tr><td>-gar</td><td>gu</td><td>pagar → pague, pagues...</td></tr>
+        <tr><td>-zar</td><td>c</td><td>empezar → empiece, empieces...</td></tr>
+        <tr><td>-ger / -gir</td><td>j</td><td>coger → coja; dirigir → dirija</td></tr>
+        <tr><td>-guir</td><td>g</td><td>seguir → siga, sigas...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB 4: НЕПРАВИЛЬНЫЕ -->
+  <div id="irreg" class="tab-section">
+
+    <div class="section-intro">Полностью неправильные глаголы — их нужно просто выучить наизусть.</div>
+
+    <table class="irreg-table">
+      <thead>
+        <tr><th>Инфинитив</th><th>yo</th><th>tú</th><th>él/ella</th><th>nosotros</th><th>ellos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ser</td><td>sea</td><td>seas</td><td>sea</td><td>seamos</td><td>sean</td></tr>
+        <tr><td>estar</td><td>esté</td><td>estés</td><td>esté</td><td>estemos</td><td>estén</td></tr>
+        <tr><td>ir</td><td>vaya</td><td>vayas</td><td>vaya</td><td>vayamos</td><td>vayan</td></tr>
+        <tr><td>haber <span class="irreg-note">(есть/иметься)</span></td><td>haya</td><td>hayas</td><td>haya</td><td>hayamos</td><td>hayan</td></tr>
+        <tr><td>saber</td><td>sepa</td><td>sepas</td><td>sepa</td><td>sepamos</td><td>sepan</td></tr>
+        <tr><td>dar</td><td>dé</td><td>des</td><td>dé</td><td>demos</td><td>den</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-box coral-b">
+      <strong>Мнемоника:</strong> «SEDHAVI» — Ser, Estar, Dar, Haber, Ir — самые частые исключения, встречаются почти в каждом экзамене.
+    </div>
+
+    <div class="stem-group-title">Глаголы с неправильной формой yo → сохраняется во всём subjuntivo</div>
+    <table class="irreg-table">
+      <thead>
+        <tr><th>Инфинитив</th><th>yo (indic.)</th><th>Основа subj.</th><th>yo / tú / él...</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>tener</td><td>tengo</td><td>teng-</td><td>tenga, tengas, tenga, tengamos, tengáis, tengan</td></tr>
+        <tr><td>poner</td><td>pongo</td><td>pong-</td><td>ponga, pongas, ponga, pongamos...</td></tr>
+        <tr><td>salir</td><td>salgo</td><td>salg-</td><td>salga, salgas, salga, salgamos...</td></tr>
+        <tr><td>venir</td><td>vengo</td><td>veng-</td><td>venga, vengas, venga, vengamos...</td></tr>
+        <tr><td>decir</td><td>digo</td><td>dig-</td><td>diga, digas, diga, digamos...</td></tr>
+        <tr><td>hacer</td><td>hago</td><td>hag-</td><td>haga, hagas, haga, hagamos...</td></tr>
+        <tr><td>conocer</td><td>conozco</td><td>conozc-</td><td>conozca, conozcas, conozca...</td></tr>
+        <tr><td>traer</td><td>traigo</td><td>traig-</td><td>traiga, traigas, traiga...</td></tr>
+        <tr><td>oír</td><td>oigo</td><td>oig-</td><td>oiga, oigas, oiga, oigamos...</td></tr>
+      </tbody>
+    </table>
+    <div class="rule-box">
+      <strong>Правило:</strong> если yo в Presente de Indicativo неправильная (-go, -zco...), эта же основа используется во <strong>всех</strong> лицах subjuntivo — исключений внутри уже нет.
+    </div>
+
+    <div class="stem-group-title">Глаголы с изменением корня (e→ie, o→ue)</div>
+    <table class="irreg-table">
+      <thead>
+        <tr><th>Инфинитив</th><th>yo</th><th>tú</th><th>él/ella</th><th>nosotros</th><th>ellos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>querer <span class="irreg-note">e→ie</span></td><td>quiera</td><td>quieras</td><td>quiera</td><td>queramos</td><td>quieran</td></tr>
+        <tr><td>pensar <span class="irreg-note">e→ie</span></td><td>piense</td><td>pienses</td><td>piense</td><td>pensemos</td><td>piensen</td></tr>
+        <tr><td>poder <span class="irreg-note">o→ue</span></td><td>pueda</td><td>puedas</td><td>pueda</td><td>podamos</td><td>puedan</td></tr>
+        <tr><td>volver <span class="irreg-note">o→ue</span></td><td>vuelva</td><td>vuelvas</td><td>vuelva</td><td>volvamos</td><td>vuelvan</td></tr>
+        <tr><td>dormir <span class="irreg-note">o→ue/u</span></td><td>duerma</td><td>duermas</td><td>duerma</td><td>durmamos</td><td>duerman</td></tr>
+      </tbody>
+    </table>
+    <div class="rule-box amber-b">
+      <strong>Важно:</strong> в -ar/-er глаголах nosotros/vosotros <strong>не меняют</strong> корень (queramos, no «quieramos»). А у -ir глаголов (dormir, morir, sentir, pedir) в nosotros/vosotros корень меняется по-другому: o→u или e→i.
+    </div>
+
+    <div class="stem-group-title">Глаголы e→i (только -ir, меняются во всех лицах)</div>
+    <table class="irreg-table">
+      <thead>
+        <tr><th>Инфинитив</th><th>yo</th><th>tú</th><th>él/ella</th><th>nosotros</th><th>ellos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>pedir</td><td>pida</td><td>pidas</td><td>pida</td><td>pidamos</td><td>pidan</td></tr>
+        <tr><td>servir</td><td>sirva</td><td>sirvas</td><td>sirva</td><td>sirvamos</td><td>sirvan</td></tr>
+        <tr><td>seguir</td><td>siga</td><td>sigas</td><td>siga</td><td>sigamos</td><td>sigan</td></tr>
+        <tr><td>sentir</td><td>sienta</td><td>sientas</td><td>sienta</td><td>sintamos</td><td>sientan</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB 5: ПРИМЕРЫ -->
+  <div id="examples" class="tab-section">
+    <div class="section-intro">Одни и те же ситуации — сравните, как меняется наклонение в зависимости от смысла.</div>
+
+    <div class="examples-box">
+      <div class="ex-row">
+        <div class="ex-badge b">IND</div>
+        <div class="ex-sp"><span class="hl">Creo que</span>&nbsp;tiene razón.</div>
+        <div class="ex-ru">Думаю, что он прав. <em>(уверенность)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">SUB</div>
+        <div class="ex-sp"><span class="hl a">No creo que</span>&nbsp;tenga razón.</div>
+        <div class="ex-ru">Не думаю, что он прав. <em>(сомнение)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">IND</div>
+        <div class="ex-sp"><span class="hl">Sé que</span>&nbsp;María viene mañana.</div>
+        <div class="ex-ru">Я знаю, что Мария придёт завтра. <em>(факт)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">SUB</div>
+        <div class="ex-sp"><span class="hl a">Espero que</span>&nbsp;María venga mañana.</div>
+        <div class="ex-ru">Надеюсь, Мария придёт завтра. <em>(желание)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">IND</div>
+        <div class="ex-sp"><span class="hl">Es verdad que</span>&nbsp;llueve mucho aquí.</div>
+        <div class="ex-ru">Правда, что здесь много дождей. <em>(факт)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">SUB</div>
+        <div class="ex-sp"><span class="hl a">Es posible que</span>&nbsp;llueva mañana.</div>
+        <div class="ex-ru">Возможно, завтра будет дождь. <em>(вероятность)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">IND</div>
+        <div class="ex-sp">Cuando <span class="hl">llego</span>&nbsp;a casa, ceno.</div>
+        <div class="ex-ru">Когда я прихожу домой [обычно], ужинаю. <em>(привычка)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">SUB</div>
+        <div class="ex-sp">Cuando <span class="hl a">llegue</span>&nbsp;a casa, cenaré.</div>
+        <div class="ex-ru">Когда я приду домой, поужинаю. <em>(ещё не случилось)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">IND</div>
+        <div class="ex-sp">Busco un piso <span class="hl">que</span>&nbsp;tiene terraza.</div>
+        <div class="ex-ru">Ищу квартиру, у которой есть терраса. <em>(конкретная, известная)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">SUB</div>
+        <div class="ex-sp">Busco un piso <span class="hl a">que</span>&nbsp;tenga terraza.</div>
+        <div class="ex-ru">Ищу квартиру, у которой была бы терраса. <em>(любая, не найдена)</em></div>
+      </div>
+    </div>
+
+    <div class="rule-box purple-b" style="margin-top:1.2rem">
+      <strong>Бонус-правило (relativas):</strong> subjuntivo также используется после <em>que</em>, если описываемый предмет/человек неопределённый, не найден или несуществующий — как в последнем примере выше. Это частая тема на B1.
+    </div>
+    <div class="rule-box">
+      <strong>Мини-чеклист перед экзаменом:</strong> 1) есть ли «que» между двумя разными подлежащими? 2) первая часть выражает желание/эмоцию/сомнение/оценку/приказ? 3) действие ещё не свершилось (после cuando, para que и т.д.)? Если да хотя бы на один вопрос — subjuntivo.
+    </div>
+  </div>
+
+  <div class="footer">Создано <span>PandaGroup</span> · Modo Subjuntivo Presente · Nivel B1</div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

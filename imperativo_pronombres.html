@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский — Imperativo y Pronombres</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark:   #0D2B4E;
+    --blue-mid:    #1A4F8A;
+    --blue-light:  #3A7FCC;
+    --blue-pale:   #D6E8FA;
+    --amber:       #E8A020;
+    --amber-light: #FEF3DA;
+    --amber-dark:  #7A4800;
+    --teal:        #0E7A6A;
+    --teal-light:  #D4F0EB;
+    --teal-dark:   #063D34;
+    --coral:       #C94040;
+    --coral-light: #FAE5E5;
+    --coral-dark:  #6B1A1A;
+    --purple:      #7A4FA0;
+    --purple-light:#EDE2F5;
+    --purple-dark: #3E2657;
+    --bg:          #F5F0E8;
+    --paper:       #FFFDF8;
+    --ink:         #1A1510;
+    --muted:       #6B6258;
+    --border:      #D8CFC0;
+  }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 2.8rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent 0, transparent 18px, rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 20px);
+  }
+  .hero-flag { font-size: 2rem; margin-bottom: 0.4rem; position: relative; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.1rem; font-weight: 900; line-height: 1.15;
+    position: relative; margin-bottom: 0.3rem;
+  }
+  .hero h1 span { color: var(--amber); }
+  .hero p { font-size: 0.9rem; color: rgba(255,255,255,0.55); position: relative; font-weight: 300; }
+
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+  .tabs-nav {
+    display: flex; gap: 0; flex-wrap: wrap;
+    background: var(--blue-dark);
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .tab-btn {
+    flex: 1 1 16%; min-width: 58px; padding: 12px 5px;
+    background: transparent; border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); background: rgba(255,255,255,0.04); }
+  .tab-btn .num {
+    width: 19px; height: 19px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); font-size: 0.65rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .num { background: var(--amber); color: var(--blue-dark); }
+
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+  .section-intro { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+  .tense-card { border-radius: 14px; padding: 1.4rem 1.3rem; border: 1.5px solid transparent; }
+  .tense-card.blue { background: var(--blue-dark); border-color: var(--blue-mid); color: #fff; }
+  .tense-card.amber { background: var(--amber-light); border-color: var(--amber); color: var(--ink); }
+  .tense-card .tc-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; margin-bottom: 2px; }
+  .tense-card .tc-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
+  .tense-card.blue .tc-name { color: var(--amber); }
+  .tense-card.amber .tc-name { color: var(--amber-dark); }
+  .tense-card .formula { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .tense-card.blue .formula { background: rgba(255,255,255,0.13); color: #fff; }
+  .tense-card.amber .formula { background: var(--amber); color: var(--amber-dark); }
+  .tense-card p { font-size: 0.87rem; line-height: 1.55; }
+  .tense-card.blue p { color: rgba(255,255,255,0.8); }
+  .tense-card.amber p { color: var(--muted); }
+
+  .conj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .conj-card { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .conj-card.c-ar { border-top: 3px solid var(--teal); }
+  .conj-card.c-er { border-top: 3px solid var(--blue-mid); }
+  .conj-card.c-ir { border-top: 3px solid var(--coral); }
+  .conj-header { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .conj-verb { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+  .conj-type { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 20px; }
+  .type-ar { background: var(--teal-light); color: var(--teal-dark); }
+  .type-er { background: var(--blue-pale); color: var(--blue-dark); }
+  .type-ir { background: var(--coral-light); color: var(--coral-dark); }
+
+  .conj-forms { padding: 8px 14px 12px; }
+  .form-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 0.79rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .form-row:last-child { border-bottom: none; }
+  .form-pron { color: var(--muted); }
+  .form-word { font-weight: 600; color: var(--blue-mid); }
+
+  .rule-box { background: var(--paper); border-left: 4px solid var(--blue-light); border-radius: 0 10px 10px 0; padding: 0.9rem 1.2rem; margin-top: 12px; font-size: 0.87rem; line-height: 1.6; }
+  .rule-box strong { color: var(--blue-dark); }
+  .rule-box.amber-b { border-left-color: var(--amber); }
+  .rule-box.amber-b strong { color: var(--amber-dark); }
+  .rule-box.coral-b { border-left-color: var(--coral); }
+  .rule-box.coral-b strong { color: var(--coral-dark); }
+  .rule-box.purple-b { border-left-color: var(--purple); }
+  .rule-box.purple-b strong { color: var(--purple-dark); }
+  .rule-box.teal-b { border-left-color: var(--teal); }
+  .rule-box.teal-b strong { color: var(--teal-dark); }
+
+  .irreg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.82rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 1rem; }
+  .irreg-table th { background: var(--blue-dark); color: rgba(255,255,255,0.65); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 9px 8px; text-align: left; }
+  .irreg-table th:first-child { color: var(--amber); }
+  .irreg-table td { padding: 8px 8px; border-top: 1px solid var(--border); }
+  .irreg-table tr:nth-child(even) td { background: var(--bg); }
+  .irreg-table td:first-child { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--blue-mid); font-size: 0.88rem; }
+  .irreg-table td:not(:first-child) { font-weight: 600; color: var(--amber-dark); }
+  .irreg-note { font-size: 0.66rem; color: var(--muted); font-weight: 400; font-family: 'Noto Sans', sans-serif; }
+
+  .stem-group-title { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple-dark); margin: 1.1rem 0 0.5rem; display: flex; align-items: center; gap: 8px; }
+  .stem-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .keyword-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .kw-box { border-radius: 12px; padding: 1rem 1.2rem; }
+  .kw-box.blue { background: var(--blue-dark); }
+  .kw-box.amber { background: var(--amber-light); border: 1.5px solid var(--amber); }
+  .kw-box.purple { background: var(--purple-light); border: 1.5px solid var(--purple); }
+  .kw-box.coral { background: var(--coral-light); border: 1.5px solid var(--coral); }
+  .kw-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .kw-box.blue .kw-title { color: var(--amber); }
+  .kw-box.amber .kw-title { color: var(--amber-dark); }
+  .kw-box.purple .kw-title { color: var(--purple-dark); }
+  .kw-box.coral .kw-title { color: var(--coral-dark); }
+  .kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw-tag { font-size: 0.79rem; font-weight: 600; padding: 4px 11px; border-radius: 20px; font-style: italic; }
+  .kw-box.blue .kw-tag { background: rgba(255,255,255,0.12); color: #fff; }
+  .kw-box.amber .kw-tag { background: rgba(232,160,32,0.22); color: var(--amber-dark); }
+  .kw-box.purple .kw-tag { background: rgba(122,79,160,0.18); color: var(--purple-dark); }
+  .kw-box.coral .kw-tag { background: rgba(201,64,64,0.18); color: var(--coral-dark); }
+
+  .examples-box { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 1.2rem; }
+  .ex-row { display: grid; grid-template-columns: auto 1fr 1fr; border-bottom: 1px solid var(--border); align-items: stretch; }
+  .ex-row:last-child { border-bottom: none; }
+  .ex-badge { writing-mode: vertical-lr; font-size: 0.58rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 5px; text-align: center; display: flex; align-items: center; justify-content: center; }
+  .ex-badge.b { background: var(--blue-dark); color: var(--amber); }
+  .ex-badge.a { background: var(--amber); color: var(--amber-dark); }
+  .ex-sp { padding: 10px 14px; font-size: 0.9rem; font-weight: 500; border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .ex-sp .hl { color: var(--blue-light); font-weight: 700; }
+  .ex-sp .hl.a { color: var(--amber-dark); font-weight: 700; }
+  .ex-ru { padding: 10px 14px; font-size: 0.84rem; color: var(--muted); display: flex; align-items: center; }
+
+  .accent-demo { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 0.88rem; flex-wrap: wrap; }
+  .accent-demo:last-child { border-bottom: none; }
+  .accent-demo .plus { color: var(--muted); font-size: 0.8rem; }
+  .accent-demo .arrow { color: var(--amber); font-weight: 700; }
+  .accent-demo .result { font-weight: 700; color: var(--coral-dark); font-size: 1rem; }
+  .accent-demo .ru { color: var(--muted); font-size: 0.78rem; margin-left: auto; }
+  .accent-box { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 0.8rem; }
+
+  .footer { margin-top: 2.5rem; text-align: center; font-size: 0.74rem; color: var(--muted); }
+  .footer span { color: var(--blue-mid); font-weight: 700; }
+
+  @media (max-width: 620px) {
+    .compare-grid, .keyword-grid, .conj-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+    .tab-btn span.label { display: none; }
+    .ex-badge { writing-mode: horizontal-tb; font-size: 0.52rem; padding: 4px 5px; }
+    .accent-demo .ru { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-flag">🇪🇸</div>
+  <h1>Imperativo <span>&</span> Pronombres</h1>
+  <p>Утвердительный и отрицательный императив + позиция местоимений и правила ударения — с нуля до автоматизма</p>
+</div>
+
+<div class="wrapper">
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('afirm', this)"><span class="num">1</span><span class="label">Afirm.</span></button>
+    <button class="tab-btn" onclick="showTab('negat', this)"><span class="num">2</span><span class="label">Negat.</span></button>
+    <button class="tab-btn" onclick="showTab('pron', this)"><span class="num">3</span><span class="label">Место</span></button>
+    <button class="tab-btn" onclick="showTab('acento', this)"><span class="num">4</span><span class="label">Ударен.</span></button>
+    <button class="tab-btn" onclick="showTab('reflex', this)"><span class="num">5</span><span class="label">Refl.</span></button>
+    <button class="tab-btn" onclick="showTab('chuleta', this)"><span class="num">6</span><span class="label">Шпора</span></button>
+  </div>
+
+  <!-- TAB 1: AFIRMATIVO -->
+  <div id="afirm" class="tab-section active">
+    <div class="section-intro">Утвердительный императив используется для просьб, приказов и советов в положительной форме: «сделай», «купи», «садитесь».</div>
+
+    <div class="rule-box">
+      <strong>tú</strong> — берём форму <em>él/ella</em> в Presente de Indicativo (без -s). <strong>usted / ustedes / nosotros</strong> — берём соответствующую форму Subjuntivo Presente. <strong>vosotros</strong> — инфинитив, меняем финальную <strong>-r</strong> на <strong>-d</strong>.
+    </div>
+
+    <div class="conj-grid" style="margin-top:1.2rem">
+      <div class="conj-card c-ar">
+        <div class="conj-header"><div class="conj-verb">hablar</div><div class="conj-type type-ar">-ar</div></div>
+        <div class="conj-forms">
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">habla</span></div>
+          <div class="form-row"><span class="form-pron">usted</span><span class="form-word">hable</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">hablemos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">hablad</span></div>
+          <div class="form-row"><span class="form-pron">ustedes</span><span class="form-word">hablen</span></div>
+        </div>
+      </div>
+      <div class="conj-card c-er">
+        <div class="conj-header"><div class="conj-verb">comer</div><div class="conj-type type-er">-er</div></div>
+        <div class="conj-forms">
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">come</span></div>
+          <div class="form-row"><span class="form-pron">usted</span><span class="form-word">coma</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">comamos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">comed</span></div>
+          <div class="form-row"><span class="form-pron">ustedes</span><span class="form-word">coman</span></div>
+        </div>
+      </div>
+      <div class="conj-card c-ir">
+        <div class="conj-header"><div class="conj-verb">vivir</div><div class="conj-type type-ir">-ir</div></div>
+        <div class="conj-forms">
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">vive</span></div>
+          <div class="form-row"><span class="form-pron">usted</span><span class="form-word">viva</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">vivamos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">vivid</span></div>
+          <div class="form-row"><span class="form-pron">ustedes</span><span class="form-word">vivan</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box amber-b">
+      <strong>Важно:</strong> только формы <em>tú</em> и <em>vosotros</em> в утвердительном императиве — «свои», отдельные от subjuntivo. Формы <em>usted, ustedes, nosotros</em> — это просто subjuntivo presente без «que».
+    </div>
+
+    <div class="stem-group-title">8 неправильных форм tú (наизусть!)</div>
+    <table class="irreg-table">
+      <thead><tr><th>Инфинитив</th><th>tú (afirm.)</th><th>Инфинитив</th><th>tú (afirm.)</th></tr></thead>
+      <tbody>
+        <tr><td>decir</td><td>di</td><td>salir</td><td>sal</td></tr>
+        <tr><td>hacer</td><td>haz</td><td>ser</td><td>sé</td></tr>
+        <tr><td>ir</td><td>ve</td><td>tener</td><td>ten</td></tr>
+        <tr><td>poner</td><td>pon</td><td>venir</td><td>ven</td></tr>
+      </tbody>
+    </table>
+    <div class="rule-box coral-b">
+      <strong>Мнемоника:</strong> «Di Haz Ve Pon Sal Sé Ten Ven» — можно превратить в короткую фразу-считалку, чтобы запомнить все 8 сразу. Формы usted/ustedes/nosotros/vosotros этих же глаголов — полностью регулярные (по subjuntivo или -d).
+    </div>
+
+    <div class="stem-group-title">Изменение корня (только tú, usted, ustedes — как в indicativo/subjuntivo)</div>
+    <table class="irreg-table">
+      <thead><tr><th>Инфинитив</th><th>tú</th><th>usted</th><th>nosotros</th><th>ustedes</th></tr></thead>
+      <tbody>
+        <tr><td>cerrar <span class="irreg-note">e→ie</span></td><td>cierra</td><td>cierre</td><td>cerremos</td><td>cierren</td></tr>
+        <tr><td>volver <span class="irreg-note">o→ue</span></td><td>vuelve</td><td>vuelva</td><td>volvamos</td><td>vuelvan</td></tr>
+        <tr><td>pedir <span class="irreg-note">e→i</span></td><td>pide</td><td>pida</td><td>pidamos</td><td>pidan</td></tr>
+        <tr><td>dormir <span class="irreg-note">o→ue/u</span></td><td>duerme</td><td>duerma</td><td>durmamos</td><td>duerman</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB 2: NEGATIVO -->
+  <div id="negat" class="tab-section">
+    <div class="section-intro">Отрицательный императив всегда и без исключений строится по одной формуле — даже для tú!</div>
+
+    <div class="compare-grid">
+      <div class="tense-card blue">
+        <div class="tc-label">Формула</div>
+        <div class="tc-name">no + Subjuntivo</div>
+        <div class="formula">для ВСЕХ лиц</div>
+        <p>В отличие от утвердительной формы, у отрицательного императива нет отдельных «своих» форм — просто отрицание + subjuntivo presente.</p>
+      </div>
+      <div class="tense-card amber">
+        <div class="tc-label">Значит</div>
+        <div class="tc-name">tú ≠ tú</div>
+        <div class="formula">разные основы</div>
+        <p>Форма tú в утвердительном и отрицательном императиве — почти всегда РАЗНЫЕ слова: <em>habla</em> → <em>no hables</em>.</p>
+      </div>
+    </div>
+
+    <table class="irreg-table">
+      <thead><tr><th>Лицо</th><th>hablar</th><th>comer</th><th>vivir</th></tr></thead>
+      <tbody>
+        <tr><td>tú</td><td>no hables</td><td>no comas</td><td>no vivas</td></tr>
+        <tr><td>usted</td><td>no hable</td><td>no coma</td><td>no viva</td></tr>
+        <tr><td>nosotros</td><td>no hablemos</td><td>no comamos</td><td>no vivamos</td></tr>
+        <tr><td>vosotros</td><td>no habléis</td><td>no comáis</td><td>no viváis</td></tr>
+        <tr><td>ustedes</td><td>no hablen</td><td>no coman</td><td>no vivan</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-box">
+      <strong>Практика:</strong> раз это subjuntivo — все неправильные основы subjuntivo (ser→sea, ir→vaya, tener→tenga, saber→sepa и т.д.) автоматически переходят и в отрицательный императив: <em>no seas</em>, <em>no vayas</em>, <em>no tengas</em>, <em>no sepas</em>.
+    </div>
+    <div class="rule-box teal-b">
+      <strong>Примера:</strong> Córtate la melena → <strong>No te la cortes</strong>. Cómprate una lavadora → <strong>No te la compres</strong>. Обе формы — субхунтиво (cortes, compres), а не императив-«свой».
+    </div>
+  </div>
+
+  <!-- TAB 3: PRONOMBRES — MESTO -->
+  <div id="pron" class="tab-section">
+    <div class="section-intro">Самое частое место ошибок: местоимение «прилипает» к глаголу или стоит отдельно — в зависимости от типа императива.</div>
+
+    <div class="compare-grid">
+      <div class="tense-card blue">
+        <div class="tc-label">Afirmativo</div>
+        <div class="tc-name">после глагола</div>
+        <div class="formula">глагол + местоимение = 1 слово</div>
+        <p>Cómpra<strong>la</strong>. Díme<strong>lo</strong>. Sentaos.</p>
+      </div>
+      <div class="tense-card amber">
+        <div class="tc-label">Negativo</div>
+        <div class="tc-name">перед глаголом</div>
+        <div class="formula">no + местоимение + глагол</div>
+        <p>No <strong>la</strong> compres. No <strong>me</strong> lo digas. No os sentéis.</p>
+      </div>
+    </div>
+
+    <div class="stem-group-title">Порядок двух местоимений: сначала косвенное, потом прямое</div>
+    <div class="rule-box purple-b">
+      Правило <strong>«RID»</strong> (Reflexivo → Indirecto → Directo): если местоимений два, сначала идёт возвратное/косвенное (me, te, se, nos, os, le→se), потом прямое (lo, la, los, las).
+    </div>
+    <div class="examples-box">
+      <div class="ex-row">
+        <div class="ex-badge b">2 PRON</div>
+        <div class="ex-sp">Dame el libro → <span class="hl">Dá</span>me<span class="hl">lo</span>.</div>
+        <div class="ex-ru">Дай мне это (косвенное + прямое).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">LE→SE</div>
+        <div class="ex-sp">Dile la verdad a él → <span class="hl a">Dí</span>selo.</div>
+        <div class="ex-ru">le + lo → se lo (никогда «lelo»!).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">2 PRON</div>
+        <div class="ex-sp">Ponte el jersey → <span class="hl">Pón</span>telo.</div>
+        <div class="ex-ru">te (возвратное) + lo (прямое).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">se lo</span> digas.</div>
+        <div class="ex-ru">В отрицательной форме местоимения тоже идут в этом порядке, но перед глаголом.</div>
+      </div>
+    </div>
+
+    <div class="rule-box coral-b">
+      <strong>Золотое правило «le/les → se»:</strong> перед lo, la, los, las местоимения le и les ВСЕГДА превращаются в se. Pídeselo (не «pídelelo»), Dáselas (не «dálelas»).
+    </div>
+  </div>
+
+  <!-- TAB 4: УДАРЕНИЕ -->
+  <div id="acento" class="tab-section">
+    <div class="section-intro">Когда местоимение приклеивается к утвердительному императиву, слово удлиняется — и ударение часто нужно «спасать» письменным акцентом.</div>
+
+    <div class="rule-box">
+      <strong>Логика:</strong> испанское слово, оканчивающееся на гласную, -n или -s, по умолчанию ударяется на предпоследний слог. Когда мы приклеиваем местоимение(-я), исходное ударение глагола должно <strong>остаться на том же месте</strong> — если по правилу оно там уже не «предпоследнее», ставим тильду.
+    </div>
+
+    <div class="stem-group-title">1 местоимение + односложная форма tú → обычно БЕЗ тильды</div>
+    <div class="accent-box">
+      <div class="accent-demo"><span>da</span><span class="plus">+</span><span>me</span><span class="arrow">→</span><span class="result">dame</span><span class="ru">дай мне</span></div>
+      <div class="accent-demo"><span>haz</span><span class="plus">+</span><span>lo</span><span class="arrow">→</span><span class="result">hazlo</span><span class="ru">сделай это</span></div>
+      <div class="accent-demo"><span>pon</span><span class="plus">+</span><span>te</span><span class="arrow">→</span><span class="result">ponte</span><span class="ru">надень (на себя)</span></div>
+      <div class="accent-demo"><span>di</span><span class="plus">+</span><span>le</span><span class="arrow">→</span><span class="result">dile</span><span class="ru">скажи ему</span></div>
+    </div>
+
+    <div class="stem-group-title">1 местоимение + форма из 2+ слогов (compra, coma, venda...) → С тильдой</div>
+    <div class="accent-box">
+      <div class="accent-demo"><span>compra</span><span class="plus">+</span><span>lo</span><span class="arrow">→</span><span class="result">cómpralo</span><span class="ru">купи это</span></div>
+      <div class="accent-demo"><span>escribe</span><span class="plus">+</span><span>me</span><span class="arrow">→</span><span class="result">escríbeme</span><span class="ru">напиши мне</span></div>
+      <div class="accent-demo"><span>abre</span><span class="plus">+</span><span>la</span><span class="arrow">→</span><span class="result">ábrela</span><span class="ru">открой её</span></div>
+      <div class="accent-demo"><span>diga</span><span class="plus">+</span><span>lo</span><span class="arrow">→</span><span class="result">dígalo</span><span class="ru">скажите это (usted)</span></div>
+      <div class="accent-demo"><span>quita</span><span class="plus">+</span><span>los</span><span class="arrow">→</span><span class="result">quítalos</span><span class="ru">убери их (из фото!)</span></div>
+    </div>
+
+    <div class="stem-group-title">2 местоимения → тильда почти всегда, даже с моносложной формой</div>
+    <div class="accent-box">
+      <div class="accent-demo"><span>da</span><span class="plus">+</span><span>me + lo</span><span class="arrow">→</span><span class="result">dámelo</span><span class="ru">дай мне это</span></div>
+      <div class="accent-demo"><span>di</span><span class="plus">+</span><span>se + lo</span><span class="arrow">→</span><span class="result">díselo</span><span class="ru">скажи ему это</span></div>
+      <div class="accent-demo"><span>pon</span><span class="plus">+</span><span>te + lo</span><span class="arrow">→</span><span class="result">póntelo</span><span class="ru">надень это (на себя)</span></div>
+      <div class="accent-demo"><span>compra</span><span class="plus">+</span><span>te + lo</span><span class="arrow">→</span><span class="result">cómpratelo</span><span class="ru">купи это себе</span></div>
+    </div>
+
+    <div class="rule-box amber-b">
+      <strong>Отрицательный императив — проще:</strong> местоимения отдельно перед глаголом, форма subjuntivo сохраняет свои обычные правила ударения без изменений: no me lo digas, no te lo pongas, no se los des.
+    </div>
+  </div>
+
+  <!-- TAB 5: REFLEXIVOS -->
+  <div id="reflex" class="tab-section">
+    <div class="section-intro">Возвратные глаголы (levantarse, sentarse, irse...) в утвердительном императиве теряют одну букву перед -nos и -os.</div>
+
+    <table class="irreg-table">
+      <thead><tr><th>Лицо</th><th>Правило</th><th>levantarse</th><th>sentarse</th></tr></thead>
+      <tbody>
+        <tr><td>tú</td><td>без изменений</td><td>levántate</td><td>siéntate</td></tr>
+        <tr><td>usted</td><td>без изменений</td><td>levántese</td><td>siéntese</td></tr>
+        <tr><td>nosotros</td><td>-mos + nos → теряем -s</td><td>levantémonos</td><td>sentémonos</td></tr>
+        <tr><td>vosotros</td><td>-d + os → теряем -d</td><td>levantaos</td><td>sentaos</td></tr>
+        <tr><td>ustedes</td><td>без изменений</td><td>levántense</td><td>siéntense</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-box coral-b">
+      <strong>Исключение №1 — irse:</strong> nosotros берёт не «vayámonos», а разговорную форму <strong>vámonos</strong> (пойдём/пошли). Это единственный такой случай.
+    </div>
+    <div class="rule-box coral-b">
+      <strong>Исключение №2 — irse:</strong> vosotros вместо ожидаемого «íos» (по правилу id+os) использует особую форму <strong>idos</strong> — единственный vosotros, где -d не выпадает.
+    </div>
+    <div class="rule-box purple-b">
+      <strong>Ударение сохраняется:</strong> в nosotros после потери -s почти всегда нужна тильда (levantémonos, sentémonos, vámonos), потому что слово стало длиннее, а ударение должно остаться на прежнем слоге.
+    </div>
+
+    <div class="stem-group-title">Отрицательная форма возвратных — как обычно, местоимение перед глаголом</div>
+    <div class="examples-box">
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Levánta<span class="hl">te</span>.</div>
+        <div class="ex-ru">Встань.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">te</span> levantes.</div>
+        <div class="ex-ru">Не вставай.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Queda<span class="hl">os</span> con nosotros.</div>
+        <div class="ex-ru">Оставайтесь с нами (vosotros).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">os</span> quedéis con ellos.</div>
+        <div class="ex-ru">Не оставайтесь с ними.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: ШПАРГАЛКА -->
+  <div id="chuleta" class="tab-section">
+    <div class="section-intro">Разбор точно таких же примеров, как в упражнении с карточками «Alumno A / Alumno B».</div>
+
+    <div class="examples-box">
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Cómpra<span class="hl">te</span> una lavadora.</div>
+        <div class="ex-ru">Купи себе стиральную машину.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">te la</span> compres.</div>
+        <div class="ex-ru">Не покупай её себе.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Pídele las llaves a tu padre.</div>
+        <div class="ex-ru">Попроси у отца ключи.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">se las</span> pidas.</div>
+        <div class="ex-ru">Не проси их у него. (le→se, las = ключи)</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Haz mucho ruido.</div>
+        <div class="ex-ru">Делай много шума.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">hagas</span> mucho.</div>
+        <div class="ex-ru">Не делай много. (нет прямого доп. местоимения — «ruido» не заменяется)</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Tira la basura.</div>
+        <div class="ex-ru">Выброси мусор.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">la</span> tires.</div>
+        <div class="ex-ru">Не выбрасывай его (её).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Ponle más sal a la salsa.</div>
+        <div class="ex-ru">Положи больше соли в соус.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">le</span> pongas más.</div>
+        <div class="ex-ru">Не клади больше (le остаётся le, т.к. дальше нет lo/la/los/las).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Queda<span class="hl">te</span> con tus amigos.</div>
+        <div class="ex-ru">Останься со своими друзьями.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">te</span> quedes con ellos.</div>
+        <div class="ex-ru">Не оставайся с ними. (возвратное «te» нельзя терять!)</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Ponte este queso en la pasta.</div>
+        <div class="ex-ru">Положи себе этот сыр в пасту.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">te lo</span> pongas.</div>
+        <div class="ex-ru">Не клади его себе.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">AFIRM</div>
+        <div class="ex-sp">Quíta<span class="hl">los</span> de la mesa.</div>
+        <div class="ex-ru">Убери их со стола (los pies).</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">NEG</div>
+        <div class="ex-sp">No <span class="hl a">los</span> quites de ahí.</div>
+        <div class="ex-ru">Не убирай их оттуда.</div>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      <strong>Чеклист перед ответом:</strong> 1) утвердительно или отрицательно? → выбираю форму глагола. 2) есть ли возвратное «se» у глагола (ponerse, quedarse...) → не забыть его как местоимение. 3) есть ли прямое дополнение (что?) → заменяю на lo/la/los/las. 4) есть ли косвенное (кому?) → me/te/le→se/nos/os/les→se, ставлю ПЕРЕД прямым. 5) утвердительная форма — приклеиваю и проверяю тильду.
+    </div>
+  </div>
+
+  <div class="footer">Создано <span>PandaGroup</span> · Imperativo & Pronombres · Nivel B1</div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

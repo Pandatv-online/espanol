@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанские времена — Perfecto vs Indefinido</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark:   #0D2B4E;
+    --blue-mid:    #1A4F8A;
+    --blue-light:  #3A7FCC;
+    --blue-pale:   #D6E8FA;
+    --amber:       #E8A020;
+    --amber-light: #FEF3DA;
+    --amber-dark:  #7A4800;
+    --teal:        #0E7A6A;
+    --teal-light:  #D4F0EB;
+    --teal-dark:   #063D34;
+    --coral:       #C94040;
+    --coral-light: #FAE5E5;
+    --coral-dark:  #6B1A1A;
+    --bg:          #F5F0E8;
+    --paper:       #FFFDF8;
+    --ink:         #1A1510;
+    --muted:       #6B6258;
+    --border:      #D8CFC0;
+  }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  .hero {
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent 0px, transparent 18px,
+      rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 20px
+    );
+  }
+  .hero-flag {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1.15;
+    position: relative;
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 span { color: var(--amber); }
+  .hero p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.6);
+    position: relative;
+    font-weight: 300;
+  }
+
+  /* ─── LAYOUT ─── */
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    border-bottom: 2px solid var(--blue-light);
+    padding-bottom: 6px;
+    margin: 2.5rem 0 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-heading .num {
+    background: var(--blue-dark);
+    color: #fff;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ─── COMPARISON CARDS ─── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 1.5rem;
+  }
+  .tense-card {
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem;
+    border: 1.5px solid transparent;
+  }
+  .tense-card.blue {
+    background: var(--blue-dark);
+    border-color: var(--blue-mid);
+    color: #fff;
+  }
+  .tense-card.amber {
+    background: var(--amber-light);
+    border-color: var(--amber);
+    color: var(--ink);
+  }
+  .tense-card .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.65;
+    margin-bottom: 2px;
+  }
+  .tense-card .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .tense-card.blue .name { color: var(--amber); }
+  .tense-card.amber .name { color: var(--amber-dark); }
+  .tense-card .formula {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: 'Noto Sans', sans-serif;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .tense-card.blue .formula { background: rgba(255,255,255,0.15); color: #fff; }
+  .tense-card.amber .formula { background: var(--amber); color: var(--amber-dark); }
+  .tense-card p { font-size: 0.88rem; line-height: 1.55; }
+  .tense-card.blue p { color: rgba(255,255,255,0.82); }
+  .tense-card.amber p { color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .tag {
+    font-size: 0.75rem;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .tense-card.blue .tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); }
+  .tense-card.amber .tag { background: rgba(232,160,32,0.25); color: var(--amber-dark); }
+
+  /* ─── DIFF TABLE ─── */
+  .diff-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.88rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .diff-table th {
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-align: left;
+  }
+  .diff-table th:first-child { background: var(--bg); color: var(--muted); }
+  .diff-table th:nth-child(2) { background: var(--blue-dark); color: var(--amber); }
+  .diff-table th:nth-child(3) { background: var(--amber); color: var(--amber-dark); }
+  .diff-table td { padding: 10px 14px; vertical-align: top; border-top: 1px solid var(--border); }
+  .diff-table tr:nth-child(even) td { background: rgba(0,0,0,0.025); }
+  .diff-table td:first-child { font-weight: 500; color: var(--muted); font-size: 0.82rem; }
+
+  /* ─── EXAMPLES ─── */
+  .examples-box {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .ex-row {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    align-items: stretch;
+  }
+  .ex-row:last-child { border-bottom: none; }
+  .ex-badge {
+    writing-mode: vertical-lr;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 12px 5px;
+    text-align: center;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ex-badge.b { background: var(--blue-dark); color: var(--amber); }
+  .ex-badge.a { background: var(--amber); color: var(--amber-dark); }
+  .ex-sp {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .ex-sp .hl { color: var(--blue-light); }
+  .ex-sp .hl.a { color: var(--amber-dark); }
+  .ex-ru {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex; align-items: center;
+  }
+
+  /* ─── CONJUGATION ─── */
+  .conj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .conj-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .conj-header {
+    padding: 10px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .conj-header .verb { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+  .conj-header .type { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 20px; }
+
+  .conj-section { padding: 8px 14px; border-top: 1px solid var(--border); }
+  .conj-section-title {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 5px 0 4px;
+  }
+  .conj-section.s-perf .conj-section-title { color: var(--blue-mid); }
+  .conj-section.s-indef .conj-section-title { color: var(--amber-dark); }
+  .form-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 0.8rem; }
+  .form-row .pron { color: var(--muted); }
+  .form-row .word { font-weight: 600; }
+  .s-perf .form-row .word { color: var(--blue-mid); }
+  .s-indef .form-row .word { color: var(--amber-dark); }
+
+  .conj-ar { border-top: 3px solid var(--teal); }
+  .conj-er { border-top: 3px solid var(--blue-mid); }
+  .conj-ir { border-top: 3px solid var(--coral); }
+  .type-ar { background: var(--teal-light); color: var(--teal-dark); }
+  .type-er { background: var(--blue-pale); color: var(--blue-dark); }
+  .type-ir { background: var(--coral-light); color: var(--coral-dark); }
+  .ch-ar { background: var(--teal); color: #fff; }
+  .ch-er { background: var(--blue-mid); color: #fff; }
+  .ch-ir { background: var(--coral); color: #fff; }
+
+  /* ─── IRREGULAR TABLE ─── */
+  .irreg-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.85rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .irreg-table th {
+    background: var(--blue-dark);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 9px 13px;
+    text-align: left;
+  }
+  .irreg-table th:first-child { color: var(--amber); }
+  .irreg-table td { padding: 9px 13px; border-top: 1px solid var(--border); }
+  .irreg-table tr:nth-child(even) td { background: var(--bg); }
+  .irreg-table td:first-child { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--blue-mid); font-size: 0.9rem; }
+  .irreg-table td:not(:first-child) { font-weight: 600; color: var(--amber-dark); }
+  .irreg-table .note { font-size: 0.72rem; color: var(--muted); font-weight: 400; font-family: 'Noto Sans', sans-serif; }
+
+  /* ─── KEYWORD BOX ─── */
+  .keyword-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 1rem;
+  }
+  .kw-box { border-radius: 12px; padding: 1rem 1.2rem; }
+  .kw-box.blue { background: var(--blue-dark); color: #fff; }
+  .kw-box.amber { background: var(--amber-light); border: 1.5px solid var(--amber); }
+  .kw-box .kw-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .kw-box.blue .kw-title { color: var(--amber); }
+  .kw-box.amber .kw-title { color: var(--amber-dark); }
+  .kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw-tag { font-size: 0.8rem; font-weight: 600; padding: 4px 11px; border-radius: 20px; font-style: italic; }
+  .kw-box.blue .kw-tag { background: rgba(255,255,255,0.13); color: #fff; }
+  .kw-box.amber .kw-tag { background: rgba(232,160,32,0.22); color: var(--amber-dark); }
+
+  /* ─── RULE CARDS ─── */
+  .rule-box {
+    background: var(--paper);
+    border-left: 4px solid var(--blue-light);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.2rem;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .rule-box strong { color: var(--blue-dark); }
+  .rule-box.amber-border { border-left-color: var(--amber); }
+  .rule-box.amber-border strong { color: var(--amber-dark); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding-bottom: 2rem;
+  }
+  .footer span { color: var(--blue-mid); font-weight: 700; }
+
+  @media (max-width: 620px) {
+    .compare-grid, .keyword-grid, .conj-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.6rem; }
+    .ex-badge { writing-mode: horizontal-tb; font-size: 0.55rem; padding: 4px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-flag">🇪🇸</div>
+  <h1>Perfecto <span>vs</span> Indefinido</h1>
+  <p>Прошедшие времена испанского языка — справочник с примерами и спряжением</p>
+</div>
+
+<div class="wrapper">
+
+  <!-- SECTION 1 -->
+  <div class="section-heading"><span class="num">1</span> Два прошедших времени</div>
+
+  <div class="compare-grid">
+    <div class="tense-card blue">
+      <div class="label">Претерито</div>
+      <div class="name">Perfecto</div>
+      <div class="formula">haber (presente) + participio</div>
+      <p>Действие в прошлом, связанное с настоящим. Период ещё не завершён или результат ощущается сейчас.</p>
+      <div class="tags">
+        <span class="tag">hoy</span>
+        <span class="tag">esta semana</span>
+        <span class="tag">este año</span>
+        <span class="tag">ya</span>
+        <span class="tag">todavía no</span>
+        <span class="tag">alguna vez</span>
+        <span class="tag">nunca</span>
+        <span class="tag">últimamente</span>
+      </div>
+    </div>
+    <div class="tense-card amber">
+      <div class="label">Претерито</div>
+      <div class="name">Indefinido</div>
+      <div class="formula">собственные окончания</div>
+      <p>Завершённое действие в прошлом, отдалённое от настоящего. Конкретный момент или период в прошлом.</p>
+      <div class="tags">
+        <span class="tag">ayer</span>
+        <span class="tag">el año pasado</span>
+        <span class="tag">en 2010</span>
+        <span class="tag">hace 3 días</span>
+        <span class="tag">aquella vez</span>
+        <span class="tag">de repente</span>
+        <span class="tag">entonces</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-heading"><span class="num">2</span> Сравнение</div>
+
+  <table class="diff-table">
+    <thead>
+      <tr>
+        <th>Критерий</th>
+        <th>Perfecto</th>
+        <th>Indefinido</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Связь с настоящим</td>
+        <td>Есть — результат важен сейчас</td>
+        <td>Нет — действие полностью в прошлом</td>
+      </tr>
+      <tr>
+        <td>Временной период</td>
+        <td>Незавершённый (сегодня, эта неделя)</td>
+        <td>Завершённый (вчера, в прошлом году)</td>
+      </tr>
+      <tr>
+        <td>Образование</td>
+        <td>he / has / ha / hemos / habéis / han + participio</td>
+        <td>Свои окончания: -é, -aste, -ó / -í, -iste, -ió</td>
+      </tr>
+      <tr>
+        <td>Вопрос</td>
+        <td>Что ты сделал сегодня / в жизни?</td>
+        <td>Что случилось тогда?</td>
+      </tr>
+      <tr>
+        <td>Пример сигнала</td>
+        <td><em>Esta semana</em> he trabajado mucho.</td>
+        <td><em>El año pasado</em> trabajé mucho.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <div class="section-heading"><span class="num">3</span> Примеры — попарно</div>
+
+  <div class="examples-box">
+    <div class="ex-row">
+      <div class="ex-badge b">P</div>
+      <div class="ex-sp"><span class="hl">He comido</span>&nbsp;hoy.</div>
+      <div class="ex-ru">Я поел сегодня. <em>(сегодня ещё длится)</em></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge a">I</div>
+      <div class="ex-sp"><span class="hl a">Comí</span>&nbsp;ayer.</div>
+      <div class="ex-ru">Я поел вчера. <em>(вчера уже прошло)</em></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge b">P</div>
+      <div class="ex-sp"><span class="hl">¿Has estado</span>&nbsp;en Madrid?</div>
+      <div class="ex-ru">Ты когда-нибудь был в Мадриде?</div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge a">I</div>
+      <div class="ex-sp"><span class="hl a">Estuve</span>&nbsp;en Madrid en 2015.</div>
+      <div class="ex-ru">Я был в Мадриде в 2015 году.</div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge b">P</div>
+      <div class="ex-sp">Este mes <span class="hl">he trabajado</span>&nbsp;mucho.</div>
+      <div class="ex-ru">В этом месяце я много работал. <em>(месяц не кончился)</em></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge a">I</div>
+      <div class="ex-sp">El año pasado <span class="hl a">trabajé</span>&nbsp;mucho.</div>
+      <div class="ex-ru">В прошлом году я много работал. <em>(год завершён)</em></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge b">P</div>
+      <div class="ex-sp">Hoy <span class="hl">he visto</span>&nbsp;a María.</div>
+      <div class="ex-ru">Сегодня я видел Марию.</div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-badge a">I</div>
+      <div class="ex-sp">Ayer <span class="hl a">vi</span>&nbsp;a María.</div>
+      <div class="ex-ru">Вчера я видел Марию.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-heading"><span class="num">4</span> Спряжение правильных глаголов</div>
+
+  <div class="conj-grid">
+    <!-- hablar -->
+    <div class="conj-card conj-ar">
+      <div class="conj-header">
+        <div class="verb">hablar</div>
+        <div class="type type-ar">-ar</div>
+      </div>
+      <div class="conj-section s-perf">
+        <div class="conj-section-title">Perfecto</div>
+        <div class="form-row"><span class="pron">yo</span><span class="word">he hablado</span></div>
+        <div class="form-row"><span class="pron">tú</span><span class="word">has hablado</span></div>
+        <div class="form-row"><span class="pron">él/ella</span><span class="word">ha hablado</span></div>
+        <div class="form-row"><span class="pron">nosotros</span><span class="word">hemos hablado</span></div>
+        <div class="form-row"><span class="pron">vosotros</span><span class="word">habéis hablado</span></div>
+        <div class="form-row"><span class="pron">ellos</span><span class="word">han hablado</span></div>
+      </div>
+      <div class="conj-section s-indef">
+        <div class="conj-section-title">Indefinido</div>
+        <div class="form-row"><span class="pron">yo</span><span class="word">hablé</span></div>
+        <div class="form-row"><span class="pron">tú</span><span class="word">hablaste</span></div>
+        <div class="form-row"><span class="pron">él/ella</span><span class="word">habló</span></div>
+        <div class="form-row"><span class="pron">nosotros</span><span class="word">hablamos</span></div>
+        <div class="form-row"><span class="pron">vosotros</span><span class="word">hablasteis</span></div>
+        <div class="form-row"><span class="pron">ellos</span><span class="word">hablaron</span></div>
+      </div>
+    </div>
+    <!-- comer -->
+    <div class="conj-card conj-er">
+      <div class="conj-header">
+        <div class="verb">comer</div>
+        <div class="type type-er">-er</div>
+      </div>
+      <div class="conj-section s-perf">
+        <div class="conj-section-title">Perfecto</div>
+        <div class="form-row"><span class="pron">yo</span><span class="word">he comido</span></div>
+        <div class="form-row"><span class="pron">tú</span><span class="word">has comido</span></div>
+        <div class="form-row"><span class="pron">él/ella</span><span class="word">ha comido</span></div>
+        <div class="form-row"><span class="pron">nosotros</span><span class="word">hemos comido</span></div>
+        <div class="form-row"><span class="pron">vosotros</span><span class="word">habéis comido</span></div>
+        <div class="form-row"><span class="pron">ellos</span><span class="word">han comido</span></div>
+      </div>
+      <div class="conj-section s-indef">
+        <div class="conj-section-title">Indefinido</div>
+        <div class="form-row"><span class="pron">yo</span><span class="word">comí</span></div>
+        <div class="form-row"><span class="pron">tú</span><span class="word">comiste</span></div>
+        <div class="form-row"><span class="pron">él/ella</span><span class="word">comió</span></div>
+        <div class="form-row"><span class="pron">nosotros</span><span class="word">comimos</span></div>
+        <div class="form-row"><span class="pron">vosotros</span><span class="word">comisteis</span></div>
+        <div class="form-row"><span class="pron">ellos</span><span class="word">comieron</span></div>
+      </div>
+    </div>
+    <!-- vivir -->
+    <div class="conj-card conj-ir">
+      <div class="conj-header">
+        <div class="verb">vivir</div>
+        <div class="type type-ir">-ir</div>
+      </div>
+      <div class="conj-section s-perf">
+        <div class="conj-section-title">Perfecto</div>
+        <div class="form-row"><span class="pron">yo</span><span class="word">he vivido</span></div>
+        <div class="form-row"><span class="pron">tú</span><span class="word">has vivido</span></div>
+        <div class="form-row"><span class="pron">él/ella</span><span class="word">ha vivido</span></div>
+        <div class="form-row"><span class="pron">nosotros</span><span class="word">hemos vivido</span></div>
+        <div class="form-row"><span class="pron">vosotros</span><span class="word">habéis vivido</span></div>
+        <div class="form-row"><span class="pron">ellos</span><span class="word">han vivido</span></div>
+      </div>
+      <div class="conj-section s-indef">
+        <div class="conj-section-title">Indefinido</div>
+        <div class="form-row"><span class="pron">yo</span><span class="word">viví</span></div>
+        <div class="form-row"><span class="pron">tú</span><span class="word">viviste</span></div>
+        <div class="form-row"><span class="pron">él/ella</span><span class="word">vivió</span></div>
+        <div class="form-row"><span class="pron">nosotros</span><span class="word">vivimos</span></div>
+        <div class="form-row"><span class="pron">vosotros</span><span class="word">vivisteis</span></div>
+        <div class="form-row"><span class="pron">ellos</span><span class="word">vivieron</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <strong>Правило для participio:</strong> -ar глаголы → <strong>-ado</strong> (hablar → hablado), -er/-ir глаголы → <strong>-ido</strong> (comer → comido, vivir → vivido)
+  </div>
+  <div class="rule-box amber-border">
+    <strong>Неправильные participios (важнейшие):</strong> hacer → <strong>hecho</strong> · decir → <strong>dicho</strong> · ver → <strong>visto</strong> · volver → <strong>vuelto</strong> · poner → <strong>puesto</strong> · escribir → <strong>escrito</strong> · abrir → <strong>abierto</strong> · romper → <strong>roto</strong>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section-heading"><span class="num">5</span> Неправильные глаголы в Indefinido</div>
+
+  <table class="irreg-table">
+    <thead>
+      <tr>
+        <th>Инфинитив</th>
+        <th>yo</th>
+        <th>tú</th>
+        <th>él / ella</th>
+        <th>nosotros</th>
+        <th>ellos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ser / ir <span class="note">(одинаковые!)</span></td>
+        <td>fui</td><td>fuiste</td><td>fue</td><td>fuimos</td><td>fueron</td>
+      </tr>
+      <tr>
+        <td>tener</td>
+        <td>tuve</td><td>tuviste</td><td>tuvo</td><td>tuvimos</td><td>tuvieron</td>
+      </tr>
+      <tr>
+        <td>estar</td>
+        <td>estuve</td><td>estuviste</td><td>estuvo</td><td>estuvimos</td><td>estuvieron</td>
+      </tr>
+      <tr>
+        <td>hacer</td>
+        <td>hice</td><td>hiciste</td><td>hizo</td><td>hicimos</td><td>hicieron</td>
+      </tr>
+      <tr>
+        <td>poder</td>
+        <td>pude</td><td>pudiste</td><td>pudo</td><td>pudimos</td><td>pudieron</td>
+      </tr>
+      <tr>
+        <td>querer</td>
+        <td>quise</td><td>quisiste</td><td>quiso</td><td>quisimos</td><td>quisieron</td>
+      </tr>
+      <tr>
+        <td>venir</td>
+        <td>vine</td><td>viniste</td><td>vino</td><td>vinimos</td><td>vinieron</td>
+      </tr>
+      <tr>
+        <td>decir</td>
+        <td>dije</td><td>dijiste</td><td>dijo</td><td>dijimos</td><td>dijeron</td>
+      </tr>
+      <tr>
+        <td>poner</td>
+        <td>puse</td><td>pusiste</td><td>puso</td><td>pusimos</td><td>pusieron</td>
+      </tr>
+      <tr>
+        <td>saber</td>
+        <td>supe</td><td>supiste</td><td>supo</td><td>supimos</td><td>supieron</td>
+      </tr>
+      <tr>
+        <td>dar</td>
+        <td>di</td><td>diste</td><td>dio</td><td>dimos</td><td>dieron</td>
+      </tr>
+      <tr>
+        <td>ver</td>
+        <td>vi</td><td>viste</td><td>vio</td><td>vimos</td><td>vieron</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 6 -->
+  <div class="section-heading"><span class="num">6</span> Слова-маркеры — быстрая шпаргалка</div>
+
+  <div class="keyword-grid">
+    <div class="kw-box blue">
+      <div class="kw-title">🔵 Perfecto — говорят об этом</div>
+      <div class="kw-tags">
+        <span class="kw-tag">hoy</span>
+        <span class="kw-tag">esta mañana</span>
+        <span class="kw-tag">esta semana</span>
+        <span class="kw-tag">este mes</span>
+        <span class="kw-tag">este año</span>
+        <span class="kw-tag">ya</span>
+        <span class="kw-tag">todavía no</span>
+        <span class="kw-tag">alguna vez</span>
+        <span class="kw-tag">nunca</span>
+        <span class="kw-tag">siempre</span>
+        <span class="kw-tag">últimamente</span>
+        <span class="kw-tag">recientemente</span>
+      </div>
+    </div>
+    <div class="kw-box amber">
+      <div class="kw-title">🟡 Indefinido — говорят об этом</div>
+      <div class="kw-tags">
+        <span class="kw-tag">ayer</span>
+        <span class="kw-tag">anteayer</span>
+        <span class="kw-tag">el lunes</span>
+        <span class="kw-tag">la semana pasada</span>
+        <span class="kw-tag">el mes pasado</span>
+        <span class="kw-tag">el año pasado</span>
+        <span class="kw-tag">en 2010</span>
+        <span class="kw-tag">hace 3 días</span>
+        <span class="kw-tag">entonces</span>
+        <span class="kw-tag">de repente</span>
+        <span class="kw-tag">aquella vez</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Создано <span>PandaGroup</span> · <a href="https://t.me/espanolconamigos">@espanolconamigos</a></a> · Pretérito Perfecto &amp; Indefinido
+  </div>
+
+</div>
+</body>
+</html>

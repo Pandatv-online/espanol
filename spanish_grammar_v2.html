@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанские времена — Perfecto vs Indefinido</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark:   #0D2B4E;
+    --blue-mid:    #1A4F8A;
+    --blue-light:  #3A7FCC;
+    --blue-pale:   #D6E8FA;
+    --amber:       #E8A020;
+    --amber-light: #FEF3DA;
+    --amber-dark:  #7A4800;
+    --teal:        #0E7A6A;
+    --teal-light:  #D4F0EB;
+    --teal-dark:   #063D34;
+    --coral:       #C94040;
+    --coral-light: #FAE5E5;
+    --coral-dark:  #6B1A1A;
+    --bg:          #F5F0E8;
+    --paper:       #FFFDF8;
+    --ink:         #1A1510;
+    --muted:       #6B6258;
+    --border:      #D8CFC0;
+  }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 2.8rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent 0, transparent 18px, rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 20px);
+  }
+  .hero-flag { font-size: 2rem; margin-bottom: 0.4rem; position: relative; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; line-height: 1.15;
+    position: relative; margin-bottom: 0.3rem;
+  }
+  .hero h1 span { color: var(--amber); }
+  .hero p { font-size: 0.9rem; color: rgba(255,255,255,0.55); position: relative; font-weight: 300; }
+
+  /* ─── TABS NAV ─── */
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+  .tabs-nav {
+    display: flex; gap: 0;
+    background: var(--blue-dark);
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .tab-btn {
+    flex: 1; padding: 12px 8px;
+    background: transparent; border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); background: rgba(255,255,255,0.04); }
+  .tab-btn .num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); font-size: 0.68rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tab-btn.active .num { background: var(--amber); color: var(--blue-dark); }
+
+  /* ─── SECTIONS ─── */
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  /* ─── COMPARE CARDS ─── */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+  .tense-card { border-radius: 14px; padding: 1.4rem 1.3rem; border: 1.5px solid transparent; }
+  .tense-card.blue { background: var(--blue-dark); border-color: var(--blue-mid); color: #fff; }
+  .tense-card.amber { background: var(--amber-light); border-color: var(--amber); color: var(--ink); }
+  .tense-card .tc-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; margin-bottom: 2px; }
+  .tense-card .tc-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
+  .tense-card.blue .tc-name { color: var(--amber); }
+  .tense-card.amber .tc-name { color: var(--amber-dark); }
+  .tense-card .formula { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .tense-card.blue .formula { background: rgba(255,255,255,0.13); color: #fff; }
+  .tense-card.amber .formula { background: var(--amber); color: var(--amber-dark); }
+  .tense-card p { font-size: 0.87rem; line-height: 1.55; }
+  .tense-card.blue p { color: rgba(255,255,255,0.8); }
+  .tense-card.amber p { color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .tag { font-size: 0.74rem; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .tense-card.blue .tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); }
+  .tense-card.amber .tag { background: rgba(232,160,32,0.25); color: var(--amber-dark); }
+
+  /* ─── DIFF TABLE ─── */
+  .diff-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.87rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .diff-table th { padding: 10px 14px; font-weight: 700; font-size: 0.78rem; text-align: left; }
+  .diff-table th:first-child { background: var(--bg); color: var(--muted); }
+  .diff-table th:nth-child(2) { background: var(--blue-dark); color: var(--amber); }
+  .diff-table th:nth-child(3) { background: var(--amber); color: var(--amber-dark); }
+  .diff-table td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; }
+  .diff-table tr:nth-child(even) td { background: rgba(0,0,0,0.025); }
+  .diff-table td:first-child { font-weight: 500; color: var(--muted); font-size: 0.8rem; }
+
+  /* ─── EXAMPLES ─── */
+  .examples-box { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 1.2rem; }
+  .ex-row { display: grid; grid-template-columns: auto 1fr 1fr; border-bottom: 1px solid var(--border); align-items: stretch; }
+  .ex-row:last-child { border-bottom: none; }
+  .ex-badge { writing-mode: vertical-lr; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; padding: 12px 5px; text-align: center; display: flex; align-items: center; justify-content: center; }
+  .ex-badge.b { background: var(--blue-dark); color: var(--amber); }
+  .ex-badge.a { background: var(--amber); color: var(--amber-dark); }
+  .ex-sp { padding: 10px 14px; font-size: 0.9rem; font-weight: 500; border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .ex-sp .hl { color: var(--blue-light); }
+  .ex-sp .hl.a { color: var(--amber-dark); }
+  .ex-ru { padding: 10px 14px; font-size: 0.84rem; color: var(--muted); display: flex; align-items: center; }
+
+  /* ─── CONJUGATION ─── */
+  .conj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .conj-card { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .conj-card.c-ar { border-top: 3px solid var(--teal); }
+  .conj-card.c-er { border-top: 3px solid var(--blue-mid); }
+  .conj-card.c-ir { border-top: 3px solid var(--coral); }
+  .conj-header { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .conj-verb { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+  .conj-type { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 20px; }
+  .type-ar { background: var(--teal-light); color: var(--teal-dark); }
+  .type-er { background: var(--blue-pale); color: var(--blue-dark); }
+  .type-ir { background: var(--coral-light); color: var(--coral-dark); }
+
+  /* mini tabs inside each conj card */
+  .mini-tabs { display: flex; border-top: 1px solid var(--border); }
+  .mini-tab { flex: 1; padding: 6px 4px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; background: transparent; border: none; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.15s; }
+  .mini-tab.active-blue { color: var(--blue-mid); border-bottom-color: var(--blue-mid); background: var(--blue-pale); }
+  .mini-tab.active-amber { color: var(--amber-dark); border-bottom-color: var(--amber); background: var(--amber-light); }
+
+  .conj-forms { padding: 8px 14px 10px; }
+  .form-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .form-row:last-child { border-bottom: none; }
+  .form-pron { color: var(--muted); }
+  .form-word { font-weight: 600; }
+  .mode-blue .form-word { color: var(--blue-mid); }
+  .mode-amber .form-word { color: var(--amber-dark); }
+
+  /* ─── RULE BOXES ─── */
+  .rule-box { background: var(--paper); border-left: 4px solid var(--blue-light); border-radius: 0 10px 10px 0; padding: 0.9rem 1.2rem; margin-top: 12px; font-size: 0.87rem; line-height: 1.6; }
+  .rule-box strong { color: var(--blue-dark); }
+  .rule-box.amber-b { border-left-color: var(--amber); }
+  .rule-box.amber-b strong { color: var(--amber-dark); }
+
+  /* ─── IRREGULAR TABLE ─── */
+  .irreg-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.84rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .irreg-table th { background: var(--blue-dark); color: rgba(255,255,255,0.65); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 9px 13px; text-align: left; }
+  .irreg-table th:first-child { color: var(--amber); }
+  .irreg-table td { padding: 8px 13px; border-top: 1px solid var(--border); }
+  .irreg-table tr:nth-child(even) td { background: var(--bg); }
+  .irreg-table td:first-child { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--blue-mid); font-size: 0.9rem; }
+  .irreg-table td:not(:first-child) { font-weight: 600; color: var(--amber-dark); }
+  .irreg-note { font-size: 0.7rem; color: var(--muted); font-weight: 400; font-family: 'Noto Sans', sans-serif; }
+
+  /* ─── KEYWORD BOXES ─── */
+  .keyword-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .kw-box { border-radius: 12px; padding: 1rem 1.2rem; }
+  .kw-box.blue { background: var(--blue-dark); }
+  .kw-box.amber { background: var(--amber-light); border: 1.5px solid var(--amber); }
+  .kw-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .kw-box.blue .kw-title { color: var(--amber); }
+  .kw-box.amber .kw-title { color: var(--amber-dark); }
+  .kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw-tag { font-size: 0.79rem; font-weight: 600; padding: 4px 11px; border-radius: 20px; font-style: italic; }
+  .kw-box.blue .kw-tag { background: rgba(255,255,255,0.12); color: #fff; }
+  .kw-box.amber .kw-tag { background: rgba(232,160,32,0.22); color: var(--amber-dark); }
+
+  /* ─── FOOTER ─── */
+  .footer { margin-top: 2.5rem; text-align: center; font-size: 0.74rem; color: var(--muted); }
+  .footer span { color: var(--blue-mid); font-weight: 700; }
+
+  @media (max-width: 620px) {
+    .compare-grid, .keyword-grid, .conj-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.6rem; }
+    .tab-btn span.label { display: none; }
+    .ex-badge { writing-mode: horizontal-tb; font-size: 0.55rem; padding: 4px 5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-flag">🇪🇸</div>
+  <h1>Perfecto <span>vs</span> Indefinido</h1>
+  <p>Прошедшие времена испанского языка — справочник с примерами и спряжением</p>
+</div>
+
+<div class="wrapper">
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('diff', this)">
+      <span class="num">1</span><span class="label">Разница</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('conj', this)">
+      <span class="num">2</span><span class="label">Спряжение</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('irreg', this)">
+      <span class="num">3</span><span class="label">Неправильные</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('keys', this)">
+      <span class="num">4</span><span class="label">Маркеры</span>
+    </button>
+  </div>
+
+  <!-- TAB 1: РАЗНИЦА -->
+  <div id="diff" class="tab-section active">
+
+    <div class="compare-grid">
+      <div class="tense-card blue">
+        <div class="tc-label">Претерито</div>
+        <div class="tc-name">Perfecto</div>
+        <div class="formula">haber + participio</div>
+        <p>Действие в прошлом, связанное с настоящим. Период ещё не завершён или результат ощущается сейчас.</p>
+        <div class="tags">
+          <span class="tag">hoy</span><span class="tag">esta semana</span><span class="tag">este año</span>
+          <span class="tag">ya</span><span class="tag">todavía no</span><span class="tag">alguna vez</span>
+          <span class="tag">nunca</span><span class="tag">últimamente</span>
+        </div>
+      </div>
+      <div class="tense-card amber">
+        <div class="tc-label">Претерито</div>
+        <div class="tc-name">Indefinido</div>
+        <div class="formula">собственные окончания</div>
+        <p>Завершённое действие в прошлом, отдалённое от настоящего. Конкретный момент или период.</p>
+        <div class="tags">
+          <span class="tag">ayer</span><span class="tag">el año pasado</span><span class="tag">en 2010</span>
+          <span class="tag">hace 3 días</span><span class="tag">aquella vez</span><span class="tag">de repente</span>
+          <span class="tag">entonces</span>
+        </div>
+      </div>
+    </div>
+
+    <table class="diff-table">
+      <thead>
+        <tr><th>Критерий</th><th>Perfecto</th><th>Indefinido</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Связь с настоящим</td><td>Есть — результат важен сейчас</td><td>Нет — действие полностью в прошлом</td></tr>
+        <tr><td>Временной период</td><td>Незавершённый (сегодня, эта неделя)</td><td>Завершённый (вчера, в прошлом году)</td></tr>
+        <tr><td>Образование</td><td>he / has / ha / hemos... + participio</td><td>-é, -aste, -ó / -í, -iste, -ió</td></tr>
+        <tr><td>Вопрос</td><td>Что ты сделал сегодня / в жизни?</td><td>Что случилось тогда?</td></tr>
+      </tbody>
+    </table>
+
+    <div class="examples-box">
+      <div class="ex-row">
+        <div class="ex-badge b">P</div>
+        <div class="ex-sp"><span class="hl">He comido</span>&nbsp;hoy.</div>
+        <div class="ex-ru">Я поел сегодня. <em>(день ещё длится)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">I</div>
+        <div class="ex-sp"><span class="hl a">Comí</span>&nbsp;ayer.</div>
+        <div class="ex-ru">Я поел вчера. <em>(вчера уже прошло)</em></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">P</div>
+        <div class="ex-sp"><span class="hl">¿Has estado</span>&nbsp;en Madrid?</div>
+        <div class="ex-ru">Ты когда-нибудь был в Мадриде?</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">I</div>
+        <div class="ex-sp"><span class="hl a">Estuve</span>&nbsp;en Madrid en 2015.</div>
+        <div class="ex-ru">Я был в Мадриде в 2015 году.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">P</div>
+        <div class="ex-sp">Este mes <span class="hl">he trabajado</span>&nbsp;mucho.</div>
+        <div class="ex-ru">В этом месяце я много работал.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">I</div>
+        <div class="ex-sp">El año pasado <span class="hl a">trabajé</span>&nbsp;mucho.</div>
+        <div class="ex-ru">В прошлом году я много работал.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge b">P</div>
+        <div class="ex-sp">Hoy <span class="hl">he visto</span>&nbsp;a María.</div>
+        <div class="ex-ru">Сегодня я видел Марию.</div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-badge a">I</div>
+        <div class="ex-sp">Ayer <span class="hl a">vi</span>&nbsp;a María.</div>
+        <div class="ex-ru">Вчера я видел Марию.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: СПРЯЖЕНИЕ -->
+  <div id="conj" class="tab-section">
+
+    <div class="conj-grid">
+
+      <!-- hablar -->
+      <div class="conj-card c-ar">
+        <div class="conj-header">
+          <div class="conj-verb">hablar</div>
+          <div class="conj-type type-ar">-ar</div>
+        </div>
+        <div class="mini-tabs">
+          <button class="mini-tab active-blue" onclick="switchConj(this, 'hab', 'perf')">Perfecto</button>
+          <button class="mini-tab" onclick="switchConj(this, 'hab', 'indef')">Indefinido</button>
+        </div>
+        <div id="hab-perf" class="conj-forms mode-blue">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">he hablado</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">has hablado</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">ha hablado</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">hemos hablado</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">habéis hablado</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">han hablado</span></div>
+        </div>
+        <div id="hab-indef" class="conj-forms mode-amber" style="display:none">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">hablé</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">hablaste</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">habló</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">hablamos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">hablasteis</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">hablaron</span></div>
+        </div>
+      </div>
+
+      <!-- comer -->
+      <div class="conj-card c-er">
+        <div class="conj-header">
+          <div class="conj-verb">comer</div>
+          <div class="conj-type type-er">-er</div>
+        </div>
+        <div class="mini-tabs">
+          <button class="mini-tab active-blue" onclick="switchConj(this, 'com', 'perf')">Perfecto</button>
+          <button class="mini-tab" onclick="switchConj(this, 'com', 'indef')">Indefinido</button>
+        </div>
+        <div id="com-perf" class="conj-forms mode-blue">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">he comido</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">has comido</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">ha comido</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">hemos comido</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">habéis comido</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">han comido</span></div>
+        </div>
+        <div id="com-indef" class="conj-forms mode-amber" style="display:none">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">comí</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">comiste</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">comió</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">comimos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">comisteis</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">comieron</span></div>
+        </div>
+      </div>
+
+      <!-- vivir -->
+      <div class="conj-card c-ir">
+        <div class="conj-header">
+          <div class="conj-verb">vivir</div>
+          <div class="conj-type type-ir">-ir</div>
+        </div>
+        <div class="mini-tabs">
+          <button class="mini-tab active-blue" onclick="switchConj(this, 'viv', 'perf')">Perfecto</button>
+          <button class="mini-tab" onclick="switchConj(this, 'viv', 'indef')">Indefinido</button>
+        </div>
+        <div id="viv-perf" class="conj-forms mode-blue">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">he vivido</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">has vivido</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">ha vivido</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">hemos vivido</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">habéis vivido</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">han vivido</span></div>
+        </div>
+        <div id="viv-indef" class="conj-forms mode-amber" style="display:none">
+          <div class="form-row"><span class="form-pron">yo</span><span class="form-word">viví</span></div>
+          <div class="form-row"><span class="form-pron">tú</span><span class="form-word">viviste</span></div>
+          <div class="form-row"><span class="form-pron">él/ella</span><span class="form-word">vivió</span></div>
+          <div class="form-row"><span class="form-pron">nosotros</span><span class="form-word">vivimos</span></div>
+          <div class="form-row"><span class="form-pron">vosotros</span><span class="form-word">vivisteis</span></div>
+          <div class="form-row"><span class="form-pron">ellos</span><span class="form-word">vivieron</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rule-box" style="margin-top:1.2rem">
+      <strong>Participio:</strong> глаголы -ar → <strong>-ado</strong> (hablar → hablado) · глаголы -er/-ir → <strong>-ido</strong> (comer → comido, vivir → vivido)
+    </div>
+    <div class="rule-box amber-b">
+      <strong>Неправильные participios:</strong> hacer → <strong>hecho</strong> · decir → <strong>dicho</strong> · ver → <strong>visto</strong> · volver → <strong>vuelto</strong> · poner → <strong>puesto</strong> · escribir → <strong>escrito</strong> · abrir → <strong>abierto</strong> · romper → <strong>roto</strong>
+    </div>
+  </div>
+
+  <!-- TAB 3: НЕПРАВИЛЬНЫЕ -->
+  <div id="irreg" class="tab-section">
+
+    <table class="irreg-table">
+      <thead>
+        <tr><th>Инфинитив</th><th>yo</th><th>tú</th><th>él / ella</th><th>nosotros</th><th>ellos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ser / ir <span class="irreg-note">(одинаковые!)</span></td><td>fui</td><td>fuiste</td><td>fue</td><td>fuimos</td><td>fueron</td></tr>
+        <tr><td>tener</td><td>tuve</td><td>tuviste</td><td>tuvo</td><td>tuvimos</td><td>tuvieron</td></tr>
+        <tr><td>estar</td><td>estuve</td><td>estuviste</td><td>estuvo</td><td>estuvimos</td><td>estuvieron</td></tr>
+        <tr><td>hacer</td><td>hice</td><td>hiciste</td><td>hizo</td><td>hicimos</td><td>hicieron</td></tr>
+        <tr><td>poder</td><td>pude</td><td>pudiste</td><td>pudo</td><td>pudimos</td><td>pudieron</td></tr>
+        <tr><td>querer</td><td>quise</td><td>quisiste</td><td>quiso</td><td>quisimos</td><td>quisieron</td></tr>
+        <tr><td>venir</td><td>vine</td><td>viniste</td><td>vino</td><td>vinimos</td><td>vinieron</td></tr>
+        <tr><td>decir</td><td>dije</td><td>dijiste</td><td>dijo</td><td>dijimos</td><td>dijeron</td></tr>
+        <tr><td>poner</td><td>puse</td><td>pusiste</td><td>puso</td><td>pusimos</td><td>pusieron</td></tr>
+        <tr><td>saber</td><td>supe</td><td>supiste</td><td>supo</td><td>supimos</td><td>supieron</td></tr>
+        <tr><td>dar</td><td>di</td><td>diste</td><td>dio</td><td>dimos</td><td>dieron</td></tr>
+        <tr><td>ver</td><td>vi</td><td>viste</td><td>vio</td><td>vimos</td><td>vieron</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rule-box" style="margin-top:1.2rem">
+      <strong>Подсказка:</strong> ser и ir совпадают полностью в Indefinido — только контекст определяет смысл. <em>Fui al mercado</em> (я пошёл) vs <em>Fui estudiante</em> (я был студентом).
+    </div>
+    <div class="rule-box amber-b">
+      <strong>Группа «-uv-»:</strong> tener → tuv-, estar → estuv-, poder → pud-, saber → sup-, poner → pus- — запомните корень, окончания одинаковые: -e, -iste, -o, -imos, -isteis, -ieron.
+    </div>
+  </div>
+
+  <!-- TAB 4: МАРКЕРЫ -->
+  <div id="keys" class="tab-section">
+
+    <div class="keyword-grid">
+      <div class="kw-box blue">
+        <div class="kw-title">🔵 Perfecto</div>
+        <div class="kw-tags">
+          <span class="kw-tag">hoy</span>
+          <span class="kw-tag">esta mañana</span>
+          <span class="kw-tag">esta tarde</span>
+          <span class="kw-tag">esta semana</span>
+          <span class="kw-tag">este mes</span>
+          <span class="kw-tag">este año</span>
+          <span class="kw-tag">ya</span>
+          <span class="kw-tag">todavía no</span>
+          <span class="kw-tag">alguna vez</span>
+          <span class="kw-tag">nunca</span>
+          <span class="kw-tag">siempre</span>
+          <span class="kw-tag">últimamente</span>
+          <span class="kw-tag">recientemente</span>
+        </div>
+      </div>
+      <div class="kw-box amber">
+        <div class="kw-title">🟡 Indefinido</div>
+        <div class="kw-tags">
+          <span class="kw-tag">ayer</span>
+          <span class="kw-tag">anteayer</span>
+          <span class="kw-tag">el lunes</span>
+          <span class="kw-tag">la semana pasada</span>
+          <span class="kw-tag">el mes pasado</span>
+          <span class="kw-tag">el año pasado</span>
+          <span class="kw-tag">en 2010</span>
+          <span class="kw-tag">hace 3 días</span>
+          <span class="kw-tag">entonces</span>
+          <span class="kw-tag">de repente</span>
+          <span class="kw-tag">aquella vez</span>
+          <span class="kw-tag">en aquella época</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box" style="margin-top:1.2rem">
+      <strong>Главное правило:</strong> если период ещё не закончился (сегодня, эта неделя) — Perfecto. Если период завершён (вчера, в прошлом году) — Indefinido.
+    </div>
+    <div class="rule-box amber-b">
+      <strong>Исключение (Latinoamérica):</strong> в Латинской Америке Indefinido часто используют вместо Perfecto даже с <em>hoy</em> — это нормально для разговорной речи. Испания строже следует правилу.
+    </div>
+
+  </div>
+
+  <div class="footer"> Создано <span>PandaGroup</span> · <a href="https://t.me/espanolconamigos">@espanolconamigos</a></a> · Pretérito Perfecto &amp; Indefinido</div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function switchConj(btn, verb, mode) {
+  const card = btn.closest('.conj-card');
+  // hide all forms in this card
+  card.querySelectorAll('.conj-forms').forEach(f => f.style.display = 'none');
+  // reset all mini-tabs
+  card.querySelectorAll('.mini-tab').forEach(t => { t.classList.remove('active-blue', 'active-amber'); });
+  // show target
+  document.getElementById(verb + '-' + mode).style.display = 'block';
+  if (mode === 'perf') btn.classList.add('active-blue');
+  else btn.classList.add('active-amber');
+}
+</script>
+</body>
+</html>
