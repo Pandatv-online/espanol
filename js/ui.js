@@ -220,6 +220,17 @@
     setTimeout(function () { live.textContent = text; }, 30);
   }
 
+  // Screen shortcuts (arrows, 1–4, Enter) act only with focus inside `scope` (the deck or the test),
+  // on the screen's <h1> or nowhere (body): keys pressed on RU/EN, the theme button or a footer link stay theirs.
+  function shortcutsApply(e, scope, screen) {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.defaultPrevented) return false;
+    var node = e.target;
+    if (!node || node === document.body || node === document.documentElement) return true;
+    if (node.isContentEditable || (node.closest && node.closest('input, textarea, select'))) return false;
+    if (scope && scope.contains(node)) return true;
+    return node.tagName === 'H1' && !!screen && screen.contains(node);
+  }
+
   ECA.ui = {
     TELEGRAM_URL: TELEGRAM_URL,
     PASS_RATIO: PASS_RATIO,
@@ -241,7 +252,8 @@
     doneBadge: doneBadge,
     quizBadges: quizBadges,
     tabs: tabs,
-    announce: announce
+    announce: announce,
+    shortcutsApply: shortcutsApply
   };
 
   var registry = {};

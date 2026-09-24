@@ -3,44 +3,6 @@
   'use strict';
   var ECA = (root.ECA = root.ECA || {});
 
-  // Deterministic random source: the same seed gives the same question order in RU and EN.
-  function seeded(seed) {
-    var a = seed >>> 0;
-    return function () {
-      a = (a + 0x6D2B79F5) >>> 0;
-      var t = a;
-      t = Math.imul(t ^ (t >>> 15), t | 1);
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-
-  // ---------- quiz state: pure. The session itself is ECA.vocabQuiz. ----------
-  var grammarQuiz = {
-    seeded: seeded,
-    create: function (seed) {
-      return { seed: seed >>> 0, session: ECA.vocabQuiz.start(), recorded: false, newBest: false };
-    },
-    // Records the score once, and only when every question is answered.
-    finish: function (quiz, questions, store, key) {
-      var vq = ECA.vocabQuiz;
-      if (quiz.recorded || !vq.finished(quiz.session, questions)) return quiz;
-      var r = vq.result(quiz.session, questions);
-      var isBest = store.recordScore(key, r.score, r.total);
-      return { seed: quiz.seed, session: quiz.session, recorded: true, newBest: !!isBest };
-    },
-    // Keyboard: digits pick an option while unanswered; Enter moves on after an answer.
-    keyAction: function (key, s) {
-      if (key === 'Enter') return s.answered ? { next: true } : null;
-      if (/^[1-9]$/.test(key)) {
-        var i = Number(key) - 1;
-        return !s.answered && i < s.options ? { pick: i } : null;
-      }
-      return null;
-    }
-  };
-  ECA.grammarQuiz = grammarQuiz;
-
   if (typeof document === 'undefined' || !ECA.views || !ECA.i18n) return;
 
   ECA.i18n.add({
@@ -86,7 +48,7 @@
     }
   });
 
-  var ui = ECA.ui, i18n = ECA.i18n, el = ui.el;
+  var ui = ECA.ui, i18n = ECA.i18n, el = ui.el, quiz = ECA.quiz, session = quiz.session;
   function t(key, params) { return i18n.t(key, params); }
   function plain(str) { return String(str || '').replace(/<[^>]*>/g, ''); }
   function newSeed() { return Math.floor(Math.random() * 4294967296); }
@@ -96,11 +58,8 @@
   document.addEventListener('keydown', function (e) {
     if (!activeKeys) return;
     if (!activeKeys.node.isConnected) { activeKeys = null; return; }
-    if (e.altKey || e.ctrlKey || e.metaKey || e.defaultPrevented) return;
+    if (!ui.shortcutsApply(e, activeKeys.node, activeKeys.screen)) return;
     var target = e.target;
-    if (target && target.closest && target.closest('input, textarea, select, [contenteditable]')) return;
-    // Only with focus inside the test or nowhere (body): keys pressed on header/footer controls stay theirs.
-    if (target && target !== document.body && target !== document.documentElement && !activeKeys.node.contains(target)) return;
     // Enter on a link or an ordinary button keeps its native click.
     if (e.key === 'Enter' && target && target.closest && target.closest('a, button:not(.option)')) return;
     if (activeKeys.handle(e.key)) e.preventDefault();
@@ -175,14 +134,14 @@
     function questions() {
       var q = state.quiz, lang = i18n.lang();
       if (!q.questions || q.lang !== lang) {
-        q.questions = ECA.quiz.fromGrammar(topic, { lang: lang, rng: seeded(q.seed) });
+        q.questions = quiz.fromGrammar(topic, { lang: lang, rng: quiz.seeded(q.seed) });
         q.lang = lang;
       }
       return q.questions;
     }
 
     function begin() {
-      state.quiz = grammarQuiz.create(newSeed());
+      state.quiz = quiz.attempt(newSeed());
       paint('#grammar-prompt');
     }
 
@@ -190,7 +149,7 @@
       ui.clear(quizBody);
       activeKeys = null;
       if (!state.quiz) paintIntro();
-      else if (ECA.vocabQuiz.finished(state.quiz.session, questions())) paintResult();
+      else if (session.finished(state.quiz.session, questions())) paintResult();
       else paintQuestion();
       if (focusSel) {
         var target = quizBody.querySelector(focusSel);
@@ -217,17 +176,17 @@
       var last = s.index === qs.length - 1;
 
       function choose(i) {
-        if (ECA.vocabQuiz.answered(state.quiz.session)) return;
-        state.quiz.session = ECA.vocabQuiz.pick(state.quiz.session, qs, i);
+        if (session.answered(state.quiz.session)) return;
+        state.quiz.session = session.pick(state.quiz.session, qs, i);
         paint('[data-next]');
         var right = i === q.answer;
         ui.announce((right ? t('grammar.right') : t('grammar.wrong', { answer: q.options[q.answer] })) +
           (q.explain ? ' ' + plain(q.explain) : ''));
       }
       function next() {
-        if (!ECA.vocabQuiz.answered(state.quiz.session)) return;
-        state.quiz.session = ECA.vocabQuiz.next(state.quiz.session);
-        state.quiz = grammarQuiz.finish(state.quiz, qs, store, quizKey);
+        if (!session.answered(state.quiz.session)) return;
+        state.quiz.session = session.next(state.quiz.session);
+        state.quiz = quiz.finish(state.quiz, qs, store, quizKey);
         if (state.quiz.recorded) paintBadges();
         paint(state.quiz.recorded ? '#grammar-result' : '#grammar-prompt');
       }
@@ -278,8 +237,9 @@
 
       activeKeys = {
         node: quizBody,
+        screen: container,
         handle: function (key) {
-          var action = grammarQuiz.keyAction(key, { answered: answered, options: q.options.length });
+          var action = quiz.keyAction(key, { answered: answered, options: q.options.length });
           if (!action) return false;
           if (action.next) next(); else choose(action.pick);
           return true;
@@ -288,7 +248,7 @@
     }
 
     function paintResult() {
-      var r = ECA.vocabQuiz.result(state.quiz.session, questions());
+      var r = session.result(state.quiz.session, questions());
       var best = store.best(quizKey);
       var passed = ui.isPassed(r);
       ui.append(quizBody, [

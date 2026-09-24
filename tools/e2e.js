@@ -19,6 +19,10 @@ const { chromium } = loadPlaywright();
 const url = 'file://' + path.join(__dirname, '..', 'index.html');
 const shotsIdx = process.argv.indexOf('--shots');
 const shotsDir = shotsIdx > 0 ? process.argv[shotsIdx + 1] : null;
+if (shotsIdx > 0 && (!shotsDir || shotsDir.startsWith('--'))) {
+  console.error('--shots needs a directory: node tools/e2e.js --shots <dir>');
+  process.exit(2);
+}
 
 const checks = [];
 // opts: { locale, colorScheme, width, expectConsoleError }
@@ -112,6 +116,8 @@ check('words test to the result; best score shown as a badge', async (page) => {
   await page.goto(url + WORDS + '/quiz');
   const result = await finishWordsQuiz(page);
   assert.match(result, /\d+\s*\/\s*10|\d+ из 10/);
+  assert.match(await page.textContent('.quiz-result__best'), /Лучший результат: \d+ из 10/);
+  assert.equal(await page.locator('.quiz-result .badge--done').count(), 0, 'a first attempt is not a new record');
   await page.reload();
   assert.equal(await page.locator('.vocab-badges .badge--score').count(), 1);
 });
@@ -121,6 +127,7 @@ check('grammar test to the result', async (page) => {
   assert.ok(await page.locator('.grammar-table, .table').count() > 0, 'topic has a table');
   const result = await finishGrammarQuiz(page);
   assert.match(result, /\d+/);
+  assert.match(await page.textContent('.grammar-result__best'), /^Лучший результат: \d+ из \d+/, 'a first attempt is not a new record');
   assert.equal(await page.locator('.grammar-badges .badge--score').count(), 1);
 });
 
@@ -175,9 +182,15 @@ check('dark theme: follows the system, toggle is remembered', async (page) => {
   const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const lum = (c) => c.match(/\d+/g).slice(0, 3).reduce((a, b) => a + Number(b), 0);
   assert.ok(lum(await bg()) < 200, 'system dark gives a dark page');
-  assert.equal(await page.getAttribute('#theme-toggle', 'aria-pressed'), 'true');
+  // The button is the "dark theme" switch: its moon icon and label mean the same in both states.
+  const toggle = () => page.evaluate(() => {
+    const b = document.getElementById('theme-toggle');
+    return [b.getAttribute('aria-pressed'), b.querySelector('.theme-toggle__icon').textContent, b.getAttribute('aria-label')];
+  });
+  assert.deepEqual(await toggle(), ['true', '☾', 'Тёмная тема']);
   await page.click('#theme-toggle');
   assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
+  assert.deepEqual(await toggle(), ['false', '☾', 'Тёмная тема']);
   assert.ok(lum(await bg()) > 600, 'light after toggle');
   await page.reload();
   assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
@@ -280,15 +293,21 @@ check('a storage write failing mid-session shows "progress is not saved"', async
 check('all 6 levels have word and grammar topics; each topic opens cleanly', async (page) => {
   await page.goto(url + '#/a1');
   const topics = await page.evaluate(() => ECA.data.levels().map((l) => ({
-    level: l.id, words: ECA.data.vocab(l.id).map((t) => t.id), grammar: ECA.data.grammar(l.id).map((t) => t.id)
+    level: l.id,
+    words: ECA.data.vocab(l.id).map((t) => [t.id, ECA.i18n.pick(t.title)]),
+    grammar: ECA.data.grammar(l.id).map((t) => [t.id, ECA.i18n.pick(t.title)])
   })));
   assert.equal(topics.length, 6);
   for (const t of topics) {
     assert.ok(t.words.length > 0 && t.grammar.length > 0, `${t.level} has words and grammar`);
     for (const [kind, ids] of [['words', t.words], ['grammar', t.grammar]]) {
-      for (const id of ids) {
+      for (const [id, title] of ids) {
         await page.evaluate((h) => { location.hash = h; }, `#/${t.level.toLowerCase()}/${kind}/${id}`);
-        await page.waitForFunction((h) => location.hash === h, `#/${t.level.toLowerCase()}/${kind}/${id}`);
+        // Wait for this very topic to be drawn, not just for the address to change.
+        await page.waitForFunction((want) => {
+          const h1 = document.querySelector('#screen h1');
+          return !!h1 && h1.textContent === want;
+        }, title, { timeout: 5000 }).catch(() => { throw new Error(`${id}: heading never became "${title}"`); });
         const text = await page.textContent('#screen');
         assert.ok(!/Такой темы нет|скоро откроется|Что-то пошло не так/.test(text), `${id} renders`);
         assert.equal(await page.locator(kind === 'words' ? '.flashcard' : '.grammar-section').count() > 0, true, `${id} content`);

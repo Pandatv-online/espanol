@@ -77,6 +77,43 @@ test('fromGrammar: keeps every question, answer still points at the correct opti
   assert.equal(ru[0].prompt, 'Выберите форму');
 });
 
+test('fromGrammar: options are shuffled — in the data the right answer is often at 0', () => {
+  const topic = { id: 'a1-x', quiz: [{ prompt: { ru: 'п', en: 'p' }, options: ['a', 'b', 'c', 'd'], answer: 0 }] };
+  const positions = new Set();
+  for (let seed = 1; seed <= 40; seed++) {
+    const [q] = quiz.fromGrammar(topic, { lang: 'en', rng: quiz.seeded(seed) });
+    assert.equal(q.options[q.answer], 'a');
+    positions.add(q.answer);
+  }
+  assert.equal(positions.size, 4, 'the right answer lands on every position: ' + [...positions]);
+});
+
+test('seeded: the same seed repeats the sequence, another seed does not', () => {
+  const a = quiz.seeded(42), b = quiz.seeded(42);
+  const seqA = [a(), a(), a()];
+  assert.deepEqual([b(), b(), b()], seqA);
+  seqA.forEach((x) => assert.ok(x >= 0 && x < 1));
+  assert.notEqual(quiz.seeded(43)(), seqA[0]);
+});
+
+test('session: first pick counts, a repeat click changes nothing, result lists mistakes', () => {
+  const { session } = quiz;
+  const qs = [{ answer: 0 }, { answer: 2 }, { answer: 1 }];
+  let s = session.start();
+  assert.equal(session.answered(s), false);
+  assert.equal(session.next(s).index, 0, 'cannot skip an unanswered question');
+
+  s = session.pick(s, qs, 0);
+  assert.equal(session.answered(s), true);
+  assert.equal(session.pick(s, qs, 3), s, 'second click after answering is ignored');
+  s = session.next(s);
+  s = session.next(session.pick(s, qs, 1));        // wrong
+  assert.equal(session.finished(s, qs), false);
+  s = session.next(session.pick(s, qs, 1));        // right
+  assert.equal(session.finished(s, qs), true);
+  assert.deepEqual(session.result(s, qs), { score: 2, total: 3, mistakes: [1] });
+});
+
 test('shuffle: returns a new permutation and leaves the input untouched', () => {
   const src = [1, 2, 3, 4, 5, 6];
   const out = quiz.shuffle(src, seeded(9));

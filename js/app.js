@@ -116,7 +116,6 @@
     var dark = effectiveTheme() === 'dark';
     var toggle = document.getElementById('theme-toggle');
     toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
-    toggle.querySelector('.theme-toggle__icon').textContent = dark ? '☀' : '☾';
     var slot = document.getElementById('footer-tg-slot');
     ui.clear(slot).appendChild(ui.telegramLink('tg-link--large'));
     document.getElementById('storage-note').hidden = store.available;

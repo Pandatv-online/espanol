@@ -94,5 +94,68 @@
     });
   }
 
-  ECA.quiz = { fromVocab: fromVocab, fromGrammar: fromGrammar, shuffle: shuffle };
+  // Deterministic random source (mulberry32): one seed gives the same quiz in RU and EN.
+  function seeded(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a = (a + 0x6d2b79f5) >>> 0;
+      var x = Math.imul(a ^ (a >>> 15), 1 | a);
+      x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x;
+      return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // The run through one test, shared by the words and grammar screens. Session = { index, picks[] }.
+  var session = {
+    start: function () { return { index: 0, picks: [] }; },
+    answered: function (s) { return s.picks[s.index] != null; },
+    // The first pick for a question is final; later picks return the same session.
+    pick: function (s, questions, choice) {
+      if (s.index >= questions.length || s.picks[s.index] != null) return s;
+      var picks = s.picks.slice();
+      picks[s.index] = choice;
+      return { index: s.index, picks: picks };
+    },
+    next: function (s) { return session.answered(s) ? { index: s.index + 1, picks: s.picks } : s; },
+    finished: function (s, questions) { return s.index >= questions.length; },
+    result: function (s, questions) {
+      var mistakes = [];
+      questions.forEach(function (q, i) { if (s.picks[i] !== q.answer) mistakes.push(i); });
+      return { score: questions.length - mistakes.length, total: questions.length, mistakes: mistakes };
+    }
+  };
+
+  // Attempt = { seed, session, recorded, newBest } — one go at a test, seeded for a stable order.
+  function attempt(seed) {
+    return { seed: seed >>> 0, session: session.start(), recorded: false, newBest: false };
+  }
+
+  // Records the score once, and only when every question is answered.
+  // "New best" means an earlier result existed and this one beat it.
+  function finish(a, questions, store, key) {
+    if (a.recorded || !session.finished(a.session, questions)) return a;
+    var r = session.result(a.session, questions);
+    var hadBest = !!store.best(key);
+    var isBest = store.recordScore(key, r.score, r.total);
+    var out = {};
+    for (var k in a) out[k] = a[k];
+    out.recorded = true;
+    out.newBest = hadBest && !!isBest;
+    return out;
+  }
+
+  // Keyboard: digits pick an option while unanswered; Enter moves on after an answer.
+  function keyAction(key, s) {
+    if (key === 'Enter') return s.answered ? { next: true } : null;
+    if (/^[1-9]$/.test(key)) {
+      var i = Number(key) - 1;
+      return !s.answered && i < s.options ? { pick: i } : null;
+    }
+    return null;
+  }
+
+  ECA.quiz = {
+    fromVocab: fromVocab, fromGrammar: fromGrammar, shuffle: shuffle, seeded: seeded,
+    session: session, attempt: attempt, finish: finish, keyAction: keyAction
+  };
 })(typeof window !== 'undefined' ? window : globalThis);

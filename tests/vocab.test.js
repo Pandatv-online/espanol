@@ -2,31 +2,41 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 require('../js/quiz.js');
 require('../js/views/vocab.js');
-const { vocabDeck } = globalThis.ECA;
+const { vocabDeck, quiz } = globalThis.ECA;
 
-const words = ['uno', 'dos', 'tres', 'cuatro', 'cinco'].map((es) => ({ es, ru: es, en: es }));
+const words = ['uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho'].map((es) => ({ es, ru: es, en: es }));
 const learnedSet = (...list) => (es) => list.includes(es);
-const zero = () => 0;
+const sorted = (arr) => [...arr].sort();
 
-test('deck holds only unlearned words, shuffled; M is the topic size', () => {
-  const deck = vocabDeck.create(words, { isLearned: learnedSet('dos'), rng: zero });
-  // Fisher–Yates with rng()=0 over [uno, tres, cuatro, cinco], worked by hand
-  assert.deepEqual(vocabDeck.order(deck), ['tres', 'cuatro', 'cinco', 'uno']);
-  assert.equal(vocabDeck.current(deck), 'tres');
-  assert.equal(vocabDeck.remaining(deck), 4);
-  assert.equal(deck.total, 5);
+test('deck holds exactly the unlearned words; M is the topic size', () => {
+  const deck = vocabDeck.create(words, { isLearned: learnedSet('dos', 'seis'), rng: quiz.seeded(1) });
+  assert.deepEqual(sorted(vocabDeck.order(deck)), sorted(['uno', 'tres', 'cuatro', 'cinco', 'siete', 'ocho']));
+  assert.equal(vocabDeck.current(deck), vocabDeck.order(deck)[0]);
+  assert.equal(vocabDeck.remaining(deck), 6);
+  assert.equal(deck.total, 8);
   assert.equal(vocabDeck.isDone(deck), false);
 });
 
+test('deck is shuffled: another random source gives another order', () => {
+  const orders = new Set();
+  for (let seed = 1; seed <= 5; seed++) {
+    orders.add(vocabDeck.order(vocabDeck.create(words, { rng: quiz.seeded(seed) })).join(','));
+  }
+  assert.ok(orders.size > 1, 'five seeds, one order');
+  const same = (seed) => vocabDeck.order(vocabDeck.create(words, { rng: quiz.seeded(seed) }));
+  assert.deepEqual(same(9), same(9), 'one seed, one order');
+});
+
 test('"Повторить" sends the current word to the end; "Знаю" removes it; the deck ends empty', () => {
-  const start = vocabDeck.create(words.slice(0, 3), { rng: zero }); // [dos, tres, uno]
+  const start = vocabDeck.create(words.slice(0, 3), { rng: quiz.seeded(3) });
+  const [a, b, c] = vocabDeck.order(start);
   const again = vocabDeck.again(start);
-  assert.deepEqual(vocabDeck.order(again), ['tres', 'uno', 'dos']);
+  assert.deepEqual(vocabDeck.order(again), [b, c, a]);
   assert.equal(vocabDeck.remaining(again), 3);
-  assert.deepEqual(vocabDeck.order(start), ['dos', 'tres', 'uno'], 'input deck is not mutated');
+  assert.deepEqual(vocabDeck.order(start), [a, b, c], 'input deck is not mutated');
 
   let d = vocabDeck.know(again);
-  assert.deepEqual(vocabDeck.order(d), ['uno', 'dos']);
+  assert.deepEqual(vocabDeck.order(d), [c, a]);
   assert.equal(vocabDeck.remaining(d), 2);
   d = vocabDeck.know(vocabDeck.know(d));
   assert.equal(vocabDeck.isDone(d), true);
@@ -36,27 +46,19 @@ test('"Повторить" sends the current word to the end; "Знаю" removes
 });
 
 test('all words learned → the deck is empty; "Повторить все заново" takes every word back', () => {
-  const all = learnedSet('uno', 'dos', 'tres', 'cuatro', 'cinco');
-  assert.equal(vocabDeck.isDone(vocabDeck.create(words, { isLearned: all, rng: zero })), true);
-  const again = vocabDeck.create(words, { isLearned: all, all: true, rng: zero });
-  assert.equal(vocabDeck.remaining(again), 5);
-  assert.equal(again.total, 5);
+  const all = learnedSet(...words.map((w) => w.es));
+  assert.equal(vocabDeck.isDone(vocabDeck.create(words, { isLearned: all })), true);
+  const again = vocabDeck.create(words, { isLearned: all, all: true });
+  assert.deepEqual(sorted(vocabDeck.order(again)), sorted(words.map((w) => w.es)));
+  assert.equal(again.total, 8);
 });
 
-test('quiz session: first pick counts, a repeat click changes nothing, result lists mistakes', () => {
-  const { vocabQuiz } = globalThis.ECA;
-  const qs = [{ answer: 0 }, { answer: 2 }, { answer: 1 }];
-  let s = vocabQuiz.start();
-  assert.equal(vocabQuiz.answered(s), false);
-  assert.equal(vocabQuiz.next(s).index, 0, 'cannot skip an unanswered question');
-
-  s = vocabQuiz.pick(s, qs, 0);
-  assert.equal(vocabQuiz.answered(s), true);
-  assert.equal(vocabQuiz.pick(s, qs, 3), s, 'second click after answering is ignored');
-  s = vocabQuiz.next(s);
-  s = vocabQuiz.next(vocabQuiz.pick(s, qs, 1));        // wrong
-  assert.equal(vocabQuiz.finished(s, qs), false);
-  s = vocabQuiz.next(vocabQuiz.pick(s, qs, 1));        // right
-  assert.equal(vocabQuiz.finished(s, qs), true);
-  assert.deepEqual(vocabQuiz.result(s, qs), { score: 2, total: 3, mistakes: [1] });
+test('without ECA.quiz the deck fails loudly instead of staying unshuffled', () => {
+  const saved = globalThis.ECA.quiz;
+  delete globalThis.ECA.quiz;
+  try {
+    assert.throws(() => vocabDeck.create(words), /quiz\.js/);
+  } finally {
+    globalThis.ECA.quiz = saved;
+  }
 });

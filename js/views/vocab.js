@@ -5,7 +5,8 @@
   // ---------- flash-card deck: pure, no DOM, no storage ----------
   // Deck = { queue: es[], total: number of topic words }. Functions never mutate their input.
   function shuffle(arr, rng) {
-    return ECA.quiz ? ECA.quiz.shuffle(arr, rng) : arr.slice();
+    if (!ECA.quiz) throw new Error('ECA.vocabDeck needs js/quiz.js loaded before js/views/vocab.js');
+    return ECA.quiz.shuffle(arr, rng);
   }
 
   var vocabDeck = {
@@ -28,34 +29,13 @@
     isDone: function (deck) { return deck.queue.length === 0; }
   };
 
-  // ---------- quiz session: pure. Session = { index, picks[] } ----------
-  var vocabQuiz = {
-    start: function () { return { index: 0, picks: [] }; },
-    answered: function (s) { return s.picks[s.index] != null; },
-    // The first pick for a question is final; later picks return the same session.
-    pick: function (s, questions, choice) {
-      if (s.index >= questions.length || s.picks[s.index] != null) return s;
-      var picks = s.picks.slice();
-      picks[s.index] = choice;
-      return { index: s.index, picks: picks };
-    },
-    next: function (s) { return vocabQuiz.answered(s) ? { index: s.index + 1, picks: s.picks } : s; },
-    finished: function (s, questions) { return s.index >= questions.length; },
-    result: function (s, questions) {
-      var mistakes = [];
-      questions.forEach(function (q, i) { if (s.picks[i] !== q.answer) mistakes.push(i); });
-      return { score: questions.length - mistakes.length, total: questions.length, mistakes: mistakes };
-    }
-  };
-
   ECA.vocabDeck = vocabDeck;
-  ECA.vocabQuiz = vocabQuiz;
 
   if (typeof document === 'undefined' || !ECA.views || !ECA.i18n) return;
 
   // ---------- screen ----------
   var i18n = ECA.i18n, ui = ECA.ui, store = ECA.store, data = ECA.data;
-  var t = i18n.t;
+  var t = i18n.t, quiz = ECA.quiz, session = quiz.session;
 
   i18n.add({
     ru: {
@@ -148,34 +128,12 @@
     }
   });
 
-  // Seeded rng, so a language switch rebuilds the same quiz in the other language.
-  function seeded(seed) {
-    var a = seed >>> 0;
-    return function () {
-      a = (a + 0x6d2b79f5) >>> 0;
-      var x = Math.imul(a ^ (a >>> 15), 1 | a);
-      x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x;
-      return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-
   // Keyboard: one document listener, routed to the screen that is on the page now.
   var active = null;
   document.addEventListener('keydown', function (e) {
     if (!active || !active.root.isConnected) return;
-    if (e.altKey || e.ctrlKey || e.metaKey || e.defaultPrevented) return;
-    var tag = e.target && e.target.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
-    if (!inScope(e.target, active)) return;
-    active.onKey(e);
+    if (ui.shortcutsApply(e, active.scope, active.root)) active.onKey(e);
   });
-  // Shortcuts act only when focus is inside the deck/quiz, on the screen heading or nowhere (body):
-  // an arrow pressed on RU/EN, the theme button or a footer link must not mark a word.
-  function inScope(node, a) {
-    if (!node || node === document.body || node === document.documentElement) return true;
-    if (a.scope && a.scope.contains(node)) return true;
-    return node.tagName === 'H1' && a.root.contains(node);
-  }
   function inTabs(node) { return !!(node && node.closest && node.closest('[role="tablist"]')); }
   function isControl(node) { return !!(node && node.closest && node.closest('a, button')); }
 
@@ -367,13 +325,13 @@
     }
 
     // ----- quiz -----
-    function newQuiz() { return { seed: Math.floor(Math.random() * 4294967296), session: vocabQuiz.start() }; }
+    function newQuiz() { return quiz.attempt(Math.floor(Math.random() * 4294967296)); }
 
     function questions() {
       var q = state.quiz, lang = i18n.lang();
       if (!q.questions || q.lang !== lang) {
         q.lang = lang;
-        q.questions = ECA.quiz.fromVocab(topic, data.vocab(levelId), { lang: lang, rng: seeded(q.seed) });
+        q.questions = quiz.fromVocab(topic, data.vocab(levelId), { lang: lang, rng: quiz.seeded(q.seed) });
       }
       return q.questions;
     }
@@ -385,7 +343,7 @@
         panel.appendChild(ui.emptyState({ title: t('vocab.quiz.tooFew') }));
         return;
       }
-      if (vocabQuiz.finished(state.quiz.session, qs)) paintResult(panel, qs);
+      if (session.finished(state.quiz.session, qs)) paintResult(panel, qs);
       else paintQuestion(panel, qs);
     }
 
@@ -397,20 +355,16 @@
       var last = s.index === qs.length - 1;
 
       function choose(i) {
-        if (vocabQuiz.answered(state.quiz.session)) return;
-        state.quiz.session = vocabQuiz.pick(state.quiz.session, qs, i);
+        if (session.answered(state.quiz.session)) return;
+        state.quiz.session = session.pick(state.quiz.session, qs, i);
         paint('[data-next]');
         ui.announce(i === q.answer ? t('vocab.quiz.right') : t('vocab.quiz.wrong', { answer: q.options[q.answer] }));
       }
       function next() {
-        if (!vocabQuiz.answered(state.quiz.session)) return;
-        state.quiz.session = vocabQuiz.next(state.quiz.session);
-        if (vocabQuiz.finished(state.quiz.session, qs) && !state.quiz.recorded) {
-          var r = vocabQuiz.result(state.quiz.session, qs);
-          state.quiz.recorded = true;
-          state.quiz.newBest = store.recordScore(quizKey, r.score, r.total);
-        }
-        paint(vocabQuiz.finished(state.quiz.session, qs) ? '#quiz-result-title' : '#quiz-prompt');
+        if (!session.answered(state.quiz.session)) return;
+        state.quiz.session = session.next(state.quiz.session);
+        state.quiz = quiz.finish(state.quiz, qs, store, quizKey);
+        paint(session.finished(state.quiz.session, qs) ? '#quiz-result-title' : '#quiz-prompt');
       }
 
       var options = q.options.map(function (text, i) {
@@ -458,18 +412,17 @@
       ]));
 
       active.onKey = function (e) {
-        if (/^[1-9]$/.test(e.key)) {
-          var i = Number(e.key) - 1;
-          if (!answered && i < q.options.length) { e.preventDefault(); choose(i); }
-        } else if (e.key === 'Enter' && answered && !inTabs(e.target) && !(e.target && e.target.closest && e.target.closest('a'))) {
-          e.preventDefault();
-          next();
-        }
+        // Enter on a tab or a link keeps its native action.
+        if (e.key === 'Enter' && (inTabs(e.target) || (e.target && e.target.closest && e.target.closest('a')))) return;
+        var action = quiz.keyAction(e.key, { answered: answered, options: q.options.length });
+        if (!action) return;
+        e.preventDefault();
+        if (action.next) next(); else choose(action.pick);
       };
     }
 
     function paintResult(panel, qs) {
-      var r = vocabQuiz.result(state.quiz.session, qs);
+      var r = session.result(state.quiz.session, qs);
       var best = store.best(quizKey);
       var passed = ui.isPassed({ score: r.score, total: r.total });
       var mistakes = r.mistakes.map(function (i) {
