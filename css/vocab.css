@@ -1,1 +1,210 @@
-/* Words screens (task 02). Uses tokens and components from base.css. */
+/* Words screens (task 02): flash cards, test, word list. Tokens and components come from base.css. */
+
+.vocab-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.vocab-panel:focus { outline: none; }
+.kbd-hint { color: var(--ink-soft); font-size: var(--step--1); }
+@media (hover: none) { .kbd-hint { display: none; } }
+
+/* ---------- cards ---------- */
+.deck { display: grid; gap: var(--space-4); max-width: 36rem; }
+.deck__status { display: flex; align-items: center; gap: var(--space-4); }
+.deck__left { flex: 0 0 auto; font-weight: 600; font-variant-numeric: tabular-nums; }
+.deck__meter { flex: 1 1 auto; }
+
+.flashcard {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-l);
+  background: none;
+  color: var(--ink);
+  text-align: center;
+  cursor: pointer;
+  perspective: 1200px;
+  -webkit-tap-highlight-color: transparent;
+}
+.flashcard__inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 480ms cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.flashcard.is-flipped .flashcard__inner { transform: rotateY(180deg); }
+.flashcard__face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 15rem;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius-l);
+  background: var(--surface);
+  box-shadow: var(--shadow-lift);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow-wrap: anywhere;
+}
+/* a saffron edge on the Spanish side, olive on the answer side */
+.flashcard__face--front { border-top: 6px solid var(--sun); }
+.flashcard__face--back { transform: rotateY(180deg); border-top: 6px solid var(--ok); }
+.flashcard:hover .flashcard__face { border-left-color: var(--ink); border-right-color: var(--ink); border-bottom-color: var(--ink); }
+
+.flashcard__word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(var(--step-2), 1rem + 4.5vw, var(--step-4));
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.flashcard__hint { color: var(--ink-soft); font-size: 0.9375rem; }
+.flashcard__es { color: var(--ink-soft); font-weight: 600; }
+.flashcard__tr {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(var(--step-1), 0.9rem + 2.5vw, var(--step-3));
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.flashcard__ex { margin-top: var(--space-2); max-width: 34ch; text-align: start; }
+
+.deck__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.deck__btn { min-height: 52px; }
+
+.deck-done {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  max-width: 40rem;
+  padding: var(--space-5);
+  border: 2px solid var(--ok);
+  border-radius: var(--radius-l);
+  background: var(--ok-soft);
+}
+.deck-done__mark {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-pill);
+  background: var(--ok);
+  color: var(--surface);
+}
+.deck-done__mark .icon { width: 1.6rem; height: 1.6rem; }
+.deck-done__title { font-family: var(--font-display); font-weight: 700; font-size: var(--step-2); letter-spacing: -0.015em; }
+.deck-done__text { max-width: 52ch; }
+.deck-done .btn-row { margin-top: var(--space-2); }
+
+/* ---------- test ---------- */
+.quiz { display: grid; gap: var(--space-4); max-width: 36rem; }
+.quiz__status { display: flex; align-items: center; gap: var(--space-4); }
+.quiz__count { flex: 0 0 auto; font-weight: 600; font-variant-numeric: tabular-nums; }
+.quiz__meter { flex: 1 1 auto; }
+.quiz__card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-l);
+  border-top: 6px solid var(--sun);
+  background: var(--surface);
+}
+.quiz__ask { color: var(--ink-soft); font-weight: 500; }
+.quiz__prompt {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(var(--step-2), 1rem + 3vw, var(--step-3));
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.quiz__prompt:focus { outline: none; }
+.option { gap: var(--space-3); }
+.option__key {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+.option__text { overflow-wrap: anywhere; }
+.quiz__verdict { font-weight: 700; }
+.quiz__explain { margin-top: var(--space-1); color: var(--ink-soft); font-weight: 400; }
+
+.quiz-result { display: grid; gap: var(--space-4); max-width: 40rem; }
+.quiz-result__top {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius-l);
+  background: var(--surface);
+}
+.quiz-result.is-passed .quiz-result__top { border-color: var(--ok); background: var(--ok-soft); }
+.quiz-result__title { display: grid; gap: var(--space-1); }
+.quiz-result__title:focus { outline: none; }
+.quiz-result__label { font-family: var(--font-body); font-size: var(--step-0); font-weight: 600; color: var(--ink-soft); }
+.quiz-result__score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(var(--step-3), 1.2rem + 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.quiz-result__best { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); color: var(--ink-soft); }
+.quiz-result__sub { font-size: var(--step-1); }
+.quiz-result__clean { color: var(--ink-soft); }
+.mistakes { border-top: 1px solid var(--line); }
+.mistake {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+.mistake__q { font-weight: 600; }
+.mistake__arrow { color: var(--ink-soft); }
+.mistake__a { color: var(--ok); font-weight: 600; }
+
+/* ---------- word list ---------- */
+.word-list { display: grid; gap: var(--space-3); max-width: 48rem; }
+.word-list__count { color: var(--ink-soft); }
+.words-table td { vertical-align: middle; }
+.words-table__es { font-weight: 600; }
+.words-table__tr { color: var(--ink-soft); }
+.words-table .words-table__mark { width: 1%; text-align: center; white-space: nowrap; }
+.words-table td.words-table__mark { padding-block: 0; }
+.learn-toggle {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  cursor: pointer;
+}
+.learn-toggle input { width: 1.375rem; height: 1.375rem; margin: 0; accent-color: var(--ok); cursor: pointer; }
+.words-table tr.is-learned .words-table__es { color: var(--ok); }
+
+@media (max-width: 400px) {
+  .vocab .tab { flex: 1 1 auto; padding-inline: var(--space-2); font-size: 0.9375rem; }
+}
+@media (max-width: 420px) {
+  .flashcard__face { min-height: 13rem; padding: var(--space-5) var(--space-4) var(--space-4); }
+  .quiz__card, .quiz-result__top, .deck-done { padding: var(--space-4); }
+  .words-table th, .words-table td { padding-inline: var(--space-2); }
+}
+
+/* No flip animation: the faces simply swap. */
+@media (prefers-reduced-motion: reduce) {
+  .flashcard__inner, .flashcard.is-flipped .flashcard__inner { transition: none; transform: none; }
+  .flashcard__face--back { transform: none; }
+  .flashcard:not(.is-flipped) .flashcard__face--back,
+  .flashcard.is-flipped .flashcard__face--front { visibility: hidden; }
+}
