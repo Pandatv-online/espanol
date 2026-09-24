@@ -30,6 +30,8 @@ const check = (name, fn, opts) => checks.push([name, fn, opts || {}]);
 
 const WORDS = '#/a1/words/a1-greetings';
 const GRAMMAR = '#/a1/grammar/a1-presente-ar';
+// The test is the last tab of a tabbed topic; a legacy topic ignores the tab and shows its test below the sections.
+const GRAMMAR_TEST = GRAMMAR + '/test';
 const TABBED = '#/a2/grammar/a2-perfecto-indefinido';
 
 async function noHorizontalScroll(page, label) {
@@ -50,6 +52,17 @@ async function finishWordsQuiz(page) {
     await page.locator('[data-next]').click();
   }
   return page.textContent('.quiz-result');
+}
+
+// Opens the topic where it shows a table: the first tab with a table block, or the legacy page.
+async function openGrammarTable(page, hash) {
+  await page.goto(url + hash);
+  const tab = await page.evaluate((id) => {
+    const t = ECA.data.find('grammar', id);
+    const hit = t && t.tabs && t.tabs.find((x) => x.blocks.some((b) => b.type === 'table'));
+    return hit ? hit.id : null;
+  }, hash.split('/').pop());
+  if (tab) await page.goto(url + hash + '/' + tab);
 }
 
 async function finishGrammarQuiz(page) {
@@ -125,7 +138,10 @@ check('words test to the result; best score shown as a badge', async (page) => {
 
 check('grammar test to the result', async (page) => {
   await page.goto(url + GRAMMAR);
+  assert.ok(await page.locator('.grammar-section, .gblock').count() > 0, 'topic has an explanation');
+  await openGrammarTable(page, GRAMMAR);
   assert.ok(await page.locator('.grammar-table, .table').count() > 0, 'topic has a table');
+  await page.goto(url + GRAMMAR_TEST);
   const result = await finishGrammarQuiz(page);
   assert.match(result, /\d+/);
   assert.match(await page.textContent('.grammar-result__best'), /^Лучший результат: \d+ из \d+/, 'a first attempt is not a new record');
@@ -324,7 +340,7 @@ check('no horizontal scroll at 320px on every screen', async (page) => {
   await page.goto(url + WORDS + '/quiz');
   await finishWordsQuiz(page);
   await noHorizontalScroll(page, 'words result');
-  await page.goto(url + GRAMMAR);
+  await page.goto(url + GRAMMAR_TEST);
   await finishGrammarQuiz(page);
   await noHorizontalScroll(page, 'grammar result');
 }, { width: 320 });
@@ -360,7 +376,7 @@ check('arrow keys mark words only with focus in the deck or on body', async (pag
 });
 
 check('grammar digit keys pick an answer only with focus in the test or on body', async (page) => {
-  await page.goto(url + GRAMMAR);
+  await page.goto(url + GRAMMAR_TEST);
   await page.locator('.grammar-quiz .btn--primary').click();
   await page.focus('[data-lang="en"]');
   await page.keyboard.press('1');
@@ -428,9 +444,9 @@ async function shots(browser) {
     ['card', async (p) => { await p.goto(url + WORDS); await p.click('.flashcard'); }],
     ['words-quiz', async (p) => { await p.goto(url + WORDS + '/quiz'); await p.locator('.options .option').nth(1).click(); }],
     ['words-result', async (p) => { await p.goto(url + WORDS + '/quiz'); await finishWordsQuiz(p); }],
-    ['grammar-topic', async (p) => p.goto(url + GRAMMAR)],
-    ['grammar-quiz', async (p) => { await p.goto(url + GRAMMAR); await p.locator('.grammar-quiz .btn--primary').click(); await p.locator('.grammar-quiz .option').nth(1).click(); await p.locator('#grammar-prompt').scrollIntoViewIfNeeded(); }],
-    ['grammar-result', async (p) => { await p.goto(url + GRAMMAR); await finishGrammarQuiz(p); }],
+    ['grammar-topic', async (p) => openGrammarTable(p, GRAMMAR)],
+    ['grammar-quiz', async (p) => { await p.goto(url + GRAMMAR_TEST); await p.locator('.grammar-quiz .btn--primary').click(); await p.locator('.grammar-quiz .option').nth(1).click(); await p.locator('#grammar-prompt').scrollIntoViewIfNeeded(); }],
+    ['grammar-result', async (p) => { await p.goto(url + GRAMMAR_TEST); await finishGrammarQuiz(p); }],
     ['tabbed-diff', async (p) => p.goto(url + TABBED)],
     ['tabbed-conj', async (p) => { await p.goto(url + TABBED + '/conj'); await p.locator('.conj-card .mini-tab').nth(1).click(); }],
     ['tabbed-irreg', async (p) => p.goto(url + TABBED + '/irreg')],
@@ -446,7 +462,7 @@ async function shots(browser) {
         await page.goto('about:blank'); // a real load per step: hash-only navigation would keep screen state
         await go(page);
         await page.waitForTimeout(250);
-        if (name === 'grammar-topic') await page.locator('.table-wrap').first().scrollIntoViewIfNeeded();
+        if (name === 'grammar-topic' && await page.locator('.table-wrap').count()) await page.locator('.table-wrap').first().scrollIntoViewIfNeeded();
         const file = path.join(shotsDir, `${name}-${scheme}-${width}.png`);
         await page.screenshot({ path: file });
         files.push([name, file]);
