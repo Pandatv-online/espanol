@@ -211,155 +211,246 @@ ECA.data.addGrammar('A2', [
   {
     id: 'a2-imperfecto', level: 'A2',
     title: { ru: 'Pretérito imperfecto', en: 'Pretérito imperfecto' },
-    summary: { ru: 'Прошедшее длительное: описание, привычка, фон рассказа. Спряжение, три неправильных глагола и как сочетать с Indefinido.',
-               en: 'The past continuous: descriptions, habits and the background of a story. Conjugation, the three irregular verbs and how it works with the indefinido.' },
-    sections: [
+    hero: {
+      es: 'Pretérito <b>Imperfecto</b>',
+      sub: { ru: 'Прошедшее длительное — описание, привычка, фон рассказа',
+             en: 'The past continuous — description, habit, the background of a story' }
+    },
+    tabs: [
       {
-        heading: { ru: 'Что это за время', en: 'What this tense is for' },
-        body: {
-          ru: ['<b>Imperfecto</b> (<i>era, tenía, vivía…</i>) — незавершённое, длительное или повторяющееся действие в прошлом. Это «фон» рассказа: то, что происходило, пока что-то случилось.',
-               '<b>Образ:</b> Imperfecto — это кино на паузе: фон, обстановка, привычки. Indefinido — это щелчок: конкретное событие, которое что-то изменило.'],
-          en: ['<b>Imperfecto</b> (<i>era, tenía, vivía…</i>) is an unfinished, ongoing or repeated action in the past. It is the “background” of a story: what was going on when something happened.',
-               '<b>Picture it:</b> Imperfecto is a paused film — the background, the setting, the habits. Indefinido is a click — a specific event that changed something.']
-        }
-      },
-      {
-        heading: { ru: 'Три главных случая', en: 'Three main uses' },
-        body: {
-          ru: ['① <b>Описание</b> — внешность, характер, состояние, погода, обстановка в прошлом.',
-               '② <b>Привычка</b> — то, что делали регулярно: раньше, в детстве.',
-               '③ <b>Фон</b> — что уже происходило, когда случилось событие (оно — в Indefinido).'],
-          en: ['① <b>Description</b> — appearance, character, state, weather, the setting in the past.',
-               '② <b>Habit</b> — what people did regularly: in the past, as a child.',
-               '③ <b>Background</b> — what was already going on when an event happened (the event is in the indefinido).']
-        },
-        examples: [
-          { es: 'Era alto y tenía el pelo rubio.', ru: 'Он был высоким и светловолосым. (описание)', en: 'He was tall and had blond hair. (description)' },
-          { es: 'Hacía frío y llovía mucho.', ru: 'Было холодно и шёл сильный дождь. (погода, обстановка)', en: 'It was cold and raining hard. (weather, setting)' },
-          { es: 'De niño jugaba al fútbol todos los días.', ru: 'В детстве я играл в футбол каждый день. (привычка)', en: 'As a child I played football every day. (habit)' },
-          { es: 'Antes vivíamos en Madrid.', ru: 'Раньше мы жили в Мадриде. (раньше, но уже нет)', en: 'We used to live in Madrid. (before, but not any more)' },
-          { es: 'Dormía cuando sonó el teléfono.', ru: 'Я спал, когда зазвонил телефон. (фон + событие)', en: 'I was sleeping when the phone rang. (background + event)' },
-          { es: 'Llovía cuando salimos.', ru: 'Шёл дождь, когда мы вышли. (фон + событие)', en: 'It was raining when we went out. (background + event)' }
+        id: 'when', label: { ru: 'Когда', en: 'When' },
+        blocks: [
+          { type: 'rules', items: [
+            { color: 'teal', label: { ru: 'Претерито', en: 'Pretérito' }, title: { ru: 'Imperfecto', en: 'Imperfecto' }, es: 'era / tenía / vivía…',
+              body: { ru: 'Незавершённое, длительное или повторяющееся действие в прошлом. Это <b>«фон» рассказа</b> — то, что происходило, пока что-то случилось.',
+                      en: 'An unfinished, ongoing or repeated action in the past. It is <b>the “background” of a story</b> — what was going on when something happened.' } },
+            { color: 'amber', label: { ru: 'Для сравнения', en: 'Compare with' }, title: { ru: 'Indefinido', en: 'Indefinido' }, es: 'fue / tuvo / vivió',
+              body: { ru: '<b>Событие</b> с чёткими границами: случилось один раз, в конкретный момент, и что-то изменило. Подробно — во вкладке «Сравнение».',
+                      en: 'An <b>event</b> with clear limits: it happened once, at a specific moment, and changed something. More in the “Contrast” tab.' } }
+          ] },
+          { type: 'triggers', heading: { ru: 'Три главных случая', en: 'Three main uses' }, items: [
+            { num: '1', color: 'teal', title: { ru: 'Описание', en: 'Description' }, sub: { ru: 'как это было', en: 'what it was like' },
+              body: { ru: 'Внешность, характер, состояние, погода, обстановка в прошлом. Сюда же время и возраст: <i>Eran las tres.</i> <i>Tenía veinte años.</i>',
+                      en: 'Appearance, character, state, weather, the setting in the past. Time and age belong here too: <i>Eran las tres.</i> <i>Tenía veinte años.</i>' },
+              phrases: ['era', 'estaba', 'tenía', 'hacía frío', 'había'] },
+            { num: '2', color: 'teal', title: { ru: 'Привычка', en: 'Habit' }, sub: { ru: 'что делали регулярно', en: 'what people used to do' },
+              body: { ru: 'То, что делали регулярно: раньше, в детстве. По-русски часто «бывало», «обычно».',
+                      en: 'What people did regularly: in the past, as a child. In English often “used to” or “would”.' },
+              phrases: ['siempre', 'normalmente', 'a veces', 'todos los días', 'antes', 'cuando era niño'] },
+            { num: '3', color: 'teal', title: { ru: 'Фон', en: 'Background' }, sub: { ru: 'что уже происходило', en: 'what was already going on' },
+              body: { ru: 'Что уже происходило, когда случилось событие. Само событие — в <b>Indefinido</b>.',
+                      en: 'What was already going on when an event happened. The event itself is in the <b>indefinido</b>.' },
+              phrases: ['mientras', 'cuando'] }
+          ] },
+          { type: 'examples', heading: { ru: 'Примеры к трём случаям', en: 'Examples of the three uses' }, items: [
+            { badge: '1', color: 'teal', es: '<b>Era</b> alto y <b>tenía</b> el pelo rubio.', ru: 'Он был высоким и светловолосым. (описание)', en: 'He was tall and had blond hair. (description)' },
+            { badge: '1', color: 'teal', es: '<b>Hacía</b> frío y <b>llovía</b> mucho.', ru: 'Было холодно и шёл сильный дождь. (погода, обстановка)', en: 'It was cold and raining hard. (weather, setting)' },
+            { badge: '2', color: 'teal', es: 'De niño <b>jugaba</b> al fútbol todos los días.', ru: 'В детстве я играл в футбол каждый день. (привычка)', en: 'As a child I played football every day. (habit)' },
+            { badge: '2', color: 'teal', es: 'Antes <b>vivíamos</b> en Madrid.', ru: 'Раньше мы жили в Мадриде. (раньше, но уже нет)', en: 'We used to live in Madrid. (before, but not any more)' },
+            { badge: '3', color: 'teal', es: '<b>Dormía</b> cuando sonó el teléfono.', ru: 'Я спал, когда зазвонил телефон. (фон + событие)', en: 'I was sleeping when the phone rang. (background + event)' },
+            { badge: '3', color: 'teal', es: '<b>Llovía</b> cuando salimos.', ru: 'Шёл дождь, когда мы вышли. (фон + событие)', en: 'It was raining when we went out. (background + event)' }
+          ] },
+          { type: 'text', color: 'teal', body: {
+            ru: ['<b>Важно:</b> глаголы состояния (<i>ser, estar, tener, querer, saber, poder, haber</i>) в описаниях прошлого почти всегда стоят в Imperfecto, а не в Indefinido. Список и исключения — во вкладке «Сравнение».'],
+            en: ['<b>Important:</b> state verbs (<i>ser, estar, tener, querer, saber, poder, haber</i>) are almost always in the imperfecto in descriptions of the past, not in the indefinido. The list and the exceptions are in the “Contrast” tab.'] } },
+          { type: 'text', color: 'purple', body: {
+            ru: ['<b>Вежливая просьба:</b> Imperfecto смягчает желание, как русское «я бы хотел»: <i>Quería un café, por favor.</i> · <i>Quería preguntar una cosa.</i>'],
+            en: ['<b>Polite requests:</b> the imperfecto softens a wish, like English “I’d like”: <i>Quería un café, por favor.</i> · <i>Quería preguntar una cosa.</i>'] } },
+          { type: 'tip', title: { ru: 'Образ', en: 'Picture it' }, body: {
+            ru: ['Imperfecto — это <b>кино на паузе</b>: фон, обстановка, привычки. Indefinido — это <b>щелчок</b>: конкретное событие, которое что-то изменило.'],
+            en: ['The imperfecto is <b>a paused film</b>: the background, the setting, the habits. The indefinido is <b>a click</b>: a specific event that changed something.'] } }
         ]
       },
       {
-        heading: { ru: 'Спряжение правильных глаголов', en: 'Regular verbs' },
-        body: {
-          ru: ['Окончания <b>-ar</b>: -aba, -abas, -aba, -ábamos, -abais, -aban. Окончания <b>-er / -ir</b> одинаковые: -ía, -ías, -ía, -íamos, -íais, -ían. Ударение на «а» и «и» — ключ к форме.',
-               '<b>Хорошая новость:</b> в Imperfecto всего три неправильных глагола на весь язык — <i>ser, ir, ver</i>.'],
-          en: ['<b>-ar</b> endings: -aba, -abas, -aba, -ábamos, -abais, -aban. <b>-er / -ir</b> endings are the same: -ía, -ías, -ía, -íamos, -íais, -ían. The stress on “a” and “í” is the key to the form.',
-               '<b>Good news:</b> the whole language has only three irregular verbs in the imperfecto — <i>ser, ir, ver</i>.']
-        },
-        table: {
-          head: ['', 'hablar', 'comer', 'vivir'],
-          rows: [
-            ['yo', 'hablaba', 'comía', 'vivía'],
-            ['tú', 'hablabas', 'comías', 'vivías'],
-            ['él / ella', 'hablaba', 'comía', 'vivía'],
-            ['nosotros', 'hablábamos', 'comíamos', 'vivíamos'],
-            ['vosotros', 'hablabais', 'comíais', 'vivíais'],
-            ['ellos', 'hablaban', 'comían', 'vivían']
-          ]
-        }
-      },
-      {
-        heading: { ru: 'Три неправильных глагола: ser, ir, ver', en: 'Three irregular verbs: ser, ir, ver' },
-        body: {
-          ru: ['Их нужно просто запомнить. У <i>ver</i> сохраняется «e» из основы: <i>veía</i>, а не «vía».'],
-          en: ['These just need to be memorised. <i>Ver</i> keeps the “e” of its stem: <i>veía</i>, not “vía”.']
-        },
-        table: {
-          head: ['', 'ser', 'ir', 'ver'],
-          rows: [
-            ['yo', 'era', 'iba', 'veía'],
-            ['tú', 'eras', 'ibas', 'veías'],
-            ['él / ella', 'era', 'iba', 'veía'],
-            ['nosotros', 'éramos', 'íbamos', 'veíamos'],
-            ['vosotros', 'erais', 'ibais', 'veíais'],
-            ['ellos', 'eran', 'iban', 'veían']
-          ]
-        }
-      },
-      {
-        heading: { ru: 'Imperfecto или Indefinido', en: 'Imperfecto or indefinido' },
-        body: {
-          ru: ['<b>Роль в рассказе.</b> Imperfecto — фон, декорации, обстановка. Indefinido — событие, действие-перелом.',
-               '<b>Завершённость.</b> Imperfecto — не завершено, нет чётких границ. Indefinido — завершено, есть момент.',
-               '<b>Повторение.</b> Imperfecto — регулярно, привычка, всегда. Indefinido — один конкретный раз.',
-               '<b>Состояние.</b> Imperfecto — описание: был, хотел, знал, мог. Indefinido — изменение состояния.',
-               '<b>Вопрос.</b> Imperfecto: «Что происходило? Как было?». Indefinido: «Что случилось?».'],
-          en: ['<b>Role in the story.</b> Imperfecto: the background, the scenery, the setting. Indefinido: the event, the turning point.',
-               '<b>Completion.</b> Imperfecto: not finished, no clear limits. Indefinido: finished, there is a moment.',
-               '<b>Repetition.</b> Imperfecto: regularly, a habit, always. Indefinido: one specific time.',
-               '<b>State.</b> Imperfecto: a description — was, wanted, knew, could. Indefinido: a change of state.',
-               '<b>Question it answers.</b> Imperfecto: “What was going on? What was it like?”. Indefinido: “What happened?”.']
-        },
-        examples: [
-          { es: 'Vivía en París.', ru: 'Я жил в Париже. (описание, фон)', en: 'I lived in Paris. (description, background)' },
-          { es: 'Se mudó a París.', ru: 'Он переехал в Париж. (момент, изменение)', en: 'He moved to Paris. (a moment, a change)' },
-          { es: 'Comía pizza los viernes.', ru: 'Я ел пиццу по пятницам. (регулярно)', en: 'I used to eat pizza on Fridays. (regularly)' },
-          { es: 'Comí pizza el viernes.', ru: 'В пятницу я поел пиццу. (конкретный раз)', en: 'I ate pizza on Friday. (one specific time)' },
-          { es: 'Leía un libro cuando llegó María.', ru: 'Я читал книгу, когда пришла Мария. (фон + событие)', en: 'I was reading a book when María arrived. (background + event)' }
+        id: 'conj', label: { ru: 'Спряжение', en: 'Conjugation' },
+        blocks: [
+          { type: 'text', body: {
+            ru: ['Окончания <b>-ar</b>: -aba, -abas, -aba, -ábamos, -abais, -aban. Окончания <b>-er / -ir</b> одинаковые: -ía, -ías, -ía, -íamos, -íais, -ían. Ударение на «а» и «í» — ключ к форме. Переключайте группы у каждой карточки.'],
+            en: ['<b>-ar</b> endings: -aba, -abas, -aba, -ábamos, -abais, -aban. <b>-er / -ir</b> endings are the same: -ía, -ías, -ía, -íamos, -íais, -ían. The stress on “a” and “í” is the key to the form. Switch between the groups on each card.'] } },
+          { type: 'conj', verbs: [
+            { inf: 'terminaciones', tr: { ru: 'окончания', en: 'endings' }, variants: [
+              { label: '-ar', color: 'teal', rows: [['yo', '-<b>aba</b>'], ['tú', '-<b>abas</b>'], ['él / ella', '-<b>aba</b>'], ['nosotros', '-<b>ábamos</b>'], ['vosotros', '-<b>abais</b>'], ['ellos', '-<b>aban</b>']] },
+              { label: '-er / -ir', color: 'purple', rows: [['yo', '-<b>ía</b>'], ['tú', '-<b>ías</b>'], ['él / ella', '-<b>ía</b>'], ['nosotros', '-<b>íamos</b>'], ['vosotros', '-<b>íais</b>'], ['ellos', '-<b>ían</b>']] }
+            ] },
+            { inf: 'hablar · comer · vivir', tr: { ru: 'глаголы-образцы', en: 'model verbs' }, variants: [
+              { label: 'hablar · -ar', color: 'teal', rows: [['yo', 'habl<b>aba</b>'], ['tú', 'habl<b>abas</b>'], ['él / ella', 'habl<b>aba</b>'], ['nosotros', 'habl<b>ábamos</b>'], ['vosotros', 'habl<b>abais</b>'], ['ellos', 'habl<b>aban</b>']] },
+              { label: 'comer · -er', color: 'purple', rows: [['yo', 'com<b>ía</b>'], ['tú', 'com<b>ías</b>'], ['él / ella', 'com<b>ía</b>'], ['nosotros', 'com<b>íamos</b>'], ['vosotros', 'com<b>íais</b>'], ['ellos', 'com<b>ían</b>']] },
+              { label: 'vivir · -ir', color: 'purple', rows: [['yo', 'viv<b>ía</b>'], ['tú', 'viv<b>ías</b>'], ['él / ella', 'viv<b>ía</b>'], ['nosotros', 'viv<b>íamos</b>'], ['vosotros', 'viv<b>íais</b>'], ['ellos', 'viv<b>ían</b>']] }
+            ] },
+            { inf: 'estar · tener · salir', tr: { ru: 'частые глаголы', en: 'common verbs' }, variants: [
+              { label: 'estar · -ar', color: 'teal', rows: [['yo', 'est<b>aba</b>'], ['tú', 'est<b>abas</b>'], ['él / ella', 'est<b>aba</b>'], ['nosotros', 'est<b>ábamos</b>'], ['vosotros', 'est<b>abais</b>'], ['ellos', 'est<b>aban</b>']] },
+              { label: 'tener · -er', color: 'purple', rows: [['yo', 'ten<b>ía</b>'], ['tú', 'ten<b>ías</b>'], ['él / ella', 'ten<b>ía</b>'], ['nosotros', 'ten<b>íamos</b>'], ['vosotros', 'ten<b>íais</b>'], ['ellos', 'ten<b>ían</b>']] },
+              { label: 'salir · -ir', color: 'purple', rows: [['yo', 'sal<b>ía</b>'], ['tú', 'sal<b>ías</b>'], ['él / ella', 'sal<b>ía</b>'], ['nosotros', 'sal<b>íamos</b>'], ['vosotros', 'sal<b>íais</b>'], ['ellos', 'sal<b>ían</b>']] }
+            ] }
+          ] },
+          { type: 'text', color: 'teal', body: {
+            ru: ['<b>Хорошая новость:</b> у <b>-er</b> и <b>-ir</b> окончания одинаковые, а неправильных глаголов в Imperfecto всего три на весь язык — <i>ser, ir, ver</i>. Даже глаголы, неправильные в настоящем, здесь правильные: <i>tener → tenía</i>, <i>poder → podía</i>, <i>hacer → hacía</i>.'],
+            en: ['<b>Good news:</b> <b>-er</b> and <b>-ir</b> verbs share the same endings, and the whole language has only three irregular verbs in the imperfecto — <i>ser, ir, ver</i>. Even verbs that are irregular in the present are regular here: <i>tener → tenía</i>, <i>poder → podía</i>, <i>hacer → hacía</i>.'] } },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<b>Ударение на письме:</b> у -ar знак ударения только в форме <i>nosotros</i> (<i>hablábamos</i>), у -er / -ir — во всех формах (<i>comía, comíamos</i>). Формы <i>yo</i> и <i>él / ella</i> совпадают (<i>hablaba</i>), поэтому, если неясно, кто действует, добавляйте местоимение.'],
+            en: ['<b>Written accents:</b> -ar verbs have an accent only in the <i>nosotros</i> form (<i>hablábamos</i>); -er / -ir verbs have it in every form (<i>comía, comíamos</i>). The <i>yo</i> and <i>él / ella</i> forms are the same (<i>hablaba</i>), so add the pronoun when it is unclear who is acting.'] } },
+          { type: 'examples', heading: { ru: 'Правильные глаголы в речи', en: 'Regular verbs in use' }, items: [
+            { color: 'teal', es: 'Mi padre <b>trabajaba</b> en un banco.', ru: 'Мой отец работал в банке.', en: 'My father worked at a bank.' },
+            { color: 'purple', es: '¿Dónde <b>vivíais</b> antes?', ru: 'Где вы жили раньше?', en: 'Where did you live before?' },
+            { color: 'purple', es: 'Los domingos <b>comíamos</b> en casa de los abuelos.', ru: 'По воскресеньям мы обедали у бабушки с дедушкой.', en: 'On Sundays we had lunch at our grandparents’.' }
+          ] }
         ]
       },
       {
-        heading: { ru: 'Мини-рассказ: оба времени вместе', en: 'A mini story with both tenses' },
-        body: {
-          ru: ['<i>Era</i> una noche tranquila. <i>Llovía</i> y <i>hacía</i> frío. Yo <i>estaba</i> en casa y <i>leía</i> un libro cuando, de repente, <b>sonó</b> el teléfono. Me <b>levanté</b>, <b>contesté</b> y <b>escuché</b> la voz de mi amigo.',
-               'Курсив — Imperfecto (фон), жирный — Indefinido (события). Imperfecto задаёт сцену и описывает фон (<i>mientras, cuando</i>), Indefinido — событие, которое в этот фон врывается или прерывает его.',
-               '<i>De repente</i>, <i>entonces</i>, <i>en ese momento</i> — сигнал Indefinido: это момент-перелом, который прерывает длящийся фон Imperfecto.'],
-          en: ['<i>Era</i> una noche tranquila. <i>Llovía</i> y <i>hacía</i> frío. Yo <i>estaba</i> en casa y <i>leía</i> un libro cuando, de repente, <b>sonó</b> el teléfono. Me <b>levanté</b>, <b>contesté</b> y <b>escuché</b> la voz de mi amigo.',
-               'Italics mark the imperfecto (background), bold marks the indefinido (events). The imperfecto sets the scene and describes the background (<i>mientras, cuando</i>); the indefinido is the event that bursts into that background or interrupts it.',
-               '<i>De repente</i>, <i>entonces</i>, <i>en ese momento</i> signal the indefinido: a turning point that interrupts the ongoing imperfecto background.']
-        },
-        examples: [
-          { es: 'Era una noche tranquila. Llovía y hacía frío.', ru: 'Была тихая ночь. Шёл дождь, и было холодно.', en: 'It was a quiet night. It was raining and it was cold.' },
-          { es: 'Yo estaba en casa y leía un libro cuando, de repente, sonó el teléfono.', ru: 'Я был дома и читал книгу, когда вдруг зазвонил телефон.', en: 'I was at home reading a book when suddenly the phone rang.' },
-          { es: 'Me levanté, contesté y escuché la voz de mi amigo.', ru: 'Я встал, ответил и услышал голос своего друга.', en: 'I got up, answered and heard my friend’s voice.' }
+        id: 'irreg', label: { ru: 'Неправильные', en: 'Irregular' },
+        blocks: [
+          { type: 'text', body: {
+            ru: ['Три неправильных глагола — <b>ser, ir, ver</b> — нужно просто запомнить. У <i>ver</i> сохраняется «e» из основы: <i>veía</i>, а не «vía».'],
+            en: ['The three irregular verbs — <b>ser, ir, ver</b> — just need to be memorised. <i>Ver</i> keeps the “e” of its stem: <i>veía</i>, not “vía”.'] } },
+          { type: 'table', heading: { ru: 'Три неправильных глагола', en: 'The three irregular verbs' },
+            head: ['', 'ser', 'ir', 'ver'],
+            rows: [
+              ['yo', 'era', 'iba', 'veía'],
+              ['tú', 'eras', 'ibas', 'veías'],
+              ['él / ella', 'era', 'iba', 'veía'],
+              ['nosotros', 'éramos', 'íbamos', 'veíamos'],
+              ['vosotros', 'erais', 'ibais', 'veíais'],
+              ['ellos', 'eran', 'iban', 'veían']
+            ] },
+          { type: 'conj', heading: { ru: 'Сравните с Indefinido', en: 'Compare with the Indefinido' }, verbs: [
+            { inf: 'ser', tr: { ru: 'быть', en: 'to be' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', '<b>era</b>'], ['tú', '<b>eras</b>'], ['él / ella', '<b>era</b>'], ['nosotros', '<b>éramos</b>'], ['vosotros', '<b>erais</b>'], ['ellos', '<b>eran</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>fui</b>'], ['tú', '<b>fuiste</b>'], ['él / ella', '<b>fue</b>'], ['nosotros', '<b>fuimos</b>'], ['vosotros', '<b>fuisteis</b>'], ['ellos', '<b>fueron</b>']] }
+            ] },
+            { inf: 'ir', tr: { ru: 'идти, ехать', en: 'to go' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', '<b>iba</b>'], ['tú', '<b>ibas</b>'], ['él / ella', '<b>iba</b>'], ['nosotros', '<b>íbamos</b>'], ['vosotros', '<b>ibais</b>'], ['ellos', '<b>iban</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>fui</b>'], ['tú', '<b>fuiste</b>'], ['él / ella', '<b>fue</b>'], ['nosotros', '<b>fuimos</b>'], ['vosotros', '<b>fuisteis</b>'], ['ellos', '<b>fueron</b>']] }
+            ] },
+            { inf: 'ver', tr: { ru: 'видеть', en: 'to see' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 've<b>ía</b>'], ['tú', 've<b>ías</b>'], ['él / ella', 've<b>ía</b>'], ['nosotros', 've<b>íamos</b>'], ['vosotros', 've<b>íais</b>'], ['ellos', 've<b>ían</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>vi</b>'], ['tú', '<b>viste</b>'], ['él / ella', '<b>vio</b>'], ['nosotros', '<b>vimos</b>'], ['vosotros', '<b>visteis</b>'], ['ellos', '<b>vieron</b>']] }
+            ] }
+          ] },
+          { type: 'text', color: 'teal', body: {
+            ru: ['<b>Ser и ir</b> в Imperfecto различаются (<i>era</i> / <i>iba</i>), а в Indefinido совпадают (<i>fui</i>). <b>Haber</b> в значении «есть, имеется» тоже правильный: <i>hay → había</i> — одна форма для единственного и множественного числа.'],
+            en: ['<b>Ser and ir</b> are different in the imperfecto (<i>era</i> / <i>iba</i>) but identical in the indefinido (<i>fui</i>). <b>Haber</b> meaning “there is / there are” is regular too: <i>hay → había</i> — one form for singular and plural.'] } },
+          { type: 'examples', items: [
+            { badge: 'ser', color: 'teal', es: 'De niña <b>era</b> muy tímida.', ru: 'В детстве я была очень застенчивой.', en: 'As a child I was very shy.' },
+            { badge: 'ir', color: 'teal', es: 'Todos los veranos <b>íbamos</b> al pueblo.', ru: 'Каждое лето мы ездили в деревню.', en: 'Every summer we went to the village.' },
+            { badge: 'ir', color: 'teal', es: '¿Adónde <b>ibas</b> tan deprisa?', ru: 'Куда ты так спешил?', en: 'Where were you going in such a hurry?' },
+            { badge: 'ver', color: 'teal', es: 'Antes <b>veíamos</b> muchas series juntos.', ru: 'Раньше мы вместе смотрели много сериалов.', en: 'We used to watch a lot of series together.' },
+            { badge: 'ver', color: 'teal', es: 'Desde la ventana se <b>veía</b> el mar.', ru: 'Из окна было видно море.', en: 'You could see the sea from the window.' },
+            { badge: 'hay', color: 'teal', es: 'En la plaza <b>había</b> mucha gente.', ru: 'На площади было много людей.', en: 'There were a lot of people in the square.' }
+          ] }
         ]
       },
       {
-        heading: { ru: 'Слова-маркеры', en: 'Time markers' },
-        body: {
-          ru: ['Слева — слова, которые обычно требуют Imperfecto, справа — Indefinido.'],
-          en: ['On the left are words that usually go with the imperfecto, on the right — with the indefinido.']
-        },
-        table: {
-          head: ['imperfecto', 'indefinido'],
-          rows: [
-            ['siempre', 'ayer'],
-            ['normalmente', 'anteayer'],
-            ['generalmente', 'el lunes'],
-            ['a veces', 'de repente'],
-            ['casi siempre', 'entonces'],
-            ['todos los días', 'en ese momento'],
-            ['cada semana', 'de pronto'],
-            ['antes', 'una vez'],
-            ['de niño / de niña', 'hace 3 años'],
-            ['cuando era pequeño', 'el año pasado'],
-            ['mientras', 'en 2010'],
-            ['en aquella época', 'aquella noche'],
-            ['frecuentemente', ''],
-            ['a menudo', '']
-          ]
-        }
+        id: 'vs', label: { ru: 'Сравнение', en: 'Contrast' },
+        blocks: [
+          { type: 'table', heading: { ru: 'Imperfecto или Indefinido', en: 'Imperfecto or Indefinido' },
+            head: [{ ru: 'Критерий', en: 'Criterion' }, 'Imperfecto', 'Indefinido'],
+            rows: [
+              [{ ru: 'Роль в рассказе', en: 'Role in the story' }, { ru: 'фон, декорации, обстановка', en: 'background, scenery, setting' }, { ru: 'событие, действие-перелом', en: 'event, turning point' }],
+              [{ ru: 'Завершённость', en: 'Completion' }, { ru: 'не завершено, нет границ', en: 'unfinished, no clear limits' }, { ru: 'завершено, есть момент', en: 'finished, a clear moment' }],
+              [{ ru: 'Повторение', en: 'Repetition' }, { ru: 'регулярно, привычка, всегда', en: 'regularly, a habit, always' }, { ru: 'один конкретный раз', en: 'one specific time' }],
+              [{ ru: 'Состояние', en: 'State' }, { ru: 'описание: был, хотел, знал', en: 'description: was, wanted' }, { ru: 'изменение состояния', en: 'a change of state' }],
+              [{ ru: 'Вопрос', en: 'Question it answers' }, { ru: 'Что происходило? Как было?', en: 'What was it like?' }, { ru: 'Что случилось?', en: 'What happened?' }],
+              [{ ru: 'Пример', en: 'Example' }, 'Vivía en París.', 'Se mudó a París.']
+            ] },
+          { type: 'examples', heading: { ru: 'Примеры попарно', en: 'Examples in pairs' }, items: [
+            { badge: 'Imp', color: 'teal', es: '<b>Vivía</b> en París.', ru: 'Я жил в Париже. (описание, фон)', en: 'I lived in Paris. (description, background)' },
+            { badge: 'Ind', color: 'amber', es: '<b>Se mudó</b> a París.', ru: 'Он переехал в Париж. (момент, изменение)', en: 'He moved to Paris. (a moment, a change)' },
+            { badge: 'Imp', color: 'teal', es: '<b>Comía</b> pizza los viernes.', ru: 'Я ел пиццу по пятницам. (регулярно)', en: 'I used to eat pizza on Fridays. (regularly)' },
+            { badge: 'Ind', color: 'amber', es: '<b>Comí</b> pizza el viernes.', ru: 'В пятницу я поел пиццу. (конкретный раз)', en: 'I ate pizza on Friday. (one specific time)' },
+            { es: '<b>Leía</b> un libro cuando <b>llegó</b> María.', ru: 'Я читал книгу (фон), когда пришла Мария (событие).', en: 'I was reading a book (background) when María arrived (event).' }
+          ] },
+          { type: 'text', heading: { ru: 'Мини-рассказ: оба времени вместе', en: 'A mini story with both tenses' }, body: {
+            ru: ['<i>Era</i> una noche tranquila. <i>Llovía</i> y <i>hacía</i> frío. Yo <i>estaba</i> en casa y <i>leía</i> un libro cuando, de repente, <b>sonó</b> el teléfono. Me <b>levanté</b>, <b>contesté</b> y <b>escuché</b> la voz de mi amigo.',
+                 'Курсив — Imperfecto (фон), жирный — Indefinido (события).'],
+            en: ['<i>Era</i> una noche tranquila. <i>Llovía</i> y <i>hacía</i> frío. Yo <i>estaba</i> en casa y <i>leía</i> un libro cuando, de repente, <b>sonó</b> el teléfono. Me <b>levanté</b>, <b>contesté</b> y <b>escuché</b> la voz de mi amigo.',
+                 'Italics mark the imperfecto (background), bold marks the indefinido (events).'] } },
+          { type: 'examples', items: [
+            { badge: 'Imp', color: 'teal', es: '<b>Era</b> una noche tranquila. <b>Llovía</b> y <b>hacía</b> frío.', ru: 'Была тихая ночь. Шёл дождь, и было холодно.', en: 'It was a quiet night. It was raining and it was cold.' },
+            { es: 'Yo <b>estaba</b> en casa y <b>leía</b> un libro cuando, de repente, <b>sonó</b> el teléfono.', ru: 'Я был дома и читал книгу, когда вдруг зазвонил телефон.', en: 'I was at home reading a book when suddenly the phone rang.' },
+            { badge: 'Ind', color: 'amber', es: 'Me <b>levanté</b>, <b>contesté</b> y <b>escuché</b> la voz de mi amigo.', ru: 'Я встал, ответил и услышал голос своего друга.', en: 'I got up, answered and heard my friend’s voice.' }
+          ] },
+          { type: 'text', color: 'teal', body: {
+            ru: ['<b>Вместе:</b> Imperfecto задаёт сцену и описывает фон (<i>mientras, cuando</i>), Indefinido — событие, которое в этот фон врывается или прерывает его.'],
+            en: ['<b>Together:</b> the imperfecto sets the scene and describes the background (<i>mientras, cuando</i>); the indefinido is the event that bursts into that background or interrupts it.'] } },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<i>De repente</i>, <i>entonces</i>, <i>en ese momento</i> — сигнал Indefinido: это момент-перелом, который прерывает длящийся фон Imperfecto.'],
+            en: ['<i>De repente</i>, <i>entonces</i>, <i>en ese momento</i> signal the indefinido: a turning point that interrupts the ongoing imperfecto background.'] } },
+          { type: 'text', heading: { ru: 'Глаголы состояния', en: 'State verbs' }, color: 'teal', body: {
+            ru: ['Глаголы состояния в описаниях прошлого почти всегда стоят в Imperfecto: <i>ser → era</i> · <i>estar → estaba</i> · <i>tener → tenía</i> · <i>querer → quería</i> · <i>saber → sabía</i> · <i>poder → podía</i> · <i>haber → había</i> · <i>parecer → parecía</i> · <i>conocer → conocía</i>.'],
+            en: ['In descriptions of the past, state verbs are almost always in the imperfecto: <i>ser → era</i> · <i>estar → estaba</i> · <i>tener → tenía</i> · <i>querer → quería</i> · <i>saber → sabía</i> · <i>poder → podía</i> · <i>haber → había</i> · <i>parecer → parecía</i> · <i>conocer → conocía</i>.'] } },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<b>Исключение:</b> те же глаголы могут стоять в Indefinido, но тогда смысл меняется: <i>sabía</i> (знал) → <i>supe</i> (узнал впервые) · <i>quería</i> (хотел) → <i>quise</i> (решил, попытался) · <i>podía</i> (мог) → <i>pude</i> (смог, получилось) · <i>conocía</i> (был знаком) → <i>conocí</i> (познакомился).'],
+            en: ['<b>Exception:</b> the same verbs can be in the indefinido, but then the meaning changes: <i>sabía</i> (knew) → <i>supe</i> (found out) · <i>quería</i> (wanted) → <i>quise</i> (decided, tried) · <i>podía</i> (could) → <i>pude</i> (managed to) · <i>conocía</i> (knew someone) → <i>conocí</i> (met for the first time).'] } },
+          { type: 'conj', verbs: [
+            { inf: 'saber', tr: { ru: 'знал → узнал', en: 'knew → found out' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'sab<b>ía</b>'], ['tú', 'sab<b>ías</b>'], ['él / ella', 'sab<b>ía</b>'], ['nosotros', 'sab<b>íamos</b>'], ['vosotros', 'sab<b>íais</b>'], ['ellos', 'sab<b>ían</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>supe</b>'], ['tú', '<b>supiste</b>'], ['él / ella', '<b>supo</b>'], ['nosotros', '<b>supimos</b>'], ['vosotros', '<b>supisteis</b>'], ['ellos', '<b>supieron</b>']] }
+            ] },
+            { inf: 'querer', tr: { ru: 'хотел → решил, попытался', en: 'wanted → decided, tried' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'quer<b>ía</b>'], ['tú', 'quer<b>ías</b>'], ['él / ella', 'quer<b>ía</b>'], ['nosotros', 'quer<b>íamos</b>'], ['vosotros', 'quer<b>íais</b>'], ['ellos', 'quer<b>ían</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>quise</b>'], ['tú', '<b>quisiste</b>'], ['él / ella', '<b>quiso</b>'], ['nosotros', '<b>quisimos</b>'], ['vosotros', '<b>quisisteis</b>'], ['ellos', '<b>quisieron</b>']] }
+            ] },
+            { inf: 'poder', tr: { ru: 'мог → смог', en: 'could → managed to' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'pod<b>ía</b>'], ['tú', 'pod<b>ías</b>'], ['él / ella', 'pod<b>ía</b>'], ['nosotros', 'pod<b>íamos</b>'], ['vosotros', 'pod<b>íais</b>'], ['ellos', 'pod<b>ían</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', '<b>pude</b>'], ['tú', '<b>pudiste</b>'], ['él / ella', '<b>pudo</b>'], ['nosotros', '<b>pudimos</b>'], ['vosotros', '<b>pudisteis</b>'], ['ellos', '<b>pudieron</b>']] }
+            ] },
+            { inf: 'conocer', tr: { ru: 'был знаком → познакомился', en: 'knew → met' }, variants: [
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'conoc<b>ía</b>'], ['tú', 'conoc<b>ías</b>'], ['él / ella', 'conoc<b>ía</b>'], ['nosotros', 'conoc<b>íamos</b>'], ['vosotros', 'conoc<b>íais</b>'], ['ellos', 'conoc<b>ían</b>']] },
+              { label: 'Indefinido', color: 'amber', rows: [['yo', 'conoc<b>í</b>'], ['tú', 'conoc<b>iste</b>'], ['él / ella', 'conoc<b>ió</b>'], ['nosotros', 'conoc<b>imos</b>'], ['vosotros', 'conoc<b>isteis</b>'], ['ellos', 'conoc<b>ieron</b>']] }
+            ] }
+          ] },
+          { type: 'examples', heading: { ru: 'Смена смысла', en: 'A change of meaning' }, items: [
+            { badge: 'Imp', color: 'teal', es: 'Ya <b>sabía</b> la verdad.', ru: 'Я уже знал правду.', en: 'I already knew the truth.' },
+            { badge: 'Ind', color: 'amber', es: 'Ayer <b>supe</b> la verdad.', ru: 'Вчера я узнал правду.', en: 'Yesterday I found out the truth.' },
+            { badge: 'Imp', color: 'teal', es: '<b>Quería</b> llamarte, pero no tenía tu número.', ru: 'Я хотел тебе позвонить, но у меня не было твоего номера.', en: 'I wanted to call you, but I didn’t have your number.' },
+            { badge: 'Ind', color: 'amber', es: '<b>Quise</b> abrir la puerta, pero estaba cerrada con llave.', ru: 'Я попытался открыть дверь, но она была заперта.', en: 'I tried to open the door, but it was locked.' },
+            { badge: 'Imp', color: 'teal', es: 'No <b>podíamos</b> dormir por el ruido.', ru: 'Мы не могли уснуть из-за шума.', en: 'We couldn’t sleep because of the noise.' },
+            { badge: 'Ind', color: 'amber', es: 'Por fin <b>pudimos</b> dormir un poco.', ru: 'Наконец нам удалось немного поспать.', en: 'At last we managed to get a little sleep.' }
+          ] }
+        ]
       },
       {
-        heading: { ru: 'Глаголы состояния', en: 'State verbs' },
-        body: {
-          ru: ['Глаголы состояния в описаниях прошлого почти всегда стоят в Imperfecto: <i>ser → era</i> · <i>estar → estaba</i> · <i>tener → tenía</i> · <i>querer → quería</i> · <i>saber → sabía</i> · <i>poder → podía</i> · <i>haber → había</i> · <i>parecer → parecía</i> · <i>conocer → conocía</i>.',
-               '<b>Исключение:</b> те же глаголы могут стоять в Indefinido, но тогда смысл меняется: <i>sabía</i> (знал) → <i>supe</i> (узнал впервые) · <i>quería</i> (хотел) → <i>quise</i> (решил, попытался) · <i>podía</i> (мог) → <i>pude</i> (смог, получилось).'],
-          en: ['In descriptions of the past, state verbs are almost always in the imperfecto: <i>ser → era</i> · <i>estar → estaba</i> · <i>tener → tenía</i> · <i>querer → quería</i> · <i>saber → sabía</i> · <i>poder → podía</i> · <i>haber → había</i> · <i>parecer → parecía</i> · <i>conocer → conocía</i>.',
-               '<b>Exception:</b> the same verbs can be in the indefinido, but then the meaning changes: <i>sabía</i> (knew) → <i>supe</i> (found out) · <i>quería</i> (wanted) → <i>quise</i> (decided, tried) · <i>podía</i> (could) → <i>pude</i> (managed to).']
-        },
-        table: {
-          head: ['', 'imperfecto', 'indefinido'],
-          rows: [
-            ['saber', 'sabía', 'supe'],
-            ['querer', 'quería', 'quise'],
-            ['poder', 'podía', 'pude']
-          ]
-        }
+        id: 'keys', label: { ru: 'Маркеры', en: 'Markers' },
+        blocks: [
+          { type: 'markers', groups: [
+            { color: 'teal', title: { ru: 'Imperfecto', en: 'Imperfecto' },
+              tags: ['siempre', 'normalmente', 'generalmente', 'a veces', 'casi siempre', 'todos los días', 'cada semana', 'antes', 'de niño / de niña', 'cuando era pequeño', 'mientras', 'en aquella época', 'frecuentemente', 'a menudo'] },
+            { color: 'amber', title: { ru: 'Indefinido', en: 'Indefinido' },
+              tags: ['ayer', 'anteayer', 'el lunes', 'de repente', 'entonces', 'en ese momento', 'de pronto', 'una vez', 'hace 3 años', 'el año pasado', 'en 2010', 'aquella noche'] }
+          ] },
+          { type: 'text', color: 'teal', body: {
+            ru: ['<b>Mientras</b> почти всегда ведёт за собой Imperfecto: два действия идут одновременно, фоном. <b>Cuando</b> подходит к обоим временам — смотрите, фон это или событие.'],
+            en: ['<b>Mientras</b> is almost always followed by the imperfecto: two actions run at the same time, as background. <b>Cuando</b> works with both tenses — check whether it is background or an event.'] } },
+          { type: 'text', color: 'amber', body: {
+            ru: ['<b>Маркер — подсказка, а не закон.</b> С <i>ayer</i> тоже бывает Imperfecto, если это описание или фон: <i>Ayer llovía cuando salí.</i> — «Вчера шёл дождь, когда я вышел».'],
+            en: ['<b>A marker is a hint, not a law.</b> Even <i>ayer</i> can go with the imperfecto when it describes the background: <i>Ayer llovía cuando salí.</i> — “It was raining yesterday when I went out.”'] } },
+          { type: 'tip', title: { ru: 'Как выбрать', en: 'How to choose' }, body: {
+            ru: ['Спросите себя: <b>«Как было? Что происходило?»</b> → Imperfecto. <b>«Что случилось?»</b> → Indefinido.',
+                 'Действие повторялось без счёта (<i>siempre, a menudo</i>) → Imperfecto. Можно назвать момент или число раз (<i>una vez, ayer a las ocho</i>) → Indefinido.'],
+            en: ['Ask yourself: <b>“What was it like? What was going on?”</b> → imperfecto. <b>“What happened?”</b> → indefinido.',
+                 'The action was repeated with no count (<i>siempre, a menudo</i>) → imperfecto. You can name the moment or the number of times (<i>una vez, ayer a las ocho</i>) → indefinido.'] } }
+        ]
+      },
+      {
+        id: 'examples', label: { ru: 'Примеры', en: 'Examples' },
+        blocks: [
+          { type: 'examples', heading: { ru: 'Описание', en: 'Description' }, items: [
+            { color: 'teal', es: 'La casa de mis abuelos <b>tenía</b> un jardín enorme.', ru: 'У дома бабушки и дедушки был огромный сад.', en: 'My grandparents’ house had a huge garden.' },
+            { color: 'teal', es: 'El hotel <b>estaba</b> cerca de la playa y <b>era</b> muy barato.', ru: 'Отель был рядом с пляжем и стоил очень дёшево.', en: 'The hotel was near the beach and was very cheap.' },
+            { color: 'teal', es: '<b>Eran</b> las diez de la noche y todavía <b>hacía</b> calor.', ru: 'Было десять вечера, а всё ещё было жарко.', en: 'It was ten at night and still hot.' }
+          ] },
+          { type: 'examples', heading: { ru: 'Привычка', en: 'Habit' }, items: [
+            { color: 'teal', es: 'En la universidad <b>estudiabais</b> por la noche, ¿verdad?', ru: 'В университете вы занимались по ночам, правда?', en: 'At university you studied at night, didn’t you?' },
+            { color: 'teal', es: 'Mi madre nos <b>leía</b> un cuento cada noche.', ru: 'Мама каждый вечер читала нам сказку.', en: 'My mother read us a story every night.' },
+            { color: 'teal', es: 'Antes <b>fumaba</b>, pero ya no.', ru: 'Раньше я курил, но больше нет.', en: 'I used to smoke, but not any more.' }
+          ] },
+          { type: 'examples', heading: { ru: 'Фон и вежливость', en: 'Background and politeness' }, items: [
+            { color: 'teal', es: 'Mientras yo <b>cocinaba</b>, los niños <b>veían</b> la tele.', ru: 'Пока я готовил, дети смотрели телевизор.', en: 'While I was cooking, the kids were watching TV.' },
+            { color: 'teal', es: '<b>Íbamos</b> por la autopista cuando se pinchó una rueda.', ru: 'Мы ехали по шоссе, когда прокололось колесо.', en: 'We were driving on the motorway when we got a flat tyre.' },
+            { color: 'teal', es: '¿Qué <b>hacías</b> cuando te llamé?', ru: 'Что ты делал, когда я тебе позвонил?', en: 'What were you doing when I called you?' },
+            { color: 'purple', es: '<b>Quería</b> un café con leche, por favor.', ru: 'Я бы хотел кофе с молоком, пожалуйста.', en: 'I’d like a white coffee, please.' }
+          ] }
+        ]
       }
     ],
     quiz: [
