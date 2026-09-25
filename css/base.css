@@ -114,11 +114,11 @@
     --focus: #8fb6ff;
     --hero-bg: #07111f;
     --hero-faint: rgb(255 255 255 / 0.1);
-    --blue: #7fb2ec;   --blue-soft: #16304f;   --blue-ink: #cfe3fa;   --blue-on: #0b1726;
+    --blue: #7fb2ec;   --blue-soft: #16304f;   --blue-ink: #cfe3fa;   --blue-on: var(--bg);
     --amber: #e8a020;  --amber-soft: #3a2c10;  --amber-ink: #f6cd7a;  --amber-on: #1f1300;
-    --teal: #4cc3ae;   --teal-soft: #0f3530;   --teal-ink: #bdebe2;   --teal-on: #0b1726;
-    --coral: #ee8080;  --coral-soft: #43201f;  --coral-ink: #f8c9c9;  --coral-on: #0b1726;
-    --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: #0b1726;
+    --teal: #4cc3ae;   --teal-soft: #0f3530;   --teal-ink: #bdebe2;   --teal-on: var(--bg);
+    --coral: #ee8080;  --coral-soft: #43201f;  --coral-ink: #f8c9c9;  --coral-on: var(--bg);
+    --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: var(--bg);
     --shadow-lift: 0 1px 0 var(--line), 0 8px 22px -12px rgb(0 0 0 / 0.7);
   }
 }
@@ -149,11 +149,11 @@
   --focus: #8fb6ff;
   --hero-bg: #07111f;
   --hero-faint: rgb(255 255 255 / 0.1);
-  --blue: #7fb2ec;   --blue-soft: #16304f;   --blue-ink: #cfe3fa;   --blue-on: #0b1726;
+  --blue: #7fb2ec;   --blue-soft: #16304f;   --blue-ink: #cfe3fa;   --blue-on: var(--bg);
   --amber: #e8a020;  --amber-soft: #3a2c10;  --amber-ink: #f6cd7a;  --amber-on: #1f1300;
-  --teal: #4cc3ae;   --teal-soft: #0f3530;   --teal-ink: #bdebe2;   --teal-on: #0b1726;
-  --coral: #ee8080;  --coral-soft: #43201f;  --coral-ink: #f8c9c9;  --coral-on: #0b1726;
-  --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: #0b1726;
+  --teal: #4cc3ae;   --teal-soft: #0f3530;   --teal-ink: #bdebe2;   --teal-on: var(--bg);
+  --coral: #ee8080;  --coral-soft: #43201f;  --coral-ink: #f8c9c9;  --coral-on: var(--bg);
+  --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: var(--bg);
   --shadow-lift: 0 1px 0 var(--line), 0 8px 22px -12px rgb(0 0 0 / 0.7);
 }
 
@@ -644,7 +644,7 @@ a, button, label, summary {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-width: var(--tap);
+  min-width: max-content; /* equal widths when they fit, never narrower than the label: labels do not run together */
   min-height: 48px;
   padding: var(--space-2) var(--space-3);
   border: 0;
@@ -673,7 +673,7 @@ a, button, label, summary {
 .tab[aria-selected="true"] .tab__num { background: var(--hero-accent); color: var(--hero-on-accent); }
 /* Very narrow screens: labels may wrap to two lines instead of pushing the strip wider. */
 @media (max-width: 400px) {
-  .tab { gap: 4px; padding-inline: 6px; white-space: normal; line-height: 1.2; text-align: center; font-size: 0.8125rem; }
+  .tab { min-width: var(--tap); gap: 4px; padding-inline: 6px; white-space: normal; line-height: 1.2; text-align: center; font-size: 0.8125rem; }
 }
 /* the strip sits right under a topic hero, like on the old pages */
 .hero + .tabs { border-radius: 0 0 var(--radius-l) var(--radius-l); }
@@ -698,9 +698,7 @@ a, button, label, summary {
   gap: var(--space-2);
   padding: var(--space-6) var(--space-5) var(--space-5);
   border-radius: var(--radius-l);
-  background: var(--hero-bg);
-  color: var(--hero-ink);
-  text-align: center;
+  text-align: center; /* navy band and hatching: the shared .site-header, .hero rule */
   overflow: hidden;
 }
 .hero__title {

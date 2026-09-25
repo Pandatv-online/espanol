@@ -26,7 +26,6 @@
       'grammar.retry': 'Ещё раз',
       'grammar.tabTest': 'Тест',
       'grammar.tabsLabel': 'Разделы темы',
-      'grammar.tableOf': 'Таблица: {cols}',
       'grammar.notPassedTabs': 'Для зачёта нужно 80% верных ответов. Перечитайте вкладки темы и попробуйте ещё раз.'
     },
     en: {
@@ -49,13 +48,14 @@
       'grammar.retry': 'Try again',
       'grammar.tabTest': 'Test',
       'grammar.tabsLabel': 'Topic sections',
-      'grammar.tableOf': 'Table: {cols}',
       'grammar.notPassedTabs': 'You need 80% correct answers to pass. Reread the topic tabs and try again.'
     }
   });
 
   var ui = ECA.ui, i18n = ECA.i18n, el = ui.el, quiz = ECA.quiz, session = quiz.session;
   function t(key, params) { return i18n.t(key, params); }
+  // Name of a table without heading: in the language of its block (render's `lang`), not the interface language.
+  var TABLE_OF = { ru: 'Таблица: ', en: 'Table: ' };
   function plain(str) { return String(str || '').replace(/<[^>]*>/g, ''); }
   function newSeed() { return Math.floor(Math.random() * 4294967296); }
 
@@ -175,7 +175,7 @@
       }));
       // Focusable region, so a keyboard user can scroll a wide table; without a heading it is named by its columns.
       var name = b.heading ? pick(b.heading, lang)
-        : t('grammar.tableOf', { cols: b.head.map(function (h) { return pick(h, lang); }).filter(Boolean).join(', ') });
+        : pick(TABLE_OF, lang) + b.head.map(function (h) { return pick(h, lang); }).filter(Boolean).join(', ');
       return el('div', { class: 'table-wrap', role: 'region', tabindex: '0', 'aria-label': name },
         el('table', { class: 'table grammar-table' }, [thead, tbody]));
     },

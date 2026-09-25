@@ -29,13 +29,29 @@ test('component rules use colour tokens only: no hex / rgb() literals outside th
   }
 });
 
-test('tokens with the same value in the light theme refer to one another', () => {
-  const light = block(base, ':root').join(';\n');
+// Hex literals shared by two or more tokens of one block: each group should be one literal plus var() references.
+function duplicateLiterals(selector) {
   const literals = {};
-  (light.match(/--[\w-]+: #[0-9a-f]{6}/gi) || []).forEach((d) => {
-    const [name, value] = d.split(': ');
-    (literals[value.toLowerCase()] = literals[value.toLowerCase()] || []).push(name);
+  block(base, selector).forEach((d) => {
+    const m = d.match(/^(--[\w-]+): (#[0-9a-f]{6})$/i);
+    if (m) (literals[m[2].toLowerCase()] = literals[m[2].toLowerCase()] || []).push(m[1]);
   });
-  const dup = Object.entries(literals).filter(([, names]) => names.length > 1);
-  assert.deepEqual(dup, []);
+  return Object.entries(literals).filter(([, names]) => names.length > 1);
+}
+
+test('tokens with the same value in the light theme refer to one another', () => {
+  assert.deepEqual(duplicateLiterals(':root'), []);
+});
+
+test('tokens with the same value in the dark theme refer to one another', () => {
+  assert.deepEqual(duplicateLiterals(':root[data-theme="dark"]'), []);
+});
+
+test('the topic hero gets its navy band with the hatching from one rule, like the site header', () => {
+  const rules = base.split('}').map((r) => r.split('{')).filter((r) => r.length === 2);
+  const heroRules = rules.filter(([sel]) => sel.split(',').some((s) => s.trim() === '.hero'));
+  const painting = heroRules.filter(([, body]) => /(^|;)\s*(background|background-color|background-image|color)\s*:/.test(body));
+  assert.equal(painting.length, 1, 'rules painting .hero: ' + painting.map(([s]) => s.trim()).join(' | '));
+  assert.match(painting[0][0], /\.site-header/);
+  assert.match(painting[0][1], /repeating-linear-gradient/);
 });

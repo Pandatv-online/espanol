@@ -514,7 +514,6 @@ check('tab strip with 6 tabs at 320px: the chosen tab is never clipped, each tab
 check('a started test survives a tab change through location.hash and a language switch', async (page) => {
   await page.goto(url + TABBED + '/test');
   await page.locator('.grammar-quiz .btn--primary').click();
-  const first = await page.textContent('.grammar-question__prompt');
   await page.locator('.grammar-quiz .option').first().click();
   await page.locator('[data-next]').click();
   const second = await page.textContent('.grammar-question__es');
@@ -527,7 +526,6 @@ check('a started test survives a tab change through location.hash and a language
   await page.click('[data-lang="en"]');
   assert.match(await page.textContent('.grammar-quiz__progress'), /Question 2 of 10/);
   assert.equal(await page.textContent('.grammar-question__es'), second, 'same question after the language switch');
-  assert.ok(first);
 });
 
 check('grammar blocks escape dangerous markup from data', async (page) => {
@@ -565,17 +563,20 @@ check('markers without colour are neutral; a table without heading is a named re
     const L = (s) => ({ ru: s, en: s });
     const panel = document.getElementById('grammar-panel');
     const m = ECA.grammarBlocks.render({ type: 'markers', groups: [{ title: L('Союзы'), tags: ['aunque'] }] }, 'ru');
-    const tb = ECA.grammarBlocks.render({ type: 'table', head: ['', 'hablar', 'comer'], rows: [['yo', 'hablo', 'como']] }, 'ru');
+    const table = { type: 'table', head: ['', 'hablar', 'comer'], rows: [['yo', 'hablo', 'como']] };
+    const tb = ECA.grammarBlocks.render(table, 'ru');
+    const tbEn = ECA.grammarBlocks.render(table, 'en');
     panel.append(m, tb);
     const box = m.querySelector('.kw-box');
-    const surface = getComputedStyle(document.querySelector('.ex-box') || panel).backgroundColor;
     const probe = document.createElement('div'); probe.style.background = 'var(--surface)'; panel.appendChild(probe);
     return { cls: box.className, bg: getComputedStyle(box).backgroundColor, surface: getComputedStyle(probe).backgroundColor,
-      name: tb.querySelector('[role="region"]').getAttribute('aria-label') };
+      name: tb.querySelector('[role="region"]').getAttribute('aria-label'),
+      nameEn: tbEn.querySelector('[role="region"]').getAttribute('aria-label') };
   });
   assert.equal(r.cls, 'kw-box', 'no colour class');
   assert.equal(r.bg, r.surface, 'neutral paper background');
-  assert.match(r.name || '', /hablar, comer/, 'region named by its columns');
+  assert.equal(r.name, 'Таблица: hablar, comer', 'region named by its columns, in the language passed to render');
+  assert.equal(r.nameEn, 'Table: hablar, comer', 'the same table rendered for English is named in English');
 });
 
 // Every topic, every tab, at 320px in the dark theme: no errors, no sideways scroll, mini-tabs switch, the test finishes.
@@ -613,7 +614,10 @@ check('EN interface: every grammar topic has English tab labels and hero line', 
     const out = [];
     for (const l of ECA.data.levels()) for (const t of ECA.data.grammar(l.id)) {
       location.hash = `#/${l.id.toLowerCase()}/grammar/${t.id}`;
-      await new Promise((r) => setTimeout(r, 30));
+      // wait for this topic's own h1, so the previous topic's screen is never the one checked
+      const title = t.hero.es.replace(/<[^>]*>/g, '');
+      for (let i = 0; i < 200 && document.querySelector('h1.hero__title')?.textContent !== title; i++) await new Promise((r) => setTimeout(r, 10));
+      if (document.querySelector('h1.hero__title')?.textContent !== title) { out.push(t.id + ': no h1'); continue; }
       const text = [...document.querySelectorAll('.tab__label, .hero__sub, #grammar-panel')].map((n) => n.textContent).join(' ');
       if (/[а-яё]/i.test(text)) out.push(t.id);
     }
@@ -621,6 +625,19 @@ check('EN interface: every grammar topic has English tab labels and hero line', 
   });
   assert.deepEqual(bad, []);
 }, { locale: 'en-US' });
+
+check('1280px: every tab of every grammar topic holds its label with padding (no labels running together)', async (page) => {
+  await page.goto(url + '#/a1');
+  const hashes = await page.evaluate(() => ECA.data.levels().flatMap((l) => ECA.data.grammar(l.id).map((t) => `#/${l.id.toLowerCase()}/grammar/${t.id}`)));
+  const tight = [];
+  for (const hash of hashes) {
+    await page.goto(url + hash);
+    await page.waitForSelector('.tabs .tab');
+    tight.push(...(await page.$$eval('.tabs .tab', (ts, h) => ts.filter((t) => t.scrollWidth > t.clientWidth)
+      .map((t) => `${h}: «${t.textContent.trim()}» +${t.scrollWidth - t.clientWidth}px`), hash)));
+  }
+  assert.equal(tight.length, 0, 'labels overflow their tab: ' + tight.join(' | '));
+}, { width: 1280 });
 
 check('4-column tables fit a 375px screen without scrolling inside', async (page) => {
   await page.goto(url + '#/a1');
