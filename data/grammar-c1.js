@@ -39,13 +39,10 @@ ECA.data.addGrammar('C1', [
               ['tener que + infinitivo', 'Tengo que irme.'],
               ['llevar + participio', 'Llevo leídas cien páginas.']
             ] },
-          { type: 'conj', heading: { ru: 'Куда ставить местоимение', en: 'Where the pronoun goes' }, verbs: [
-            { inf: 'lo · te · se · me lo', tr: { ru: 'два равноправных варианта', en: 'two equally correct options' }, variants: [
-              { label: { ru: 'перед глаголом', en: 'before the verb' }, color: 'amber', rows: [['lo', '<b>Lo</b> acabo de ver.'], ['te', '<b>Te</b> vuelvo a llamar.'], ['se', '<b>Se</b> está duchando.'], ['me lo', '<b>Me lo</b> tienes que contar.']] },
-              { label: { ru: 'после инфинитива', en: 'attached' }, color: 'amber', rows: [['lo', 'Acabo de <b>verlo</b>.'], ['te', 'Vuelvo a <b>llamarte</b>.'], ['se', 'Está <b>duchándose</b>.'], ['me lo', 'Tienes que <b>contármelo</b>.']] }
-            ] }
-          ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
+          { type: 'text', heading: { ru: 'Куда ставить местоимение: два равноправных варианта', en: 'Where the pronoun goes: two equally correct options' }, body: {
+            ru: ['<b>Перед глаголом</b> или <b>после инфинитива</b> — оба варианта правильны:', '<b>Lo</b> acabo de ver. = Acabo de <b>verlo</b>. (конец)', '<b>Te</b> vuelvo a llamar. = Vuelvo a <b>llamarte</b>. (повтор)', '<b>Se</b> está duchando. = Está <b>duchándose</b>. (процесс)', '<b>Me lo</b> tienes que contar. = Tienes que <b>contármelo</b>. (долг)'],
+            en: ['<b>Before the verb</b> or <b>attached</b> to the infinitive — both are correct:', '<b>Lo</b> acabo de ver. = Acabo de <b>verlo</b>. (end)', '<b>Te</b> vuelvo a llamar. = Vuelvo a <b>llamarte</b>. (repetition)', '<b>Se</b> está duchando. = Está <b>duchándose</b>. (progress)', '<b>Me lo</b> tienes que contar. = Tienes que <b>contármelo</b>. (duty)'] } },
+          { type: 'text', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
             ru: 'Внутрь перифразы местоимение не ставят — <i>*Acabo de lo ver</i> ошибка. Два местоимения всегда идут вместе: <i>Te lo vuelvo a decir</i> или <i>Vuelvo a decírtelo</i>. У присоединённой формы часто появляется ударение: <i>duchándose, contármelo</i>.',
             en: 'A pronoun never goes inside the periphrasis — <i>*Acabo de lo ver</i> is wrong. Two pronouns always stay together: <i>Te lo vuelvo a decir</i> or <i>Vuelvo a decírtelo</i>. The attached form often needs a written accent: <i>duchándose, contármelo</i>.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
@@ -70,16 +67,26 @@ ECA.data.addGrammar('C1', [
           { type: 'text', color: 'teal', heading: { ru: 'Ir a: план, а не «вот-вот»', en: 'Ir a: a plan, not “about to”' }, body: {
             ru: '<b>Ir a + инфинитив</b> тоже смотрит вперёд, но это план или прогноз: <i>Voy a llamarla mañana</i>. В imperfecto — намерение, которое не сбылось: <i>Iba a llamarte, pero se me olvidó</i>.',
             en: '<b>Ir a + infinitive</b> also looks ahead, but it is a plan or a prediction: <i>Voy a llamarla mañana</i>. In the imperfecto it is an intention that did not happen: <i>Iba a llamarte, pero se me olvidó</i>.' } },
-          { type: 'conj', heading: { ru: 'Спряжение: presente и indefinido', en: 'Conjugation: presente and indefinido' }, verbs: [
-            { inf: 'ponerse a', tr: { ru: 'возвратный, неправильный', en: 'reflexive, irregular' }, variants: [
-              { label: 'Presente', color: 'blue', rows: [['yo', 'me <b>pongo</b> a'], ['tú', 'te <b>pones</b> a'], ['él / ella', 'se <b>pone</b> a'], ['nosotros', 'nos <b>ponemos</b> a'], ['vosotros', 'os <b>ponéis</b> a'], ['ellos', 'se <b>ponen</b> a']] },
-              { label: 'Indefinido', color: 'amber', rows: [['yo', 'me <b>puse</b> a'], ['tú', 'te <b>pusiste</b> a'], ['él / ella', 'se <b>puso</b> a'], ['nosotros', 'nos <b>pusimos</b> a'], ['vosotros', 'os <b>pusisteis</b> a'], ['ellos', 'se <b>pusieron</b> a']] }
+          { type: 'table', heading: { ru: 'Ponerse a: presente и indefinido + a (возвратный, неправильный)', en: 'Ponerse a: presente and indefinido + a (reflexive, irregular)' },
+            head: ['', 'presente', 'indefinido'],
+            rows: [
+              ['yo', 'me pongo', 'me puse'],
+              ['tú', 'te pones', 'te pusiste'],
+              ['él / ella', 'se pone', 'se puso'],
+              ['nosotros', 'nos ponemos', 'nos pusimos'],
+              ['vosotros', 'os ponéis', 'os pusisteis'],
+              ['ellos', 'se ponen', 'se pusieron']
             ] },
-            { inf: 'echarse a', tr: { ru: 'возвратный, правильный', en: 'reflexive, regular' }, variants: [
-              { label: 'Presente', color: 'blue', rows: [['yo', 'me <b>echo</b> a'], ['tú', 'te <b>echas</b> a'], ['él / ella', 'se <b>echa</b> a'], ['nosotros', 'nos <b>echamos</b> a'], ['vosotros', 'os <b>echáis</b> a'], ['ellos', 'se <b>echan</b> a']] },
-              { label: 'Indefinido', color: 'amber', rows: [['yo', 'me <b>eché</b> a'], ['tú', 'te <b>echaste</b> a'], ['él / ella', 'se <b>echó</b> a'], ['nosotros', 'nos <b>echamos</b> a'], ['vosotros', 'os <b>echasteis</b> a'], ['ellos', 'se <b>echaron</b> a']] }
-            ] }
-          ] },
+          { type: 'table', heading: { ru: 'Echarse a: presente и indefinido + a (возвратный, правильный)', en: 'Echarse a: presente and indefinido + a (reflexive, regular)' },
+            head: ['', 'presente', 'indefinido'],
+            rows: [
+              ['yo', 'me echo', 'me eché'],
+              ['tú', 'te echas', 'te echaste'],
+              ['él / ella', 'se echa', 'se echó'],
+              ['nosotros', 'nos echamos', 'nos echamos'],
+              ['vosotros', 'os echáis', 'os echasteis'],
+              ['ellos', 'se echan', 'se echaron']
+            ] },
           { type: 'markers', heading: { ru: 'С чем сочетаются', en: 'Typical partners' }, groups: [
             { color: 'teal', title: { ru: 'echarse a · romper a', en: 'echarse a · romper a' }, tags: ['reír', 'llorar', 'correr', 'temblar', 'andar', 'volar'] },
             { color: 'teal', title: { ru: 'ponerse a', en: 'ponerse a' }, tags: ['llover', 'trabajar', 'estudiar', 'cantar', 'gritar', 'buscar'] }
@@ -108,21 +115,21 @@ ECA.data.addGrammar('C1', [
           { type: 'conj', heading: { ru: 'Утверждение и отрицание', en: 'Affirmative and negative' }, verbs: [
             { inf: 'llevar', tr: { ru: 'сколько уже длится', en: 'how long so far' }, variants: [
               { label: { ru: 'да: + герундий', en: 'yes: + gerund' }, color: 'blue', rows: [['yo', 'Llevo un año <b>estudiando</b>.'], ['tú', 'Llevas horas <b>hablando</b>.'], ['ella', 'Lleva un mes <b>trabajando</b> aquí.'], ['nosotros', 'Llevamos días <b>buscando</b> piso.']] },
-              { label: { ru: 'нет: sin + инф.', en: 'no: sin + inf.' }, color: 'blue', rows: [['yo', 'Llevo un año <b>sin estudiar</b>.'], ['tú', 'Llevas horas <b>sin hablar</b>.'], ['ella', 'Lleva un mes <b>sin trabajar</b>.'], ['nosotros', 'Llevamos días <b>sin dormir</b> bien.']] }
+              { label: { ru: 'нет: sin + инф.', en: 'no: sin + inf.' }, color: 'coral', rows: [['yo', 'Llevo un año <b>sin estudiar</b>.'], ['tú', 'Llevas horas <b>sin hablar</b>.'], ['ella', 'Lleva un mes <b>sin trabajar</b>.'], ['nosotros', 'Llevamos días <b>sin dormir</b> bien.']] }
             ] },
             { inf: 'seguir', tr: { ru: 'всё ещё', en: 'still' }, variants: [
               { label: { ru: 'да: + герундий', en: 'yes: + gerund' }, color: 'blue', rows: [['yo', 'Sigo <b>viviendo</b> en Sevilla.'], ['tú', '¿Sigues <b>teniendo</b> coche?'], ['ellos', 'Siguen <b>contestando</b> tarde.']] },
-              { label: { ru: 'нет: sin + инф.', en: 'no: sin + inf.' }, color: 'blue', rows: [['yo', 'Sigo <b>sin vivir</b> en Sevilla.'], ['tú', '¿Sigues <b>sin tener</b> coche?'], ['ellos', 'Siguen <b>sin contestar</b>.']] }
+              { label: { ru: 'нет: sin + инф.', en: 'no: sin + inf.' }, color: 'coral', rows: [['yo', 'Sigo <b>sin entender</b> el problema.'], ['tú', '¿Sigues <b>sin tener</b> coche?'], ['ellos', 'Siguen <b>sin contestar</b>.']] }
             ] }
           ] },
           { type: 'table', heading: { ru: 'Три способа сказать «уже три часа»', en: 'Three ways to say “for three hours”' },
             head: [{ ru: 'Конструкция', en: 'Structure' }, { ru: 'Пример', en: 'Example' }],
             rows: [
-              ['llevar + gerundio', 'Llevo tres horas esperando.'],
-              ['hace … que', 'Hace tres horas que espero.'],
-              ['desde hace', 'Espero desde hace tres horas.']
+              ['llevar + ger.', 'Llevo 3 horas esperando.'],
+              ['hace … que', 'Hace 3 horas que espero.'],
+              ['desde hace', 'Espero desde hace 3 horas.']
             ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
+          { type: 'text', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
             ru: '<b>Llevar + gerundio</b> — только о том, что длится <b>до момента речи</b> или до момента в прошлом (тогда <i>llevaba…</i>). Нужен срок или вопрос о сроке: <i>¿Cuánto tiempo llevas esperando?</i> Просто «всё ещё жду» — <i>Sigo esperando</i>.',
             en: '<b>Llevar + gerundio</b> is only about something lasting <b>up to the moment of speaking</b> or up to a past moment (then <i>llevaba…</i>). It needs a time phrase or a question about time: <i>¿Cuánto tiempo llevas esperando?</i> A plain “I’m still waiting” is <i>Sigo esperando</i>.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
@@ -145,18 +152,18 @@ ECA.data.addGrammar('C1', [
             { color: 'coral', title: { ru: 'Terminar de · llegar a', en: 'Terminar de · llegar a' }, es: 'terminar de · llegar a + infinitivo',
               body: { ru: '<b>Terminar de</b> — довести до конца: <i>¿Has terminado de comer?</i> <b>Llegar a</b> — дойти до результата или крайности: <i>Llegué a pensar que no volvería</i>.', en: '<b>Terminar de</b> — to finish doing: <i>¿Has terminado de comer?</i> <b>Llegar a</b> — to get as far as a result or an extreme: <i>Llegué a pensar que no volvería</i>.' } }
           ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Не путайте', en: 'Don’t confuse' }, body: {
+          { type: 'text', heading: { ru: 'Не путайте', en: 'Don’t confuse' }, body: {
             ru: '<b>Acabar de</b> + инфинитив — «только что», <b>acabar</b> + gerundio — «в итоге». <i>Acaba de mudarse a Chile</i> — «только что переехал в Чили»; <i>Acabó mudándose a Chile</i> — «в итоге переехал в Чили».',
             en: '<b>Acabar de</b> + infinitive — “have just”, <b>acabar</b> + gerundio — “to end up”. <i>Acaba de mudarse a Chile</i> — “he has just moved to Chile”; <i>Acabó mudándose a Chile</i> — “he ended up moving to Chile”.' } },
           { type: 'conj', heading: { ru: 'Acabar: два значения', en: 'Acabar: two meanings' }, verbs: [
             { inf: 'acabar', tr: { ru: '«только что» или «в итоге»', en: '“have just” or “end up”' }, variants: [
               { label: 'acabar de + inf.', color: 'coral', rows: [['yo', '<b>Acabo de</b> llegar.'], ['tú', '<b>Acabas de</b> despertarte.'], ['él / ella', '<b>Acaba de</b> irse.'], ['nosotros', '<b>Acabamos de</b> cenar.'], ['vosotros', '<b>Acabáis de</b> aprobar.'], ['ellos', '<b>Acaban de</b> casarse.']] },
-              { label: 'acabar + ger.', color: 'coral', rows: [['yo', '<b>Acabé cediendo</b>.'], ['tú', '<b>Acabarás aceptando</b>.'], ['él / ella', '<b>Acabó cambiando</b> de idea.'], ['nosotros', '<b>Acabamos riéndonos</b>.'], ['vosotros', '<b>Acabasteis discutiendo</b>.'], ['ellos', '<b>Acabaron casándose</b>.']] }
+              { label: 'acabar + ger.', color: 'amber', rows: [['yo', '<b>Acabé cediendo</b>.'], ['tú', '<b>Acabarás aceptando</b>.'], ['él / ella', '<b>Acabó cambiando</b> de idea.'], ['nosotros', '<b>Acabamos riéndonos</b>.'], ['vosotros', '<b>Acabasteis discutiendo</b>.'], ['ellos', '<b>Acabaron casándose</b>.']] }
             ] }
           ] },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'coral', es: '<b>Acababa de llegar</b> a casa cuando me llamaste.', ru: 'Я только-только пришёл домой, когда ты позвонил.', en: 'I had just got home when you called me.' },
-            { color: 'coral', es: 'Discutían tanto que <b>acabaron separándose</b>.', ru: 'Они так много ссорились, что в итоге расстались.', en: 'They argued so much that they ended up splitting up.' },
+            { color: 'amber', es: 'Discutían tanto que <b>acabaron separándose</b>.', ru: 'Они так много ссорились, что в итоге расстались.', en: 'They argued so much that they ended up splitting up.' },
             { color: 'coral', es: 'Si vas a Granada, <b>no dejes de ver</b> la Alhambra.', ru: 'Если поедешь в Гранаду, обязательно посмотри Альгамбру.', en: 'If you go to Granada, be sure to see the Alhambra.' }
           ] }
         ]
@@ -174,17 +181,23 @@ ECA.data.addGrammar('C1', [
             { color: 'purple', title: { ru: 'Deber · haber de', en: 'Deber · haber de' }, es: 'deber · haber de + infinitivo',
               body: { ru: '<b>Deber</b> — моральный долг, совет: <i>Debes decirle la verdad</i>. <b>Haber de</b> — книжное «надлежит, предстоит»: <i>Has de saber que…</i>', en: '<b>Deber</b> — moral duty, advice: <i>Debes decirle la verdad</i>. <b>Haber de</b> — formal or literary “must, be to”: <i>Has de saber que…</i>' } }
           ] },
-          { type: 'conj', heading: { ru: 'Deber и soler', en: 'Deber and soler' }, verbs: [
+          { type: 'conj', heading: { ru: 'Deber или deber de', en: 'Deber or deber de' }, verbs: [
             { inf: 'deber', tr: { ru: 'долг или вероятность', en: 'duty or probability' }, variants: [
               { label: { ru: 'долг', en: 'obligation' }, color: 'purple', rows: [['él', '<b>Debe</b> estar en casa a las diez.'], ['tú', '<b>Debes</b> tener más cuidado.'], ['ellos', '<b>Deben</b> ser puntuales.']] },
               { label: { ru: 'вероятность', en: 'probability' }, color: 'amber', rows: [['él', '<b>Debe de</b> estar ya en casa.'], ['tú', '<b>Debes de</b> tener hambre.'], ['ellos', '<b>Deben de</b> ser hermanos.']] }
-            ] },
-            { inf: 'soler', tr: { ru: 'только два времени', en: 'only two tenses' }, variants: [
-              { label: 'Presente', color: 'blue', rows: [['yo', 'su<b>elo</b>'], ['tú', 'su<b>eles</b>'], ['él / ella', 'su<b>ele</b>'], ['nosotros', 'sol<b>emos</b>'], ['vosotros', 'sol<b>éis</b>'], ['ellos', 'su<b>elen</b>']] },
-              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'sol<b>ía</b>'], ['tú', 'sol<b>ías</b>'], ['él / ella', 'sol<b>ía</b>'], ['nosotros', 'sol<b>íamos</b>'], ['vosotros', 'sol<b>íais</b>'], ['ellos', 'sol<b>ían</b>']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Deber или deber de', en: 'Deber or deber de' }, body: {
+          { type: 'table', heading: { ru: 'Soler: только два времени', en: 'Soler: only two tenses' },
+            head: ['', 'presente', 'imperfecto'],
+            rows: [
+              ['yo', 'suelo', 'solía'],
+              ['tú', 'sueles', 'solías'],
+              ['él / ella', 'suele', 'solía'],
+              ['nosotros', 'solemos', 'solíamos'],
+              ['vosotros', 'soléis', 'solíais'],
+              ['ellos', 'suelen', 'solían']
+            ] },
+          { type: 'text', heading: { ru: 'Deber или deber de', en: 'Deber or deber de' }, body: {
             ru: '<b>Deber de</b> + инфинитив — предположение, «наверное»: <i>Debe de estar enfermo</i>. <b>Deber</b> без <i>de</i> — долг: <i>Debe estar en clase a las ocho</i> — «он обязан быть на занятии в восемь». По норме RAE <i>deber de</i> в значении долга — ошибка; <i>deber</i> для вероятности допускается, но в тщательной речи их различают.',
             en: '<b>Deber de</b> + infinitive is a guess, “must (probably)”: <i>Debe de estar enfermo</i>. <b>Deber</b> without <i>de</i> is duty: <i>Debe estar en clase a las ocho</i> — “he has to be in class at eight”. According to the RAE, <i>deber de</i> for obligation is a mistake; <i>deber</i> for probability is accepted, but careful speakers keep them apart.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
@@ -212,7 +225,7 @@ ECA.data.addGrammar('C1', [
             { badge: 'dur', color: 'blue', es: '<b>Llevaba</b> dos horas <b>esperando</b> cuando por fin llegó el médico.', ru: 'Я ждал уже два часа, когда наконец пришёл врач.', en: 'I had been waiting for two hours when the doctor finally arrived.' },
             { badge: 'dur', color: 'blue', es: 'Mi vecino <b>anda contando</b> a todo el mundo que me mudo.', ru: 'Мой сосед всем рассказывает, что я переезжаю.', en: 'My neighbour is going around telling everyone I’m moving.' },
             { badge: 'fin', color: 'coral', es: '<b>Acabamos de enterarnos</b> de la noticia.', ru: 'Мы только что узнали эту новость.', en: 'We’ve just heard the news.' },
-            { badge: 'fin', color: 'coral', es: 'Tras tantos años en el extranjero, <b>acabó volviendo</b> a su ciudad.', ru: 'После стольких лет за границей она в итоге вернулась в родной город.', en: 'After so many years abroad, she ended up going back to her home town.' },
+            { badge: 'fin', color: 'amber', es: 'Tras tantos años en el extranjero, <b>acabó volviendo</b> a su ciudad.', ru: 'После стольких лет за границей она в итоге вернулась в родной город.', en: 'After so many years abroad, she ended up going back to her home town.' },
             { badge: 'fin', color: 'coral', es: '<b>Dejad de discutir</b> y escuchad.', ru: 'Хватит спорить, послушайте.', en: 'Stop arguing and listen.' },
             { badge: 'fin', color: 'coral', es: '<b>No acabo de entender</b> por qué se enfadó.', ru: 'Никак не пойму, почему он рассердился.', en: 'I can’t quite understand why he got angry.' },
             { badge: 'fin', color: 'coral', es: '<b>Ha dejado de llover</b>, podemos salir.', ru: 'Дождь перестал, можно выходить.', en: 'It’s stopped raining, we can go out.' },
@@ -285,9 +298,9 @@ ECA.data.addGrammar('C1', [
             { color: 'coral', label: { ru: 'Возможно или неважно', en: 'Possible or irrelevant' }, title: { ru: 'Aunque + presente de subjuntivo', en: 'Aunque + presente de subjuntivo' }, es: 'aunque esté',
               body: { ru: 'Возможность или неважный факт: «даже если…». <i>Aunque llueva, saldré</i> — не знаю, будет ли дождь, но это ничего не меняет. Так же говорят о том, что оба собеседника уже знают: <i>Sí, ya sé que es tu jefe, pero aunque sea tu jefe, no puede gritarte</i>.',
                       en: 'A possibility or an irrelevant fact: “even if…”. <i>Aunque llueva, saldré</i> — I don’t know if it will rain, but it changes nothing. It is also used for something both speakers already know: <i>Sí, ya sé que es tu jefe, pero aunque sea tu jefe, no puede gritarte</i>.' } },
-            { color: 'coral', label: { ru: 'Нереально сейчас', en: 'Unreal now' }, title: { ru: 'Aunque + imperfecto de subjuntivo', en: 'Aunque + imperfecto de subjuntivo' }, es: 'aunque estuviera',
+            { color: 'teal', label: { ru: 'Нереально сейчас', en: 'Unreal now' }, title: { ru: 'Aunque + imperfecto de subjuntivo', en: 'Aunque + imperfecto de subjuntivo' }, es: 'aunque estuviera',
               body: { ru: 'Нереальное в настоящем или будущем; в главной части — condicional: <i>Aunque fuera millonario, no viviría ahí</i>.', en: 'Something unreal in the present or future; the main clause takes the conditional: <i>Aunque fuera millonario, no viviría ahí</i>.' } },
-            { color: 'coral', label: { ru: 'Нереально в прошлом', en: 'Unreal past' }, title: { ru: 'Aunque + pluscuamperfecto de subj.', en: 'Aunque + pluscuamperfecto de subj.' }, es: 'aunque hubiera estado',
+            { color: 'teal', label: { ru: 'Нереально в прошлом', en: 'Unreal past' }, title: { ru: 'Aunque + pluscuamperfecto de subj.', en: 'Aunque + pluscuamperfecto de subj.' }, es: 'aunque hubiera estado',
               body: { ru: 'Нереальное в прошлом; в главной части — condicional compuesto: <i>Aunque me lo hubieras pedido, no habría ido</i>.', en: 'Something unreal in the past; the main clause takes the condicional compuesto: <i>Aunque me lo hubieras pedido, no habría ido</i>.' } }
           ] },
           { type: 'table', heading: { ru: 'Коротко', en: 'In short' },
@@ -304,26 +317,26 @@ ECA.data.addGrammar('C1', [
               { label: 'Subjuntivo', color: 'coral', rows: [['hipótesis', 'Aunque lo <b>sepa</b>, no lo diré.'], ['irreal', 'Aunque lo <b>supiera</b>, no lo diría.'], ['irreal pasado', 'Aunque lo <b>hubiera sabido</b>, no lo habría dicho.']] }
             ] }
           ] },
-          { type: 'conj', heading: { ru: 'Формы после aunque', en: 'Forms after aunque' }, verbs: [
+          { type: 'conj', heading: { ru: 'Формы после aunque: indicativo; subjuntivo presente и pasado (imperfecto)', en: 'Forms after aunque: indicative; subjunctive presente and pasado (imperfecto)' }, verbs: [
             { inf: 'ser', tr: { ru: 'неправильный', en: 'irregular' }, variants: [
               { label: 'Indicativo', color: 'blue', rows: [['yo', 'aunque <b>soy</b>'], ['tú', 'aunque <b>eres</b>'], ['él / ella', 'aunque <b>es</b>'], ['nosotros', 'aunque <b>somos</b>'], ['vosotros', 'aunque <b>sois</b>'], ['ellos', 'aunque <b>son</b>']] },
-              { label: 'Subjuntivo', color: 'coral', rows: [['yo', 'aunque <b>sea</b>'], ['tú', 'aunque <b>seas</b>'], ['él / ella', 'aunque <b>sea</b>'], ['nosotros', 'aunque <b>seamos</b>'], ['vosotros', 'aunque <b>seáis</b>'], ['ellos', 'aunque <b>sean</b>']] },
-              { label: 'Subj. imperf.', color: 'coral', rows: [['yo', 'aunque <b>fuera</b>'], ['tú', 'aunque <b>fueras</b>'], ['él / ella', 'aunque <b>fuera</b>'], ['nosotros', 'aunque <b>fuéramos</b>'], ['vosotros', 'aunque <b>fuerais</b>'], ['ellos', 'aunque <b>fueran</b>']] }
+              { label: 'Presente', color: 'coral', rows: [['yo', 'aunque <b>sea</b>'], ['tú', 'aunque <b>seas</b>'], ['él / ella', 'aunque <b>sea</b>'], ['nosotros', 'aunque <b>seamos</b>'], ['vosotros', 'aunque <b>seáis</b>'], ['ellos', 'aunque <b>sean</b>']] },
+              { label: 'Pasado', color: 'teal', rows: [['yo', 'aunque <b>fuera</b>'], ['tú', 'aunque <b>fueras</b>'], ['él / ella', 'aunque <b>fuera</b>'], ['nosotros', 'aunque <b>fuéramos</b>'], ['vosotros', 'aunque <b>fuerais</b>'], ['ellos', 'aunque <b>fueran</b>']] }
             ] },
             { inf: 'tener', tr: { ru: 'неправильный', en: 'irregular' }, variants: [
               { label: 'Indicativo', color: 'blue', rows: [['yo', 'aunque <b>tengo</b>'], ['tú', 'aunque <b>tienes</b>'], ['él / ella', 'aunque <b>tiene</b>'], ['nosotros', 'aunque <b>tenemos</b>'], ['vosotros', 'aunque <b>tenéis</b>'], ['ellos', 'aunque <b>tienen</b>']] },
-              { label: 'Subjuntivo', color: 'coral', rows: [['yo', 'aunque <b>tenga</b>'], ['tú', 'aunque <b>tengas</b>'], ['él / ella', 'aunque <b>tenga</b>'], ['nosotros', 'aunque <b>tengamos</b>'], ['vosotros', 'aunque <b>tengáis</b>'], ['ellos', 'aunque <b>tengan</b>']] },
-              { label: 'Subj. imperf.', color: 'coral', rows: [['yo', 'aunque <b>tuviera</b>'], ['tú', 'aunque <b>tuvieras</b>'], ['él / ella', 'aunque <b>tuviera</b>'], ['nosotros', 'aunque <b>tuviéramos</b>'], ['vosotros', 'aunque <b>tuvierais</b>'], ['ellos', 'aunque <b>tuvieran</b>']] }
+              { label: 'Presente', color: 'coral', rows: [['yo', 'aunque <b>tenga</b>'], ['tú', 'aunque <b>tengas</b>'], ['él / ella', 'aunque <b>tenga</b>'], ['nosotros', 'aunque <b>tengamos</b>'], ['vosotros', 'aunque <b>tengáis</b>'], ['ellos', 'aunque <b>tengan</b>']] },
+              { label: 'Pasado', color: 'teal', rows: [['yo', 'aunque <b>tuviera</b>'], ['tú', 'aunque <b>tuvieras</b>'], ['él / ella', 'aunque <b>tuviera</b>'], ['nosotros', 'aunque <b>tuviéramos</b>'], ['vosotros', 'aunque <b>tuvierais</b>'], ['ellos', 'aunque <b>tuvieran</b>']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Согласование времён', en: 'Sequence of tenses' }, body: {
+          { type: 'text', heading: { ru: 'Согласование времён', en: 'Sequence of tenses' }, body: {
             ru: 'Aunque + presente de subjuntivo → в главной части presente, futuro или imperativo; aunque + imperfecto de subjuntivo → condicional; aunque + pluscuamperfecto de subjuntivo → condicional compuesto. Pluscuamperfecto de subjuntivo = <b>hubiera + participio</b>: <i>aunque hubiera sido, aunque hubieras tenido</i>.',
             en: 'Aunque + present subjunctive → the main clause is in the present, future or imperative; aunque + imperfect subjunctive → conditional; aunque + pluperfect subjunctive → condicional compuesto. The pluperfect subjunctive is <b>hubiera + participle</b>: <i>aunque hubiera sido, aunque hubieras tenido</i>.' } },
           { type: 'examples', heading: { ru: 'Одна фраза — четыре формы', en: 'One sentence, four forms' }, items: [
             { badge: 'ind', color: 'blue', es: 'Aunque <b>está</b> cansada, sigue trabajando.', ru: 'Хотя она устала, она продолжает работать.', en: 'Although she’s tired, she keeps working.' },
             { badge: 'pre', color: 'coral', es: 'Aunque <b>esté</b> cansada, seguirá trabajando.', ru: 'Даже если она устанет, она продолжит работать.', en: 'Even if she’s tired, she’ll keep working.' },
-            { badge: 'imp', color: 'coral', es: 'Aunque <b>estuviera</b> cansada, seguiría trabajando.', ru: 'Даже если бы она устала, она продолжала бы работать.', en: 'Even if she were tired, she would keep working.' },
-            { badge: 'plu', color: 'coral', es: 'Aunque <b>hubiera estado</b> cansada, habría seguido trabajando.', ru: 'Даже если бы она тогда устала, она бы продолжила работать.', en: 'Even if she had been tired, she would have kept working.' }
+            { badge: 'imp', color: 'teal', es: 'Aunque <b>estuviera</b> cansada, seguiría trabajando.', ru: 'Даже если бы она устала, она продолжала бы работать.', en: 'Even if she were tired, she would keep working.' },
+            { badge: 'plu', color: 'teal', es: 'Aunque <b>hubiera estado</b> cansada, habría seguido trabajando.', ru: 'Даже если бы она тогда устала, она бы продолжила работать.', en: 'Even if she had been tired, she would have kept working.' }
           ] }
         ]
       },
@@ -331,13 +344,13 @@ ECA.data.addGrammar('C1', [
         id: 'however', label: { ru: 'Как бы ни', en: 'However' },
         blocks: [
           { type: 'rules', heading: { ru: 'Конструкции', en: 'Structures' }, items: [
-            { color: 'purple', title: { ru: 'Por mucho que · por más que', en: 'Por mucho que · por más que' }, es: 'por mucho que + verbo',
+            { color: 'amber', title: { ru: 'Por mucho que · por más que', en: 'Por mucho que · por más que' }, es: 'por mucho que + verbo',
               body: { ru: '«Сколько бы ни»: <i>Por mucho que corras, no llegarás a tiempo</i>.', en: '“However much”: <i>Por mucho que corras, no llegarás a tiempo</i>.' } },
-            { color: 'purple', title: { ru: 'Por muy … que', en: 'Por muy … que' }, es: 'por muy + adjetivo / adverbio + que',
+            { color: 'amber', title: { ru: 'Por muy … que', en: 'Por muy … que' }, es: 'por muy + adjetivo / adverbio + que',
               body: { ru: '«Каким бы ни», «как бы ни»: <i>Por muy difícil que sea, lo intentaré</i>.', en: '“However (adjective)”: <i>Por muy difícil que sea, lo intentaré</i>.' } },
-            { color: 'purple', title: { ru: 'Por mucho + существительное', en: 'Por mucho + noun' }, es: 'por mucho/a/os/as + sustantivo + que',
+            { color: 'amber', title: { ru: 'Por mucho + существительное', en: 'Por mucho + noun' }, es: 'por mucho/a/os/as + sustantivo + que',
               body: { ru: '«Сколько бы ни» с существительным; <i>mucho</i> согласуется с ним: <i>Por mucha prisa que tengas…</i>', en: '“However much / many” with a noun; <i>mucho</i> agrees with it: <i>Por mucha prisa que tengas…</i>' } },
-            { color: 'purple', title: { ru: 'Por poco que', en: 'Por poco que' }, es: 'por poco que + verbo',
+            { color: 'amber', title: { ru: 'Por poco que', en: 'Por poco que' }, es: 'por poco que + verbo',
               body: { ru: '«Как бы мало ни»: <i>Por poco que comas, algo engordarás</i>.', en: '“However little”: <i>Por poco que comas, algo engordarás</i>.' } }
           ] },
           { type: 'text', color: 'amber', heading: { ru: 'Какое наклонение', en: 'Which mood' }, body: {
@@ -348,9 +361,9 @@ ECA.data.addGrammar('C1', [
               { label: 'Indicativo', color: 'blue', rows: [['él', 'Por mucho que <b>ahorra</b>, no le llega.'], ['yo', 'Por más que lo <b>intento</b>, no puedo.']] },
               { label: 'Subjuntivo', color: 'coral', rows: [['él', 'Por mucho que <b>ahorre</b>, no le llegará.'], ['yo', 'Por más que lo <b>intente</b>, no podré.']] }
             ] },
-            { inf: 'por muy … que', tr: { ru: 'реально или нереально', en: 'real or unreal' }, variants: [
-              { label: 'Subj. presente', color: 'coral', rows: [['ser', 'Por muy caro que <b>sea</b>, lo compraré.'], ['estar', 'Por muy lejos que <b>esté</b>, iremos.']] },
-              { label: 'Subj. imperfecto', color: 'coral', rows: [['ser', 'Por muy caro que <b>fuera</b>, lo compraría.'], ['estar', 'Por muy lejos que <b>estuviera</b>, iríamos.']] }
+            { inf: 'por muy … que', tr: { ru: 'subjuntivo: presente — реально, pasado (imperfecto) — нереально', en: 'subjunctive: presente — real, pasado (imperfecto) — unreal' }, variants: [
+              { label: 'Presente', color: 'coral', rows: [['ser', 'Por muy caro que <b>sea</b>, lo compraré.'], ['estar', 'Por muy lejos que <b>esté</b>, iremos.']] },
+              { label: 'Pasado', color: 'teal', rows: [['ser', 'Por muy caro que <b>fuera</b>, lo compraría.'], ['estar', 'Por muy lejos que <b>estuviera</b>, iríamos.']] }
             ] }
           ] },
           { type: 'table', heading: { ru: 'Все варианты', en: 'All variants' },
@@ -374,7 +387,7 @@ ECA.data.addGrammar('C1', [
         id: 'others', label: { ru: 'Другие союзы', en: 'Conjunctions' },
         blocks: [
           { type: 'triggers', heading: { ru: 'Пять союзов', en: 'Five connectors' }, items: [
-            { num: '1', color: 'purple', title: { ru: 'A pesar de (que)', en: 'A pesar de (que)' }, sub: { ru: 'наклонение — как у aunque', en: 'mood as with aunque' },
+            { num: '1', color: 'amber', title: { ru: 'A pesar de (que)', en: 'A pesar de (que)' }, sub: { ru: 'наклонение — как у aunque', en: 'mood as with aunque' },
               phrases: ['a pesar de', 'a pesar de que', 'pese a', 'pese a que'],
               body: { ru: '<b>A pesar de + существительное или инфинитив</b>, <b>a pesar de que + глагол</b>: <i>A pesar de la lluvia…</i>, <i>A pesar de que llovía…</i>. <i>Pese a (que)</i> — то же, книжнее.', en: '<b>A pesar de + noun or infinitive</b>, <b>a pesar de que + verb</b>: <i>A pesar de la lluvia…</i>, <i>A pesar de que llovía…</i>. <i>Pese a (que)</i> is the same, more formal.' },
               ex: { es: 'Pese a que nadie lo <b>esperaba</b>, ganaron la liga.', ru: 'Хотя никто этого не ожидал, они выиграли лигу.', en: 'Even though nobody expected it, they won the league.' } },
@@ -386,11 +399,11 @@ ECA.data.addGrammar('C1', [
               phrases: ['y eso que'],
               body: { ru: '«И это притом что»; всегда после главной части: <i>Suspendió, y eso que estudió mucho</i>.', en: '“And that’s even though”; always after the main clause: <i>Suspendió, y eso que estudió mucho</i>.' },
               ex: { es: 'Llegó tarde, y eso que <b>salió</b> a las siete.', ru: 'Он опоздал, и это притом что вышел в семь.', en: 'He was late, even though he left at seven.' } },
-            { num: '4', color: 'teal', title: { ru: 'Aun + gerundio', en: 'Aun + gerundio' }, sub: { ru: '«даже…»', en: '“even…”' },
+            { num: '4', color: 'purple', title: { ru: 'Aun + gerundio', en: 'Aun + gerundio' }, sub: { ru: '«даже…»', en: '“even…”' },
               phrases: ['aun + gerundio'],
               body: { ru: '<b>Aun + gerundio</b> — «даже…»: <i>Aun sabiendo la verdad, calló</i>. Здесь <i>aun</i> пишется <b>без ударения</b>.', en: '<b>Aun + gerund</b> — “even (while)…”: <i>Aun sabiendo la verdad, calló</i>. Here <i>aun</i> has <b>no written accent</b>.' },
               ex: { es: 'Aun <b>conociendo</b> los riesgos, decidieron seguir adelante.', ru: 'Даже зная о рисках, они решили продолжать.', en: 'Even knowing the risks, they decided to go ahead.' } },
-            { num: '5', color: 'purple', title: { ru: 'Aun cuando · incluso si · ni aunque', en: 'Aun cuando · incluso si · ni aunque' }, sub: { ru: '«даже если»', en: '“even if”' },
+            { num: '5', color: 'amber', title: { ru: 'Aun cuando · incluso si · ni aunque', en: 'Aun cuando · incluso si · ni aunque' }, sub: { ru: '«даже если»', en: '“even if”' },
               phrases: ['aun cuando', 'incluso si', 'ni aunque'],
               body: { ru: '<i>Aun cuando</i> — книжный синоним <i>aunque</i>. <i>Incluso si</i> ведёт себя как <i>si</i>. <i>Ni aunque</i> — «даже если бы… — нет», обычно с imperfecto de subjuntivo.', en: '<i>Aun cuando</i> is a formal synonym of <i>aunque</i>. <i>Incluso si</i> behaves like <i>si</i>. <i>Ni aunque</i> — “not even if”, usually with the imperfect subjunctive.' },
               ex: { es: 'No lo haría ni aunque me <b>pagaran</b>.', ru: 'Я бы этого не сделал, даже если бы мне заплатили.', en: 'I wouldn’t do it even if they paid me.' } }
@@ -400,24 +413,24 @@ ECA.data.addGrammar('C1', [
               { label: 'Indicativo', color: 'blue', rows: [['hecho', 'A pesar de que <b>llueve</b>, saldremos.'], ['hecho', 'A pesar de que <b>es</b> caro, lo compro.']] },
               { label: 'Subjuntivo', color: 'coral', rows: [['hipótesis', 'A pesar de que <b>llueva</b>, saldremos.'], ['hipótesis', 'A pesar de que <b>sea</b> caro, lo compraré.']] }
             ] },
-            { inf: 'incluso si', tr: { ru: 'как si: без presente de subjuntivo', en: 'like si: no present subjunctive' }, variants: [
+            { inf: 'incluso si', tr: { ru: 'как si: без presente de subjuntivo; pasado = imperfecto de subjuntivo', en: 'like si: no present subjunctive; pasado = imperfecto de subjuntivo' }, variants: [
               { label: 'Indicativo', color: 'blue', rows: [['real', 'Incluso si <b>llueve</b>, saldremos.']] },
-              { label: 'Subj. imperfecto', color: 'coral', rows: [['irreal', 'Incluso si <b>lloviera</b>, saldríamos.']] }
+              { label: 'Pasado', color: 'teal', rows: [['irreal', 'Incluso si <b>lloviera</b>, saldríamos.']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Ловушка', en: 'Trap' }, body: {
+          { type: 'text', heading: { ru: 'Ловушка', en: 'Trap' }, body: {
             ru: '<i>Incluso si</i> никогда не берёт presente de subjuntivo: не <i>*incluso si llueva</i>, а <i>incluso si llueve</i> или <i>aunque llueva</i>. <i>Si bien</i> и <i>y eso que</i> — только indicativo.',
             en: '<i>Incluso si</i> never takes the present subjunctive: not <i>*incluso si llueva</i>, but <i>incluso si llueve</i> or <i>aunque llueva</i>. <i>Si bien</i> and <i>y eso que</i> take the indicative only.' } },
           { type: 'markers', heading: { ru: 'Кто с каким наклонением', en: 'Which mood goes where' }, groups: [
-            { color: 'purple', title: { ru: 'Indicativo или subjuntivo', en: 'Indicative or subjunctive' }, tags: ['aunque', 'a pesar de que', 'pese a que', 'aun cuando', 'por mucho que', 'por más que', 'por muy … que'] },
+            { color: 'amber', title: { ru: 'Indicativo или subjuntivo', en: 'Indicative or subjunctive' }, tags: ['aunque', 'a pesar de que', 'pese a que', 'aun cuando', 'por mucho que', 'por más que', 'por muy … que'] },
             { color: 'blue', title: { ru: 'Только indicativo', en: 'Indicative only' }, tags: ['si bien', 'y eso que'] },
             { color: 'coral', title: { ru: 'Только subjuntivo', en: 'Subjunctive only' }, tags: ['así', 'mal que', 'ni aunque'] },
-            { color: 'teal', title: { ru: 'Без спрягаемого глагола', en: 'No conjugated verb' }, tags: ['a pesar de + sustantivo', 'pese a + infinitivo', 'aun + gerundio', 'con + infinitivo'] }
+            { color: 'purple', title: { ru: 'Без спрягаемого глагола', en: 'No conjugated verb' }, tags: ['a pesar de + sustantivo', 'pese a + infinitivo', 'aun + gerundio', 'con + infinitivo'] }
           ] },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'blue', es: 'A pesar de que <b>estaba</b> enfermo, fue a trabajar.', ru: 'Несмотря на то что он был болен, он пошёл на работу.', en: 'Even though he was ill, he went to work.' },
             { color: 'blue', es: 'Si bien el informe <b>es</b> completo, contiene algunos errores.', ru: 'Хотя отчёт и полный, в нём есть несколько ошибок.', en: 'While the report is thorough, it contains a few errors.' },
-            { color: 'teal', es: 'Aun <b>teniendo</b> razón, perdió la discusión.', ru: 'Даже будучи правым, он проиграл спор.', en: 'Even though he was right, he lost the argument.' }
+            { color: 'purple', es: 'Aun <b>teniendo</b> razón, perdió la discusión.', ru: 'Даже будучи правым, он проиграл спор.', en: 'Even though he was right, he lost the argument.' }
           ] }
         ]
       },
@@ -443,22 +456,29 @@ ECA.data.addGrammar('C1', [
               body: { ru: 'Разговорное и резкое «даже если», «пусть хоть»: <i>No se lo digo así me maten</i>. Не путать с <i>así</i> «так».', en: 'A colloquial, emphatic “even if”: <i>No se lo digo así me maten</i>. Don’t confuse it with <i>así</i> “like this”.' } },
             { color: 'coral', title: { ru: 'Mal que + subjuntivo', en: 'Mal que + subjuntivo' }, es: 'mal que me / te / le pese',
               body: { ru: 'Устойчивое «нравится или нет»: <i>mal que nos pese…</i>', en: 'A set phrase, “like it or not”: <i>mal que nos pese…</i>' } },
-            { color: 'teal', title: { ru: 'Con + infinitivo', en: 'Con + infinitivo' }, es: 'con + infinitivo',
+            { color: 'purple', title: { ru: 'Con + infinitivo', en: 'Con + infinitivo' }, es: 'con + infinitivo',
               body: { ru: 'Литературное «при всём том, что»: <i>Con ser tan listo, no aprobó</i>.', en: 'Literary “for all that”: <i>Con ser tan listo, no aprobó</i>.' } },
             { color: 'coral', title: { ru: 'Повтор глагола', en: 'Repeated verb' }, es: 'digan lo que digan',
               body: { ru: 'Глагол в subjuntivo дважды — «что бы ни, как бы ни»: <i>sea como sea, quieras o no, cueste lo que cueste</i>.', en: 'The verb twice in the subjunctive — “whatever, however”: <i>sea como sea, quieras o no, cueste lo que cueste</i>.' } }
           ] },
           { type: 'conj', heading: { ru: 'Одна мысль — три регистра', en: 'One idea, three registers' }, verbs: [
-            { inf: 'aunque', tr: { ru: 'факт и гипотеза', en: 'fact and hypothesis' }, variants: [
-              { label: { ru: 'разговорный', en: 'colloquial' }, color: 'amber', rows: [['hecho', 'Aprobó, y eso que no <b>estudió</b>.'], ['hipótesis', 'No voy, así me lo <b>pidas</b>.']] },
-              { label: { ru: 'нейтральный', en: 'neutral' }, color: 'amber', rows: [['hecho', 'Aprobó aunque no <b>estudió</b>.'], ['hipótesis', 'No voy aunque me lo <b>pidas</b>.']] },
-              { label: { ru: 'книжный', en: 'formal' }, color: 'amber', rows: [['hecho', 'Si bien no <b>estudió</b>, aprobó.'], ['hipótesis', 'No iré aun cuando me lo <b>pidas</b>.']] }
+            { inf: 'y eso que · así', tr: { ru: 'разговорный', en: 'colloquial' }, variants: [
+              { label: 'Indicativo', color: 'blue', rows: [['hecho', 'Aprobó, y eso que no <b>estudió</b>.']] },
+              { label: 'Subjuntivo', color: 'coral', rows: [['hipótesis', 'No voy, así me lo <b>pidas</b>.']] }
+            ] },
+            { inf: 'aunque', tr: { ru: 'нейтральный', en: 'neutral' }, variants: [
+              { label: 'Indicativo', color: 'blue', rows: [['hecho', 'Aprobó aunque no <b>estudió</b>.']] },
+              { label: 'Subjuntivo', color: 'coral', rows: [['hipótesis', 'No voy aunque me lo <b>pidas</b>.']] }
+            ] },
+            { inf: 'si bien · aun cuando', tr: { ru: 'книжный', en: 'formal' }, variants: [
+              { label: 'Indicativo', color: 'blue', rows: [['hecho', 'Si bien no <b>estudió</b>, aprobó.']] },
+              { label: 'Subjuntivo', color: 'coral', rows: [['hipótesis', 'No iré aun cuando me lo <b>pidas</b>.']] }
             ] }
           ] },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'coral', es: 'Mal que te <b>pese</b>, tu hermano tiene razón.', ru: 'Нравится тебе это или нет, твой брат прав.', en: 'Like it or not, your brother is right.' },
             { color: 'coral', es: '<b>Digan</b> lo que <b>digan</b>, yo me quedo.', ru: 'Что бы ни говорили, я остаюсь.', en: 'Whatever they say, I’m staying.' },
-            { color: 'teal', es: '<b>Con ser</b> tan inteligente, no supo resolverlo.', ru: 'При всём своём уме он не сумел это решить.', en: 'For all his intelligence, he couldn’t solve it.' }
+            { color: 'purple', es: '<b>Con ser</b> tan inteligente, no supo resolverlo.', ru: 'При всём своём уме он не сумел это решить.', en: 'For all his intelligence, he couldn’t solve it.' }
           ] },
           { type: 'tip', heading: { ru: 'Шпаргалка', en: 'Cheat sheet' }, title: { ru: 'Как выбрать', en: 'How to choose' }, body: {
             ru: ['Факт → <b>indicativo</b> (aunque, si bien, y eso que). Гипотеза или «неважно» → <b>subjuntivo</b>. Нереальное → imperfecto или pluscuamperfecto de subjuntivo.',
@@ -492,11 +512,11 @@ ECA.data.addGrammar('C1', [
             { badge: 'pre', color: 'coral', es: 'Aunque <b>sea</b> tarde, llámame cuando llegues.', ru: 'Даже если будет поздно, позвони мне, когда доберёшься.', en: 'Even if it’s late, call me when you get there.' },
             { badge: 'pre', color: 'coral', es: '<b>Pase</b> lo que <b>pase</b>, llámame.', ru: 'Что бы ни случилось, звони мне.', en: 'Whatever happens, call me.' },
             { badge: 'pre', color: 'coral', es: 'No se lo perdono así me lo <b>pida</b> de rodillas.', ru: 'Не прощу его, даже если будет умолять на коленях.', en: 'I won’t forgive him even if he begs me on his knees.' },
-            { badge: 'imp', color: 'coral', es: 'Aunque <b>tuviera</b> tiempo, no iría a esa fiesta.', ru: 'Даже будь у меня время, я бы не пошёл на эту вечеринку.', en: 'Even if I had time, I wouldn’t go to that party.' },
-            { badge: 'imp', color: 'coral', es: 'Aunque <b>tuviéramos</b> más espacio, no adoptaríamos otro perro.', ru: 'Даже будь у нас больше места, мы бы не взяли ещё одну собаку.', en: 'Even if we had more space, we wouldn’t adopt another dog.' },
-            { badge: 'plu', color: 'coral', es: 'Aunque <b>hubierais salido</b> antes, habríais perdido el tren.', ru: 'Даже если бы вы вышли раньше, вы бы всё равно опоздали на поезд.', en: 'Even if you had left earlier, you would have missed the train.' },
-            { badge: 'inf', color: 'teal', es: 'A pesar de <b>estar</b> agotados, terminamos el trabajo.', ru: 'Несмотря на усталость, мы закончили работу.', en: 'Despite being exhausted, we finished the job.' },
-            { badge: 'sus', color: 'teal', es: '<b>Pese a</b> los esfuerzos del Gobierno, el paro sigue subiendo.', ru: 'Несмотря на усилия правительства, безработица продолжает расти.', en: 'Despite the government’s efforts, unemployment keeps rising.' }
+            { badge: 'imp', color: 'teal', es: 'Aunque <b>tuviera</b> tiempo, no iría a esa fiesta.', ru: 'Даже будь у меня время, я бы не пошёл на эту вечеринку.', en: 'Even if I had time, I wouldn’t go to that party.' },
+            { badge: 'imp', color: 'teal', es: 'Aunque <b>tuviéramos</b> más espacio, no adoptaríamos otro perro.', ru: 'Даже будь у нас больше места, мы бы не взяли ещё одну собаку.', en: 'Even if we had more space, we wouldn’t adopt another dog.' },
+            { badge: 'plu', color: 'teal', es: 'Aunque <b>hubierais salido</b> antes, habríais perdido el tren.', ru: 'Даже если бы вы вышли раньше, вы бы всё равно опоздали на поезд.', en: 'Even if you had left earlier, you would have missed the train.' },
+            { badge: 'inf', color: 'purple', es: 'A pesar de <b>estar</b> agotados, terminamos el trabajo.', ru: 'Несмотря на усталость, мы закончили работу.', en: 'Despite being exhausted, we finished the job.' },
+            { badge: 'sus', color: 'purple', es: '<b>Pese a</b> los esfuerzos del Gobierno, el paro sigue subiendo.', ru: 'Несмотря на усилия правительства, безработица продолжает расти.', en: 'Despite the government’s efforts, unemployment keeps rising.' }
           ] }
         ]
       }
@@ -594,13 +614,15 @@ ECA.data.addGrammar('C1', [
             { color: 'teal', title: { ru: 'Incluso · por otra parte', en: 'Incluso · por otra parte' }, es: 'incluso · hasta · por otra parte',
               body: { ru: '<i>Incluso, hasta</i> — «даже» (самый неожиданный элемент). <i>Por otra parte, por otro lado</i> — «с другой стороны; кроме того»: новый аспект темы.', en: '<i>Incluso, hasta</i> — “even” (the most unexpected item). <i>Por otra parte, por otro lado</i> — “on the other hand; besides”: a new aspect of the topic.' } }
           ] },
-          { type: 'conj', heading: { ru: 'Además или además de', en: 'Además or además de' }, verbs: [
-            { inf: 'además', tr: { ru: 'между фразами или внутри', en: 'between sentences or inside one' }, variants: [
-              { label: 'además,', color: 'teal', rows: [['frase', 'Es caro; <b>además</b>, es feo.'], ['frase', 'Trabaja; <b>además</b>, estudia.']] },
-              { label: 'además de', color: 'teal', rows: [['adjetivo', '<b>Además de</b> caro, es feo.'], ['infinitivo', '<b>Además de</b> trabajar, estudia.']] }
-            ] }
-          ] },
-          { type: 'text', color: 'coral', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
+          { type: 'table', heading: { ru: 'Además (между фразами) или además de (внутри)', en: 'Además (between sentences) or además de (inside one)' },
+            head: ['', 'ejemplo'],
+            rows: [
+              ['además,', 'Es caro; además, es feo.'],
+              ['además,', 'Trabaja; además, estudia.'],
+              ['además de', 'Además de caro, es feo.'],
+              ['además de', 'Además de trabajar, estudia.']
+            ] },
+          { type: 'text', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
             ru: '<i>Encima</i> в эссе и деловом письме не годится — там <i>además, es más, asimismo</i>. <i>Es más</i> ставят после точки или точки с запятой, и оно всегда усиливает, а не просто добавляет.',
             en: '<i>Encima</i> is out of place in an essay or a business letter — use <i>además, es más, asimismo</i>. <i>Es más</i> comes after a full stop or a semicolon, and it always intensifies rather than simply adds.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
@@ -623,14 +645,12 @@ ECA.data.addGrammar('C1', [
             { color: 'amber', title: { ru: 'Pero · sino', en: 'Pero · sino' }, es: 'pero · sino · sino que',
               body: { ru: '<b>Sino</b> — после отрицания, когда заменяем одно другим; перед спрягаемым глаголом — <b>sino que</b>. <b>Pero</b> ничего не заменяет, а добавляет оговорку.', en: '<b>Sino</b> follows a negative when one thing replaces another; before a conjugated verb use <b>sino que</b>. <b>Pero</b> replaces nothing; it adds a reservation.' } }
           ] },
-          { type: 'conj', heading: { ru: 'Pero, sino или sino que', en: 'Pero, sino or sino que' }, verbs: [
-            { inf: 'no … pero / sino', tr: { ru: 'оговорка или замена', en: 'reservation or replacement' }, variants: [
-              { label: 'pero', color: 'amber', rows: [['añade', 'No es caro, <b>pero</b> tampoco es barato.']] },
-              { label: 'sino', color: 'amber', rows: [['sustituye', 'No es rojo, <b>sino</b> naranja.']] },
-              { label: 'sino que', color: 'amber', rows: [['+ verbo', 'No solo no me ayudó, <b>sino que</b> se rió de mí.']] }
-            ] }
+          { type: 'examples', heading: { ru: 'Pero, sino или sino que: оговорка или замена', en: 'Pero, sino or sino que: reservation or replacement' }, items: [
+            { badge: 'pe', color: 'amber', es: 'No es caro, <b>pero</b> tampoco es barato.', ru: 'Не дорого, но и не дёшево (añade — добавляет оговорку).', en: 'It isn’t expensive, but it isn’t cheap either (añade — adds a reservation).' },
+            { badge: 'si', color: 'amber', es: 'No es rojo, <b>sino</b> naranja.', ru: 'Он не красный, а оранжевый (sustituye — заменяет).', en: 'It isn’t red but orange (sustituye — replaces).' },
+            { badge: 'sq', color: 'amber', es: 'No solo no me ayudó, <b>sino que</b> se rió de mí.', ru: 'Он не только не помог мне, но ещё и посмеялся надо мной (+ verbo).', en: 'Not only did he not help me, he laughed at me (+ verbo).' }
           ] },
-          { type: 'text', color: 'coral', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
+          { type: 'text', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
             ru: '<i>En cambio</i> не синоним <i>sin embargo</i>: он сравнивает двух разных участников, а не спорит с предыдущей мыслью. Не <i>*Estudié mucho; en cambio, suspendí</i>, а <i>…; sin embargo, suspendí</i>.',
             en: '<i>En cambio</i> is not a synonym of <i>sin embargo</i>: it compares two different participants rather than going against the previous idea. Not <i>*Estudié mucho; en cambio, suspendí</i>, but <i>…; sin embargo, suspendí</i>.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
@@ -687,11 +707,13 @@ ECA.data.addGrammar('C1', [
             { color: 'purple', title: { ru: 'Порядок и вывод', en: 'Order and conclusion' }, es: 'en primer lugar · por último · en definitiva',
               body: { ru: 'Порядок: <i>en primer lugar, en segundo lugar, por otra parte, por último</i>. Вывод: <i>en resumen, en conclusión, en definitiva</i> — итог после перечисления.', en: 'Order: <i>en primer lugar, en segundo lugar, por otra parte, por último</i>. Conclusion: <i>en resumen, en conclusión, en definitiva</i> — a summary after a list.' } }
           ] },
-          { type: 'conj', heading: { ru: 'Одна функция — два регистра', en: 'One function, two registers' }, verbs: [
-            { inf: 'es decir · en definitiva', tr: { ru: 'разговор или текст', en: 'speech or writing' }, variants: [
-              { label: { ru: 'разговорный', en: 'colloquial' }, color: 'purple', rows: [['reformular', '<b>O sea</b>, que no vienes.'], ['concluir', '<b>Total</b>, que nos quedamos sin cenar.'], ['ordenar', '<b>Primero</b>…, <b>luego</b>…, <b>al final</b>…']] },
-              { label: { ru: 'книжный', en: 'formal' }, color: 'purple', rows: [['reformular', '<b>Es decir</b>, no asistirá.'], ['concluir', '<b>En conclusión</b>, no hubo acuerdo.'], ['ordenar', '<b>En primer lugar</b>…, <b>asimismo</b>…, <b>por último</b>…']] }
-            ] }
+          { type: 'rules', heading: { ru: 'Одна функция — два регистра: разговор или текст', en: 'One function, two registers: speech or writing' }, items: [
+            { color: 'purple', label: { ru: 'Разговор', en: 'Speech' }, title: { ru: 'Разговорный', en: 'Colloquial' }, es: 'o sea · total · primero, luego',
+              body: { ru: '<i>reformular:</i> <b>O sea</b>, que no vienes.<br><i>concluir:</i> <b>Total</b>, que nos quedamos sin cenar.<br><i>ordenar:</i> <b>Primero</b>…, <b>luego</b>…, <b>al final</b>…',
+                      en: '<i>reformular:</i> <b>O sea</b>, que no vienes.<br><i>concluir:</i> <b>Total</b>, que nos quedamos sin cenar.<br><i>ordenar:</i> <b>Primero</b>…, <b>luego</b>…, <b>al final</b>…' } },
+            { color: 'purple', label: { ru: 'Текст', en: 'Writing' }, title: { ru: 'Книжный', en: 'Formal' }, es: 'es decir · en conclusión · en primer lugar',
+              body: { ru: '<i>reformular:</i> <b>Es decir</b>, no asistirá.<br><i>concluir:</i> <b>En conclusión</b>, no hubo acuerdo.<br><i>ordenar:</i> <b>En primer lugar</b>…, <b>asimismo</b>…, <b>por último</b>…',
+                      en: '<i>reformular:</i> <b>Es decir</b>, no asistirá.<br><i>concluir:</i> <b>En conclusión</b>, no hubo acuerdo.<br><i>ordenar:</i> <b>En primer lugar</b>…, <b>asimismo</b>…, <b>por último</b>…' } }
           ] },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'purple', es: 'Vuelvo el viernes, <b>o sea</b>, pasado mañana.', ru: 'Я вернусь в пятницу, то есть послезавтра.', en: 'I’m back on Friday, that is, the day after tomorrow.' },
@@ -788,32 +810,29 @@ ECA.data.addGrammar('C1', [
           { type: 'conj', heading: { ru: 'Спряжение: futuro и condicional compuesto', en: 'Conjugation: futuro and condicional compuesto' }, verbs: [
             { inf: 'salir', tr: { ru: 'правильное причастие', en: 'regular participle' }, variants: [
               { label: 'Futuro', color: 'purple', rows: [['yo', '<b>habré</b> salido'], ['tú', '<b>habrás</b> salido'], ['él / ella', '<b>habrá</b> salido'], ['nosotros', '<b>habremos</b> salido'], ['vosotros', '<b>habréis</b> salido'], ['ellos', '<b>habrán</b> salido']] },
-              { label: 'Condicional', color: 'purple', rows: [['yo', '<b>habría</b> salido'], ['tú', '<b>habrías</b> salido'], ['él / ella', '<b>habría</b> salido'], ['nosotros', '<b>habríamos</b> salido'], ['vosotros', '<b>habríais</b> salido'], ['ellos', '<b>habrían</b> salido']] }
+              { label: 'Condicional', color: 'teal', rows: [['yo', '<b>habría</b> salido'], ['tú', '<b>habrías</b> salido'], ['él / ella', '<b>habría</b> salido'], ['nosotros', '<b>habríamos</b> salido'], ['vosotros', '<b>habríais</b> salido'], ['ellos', '<b>habrían</b> salido']] }
             ] },
             { inf: 'hacer', tr: { ru: 'причастие hecho', en: 'participle hecho' }, variants: [
               { label: 'Futuro', color: 'purple', rows: [['yo', 'habré <b>hecho</b>'], ['tú', 'habrás <b>hecho</b>'], ['él / ella', 'habrá <b>hecho</b>'], ['nosotros', 'habremos <b>hecho</b>'], ['vosotros', 'habréis <b>hecho</b>'], ['ellos', 'habrán <b>hecho</b>']] },
-              { label: 'Condicional', color: 'purple', rows: [['yo', 'habría <b>hecho</b>'], ['tú', 'habrías <b>hecho</b>'], ['él / ella', 'habría <b>hecho</b>'], ['nosotros', 'habríamos <b>hecho</b>'], ['vosotros', 'habríais <b>hecho</b>'], ['ellos', 'habrían <b>hecho</b>']] }
+              { label: 'Condicional', color: 'teal', rows: [['yo', 'habría <b>hecho</b>'], ['tú', 'habrías <b>hecho</b>'], ['él / ella', 'habría <b>hecho</b>'], ['nosotros', 'habríamos <b>hecho</b>'], ['vosotros', 'habríais <b>hecho</b>'], ['ellos', 'habrían <b>hecho</b>']] }
             ] }
           ] },
           { type: 'table', heading: { ru: 'Неправильные причастия', en: 'Irregular participles' },
-            head: ['infinitivo', 'participio', 'infinitivo', 'participio'],
+            head: ['infinitivo', 'participio'],
             rows: [
-              ['poner', 'puesto', 'escribir', 'escrito'],
-              ['hacer', 'hecho', 'romper', 'roto'],
-              ['decir', 'dicho', 'abrir', 'abierto'],
-              ['ver', 'visto', 'morir', 'muerto'],
-              ['volver', 'vuelto', 'cubrir', 'cubierto'],
-              ['resolver', 'resuelto', 'descubrir', 'descubierto']
+              ['poner', 'puesto'], ['hacer', 'hecho'], ['decir', 'dicho'], ['ver', 'visto'],
+              ['volver', 'vuelto'], ['resolver', 'resuelto'], ['escribir', 'escrito'], ['romper', 'roto'],
+              ['abrir', 'abierto'], ['morir', 'muerto'], ['cubrir', 'cubierto'], ['descubrir', 'descubierto']
             ] },
           { type: 'rules', heading: { ru: 'Что они значат', en: 'What they mean' }, items: [
             { color: 'purple', title: { ru: 'Futuro compuesto', en: 'Futuro compuesto' }, es: 'habré salido',
               body: { ru: '1) догадка о недавнем прошлом: «наверное, уже…»; 2) действие, которое <b>завершится к сроку</b> в будущем; 3) уступка о прошлом: «может, и…, но».', en: '1) a guess about the recent past: “must have…”; 2) an action that <b>will be complete by</b> a future point; 3) a concession about the past: “may have…, but”.' } },
-            { color: 'purple', title: { ru: 'Condicional compuesto', en: 'Condicional compuesto' }, es: 'habría salido',
+            { color: 'teal', title: { ru: 'Condicional compuesto', en: 'Condicional compuesto' }, es: 'habría salido',
               body: { ru: '1) <b>нереальное прошлое</b>, упрёк, сожаление: «сделал бы»; 2) догадка о давнем прошлом (вместо pluscuamperfecto); 3) будущее завершённое в пересказе.', en: '1) the <b>unreal past</b>, reproach, regret: “would have done”; 2) a guess about an earlier past (instead of the pluscuamperfecto); 3) the future perfect in reported speech.' } }
           ] },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'purple', es: '¿<b>Habrás acabado</b> el informe para el lunes?', ru: 'Ты закончишь отчёт к понедельнику?', en: 'Will you have finished the report by Monday?' },
-            { color: 'purple', es: 'Yo no <b>habría dicho</b> eso.', ru: 'Я бы такого не сказал.', en: 'I wouldn’t have said that.' }
+            { color: 'teal', es: 'Yo no <b>habría dicho</b> eso.', ru: 'Я бы такого не сказал.', en: 'I wouldn’t have said that.' }
           ] }
         ]
       },
@@ -830,7 +849,8 @@ ECA.data.addGrammar('C1', [
             rows: [
               ['Está en casa.', 'Estará en casa.'],
               ['Ha salido.', 'Habrá salido.'],
-              ['Salió. · Estaba cansado.', 'Saldría. · Estaría cansado.'],
+              ['Salió.', 'Saldría.'],
+              ['Estaba cansado.', 'Estaría cansado.'],
               ['Había salido.', 'Habría salido.']
             ] },
           { type: 'conj', heading: { ru: 'Факт или догадка', en: 'Fact or guess' }, verbs: [
@@ -839,13 +859,13 @@ ECA.data.addGrammar('C1', [
               { label: { ru: 'догадка', en: 'guess' }, color: 'purple', rows: [['ahora', '<b>Estará</b> en el trabajo.'], ['hoy', 'Ya <b>se habrá ido</b>.'], ['ayer', '<b>Llegaría</b> tarde.'], ['antes', 'Ya <b>se habría ido</b>.']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', heading: { ru: 'В вопросе', en: 'In questions' }, body: {
+          { type: 'text', heading: { ru: 'В вопросе', en: 'In questions' }, body: {
             ru: 'В вопросе та же форма значит «интересно…», «куда же…»: <i>¿Qué hora será?</i> — «интересно, который час?»; <i>¿Dónde habré puesto las gafas?</i> — «куда же я дел очки?».',
             en: 'In a question the same form means “I wonder…”: <i>¿Qué hora será?</i> — “I wonder what time it is”; <i>¿Dónde habré puesto las gafas?</i> — “where on earth have I put my glasses?”.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'purple', es: 'Juan no contesta; <b>se habrá dormido</b>.', ru: 'Хуан не отвечает; наверное, уснул.', en: 'Juan isn’t answering; he must have fallen asleep.' },
-            { color: 'purple', es: 'Cuando llegué, <b>serían</b> las tres.', ru: 'Когда я пришёл, было, наверное, три часа.', en: 'When I arrived, it must have been about three.' },
-            { color: 'purple', es: 'La puerta estaba abierta: alguien la <b>habría dejado</b> así.', ru: 'Дверь была открыта: наверное, кто-то её так оставил.', en: 'The door was open: someone must have left it like that.' }
+            { color: 'amber', es: 'Cuando llegué, <b>serían</b> las tres.', ru: 'Когда я пришёл, было, наверное, три часа.', en: 'When I arrived, it must have been about three.' },
+            { color: 'teal', es: 'La puerta estaba abierta: alguien la <b>habría dejado</b> así.', ru: 'Дверь была открыта: наверное, кто-то её так оставил.', en: 'The door was open: someone must have left it like that.' }
           ] }
         ]
       },
@@ -853,32 +873,32 @@ ECA.data.addGrammar('C1', [
         id: 'regret', label: { ru: 'Сожаление', en: 'Regret' },
         blocks: [
           { type: 'rules', heading: { ru: 'Упрёк и сожаление', en: 'Reproach and regret' }, items: [
-            { color: 'purple', title: { ru: 'Нереальное прошлое', en: 'Unreal past' }, es: 'habría + participio',
+            { color: 'teal', title: { ru: 'Нереальное прошлое', en: 'Unreal past' }, es: 'habría + participio',
               body: { ru: 'То, что могло случиться, но не случилось: <i>Yo en tu lugar habría dicho que no</i>.', en: 'What could have happened but didn’t: <i>Yo en tu lugar habría dicho que no</i>.' } },
             { color: 'coral', title: { ru: 'С условием', en: 'With a condition' }, es: 'si + hubiera + participio',
               body: { ru: 'Полная нереальная условная фраза: условие — pluscuamperfecto de subjuntivo, результат — condicional compuesto.', en: 'A full unreal conditional: the condition takes the pluperfect subjunctive, the result the condicional compuesto.' } },
-            { color: 'purple', title: { ru: 'Упрёк', en: 'Reproach' }, es: 'podrías haber + participio',
+            { color: 'teal', title: { ru: 'Упрёк', en: 'Reproach' }, es: 'podrías haber + participio',
               body: { ru: '«Мог бы и…»: <i>Podrías haberme ayudado</i> = <i>Me habrías podido ayudar</i>.', en: '“You could have…”: <i>Podrías haberme ayudado</i> = <i>Me habrías podido ayudar</i>.' } },
-            { color: 'purple', title: { ru: 'Сожаление', en: 'Regret' }, es: 'me habría gustado + infinitivo',
+            { color: 'teal', title: { ru: 'Сожаление', en: 'Regret' }, es: 'me habría gustado + infinitivo',
               body: { ru: '«Хотелось бы (но не вышло)»: <i>Me habría gustado conocerla</i>. Так же <i>habría preferido, habría sido mejor</i>.', en: '“I would have liked to (but didn’t)”: <i>Me habría gustado conocerla</i>. Likewise <i>habría preferido, habría sido mejor</i>.' } }
           ] },
           { type: 'conj', heading: { ru: 'Два порядка слов, две формы', en: 'Two word orders, two forms' }, verbs: [
             { inf: 'poder', tr: { ru: 'упрёк: «мог бы…»', en: 'reproach: “could have…”' }, variants: [
-              { label: 'podrías haber', color: 'purple', rows: [['tú', '<b>Podrías haberme</b> llamado.'], ['él', '<b>Podría haberlo</b> dicho antes.'], ['vosotros', '<b>Podríais haber</b> avisado.']] },
-              { label: 'habrías podido', color: 'purple', rows: [['tú', '<b>Habrías podido</b> llamarme.'], ['él', '<b>Habría podido</b> decirlo antes.'], ['vosotros', '<b>Habríais podido</b> avisar.']] }
+              { label: 'podrías haber', color: 'amber', rows: [['tú', '<b>Podrías haberme</b> llamado.'], ['él', '<b>Podría haberlo</b> dicho antes.'], ['vosotros', '<b>Podríais haber</b> avisado.']] },
+              { label: 'habrías podido', color: 'teal', rows: [['tú', '<b>Habrías podido</b> llamarme.'], ['él', '<b>Habría podido</b> decirlo antes.'], ['vosotros', '<b>Habríais podido</b> avisar.']] }
             ] },
             { inf: 'si lo hubiera sabido…', tr: { ru: 'главная часть: два варианта', en: 'main clause: two options' }, variants: [
-              { label: 'Condicional', color: 'purple', rows: [['yo', '…, <b>habría</b> ido.'], ['nosotros', '…, <b>habríamos</b> venido.'], ['ellos', '…, <b>habrían</b> llamado.']] },
+              { label: 'Condicional', color: 'teal', rows: [['yo', '…, <b>habría</b> ido.'], ['nosotros', '…, <b>habríamos</b> venido.'], ['ellos', '…, <b>habrían</b> llamado.']] },
               { label: 'Subjuntivo', color: 'coral', rows: [['yo', '…, <b>hubiera</b> ido.'], ['nosotros', '…, <b>hubiéramos</b> venido.'], ['ellos', '…, <b>hubieran</b> llamado.']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
+          { type: 'text', heading: { ru: 'Внимание', en: 'Watch out' }, body: {
             ru: 'После <i>si</i> condicional не ставят никогда: не <i>*si habría sabido</i>, а <i>si hubiera sabido</i>. А вот в главной части вместо <i>habría</i> можно сказать <i>hubiera</i> — это обычно в разговоре.',
             en: 'After <i>si</i> never use the conditional: not <i>*si habría sabido</i> but <i>si hubiera sabido</i>. In the main clause, however, <i>hubiera</i> can replace <i>habría</i> — this is common in speech.' } },
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
-            { color: 'purple', es: 'Si me lo hubieras dicho, te <b>habría ayudado</b>.', ru: 'Если бы ты мне сказал, я бы тебе помог.', en: 'If you had told me, I would have helped you.' },
-            { color: 'purple', es: '<b>Podrías haberme avisado</b> de que no venías.', ru: 'Мог бы предупредить, что не придёшь.', en: 'You could have told me you weren’t coming.' },
-            { color: 'purple', es: '<b>Me habría gustado</b> despedirme de ella.', ru: 'Мне бы хотелось с ней попрощаться.', en: 'I would have liked to say goodbye to her.' }
+            { color: 'teal', es: 'Si me lo hubieras dicho, te <b>habría ayudado</b>.', ru: 'Если бы ты мне сказал, я бы тебе помог.', en: 'If you had told me, I would have helped you.' },
+            { color: 'amber', es: '<b>Podrías haberme avisado</b> de que no venías.', ru: 'Мог бы предупредить, что не придёшь.', en: 'You could have told me you weren’t coming.' },
+            { color: 'teal', es: '<b>Me habría gustado</b> despedirme de ella.', ru: 'Мне бы хотелось с ней попрощаться.', en: 'I would have liked to say goodbye to her.' }
           ] }
         ]
       },
@@ -888,7 +908,7 @@ ECA.data.addGrammar('C1', [
           { type: 'rules', heading: { ru: 'Ещё три значения', en: 'Three more uses' }, items: [
             { color: 'purple', title: { ru: 'Завершится к сроку', en: 'Done by a deadline' }, es: 'para + fecha + futuro compuesto',
               body: { ru: '<b>Futuro compuesto</b> — действие завершится к моменту в будущем: <i>Para junio habré terminado la tesis</i>.', en: '<b>Futuro compuesto</b>: an action will be complete by a point in the future: <i>Para junio habré terminado la tesis</i>.' } },
-            { color: 'purple', title: { ru: 'Будущее в прошлом', en: 'Future in the past' }, es: 'dijo que + condicional compuesto',
+            { color: 'teal', title: { ru: 'Будущее в прошлом', en: 'Future in the past' }, es: 'dijo que + condicional compuesto',
               body: { ru: '<b>Condicional compuesto</b> — «будущее завершённое» в пересказе: <i>Dijo que para las ocho habría vuelto</i>.', en: '<b>Condicional compuesto</b>: the “future perfect” in reported speech: <i>Dijo que para las ocho habría vuelto</i>.' } },
             { color: 'purple', title: { ru: 'Уступка', en: 'Concession' }, es: 'será…, pero · tendría…, pero',
               body: { ru: '«Может, и так, но…»: <i>Será muy listo, pero no sabe escuchar</i>. О прошлом — condicional: <i>Tendría razón, pero no supo explicarlo</i>.', en: '“That may be so, but…”: <i>Será muy listo, pero no sabe escuchar</i>. About the past use the conditional: <i>Tendría razón, pero no supo explicarlo</i>.' } }
@@ -896,7 +916,7 @@ ECA.data.addGrammar('C1', [
           { type: 'conj', heading: { ru: 'Прямая речь и пересказ', en: 'Direct and reported speech' }, verbs: [
             { inf: 'para las ocho', tr: { ru: 'futuro → condicional compuesto', en: 'futuro → condicional compuesto' }, variants: [
               { label: { ru: 'прямая речь', en: 'direct speech' }, color: 'purple', rows: [['yo', '«<b>Habré terminado</b> para las ocho».'], ['nosotros', '«<b>Habremos vuelto</b> antes de cenar».'], ['ellos', '«<b>Habrán llegado</b> a las diez».']] },
-              { label: { ru: 'пересказ', en: 'reported' }, color: 'purple', rows: [['yo', 'Dije que <b>habría terminado</b> para las ocho.'], ['nosotros', 'Dijimos que <b>habríamos vuelto</b> antes de cenar.'], ['ellos', 'Dijeron que <b>habrían llegado</b> a las diez.']] }
+              { label: { ru: 'пересказ', en: 'reported' }, color: 'teal', rows: [['yo', 'Dije que <b>habría terminado</b> para las ocho.'], ['nosotros', 'Dijimos que <b>habríamos vuelto</b> antes de cenar.'], ['ellos', 'Dijeron que <b>habrían llegado</b> a las diez.']] }
             ] }
           ] },
           { type: 'markers', heading: { ru: 'Маркеры срока', en: 'Deadline markers' }, groups: [
@@ -905,7 +925,7 @@ ECA.data.addGrammar('C1', [
           { type: 'examples', heading: { ru: 'Примеры', en: 'Examples' }, items: [
             { color: 'purple', es: 'Dentro de un mes ya <b>habremos vendido</b> la casa.', ru: 'Через месяц мы уже продадим дом.', en: 'In a month we will already have sold the house.' },
             { color: 'purple', es: '<b>Será</b> muy caro, pero vale la pena.', ru: 'Может, это и дорого, но оно того стоит.', en: 'It may be expensive, but it’s worth it.' },
-            { color: 'purple', es: 'Me dijeron que para el martes <b>habrían arreglado</b> la lavadora.', ru: 'Мне сказали, что к вторнику починят стиральную машину.', en: 'They told me they would have fixed the washing machine by Tuesday.' }
+            { color: 'teal', es: 'Me dijeron que para el martes <b>habrían arreglado</b> la lavadora.', ru: 'Мне сказали, что к вторнику починят стиральную машину.', en: 'They told me they would have fixed the washing machine by Tuesday.' }
           ] }
         ]
       },
@@ -919,23 +939,23 @@ ECA.data.addGrammar('C1', [
             { badge: 'hip', color: 'purple', es: '¿Dónde está Marta? — No sé, <b>habrá salido</b> a comprar.', ru: '— Где Марта? — Не знаю, наверное, вышла в магазин.', en: '“Where’s Marta?” “I don’t know, she must have gone out shopping.”' },
             { badge: 'hip', color: 'purple', es: 'Tienen cara de cansados; <b>habrán dormido</b> poco.', ru: 'Вид у них усталый — наверное, мало спали.', en: 'They look tired; they can’t have slept much.' },
             { badge: 'hip', color: 'purple', es: '¿Quién <b>habrá dejado</b> la ventana abierta?', ru: 'Интересно, кто оставил окно открытым?', en: 'I wonder who left the window open.' },
-            { badge: 'hip', color: 'purple', es: 'No vino a la boda; <b>estaría</b> enfermo.', ru: 'Он не пришёл на свадьбу — наверное, болел.', en: 'He didn’t come to the wedding; he must have been ill.' },
-            { badge: 'hip', color: 'purple', es: 'Cuando la conocí, <b>tendría</b> unos veinte años.', ru: 'Когда я с ней познакомился, ей было лет двадцать.', en: 'When I met her, she must have been about twenty.' },
-            { badge: 'hip', color: 'purple', es: 'El andén estaba vacío: el tren ya <b>habría salido</b>.', ru: 'Платформа была пуста: поезд, видимо, уже ушёл.', en: 'The platform was empty: the train must already have left.' },
+            { badge: 'hip', color: 'amber', es: 'No vino a la boda; <b>estaría</b> enfermo.', ru: 'Он не пришёл на свадьбу — наверное, болел.', en: 'He didn’t come to the wedding; he must have been ill.' },
+            { badge: 'hip', color: 'amber', es: 'Cuando la conocí, <b>tendría</b> unos veinte años.', ru: 'Когда я с ней познакомился, ей было лет двадцать.', en: 'When I met her, she must have been about twenty.' },
+            { badge: 'hip', color: 'teal', es: 'El andén estaba vacío: el tren ya <b>habría salido</b>.', ru: 'Платформа была пуста: поезд, видимо, уже ушёл.', en: 'The platform was empty: the train must already have left.' },
             { badge: 'hip', color: 'purple', es: '¿Me <b>habré equivocado</b> de dirección?', ru: 'Неужели я ошибся адресом?', en: 'Could I have got the wrong address?' },
             { badge: 'pl', color: 'purple', es: 'Para cuando llegues, ya <b>habremos cenado</b>.', ru: 'К тому времени, как ты придёшь, мы уже поужинаем.', en: 'By the time you arrive, we will have had dinner.' },
             { badge: 'pl', color: 'purple', es: 'A finales de año <b>habréis pagado</b> toda la hipoteca.', ru: 'К концу года вы выплатите всю ипотеку.', en: 'By the end of the year you will have paid off the whole mortgage.' },
             { badge: 'pl', color: 'purple', es: 'Mañana a estas horas ya <b>habré aterrizado</b> en Lima.', ru: 'Завтра в это время я уже приземлюсь в Лиме.', en: 'This time tomorrow I will have landed in Lima.' },
-            { badge: 'irr', color: 'purple', es: 'Con más tiempo, <b>habríamos visitado</b> también Toledo.', ru: 'Будь у нас больше времени, мы бы съездили и в Толедо.', en: 'With more time, we would have visited Toledo too.' },
-            { badge: 'irr', color: 'purple', es: 'Si hubierais reservado antes, <b>habríais conseguido</b> mejores asientos.', ru: 'Если бы вы забронировали раньше, вам достались бы места получше.', en: 'If you had booked earlier, you would have got better seats.' },
-            { badge: 'irr', color: 'purple', es: 'Yo que tú no <b>habría firmado</b> ese contrato.', ru: 'На твоём месте я бы не подписал этот контракт.', en: 'If I were you, I wouldn’t have signed that contract.' },
-            { badge: 'irr', color: 'purple', es: '<b>Habría preferido</b> que me lo dijeras a la cara.', ru: 'Я бы предпочёл, чтобы ты сказал мне это в лицо.', en: 'I would have preferred you to say it to my face.' },
-            { badge: 'irr', color: 'purple', es: '¡<b>Podrías haber llamado</b> antes de venir!', ru: 'Мог бы позвонить, прежде чем приходить!', en: 'You could have called before coming!' },
-            { badge: 'ind', color: 'purple', es: 'Nos aseguró que para el viernes <b>habría terminado</b> la obra.', ru: 'Он заверил нас, что к пятнице закончит ремонт.', en: 'He assured us that he would have finished the building work by Friday.' },
-            { badge: 'ind', color: 'purple', es: 'Pensaba que a esas alturas ya <b>habrías encontrado</b> trabajo.', ru: 'Я думал, что к тому времени ты уже найдёшь работу.', en: 'I thought that by then you would already have found a job.' },
+            { badge: 'irr', color: 'teal', es: 'Con más tiempo, <b>habríamos visitado</b> también Toledo.', ru: 'Будь у нас больше времени, мы бы съездили и в Толедо.', en: 'With more time, we would have visited Toledo too.' },
+            { badge: 'irr', color: 'teal', es: 'Si hubierais reservado antes, <b>habríais conseguido</b> mejores asientos.', ru: 'Если бы вы забронировали раньше, вам достались бы места получше.', en: 'If you had booked earlier, you would have got better seats.' },
+            { badge: 'irr', color: 'teal', es: 'Yo que tú no <b>habría firmado</b> ese contrato.', ru: 'На твоём месте я бы не подписал этот контракт.', en: 'If I were you, I wouldn’t have signed that contract.' },
+            { badge: 'irr', color: 'teal', es: '<b>Habría preferido</b> que me lo dijeras a la cara.', ru: 'Я бы предпочёл, чтобы ты сказал мне это в лицо.', en: 'I would have preferred you to say it to my face.' },
+            { badge: 'irr', color: 'amber', es: '¡<b>Podrías haber llamado</b> antes de venir!', ru: 'Мог бы позвонить, прежде чем приходить!', en: 'You could have called before coming!' },
+            { badge: 'ind', color: 'teal', es: 'Nos aseguró que para el viernes <b>habría terminado</b> la obra.', ru: 'Он заверил нас, что к пятнице закончит ремонт.', en: 'He assured us that he would have finished the building work by Friday.' },
+            { badge: 'ind', color: 'teal', es: 'Pensaba que a esas alturas ya <b>habrías encontrado</b> trabajo.', ru: 'Я думал, что к тому времени ты уже найдёшь работу.', en: 'I thought that by then you would already have found a job.' },
             { badge: 'con', color: 'purple', es: '<b>Tendrá</b> mucho dinero, pero no es feliz.', ru: 'Может, денег у него и много, но он несчастлив.', en: 'He may have a lot of money, but he isn’t happy.' },
             { badge: 'con', color: 'purple', es: '<b>Habrá estudiado</b> mucho, pero el examen le salió fatal.', ru: 'Может, он и много занимался, но экзамен провалил.', en: 'He may have studied a lot, but the exam went terribly.' },
-            { badge: 'con', color: 'purple', es: '<b>Sería</b> un buen jugador, pero nunca ganó nada.', ru: 'Может, он и был хорошим игроком, но так ничего и не выиграл.', en: 'He may have been a good player, but he never won anything.' }
+            { badge: 'con', color: 'amber', es: '<b>Sería</b> un buen jugador, pero nunca ganó nada.', ru: 'Может, он и был хорошим игроком, но так ничего и не выиграл.', en: 'He may have been a good player, but he never won anything.' }
           ] }
         ]
       }

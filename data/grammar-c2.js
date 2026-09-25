@@ -15,10 +15,10 @@ ECA.data.addGrammar('C2', [
           { type: 'text', heading: { ru: 'Один глагол — два значения', en: 'One verb, two meanings' }, body: {
             ru: ['У ряда глаголов два значения, и наклонение показывает, какое из них имеется в виду. <b>Decir, escribir, avisar, insistir en</b>: с indicativo — сообщение («говорит, что…»), с subjuntivo — приказ или требование («велит, чтобы…»).',
                  '<b>Sentir</b>: с indicativo — «чувствовать, замечать», с subjuntivo — «сожалеть». <b>Comprender, entender</b>: с indicativo — «понимать, осознавать факт», с subjuntivo — «находить естественным, оправдывать».',
-                 '<b>Согласование времён.</b> Если главный глагол в прошедшем, subjuntivo переходит в imperfecto: <i>Dice que vengas → Dijo que vinieras</i>. Indicativo меняется как в обычной косвенной речи: <i>Dice que viene → Dijo que venía</i>.'],
+                 '<b>Согласование времён.</b> Если главный глагол в прошедшем, subjuntivo переходит в imperfecto: <i>Dice que llames → Dijo que llamaras</i>. Indicativo меняется как в обычной косвенной речи: <i>Dice que viene → Dijo que venía</i>.'],
             en: ['Some verbs have two meanings, and the mood shows which one is intended. <b>Decir, escribir, avisar, insistir en</b>: with the indicative they report (“says that…”), with the subjunctive they order or demand (“tells someone to…”).',
                  '<b>Sentir</b>: with the indicative it means “to feel, to sense”, with the subjunctive “to be sorry”. <b>Comprender, entender</b>: with the indicative “to realise a fact”, with the subjunctive “to find it natural, to sympathise”.',
-                 '<b>Sequence of tenses.</b> If the main verb is in the past, the subjunctive moves to the imperfect: <i>Dice que vengas → Dijo que vinieras</i>. The indicative shifts as in ordinary reported speech: <i>Dice que viene → Dijo que venía</i>.'] } },
+                 '<b>Sequence of tenses.</b> If the main verb is in the past, the subjunctive moves to the imperfect: <i>Dice que llames → Dijo que llamaras</i>. The indicative shifts as in ordinary reported speech: <i>Dice que viene → Dijo que venía</i>.'] } },
           { type: 'rules', heading: { ru: 'Как отличить', en: 'How to tell them apart' }, items: [
             { color: 'blue', label: { ru: 'Modo', en: 'Modo' }, title: { ru: 'Indicativo — сообщаю, замечаю', en: 'Indicativo — I report, I notice' }, es: 'Dice que viene.',
               body: { ru: 'Придаточное — <b>информация</b>: что-то есть, было или будет. Глагол можно заменить на <i>informar, percibir, darse cuenta</i>.',
@@ -34,7 +34,7 @@ ECA.data.addGrammar('C2', [
               ['escribir · avisar', 'informar', 'pedir'],
               ['insistir en', 'afirmar', 'exigir'],
               ['sentir', 'percibir', 'lamentar'],
-              ['comprender · entender', 'darse cuenta', 'verlo lógico'],
+              ['entender', 'darse cuenta', 'verlo lógico'],
               ['temer(se)', 'dar una mala noticia', 'tener miedo'],
               ['parecer', 'dar la impresión', 'valorar'],
               ['recordar', 'informar', 'pedir']
@@ -79,20 +79,20 @@ ECA.data.addGrammar('C2', [
         id: 'conjunctions', label: { ru: 'Союзы', en: 'Conjunctions' },
         blocks: [
           { type: 'text', heading: { ru: 'Один союз — два значения', en: 'One conjunction, two meanings' }, body: {
-            ru: ['<b>Como</b> в начале фразы: с indicativo — причина («так как»), с subjuntivo — условие, часто угроза («если только»): <i>Como no vienes, me voy</i> — «раз ты не идёшь»; <i>Como no vengas, me voy</i> — «если не придёшь, я уйду».',
+            ru: ['<b>Como</b> в начале фразы: с indicativo — причина («так как»), с subjuntivo — условие, часто угроза («если только»): <i>Como no contestas, cuelgo</i> — «раз ты не отвечаешь, я кладу трубку»; <i>Como no contestes, cuelgo</i> — «если не ответишь, положу трубку».',
                  '<b>Mientras</b>: с indicativo — «пока, в то время как», с subjuntivo — «при условии что, до тех пор пока»: <i>Mientras vivas aquí, cumplirás mis normas</i>.',
                  '<b>Siempre que</b>: с indicativo — «каждый раз, когда», с subjuntivo — «при условии, что». <b>De modo que, de manera que</b>: с indicativo — результат («так что»), с subjuntivo — цель («так, чтобы»).',
                  '<b>Aunque</b>: с indicativo — уступка факту, который мы сообщаем («хотя»); с subjuntivo — гипотеза («даже если») или факт, известный обоим, но неважный для говорящего. <b>No porque… sino porque</b>: отвергнутая причина стоит в subjuntivo.'],
-            en: ['<b>Como</b> at the start of a sentence: with the indicative it gives a reason (“since”), with the subjunctive a condition, often a threat (“if…”): <i>Como no vienes, me voy</i> — “since you’re not coming”; <i>Como no vengas, me voy</i> — “if you don’t come, I’m leaving”.',
+            en: ['<b>Como</b> at the start of a sentence: with the indicative it gives a reason (“since”), with the subjunctive a condition, often a threat (“if…”): <i>Como no contestas, cuelgo</i> — “since you’re not answering, I’m hanging up”; <i>Como no contestes, cuelgo</i> — “if you don’t answer, I’ll hang up”.',
                  '<b>Mientras</b>: with the indicative “while”, with the subjunctive “as long as”: <i>Mientras vivas aquí, cumplirás mis normas</i>.',
                  '<b>Siempre que</b>: with the indicative “whenever, every time”, with the subjunctive “provided that”. <b>De modo que, de manera que</b>: with the indicative a result (“so”), with the subjunctive a purpose (“so that”).',
                  '<b>Aunque</b>: with the indicative it concedes a fact that we are stating (“although”); with the subjunctive it is a hypothesis (“even if”) or a fact both speakers know but which does not matter to the speaker. <b>No porque… sino porque</b>: a rejected reason takes the subjunctive.'] } },
           { type: 'table', heading: { ru: 'Союз и два его значения', en: 'Each conjunction, two meanings' },
-            head: ['', '+ indicativo', '+ subjuntivo'],
+            head: ['', 'indicativo', 'subjuntivo'],
             rows: [
               ['como', 'causa', 'condición'],
               ['mientras', 'a la vez', 'condición'],
-              ['siempre que', 'cada vez', 'con tal de que'],
+              ['siempre que', 'cada vez', 'condición'],
               ['de modo que', 'resultado', 'finalidad'],
               ['aunque', 'hecho', 'hipótesis'],
               ['porque', 'causa', 'no porque…']
@@ -136,9 +136,9 @@ ECA.data.addGrammar('C2', [
         id: 'relatives', label: { ru: 'Придаточные', en: 'Clauses' },
         blocks: [
           { type: 'text', heading: { ru: 'Известное или любое', en: 'Known or any' }, body: {
-            ru: ['<b>Lo que, el que, donde</b>: с indicativo — известное, с subjuntivo — любое, ещё неизвестное: <i>Haré lo que dices</i> (я слышал, что ты говоришь) / <i>Haré lo que digas</i> (что бы ты ни сказал).',
+            ru: ['<b>Lo que, el que, donde</b>: с indicativo — известное, с subjuntivo — любое, ещё неизвестное: <i>Comeré lo que preparas</i> (съем то, что ты готовишь, — я знаю, что именно) / <i>Comeré lo que prepares</i> (съем, что бы ты ни приготовил).',
                  'Так же ведут себя <b>quien, como</b> и придаточные при существительном. Если человек или предмет <b>известен и точно существует</b> — indicativo; если его ещё ищут, подойдёт любой или его, возможно, нет — subjuntivo.'],
-            en: ['<b>Lo que, el que, donde</b>: with the indicative something known, with the subjunctive anything, still unknown: <i>Haré lo que dices</i> (I’ve heard what you say) / <i>Haré lo que digas</i> (whatever you say).',
+            en: ['<b>Lo que, el que, donde</b>: with the indicative something known, with the subjunctive anything, still unknown: <i>Comeré lo que preparas</i> (I’ll eat what you’re cooking — I know what it is) / <i>Comeré lo que prepares</i> (I’ll eat whatever you cook).',
                  '<b>Quien, como</b> and clauses that describe a noun work the same way. If the person or thing is <b>known and certainly exists</b>, use the indicative; if it is still being sought, any one will do, or it may not exist, use the subjunctive.'] } },
           { type: 'table', heading: { ru: 'Что выбирает наклонение', en: 'What decides the mood' },
             head: ['', '+ indicativo', '+ subjuntivo'],
@@ -204,7 +204,7 @@ ECA.data.addGrammar('C2', [
             { badge: 'S', color: 'coral', es: 'Como no <b>vengas</b>, me voy.', ru: 'Если не придёшь, я уйду.', en: 'If you don’t come, I’m leaving.' },
             { badge: 'S', color: 'coral', es: 'Como no me <b>llames</b> esta noche, me enfado.', ru: 'Если не позвонишь мне сегодня вечером, я обижусь.', en: 'If you don’t call me tonight, I’ll be upset.' },
             { badge: 'I', color: 'blue', es: 'Mientras <b>cocinas</b>, pongo la mesa.', ru: 'Пока ты готовишь, я накрою на стол.', en: 'While you cook, I’ll set the table.' },
-            { badge: 'S', color: 'coral', es: 'Mientras <b>cocines</b> tú, yo friego.', ru: 'Пока готовишь ты, посуду мою я.', en: 'As long as you do the cooking, I’ll do the washing-up.' },
+            { badge: 'S', color: 'coral', es: 'Mientras <b>cocines</b> tú, yo friego.', ru: 'При условии, что готовишь ты, посуду мою я.', en: 'As long as you do the cooking, I’ll do the washing-up.' },
             { badge: 'S', color: 'coral', es: 'Mientras <b>haya</b> salud, lo demás no importa.', ru: 'Было бы здоровье, остальное неважно.', en: 'As long as we have our health, nothing else matters.' },
             { badge: 'I', color: 'blue', es: 'Siempre que <b>vamos</b> a Cádiz, comemos en el mismo sitio.', ru: 'Каждый раз, когда мы ездим в Кадис, обедаем в одном и том же месте.', en: 'Whenever we go to Cádiz, we eat at the same place.' },
             { badge: 'S', color: 'coral', es: 'Podéis quedaros, siempre que no <b>hagáis</b> ruido.', ru: 'Можете остаться, если не будете шуметь.', en: 'You can stay, as long as you don’t make any noise.' },
@@ -459,11 +459,11 @@ ECA.data.addGrammar('C2', [
             { badge: 'C', color: 'amber', es: 'La gente <b>flipó</b> con la noticia.', ru: 'Народ офигел от новости.', en: 'People were blown away by the news.' }
           ] },
           { type: 'examples', heading: { ru: 'Из писем', en: 'From letters' }, items: [
-            { color: 'blue', es: 'Estimada Sra. López: me <b>dirijo</b> a usted para solicitar una cita.', ru: 'Уважаемая госпожа Лопес! Обращаюсь к вам с просьбой о встрече.', en: 'Dear Ms López, I am writing to request an appointment.' },
+            { color: 'blue', es: 'Estimada Sra. López:<br>Me <b>dirijo</b> a usted para solicitar una cita.', ru: 'Уважаемая госпожа Лопес! Обращаюсь к вам с просьбой о встрече.', en: 'Dear Ms López, I am writing to request an appointment.' },
             { color: 'blue', es: '<b>Adjunto</b> le remito mi currículum.', ru: 'Прилагаю к письму своё резюме.', en: 'Please find my CV attached.' },
             { color: 'blue', es: '<b>Quedo</b> a la espera de su respuesta.', ru: 'Жду вашего ответа.', en: 'I look forward to your reply.' },
             { color: 'blue', es: 'Sin otro particular, le <b>saluda</b> atentamente,', ru: 'На этом всё. С уважением,', en: 'With nothing further to add, yours faithfully,' },
-            { color: 'amber', es: 'Querida Marta: <b>¿qué tal</b> todo por Valencia?', ru: 'Дорогая Марта, как там у тебя дела в Валенсии?', en: 'Dear Marta, how’s everything in Valencia?' },
+            { color: 'amber', es: 'Querida Marta:<br><b>¿Qué tal</b> todo por Valencia?', ru: 'Дорогая Марта, как там у тебя дела в Валенсии?', en: 'Dear Marta, how’s everything in Valencia?' },
             { color: 'amber', es: 'Bueno, te dejo, que tengo mucho lío. <b>Un abrazo</b>,', ru: 'Ну всё, убегаю, у меня завал. Обнимаю,', en: 'Right, I’ll stop here — I’m swamped. Hugs,' }
           ] }
         ]
@@ -529,7 +529,7 @@ ECA.data.addGrammar('C2', [
               ['lugar', 'Fue en Sevilla donde vivió.'],
               ['tiempo', 'Fue en mayo cuando llegó.'],
               ['modo', 'Es así como se hace.'],
-              ['complemento con preposición', 'Es a ti a quien busco.']
+              ['preposición', 'Es a ti a quien busco.']
             ] },
           { type: 'text', heading: { ru: 'Согласование', en: 'Agreement' }, body: {
             ru: ['Если выделено личное местоимение, <b>ser согласуется с ним</b>: <i>Soy yo quien paga</i>, <i>Fuimos nosotros los que rompimos la ventana</i>.',
@@ -537,19 +537,19 @@ ECA.data.addGrammar('C2', [
             en: ['If a personal pronoun is highlighted, <b>ser agrees with it</b>: <i>Soy yo quien paga</i>, <i>Fuimos nosotros los que rompimos la ventana</i>.',
                  'After <i>quien</i> the verb in the clause is usually third person: <i>Soy yo quien paga</i>. After <i>el que, la que</i> both are possible: <i>Soy yo el que pago / el que paga</i>. The article agrees with the highlighted word: <i>Fue ella la que llamó</i>.'] } },
           { type: 'conj', heading: { ru: 'Нейтрально или с выделением', en: 'Neutral or emphatic' }, verbs: [
-            { inf: 'Juan rompió el jarrón', variants: [
+            { inf: 'romper el jarrón', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Juan rompió el jarrón.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['persona', 'Fue <b>Juan</b> quien rompió el jarrón.'], ['cosa', 'Fue <b>el jarrón</b> lo que rompió Juan.']] }
             ] },
-            { inf: 'Trabajo en Bilbao', variants: [
+            { inf: 'trabajar en Bilbao', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Trabajo en Bilbao.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['lugar', 'Es <b>en Bilbao</b> donde trabajo.']] }
             ] },
-            { inf: 'Nos casamos en 2015', variants: [
+            { inf: 'casarse en 2015', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Nos casamos en 2015.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['tiempo', 'Fue <b>en 2015</b> cuando nos casamos.']] }
             ] },
-            { inf: 'Tú pagas la cena', variants: [
+            { inf: 'pagar la cena', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Tú pagas la cena.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['quien', 'Eres <b>tú</b> quien paga la cena.'], ['el que', 'Eres <b>tú</b> el que pagas la cena.']] }
             ] }
@@ -557,7 +557,7 @@ ECA.data.addGrammar('C2', [
         ]
       },
       {
-        id: 'lo-que', label: { ru: 'Lo que', en: 'Lo que' },
+        id: 'what', label: { ru: 'Lo que', en: 'Lo que' },
         blocks: [
           { type: 'text', heading: { ru: 'Lo que… es', en: 'Lo que… es' }, body: {
             ru: ['<b>Lo que + глагол + es…</b> откладывает главное на конец: <i>Lo que necesito es descansar</i>; <i>Lo que más me molesta es que no avise</i>.',
@@ -581,11 +581,11 @@ ECA.data.addGrammar('C2', [
               ['¡lo que + verbo!', '¡Lo que ha llovido!']
             ] },
           { type: 'conj', heading: { ru: 'Нейтрально или с выделением', en: 'Neutral or emphatic' }, verbs: [
-            { inf: 'Necesito vacaciones', variants: [
+            { inf: 'necesitar vacaciones', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Necesito vacaciones.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['lo que… es', 'Lo que necesito <b>son</b> vacaciones.'], ['al revés', 'Vacaciones <b>es lo que</b> necesito.']] }
             ] },
-            { inf: 'Es muy caro', variants: [
+            { inf: 'ser caro', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Es muy caro.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['lo… que', 'No sabes <b>lo caro que</b> es.'], ['con lo… que', '<b>Con lo caro que</b> es, no pienso comprarlo.']] }
             ] }
@@ -620,15 +620,15 @@ ECA.data.addGrammar('C2', [
               ['sin artículo', '—', 'Dinero no tengo.']
             ] },
           { type: 'conj', heading: { ru: 'Нейтрально или с выделением', en: 'Neutral or emphatic' }, verbs: [
-            { inf: 'Ya he visto esa película', variants: [
+            { inf: 'ver la película', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Ya he visto esa película.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['tema', 'Esa película ya <b>la</b> he visto.']] }
             ] },
-            { inf: 'Ana trajo el vino', variants: [
+            { inf: 'traer el vino', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Ana trajo el vino.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['respuesta', '¿Quién trajo el vino? — Lo trajo <b>Ana</b>.']] }
             ] },
-            { inf: 'Tardé dos horas en llegar', variants: [
+            { inf: 'tardar en llegar', variants: [
               { label: { ru: 'нейтрально', en: 'neutral' }, color: 'blue', rows: [['frase', 'Tardé dos horas en llegar.']] },
               { label: { ru: 'с выделением', en: 'emphatic' }, color: 'amber', rows: [['foco', '<b>Dos horas</b> tardé en llegar.']] }
             ] }
@@ -776,28 +776,32 @@ ECA.data.addGrammar('C2', [
             en: ['Like the Imperfecto de subjuntivo, it comes from the <b>ellos</b> form of the Indefinido: drop <b>-ron</b> and add <b>-re, -res, -re, -remos, -reis, -ren</b>. <i>hablaron → hablare</i>, <i>tuvieron → tuviere</i>, <i>fueron → fuere</i>.',
                  'The nosotros form has an accent: <i>habláremos, tuviéremos</i>. The compound form is <b>hubiere + participle</b>: <i>hubiere cometido</i>.',
                  'It is easy to confuse with the Imperfecto de subjuntivo: <i>tuviera</i> (imperfecto) vs <i>tuviere</i> (futuro). The difference is one letter: <b>-ra</b> vs <b>-re</b>.'] } },
-          { type: 'table', heading: { ru: 'Три глагола во всех лицах', en: 'Three verbs in every person' },
-            head: ['', 'hablar', 'tener', 'ser / ir'],
-            rows: [
-              ['yo', 'hablare', 'tuviere', 'fuere'],
-              ['tú', 'hablares', 'tuvieres', 'fueres'],
-              ['él / ella', 'hablare', 'tuviere', 'fuere'],
-              ['nosotros', 'habláremos', 'tuviéremos', 'fuéremos'],
-              ['vosotros', 'hablareis', 'tuviereis', 'fuereis'],
-              ['ellos', 'hablaren', 'tuvieren', 'fueren']
+          { type: 'conj', heading: { ru: 'Три глагола во всех лицах', en: 'Three verbs in every person' }, verbs: [
+            { inf: 'hablar', tr: { ru: '-ar · говорить', en: '-ar · to speak' }, variants: [
+              { label: 'Futuro de subj.', color: 'purple', rows: [['yo', 'habla<b>re</b>'], ['tú', 'habla<b>res</b>'], ['él / ella', 'habla<b>re</b>'], ['nosotros', 'hablá<b>remos</b>'], ['vosotros', 'habla<b>reis</b>'], ['ellos', 'habla<b>ren</b>']] },
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'habla<b>ra</b>'], ['tú', 'habla<b>ras</b>'], ['él / ella', 'habla<b>ra</b>'], ['nosotros', 'hablá<b>ramos</b>'], ['vosotros', 'habla<b>rais</b>'], ['ellos', 'habla<b>ran</b>']] }
             ] },
+            { inf: 'tener', tr: { ru: 'иметь', en: 'to have' }, variants: [
+              { label: 'Futuro de subj.', color: 'purple', rows: [['yo', 'tuvie<b>re</b>'], ['tú', 'tuvie<b>res</b>'], ['él / ella', 'tuvie<b>re</b>'], ['nosotros', 'tuvié<b>remos</b>'], ['vosotros', 'tuvie<b>reis</b>'], ['ellos', 'tuvie<b>ren</b>']] },
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'tuvie<b>ra</b>'], ['tú', 'tuvie<b>ras</b>'], ['él / ella', 'tuvie<b>ra</b>'], ['nosotros', 'tuvié<b>ramos</b>'], ['vosotros', 'tuvie<b>rais</b>'], ['ellos', 'tuvie<b>ran</b>']] }
+            ] },
+            { inf: 'ser / ir', tr: { ru: 'быть · идти', en: 'to be · to go' }, variants: [
+              { label: 'Futuro de subj.', color: 'purple', rows: [['yo', 'fue<b>re</b>'], ['tú', 'fue<b>res</b>'], ['él / ella', 'fue<b>re</b>'], ['nosotros', 'fué<b>remos</b>'], ['vosotros', 'fue<b>reis</b>'], ['ellos', 'fue<b>ren</b>']] },
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'fue<b>ra</b>'], ['tú', 'fue<b>ras</b>'], ['él / ella', 'fue<b>ra</b>'], ['nosotros', 'fué<b>ramos</b>'], ['vosotros', 'fue<b>rais</b>'], ['ellos', 'fue<b>ran</b>']] }
+            ] }
+          ] },
           { type: 'conj', heading: { ru: '-re или -ra', en: '-re or -ra' }, verbs: [
             { inf: 'comer', tr: { ru: 'comieron → comie-', en: 'comieron → comie-' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['yo', 'comie<b>re</b>'], ['tú', 'comie<b>res</b>'], ['él / ella', 'comie<b>re</b>'], ['nosotros', 'comié<b>remos</b>'], ['vosotros', 'comie<b>reis</b>'], ['ellos', 'comie<b>ren</b>']] },
-              { label: 'Imperfecto subj.', color: 'coral', rows: [['yo', 'comie<b>ra</b>'], ['tú', 'comie<b>ras</b>'], ['él / ella', 'comie<b>ra</b>'], ['nosotros', 'comié<b>ramos</b>'], ['vosotros', 'comie<b>rais</b>'], ['ellos', 'comie<b>ran</b>']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['yo', 'comie<b>re</b>'], ['tú', 'comie<b>res</b>'], ['él / ella', 'comie<b>re</b>'], ['nosotros', 'comié<b>remos</b>'], ['vosotros', 'comie<b>reis</b>'], ['ellos', 'comie<b>ren</b>']] },
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'comie<b>ra</b>'], ['tú', 'comie<b>ras</b>'], ['él / ella', 'comie<b>ra</b>'], ['nosotros', 'comié<b>ramos</b>'], ['vosotros', 'comie<b>rais</b>'], ['ellos', 'comie<b>ran</b>']] }
             ] },
             { inf: 'decir', tr: { ru: 'dijeron → dije-', en: 'dijeron → dije-' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['yo', 'dije<b>re</b>'], ['tú', 'dije<b>res</b>'], ['él / ella', 'dije<b>re</b>'], ['nosotros', 'dijé<b>remos</b>'], ['vosotros', 'dije<b>reis</b>'], ['ellos', 'dije<b>ren</b>']] },
-              { label: 'Imperfecto subj.', color: 'coral', rows: [['yo', 'dije<b>ra</b>'], ['tú', 'dije<b>ras</b>'], ['él / ella', 'dije<b>ra</b>'], ['nosotros', 'dijé<b>ramos</b>'], ['vosotros', 'dije<b>rais</b>'], ['ellos', 'dije<b>ran</b>']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['yo', 'dije<b>re</b>'], ['tú', 'dije<b>res</b>'], ['él / ella', 'dije<b>re</b>'], ['nosotros', 'dijé<b>remos</b>'], ['vosotros', 'dije<b>reis</b>'], ['ellos', 'dije<b>ren</b>']] },
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', 'dije<b>ra</b>'], ['tú', 'dije<b>ras</b>'], ['él / ella', 'dije<b>ra</b>'], ['nosotros', 'dijé<b>ramos</b>'], ['vosotros', 'dije<b>rais</b>'], ['ellos', 'dije<b>ran</b>']] }
             ] },
             { inf: 'haber + participio', tr: { ru: 'сложная форма · cometer', en: 'compound form · cometer' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['yo', '<b>hubiere</b> cometido'], ['tú', '<b>hubieres</b> cometido'], ['él / ella', '<b>hubiere</b> cometido'], ['nosotros', '<b>hubiéremos</b> cometido'], ['vosotros', '<b>hubiereis</b> cometido'], ['ellos', '<b>hubieren</b> cometido']] },
-              { label: 'Imperfecto subj.', color: 'coral', rows: [['yo', '<b>hubiera</b> cometido'], ['tú', '<b>hubieras</b> cometido'], ['él / ella', '<b>hubiera</b> cometido'], ['nosotros', '<b>hubiéramos</b> cometido'], ['vosotros', '<b>hubierais</b> cometido'], ['ellos', '<b>hubieran</b> cometido']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['yo', '<b>hubiere</b> cometido'], ['tú', '<b>hubieres</b> cometido'], ['él / ella', '<b>hubiere</b> cometido'], ['nosotros', '<b>hubiéremos</b> cometido'], ['vosotros', '<b>hubiereis</b> cometido'], ['ellos', '<b>hubieren</b> cometido']] },
+              { label: 'Imperfecto', color: 'teal', rows: [['yo', '<b>hubiera</b> cometido'], ['tú', '<b>hubieras</b> cometido'], ['él / ella', '<b>hubiera</b> cometido'], ['nosotros', '<b>hubiéramos</b> cometido'], ['vosotros', '<b>hubierais</b> cometido'], ['ellos', '<b>hubieran</b> cometido']] }
             ] }
           ] },
           { type: 'tip', title: { ru: 'Одна буква — три формы', en: 'One letter, three forms' }, body: {
@@ -830,10 +834,10 @@ ECA.data.addGrammar('C2', [
               ex: { es: 'Los que <b>hubieren participado</b> en el delito responderán solidariamente.', ru: 'Все, кто участвовал в преступлении, несут солидарную ответственность.', en: 'All those who have taken part in the offence shall be jointly liable.' } }
           ] },
           { type: 'text', heading: { ru: 'Другие приметы юридического стиля', en: 'Other marks of legal style' }, body: {
-            ru: ['<b>Haber de + инфинитив</b> — долженствование в регламентах: <i>Los candidatos habrán de presentar la solicitud antes del día 5</i>. Формулы: <i>so pena de</i> («под угрозой»), <i>por la presente</i> («настоящим»), <i>el susodicho</i> («вышеупомянутый»).'],
-            en: ['<b>Haber de + infinitive</b> expresses obligation in regulations: <i>Los candidatos habrán de presentar la solicitud antes del día 5</i>. Formulas: <i>so pena de</i> (“on pain of”), <i>por la presente</i> (“hereby”), <i>el susodicho</i> (“the aforementioned”).'] } },
+            ru: ['<b>Haber de + инфинитив</b> — долженствование в регламентах: <i>Los aspirantes habrán de acreditar su experiencia</i>. Формулы: <i>so pena de</i> («под угрозой»), <i>por la presente</i> («настоящим»), <i>el susodicho</i> («вышеупомянутый»).'],
+            en: ['<b>Haber de + infinitive</b> expresses obligation in regulations: <i>Los aspirantes habrán de acreditar su experiencia</i>. Formulas: <i>so pena de</i> (“on pain of”), <i>por la presente</i> (“hereby”), <i>el susodicho</i> (“the aforementioned”).'] } },
           { type: 'markers', heading: { ru: 'Юридические формулы', en: 'Legal formulas' }, groups: [
-            { color: 'teal', title: { ru: 'Книжный и юридический стиль', en: 'Bookish and legal style' }, tags: ['so pena de', 'por la presente', 'el susodicho', 'haber de + infinitivo', 'dicho / dicha', 'el abajo firmante', 'a los efectos de', 'en su caso'] }
+            { color: 'amber', title: { ru: 'Книжный и юридический стиль', en: 'Bookish and legal style' }, tags: ['so pena de', 'por la presente', 'el susodicho', 'haber de + infinitivo', 'dicho / dicha', 'el abajo firmante', 'a los efectos de', 'en su caso'] }
           ] }
         ]
       },
@@ -841,22 +845,22 @@ ECA.data.addGrammar('C2', [
         id: 'formulas', label: { ru: 'Формулы', en: 'Set phrases' },
         blocks: [
           { type: 'text', heading: { ru: 'Поговорки и торжественные формулы', en: 'Sayings and solemn formulas' }, body: {
-            ru: ['В нескольких поговорках и формулах futuro de subjuntivo застыл навсегда. Их не перестраивают: говорят так, как они сложились, — <i>Adonde fueres, haz lo que vieres</i>. Рядом живут и современные варианты с presente de subjuntivo.',
+            ru: ['В нескольких поговорках и формулах futuro de subjuntivo застыл навсегда. Их не перестраивают: говорят так, как они сложились, — <i>sea quien fuere</i>. Рядом живут и современные варианты с presente de subjuntivo.',
                  'Та же форма звучит в <b>клятвах и присягах</b> («если же вы этого не сделаете…») и в юридическом обороте <i>a que hubiere lugar</i> — «какие положены».'],
-            en: ['In a handful of sayings and formulas the futuro de subjuntivo is frozen for good. They are not rebuilt; people say them as they have come down — <i>Adonde fueres, haz lo que vieres</i>. Modern versions with the present subjunctive exist alongside them.',
+            en: ['In a handful of sayings and formulas the futuro de subjuntivo is frozen for good. They are not rebuilt; people say them as they have come down — <i>sea quien fuere</i>. Modern versions with the present subjunctive exist alongside them.',
                  'The same form is heard in <b>oaths</b> (“and should you fail to do so…”) and in the legal phrase <i>a que hubiere lugar</i> — “as may be appropriate”.'] } },
           { type: 'conj', heading: { ru: 'Формула и её современный вид', en: 'The formula and its modern form' }, verbs: [
             { inf: 'sea lo que fuere', tr: { ru: 'что бы то ни было', en: 'whatever it may be' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['fórmula', 'sea lo que <b>fuere</b>']] },
-              { label: 'Presente subj.', color: 'coral', rows: [['hoy', 'sea lo que <b>sea</b>']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['fórmula', 'sea lo que <b>fuere</b>']] },
+              { label: 'Presente', color: 'coral', rows: [['hoy', 'sea lo que <b>sea</b>']] }
             ] },
             { inf: 'fuere como fuere', tr: { ru: 'как бы то ни было', en: 'be that as it may' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['fórmula', '<b>fuere</b> como <b>fuere</b>']] },
-              { label: 'Presente subj.', color: 'coral', rows: [['hoy', '<b>sea</b> como <b>sea</b>']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['fórmula', '<b>fuere</b> como <b>fuere</b>']] },
+              { label: 'Presente', color: 'coral', rows: [['hoy', '<b>sea</b> como <b>sea</b>']] }
             ] },
             { inf: 'venga lo que viniere', tr: { ru: 'будь что будет', en: 'come what may' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['fórmula', 'venga lo que <b>viniere</b>']] },
-              { label: 'Presente subj.', color: 'coral', rows: [['hoy', 'venga lo que <b>venga</b>']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['fórmula', 'venga lo que <b>viniere</b>']] },
+              { label: 'Presente', color: 'coral', rows: [['hoy', 'venga lo que <b>venga</b>']] }
             ] }
           ] },
           { type: 'markers', heading: { ru: 'Узнайте на слух', en: 'Recognise them' }, groups: [
@@ -881,20 +885,20 @@ ECA.data.addGrammar('C2', [
             ] },
           { type: 'conj', heading: { ru: 'Одна фраза — две эпохи', en: 'One sentence, two eras' }, verbs: [
             { inf: 'el que + verbo', tr: { ru: '→ presente de subjuntivo', en: '→ present subjunctive' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['arcaico', 'El que <b>incumpliere</b> el contrato pagará una multa.']] },
-              { label: 'Subjuntivo', color: 'coral', rows: [['hoy', 'El que <b>incumpla</b> el contrato pagará una multa.']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['arcaico', 'El que <b>incumpliere</b> el contrato pagará una multa.']] },
+              { label: 'Presente', color: 'coral', rows: [['hoy', 'El que <b>incumpla</b> el contrato pagará una multa.']] }
             ] },
             { inf: 'si + verbo', tr: { ru: '→ presente de indicativo', en: '→ present indicative' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['arcaico', 'Si el cliente <b>solicitare</b> factura, se le entregará.']] },
+              { label: 'Futuro de subj.', color: 'purple', rows: [['arcaico', 'Si el cliente <b>solicitare</b> factura, se le entregará.']] },
               { label: 'Indicativo', color: 'blue', rows: [['hoy', 'Si el cliente <b>solicita</b> factura, se le entregará.']] }
             ] },
             { inf: 'cuando + verbo', tr: { ru: '→ presente de subjuntivo', en: '→ present subjunctive' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['arcaico', 'Cuando <b>fuere</b> necesario, se convocará una reunión.']] },
-              { label: 'Subjuntivo', color: 'coral', rows: [['hoy', 'Cuando <b>sea</b> necesario, se convocará una reunión.']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['arcaico', 'Cuando <b>fuere</b> necesario, se convocará una reunión.']] },
+              { label: 'Presente', color: 'coral', rows: [['hoy', 'Cuando <b>sea</b> necesario, se convocará una reunión.']] }
             ] },
             { inf: 'hubiere + participio', tr: { ru: '→ haya + participio', en: '→ haya + participle' }, variants: [
-              { label: 'Futuro subj.', color: 'purple', rows: [['arcaico', 'Quien <b>hubiere</b> pagado la cuota podrá votar.']] },
-              { label: 'Subjuntivo', color: 'coral', rows: [['hoy', 'Quien <b>haya</b> pagado la cuota podrá votar.']] }
+              { label: 'Futuro de subj.', color: 'purple', rows: [['arcaico', 'Quien <b>hubiere</b> pagado la cuota podrá votar.']] },
+              { label: 'Presente', color: 'coral', rows: [['hoy', 'Quien <b>haya</b> pagado la cuota podrá votar.']] }
             ] }
           ] },
           { type: 'text', heading: { ru: 'Не путайте', en: 'Don’t mix them up' }, body: {
@@ -916,8 +920,8 @@ ECA.data.addGrammar('C2', [
             { color: 'purple', es: 'Si <b>hubiere</b> más de un heredero, la herencia se dividirá a partes iguales.', ru: 'Если наследников окажется несколько, наследство будет разделено поровну.', en: 'Should there be more than one heir, the estate shall be divided equally.' },
             { color: 'purple', es: 'Si el deudor no <b>pagare</b> en el plazo fijado, se procederá al embargo.', ru: 'Если должник не заплатит в установленный срок, на его имущество наложат арест.', en: 'Should the debtor fail to pay by the set deadline, his assets shall be seized.' },
             { color: 'purple', es: 'Quien <b>hallare</b> un objeto perdido deberá entregarlo en el ayuntamiento.', ru: 'Тот, кто найдёт потерянную вещь, обязан сдать её в мэрию.', en: 'Whoever finds a lost item must hand it in at the town hall.' },
-            { color: 'teal', es: 'Los candidatos <b>habrán de</b> presentar la solicitud antes del día 5.', ru: 'Кандидаты должны подать заявление до 5-го числа.', en: 'Candidates shall submit their applications before the 5th.' },
-            { color: 'teal', es: 'Queda prohibido fumar en el recinto, <b>so pena de</b> multa.', ru: 'Курить на территории запрещено под угрозой штрафа.', en: 'Smoking on the premises is prohibited, on pain of a fine.' }
+            { color: 'amber', es: 'Los candidatos <b>habrán de</b> presentar la solicitud antes del día 5.', ru: 'Кандидаты должны подать заявление до 5-го числа.', en: 'Candidates shall submit their applications before the 5th.' },
+            { color: 'amber', es: 'Queda prohibido fumar en el recinto, <b>so pena de</b> multa.', ru: 'Курить на территории запрещено под угрозой штрафа.', en: 'Smoking on the premises is prohibited, on pain of a fine.' }
           ] },
           { type: 'examples', heading: { ru: 'Поговорки и формулы', en: 'Sayings and formulas' }, items: [
             { color: 'purple', es: 'Adonde <b>fueres</b>, haz lo que <b>vieres</b>.', ru: 'В чужой монастырь со своим уставом не ходят.', en: 'When in Rome, do as the Romans do.' },
@@ -940,9 +944,9 @@ ECA.data.addGrammar('C2', [
             { badge: 'M', color: 'blue', es: 'Si <b>tiene</b> alguna duda, consulte al personal de sala.', ru: 'Если у вас есть вопросы, обратитесь к персоналу зала (современный вариант).', en: 'If you have any questions, please ask the staff (modern form).' }
           ] },
           { type: 'examples', heading: { ru: 'Другие старинные черты', en: 'Other old-fashioned features' }, items: [
-            { color: 'teal', es: '<b>Hallábase</b> el caballero en su castillo cuando llegó la noticia.', ru: 'Рыцарь находился в своём замке, когда пришла весть.', en: 'The knight was in his castle when the news arrived.' },
-            { color: 'teal', es: '<b>Díjole</b> entonces el anciano que nada temiese.', ru: 'И тогда старик сказал ему ничего не бояться.', en: 'Then the old man told him to fear nothing.' },
-            { color: 'teal', es: '<b>Sentóse</b> la dama junto a la ventana y guardó silencio.', ru: 'Дама села у окна и умолкла.', en: 'The lady sat down by the window and fell silent.' }
+            { color: 'amber', es: '<b>Hallábase</b> el caballero en su castillo cuando llegó la noticia.', ru: 'Рыцарь находился в своём замке, когда пришла весть.', en: 'The knight was in his castle when the news arrived.' },
+            { color: 'amber', es: '<b>Díjole</b> entonces el anciano que nada temiese.', ru: 'И тогда старик сказал ему ничего не бояться.', en: 'Then the old man told him to fear nothing.' },
+            { color: 'amber', es: '<b>Sentóse</b> la dama junto a la ventana y guardó silencio.', ru: 'Дама села у окна и умолкла.', en: 'The lady sat down by the window and fell silent.' }
           ] }
         ]
       }
@@ -1002,11 +1006,11 @@ ECA.data.addGrammar('C2', [
           { type: 'table', heading: { ru: 'Местоимения-дополнения', en: 'Object pronouns' },
             head: ['', 'masculino', 'femenino'],
             rows: [
-              ['directo singular', 'lo', 'la'],
-              ['directo plural', 'los', 'las'],
-              ['indirecto singular', 'le', 'le'],
-              ['indirecto plural', 'les', 'les'],
-              ['indirecto + directo', 'se lo · se los', 'se la · se las']
+              ['dir. sing.', 'lo', 'la'],
+              ['dir. pl.', 'los', 'las'],
+              ['indir. sing.', 'le', 'le'],
+              ['indir. pl.', 'les', 'les'],
+              ['indir. + dir.', 'se lo · se los', 'se la · se las']
             ] },
           { type: 'rules', heading: { ru: 'Три правила', en: 'Three rules' }, items: [
             { color: 'teal', title: { ru: 'Прямое: кого? что?', en: 'Direct: whom? what?' }, es: 'lo · la · los · las',
