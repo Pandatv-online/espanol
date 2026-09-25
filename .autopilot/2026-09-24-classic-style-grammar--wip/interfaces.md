@@ -59,3 +59,25 @@
 - Ключи прогресса `grammar:<id>` и id тем не меняются.
 
 ## Что построили таски
+
+## Из таска 11 — стиль старых страниц
+
+- Токены (base.css): `--bg --surface --surface-2 --ink --ink-soft --heading --em --link --line --line-strong --accent --accent-ink --accent-soft --accent-stripe --accent-hi --sun* --ok* --bad* --focus --tg`; hero: `--hero-bg --hero-ink --hero-soft --hero-faint --hero-accent --hero-focus`; палитра `{blue,amber,teal,coral,purple}` × `{"", -soft, -ink, -on}`; шрифты `--font-display` (Playfair Display), `--font-body` (Noto Sans).
+- Цветовые классы `.c-blue/.c-amber/.c-teal/.c-coral/.c-purple` задают `--c --c-soft --c-ink --c-on` (стоят в конце base.css, перекрывают умолчания компонентов).
+- Hero темы: `.hero > .hero__title` (`<b>` или `.hero__accent` — янтарь), `.hero__sub`, `.hero__meta`; идущая следом `.tabs` стыкуется с hero.
+- Полоса вкладок: `ui.tabs(opts)` рисует `.tab > .tab__num + .tab__label` (`numbered:false` — без номеров); при 4+ вкладках уже 560px подпись только у активной.
+- Мини-вкладки: `.mini-tabs > .mini-tab.c-*`, активная — `[aria-selected="true"]` или `[aria-pressed="true"]`.
+- Правила: `.rule-grid > .rule-card.c-*` (`__label __title __es __body`), `.c-blue` — заливка navy; заметки `.rule-box.c-*`.
+- Триггеры: `.trigger-list > .trigger-card` (`__head __num __title __sub __body __ex`); `.phrase-list > .phrase(.c-*)`.
+- Маркеры: `.kw-grid > .kw-box.c-* > .kw-box__title + .kw-tags > .kw-tag`.
+- Примеры: `ul.ex-box > li.ex-row(.c-*) > .ex-row__es` (`<b>` — форма) + `.ex-row__tr`; `.ex-row--badged + .ex-row__badge.c-*`.
+- Спряжение: `.conj-grid > .conj-card.c-* > .conj-card__head (__verb, __tr) + .mini-tabs + .conj-forms(.c-*) > .form-row > __pron + __word`.
+- Шпаргалка: `.tip > .tip__title + .tip__body`. Также `.section-intro`, `.group-title(.c-*)`, `.table` (navy-шапка), `.example__es b`.
+- Строка темы грамматики на странице уровня показывает подзаголовок, если у темы есть `summary` или `hero.sub`.
+
+## Из таска 12 — грамматика вкладками
+
+- Маршрут `#/<lvl>/grammar/<id>/<tab>`; `parseRoute` → `{name:'grammar', level, topicId, tab|null}`; id вкладки `test` зарезервирован; неизвестная вкладка → первая (адрес чистится replaceState); переключение вкладок — replaceState, без записи в историю. Состояние экрана грамматики хранится по уровню+теме (тест не сбрасывается при смене вкладки/языка).
+- `ECA.grammarBlocks.render(block, lang) -> Node`, `ECA.grammarBlocks.types`. Ключи i18n `grammar.tabTest`, `grammar.tabsLabel`, `grammar.notPassedTabs`.
+- **Полный контракт данных темы — раздел «Тема грамматики» в `CONTENT.md`.** Отличия от спеки: `heading {ru,en}` у любого блока; `text.color`; `rules.items[].label`; `triggers.items[].color/body/ex`; `examples.items[].color/badge` (1–3 символа); `conj` variant `label` — строка или `{ru,en}` (≤ 16); ячейка `table` — испанская строка или `{ru,en}` (≤ 30); любой `body` — `{ru,en}`, каждая сторона строка или массив абзацев.
+- Валидатор: формат по `Array.isArray(topic.tabs)` (иначе старый `sections`, оба сразу — ошибка); `hero {es, sub}` обязателен; 4–6 вкладок, id `[a-z0-9-]`, уникальны, не `test`, подпись ≤ 12; ≥ 20 примеров, в каждом `<b>` в es; conj ≥ 2 вариантов; цвета из 5; только разрешённые теги.
