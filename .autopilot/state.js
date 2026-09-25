@@ -1,7 +1,7 @@
 window.STATE =
 {
   "slug": "classic-style-grammar",
-  "dir": "2026-09-24-classic-style-grammar--wip",
+  "dir": "2026-09-24-classic-style-grammar",
   "title": "Грамматика и стиль как на старых страницах",
   "mode": "interview",
   "depth": "deep",
@@ -11,8 +11,8 @@ window.STATE =
   "memoryFile": "CLAUDE.md",
   "skillDir": "/Users/roman/.agents/skills/autopilot",
   "startedAt": "2026-09-24T19:01:27+03:00",
-  "updatedAt": "2026-09-25T13:25:16+03:00",
-  "finishedAt": null,
+  "updatedAt": "2026-09-25T13:29:54+03:00",
+  "finishedAt": "2026-09-25T13:29:54+03:00",
   "stages": [
     {
       "id": "preflight",
@@ -62,8 +62,10 @@ window.STATE =
     },
     {
       "id": "final",
-      "status": "active",
-      "startedAt": "2026-09-25T13:25:16+03:00"
+      "status": "done",
+      "startedAt": "2026-09-25T13:25:16+03:00",
+      "finishedAt": "2026-09-25T13:29:54+03:00",
+      "note": "слепая приёмка: 10 из 10, расхождений нет"
     }
   ],
   "requirements": {
@@ -482,5 +484,13 @@ window.STATE =
     "manifestSpec": "rev-ms6",
     "craft": "rev-craft6"
   },
-  "blind": null
+  "blind": {
+    "implemented": 10,
+    "partial": 0,
+    "missing": 0,
+    "drift": [],
+    "notes": [
+      "все 10 пунктов брифа и дополнений реализованы; примеров грамматики 481 → 1421"
+    ]
+  }
 }
