@@ -81,7 +81,9 @@
 .conj-forms[hidden] { display: none; }
 .conj-card .mini-tab { text-transform: none; letter-spacing: 0.02em; font-size: 0.8125rem; }
 .form-row__word { overflow-wrap: anywhere; }
-.form-row__word b { color: var(--em); }
+.form-row__word b { color: var(--ending); }
+/* warm cards get a cool ending, so the ending never shares the stem's hue */
+.conj-forms.c-coral, .conj-forms.c-amber { --ending: var(--blue-hi); }
 
 .ex-row__es, .ex-row__tr { margin: 0; overflow-wrap: anywhere; }
 

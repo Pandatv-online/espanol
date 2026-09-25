@@ -32,8 +32,10 @@
       'site.tagline': 'Учите испанские слова и грамматику по уровням, от A1 до C2.',
       'nav.skip': 'К содержанию',
       'lang.group': 'Язык интерфейса',
-      'theme.label': 'Тёмная тема',
-      'theme.short': 'Тёмная',
+      'theme.light': 'Светлая',
+      'theme.dark': 'Тёмная',
+      'theme.toDark': 'Светлая тема — включить тёмную',
+      'theme.toLight': 'Тёмная тема — включить светлую',
       'footer.by': 'Сайт сделал',
       'footer.reset': 'Сбросить прогресс',
       'footer.resetConfirm': 'Сбросить выученные слова и результаты тестов? Язык и тема останутся.',
@@ -50,8 +52,10 @@
       'site.tagline': 'Learn Spanish words and grammar level by level, from A1 to C2.',
       'nav.skip': 'Skip to content',
       'lang.group': 'Interface language',
-      'theme.label': 'Dark theme',
-      'theme.short': 'Dark',
+      'theme.light': 'Light',
+      'theme.dark': 'Dark',
+      'theme.toDark': 'Light theme — switch to dark',
+      'theme.toLight': 'Dark theme — switch to light',
       'footer.by': 'Website by',
       'footer.reset': 'Reset progress',
       'footer.resetConfirm': 'Reset learned words and test results? Language and theme stay as they are.',
@@ -114,8 +118,11 @@
       b.setAttribute('aria-pressed', b.getAttribute('data-lang') === i18n.lang() ? 'true' : 'false');
     });
     var dark = effectiveTheme() === 'dark';
+    // The button shows the current theme; its name also says what a click does.
     var toggle = document.getElementById('theme-toggle');
-    toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    toggle.querySelector('.theme-toggle__icon').textContent = dark ? '☾' : '☀';
+    toggle.querySelector('.theme-toggle__text').textContent = i18n.t(dark ? 'theme.dark' : 'theme.light');
+    toggle.setAttribute('aria-label', i18n.t(dark ? 'theme.toLight' : 'theme.toDark'));
     var slot = document.getElementById('footer-tg-slot');
     ui.clear(slot).appendChild(ui.telegramLink('tg-link--large'));
     document.getElementById('storage-note').hidden = store.available;

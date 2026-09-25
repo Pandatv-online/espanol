@@ -24,13 +24,13 @@
     return el('nav', { class: 'level-steps', 'aria-label': i18n.t('level.pick') },
       data.levels().map(function (lvl, i) {
         var active = lvl.id === activeId;
-        return el('a', {
+        return ui.outline(el('a', {
           class: 'level-tile', href: ui.href(lvl.id), 'data-level': lvl.id, style: '--step:' + i,
           'aria-current': active ? 'page' : null
         }, [
           el('span', { class: 'level-tile__code', text: lvl.id }),
           el('span', { class: 'level-tile__name', text: i18n.pick(lvl.name) })
-        ]);
+        ]));
       }));
   }
 
@@ -40,27 +40,27 @@
   function wordCard(levelId, topic, i) {
     var el = ui.el;
     var learned = store.learnedCount(topic.id, topic.words);
-    return el('li', null, el('a', { class: 'topic-card c-' + CARD_COLORS[i % CARD_COLORS.length], href: ui.href(levelId, 'words', topic.id) }, [
+    return el('li', null, ui.outline(el('a', { class: 'topic-card c-' + CARD_COLORS[i % CARD_COLORS.length], href: ui.href(levelId, 'words', topic.id) }, [
       el('span', { class: 'topic-card__icon', 'aria-hidden': 'true', text: topic.icon || '•' }),
       el('span', { class: 'topic-card__title', text: i18n.pick(topic.title) }),
       el('span', { class: 'topic-card__meta' }, [
         ui.badge(i18n.t('badge.words', { n: learned, m: topic.words.length }), learned && learned === topic.words.length ? 'done' : null)
       ].concat(ui.quizBadges('words:' + topic.id), ui.doneBadge('words', topic) || []))
-    ]));
+    ])));
   }
 
   function grammarRow(levelId, topic, i) {
     var el = ui.el;
     var badges = ui.quizBadges('grammar:' + topic.id).concat(ui.doneBadge('grammar', topic) || []);
     var summary = topic.summary || (topic.hero && topic.hero.sub);
-    return el('li', null, el('a', { class: 'topic-row', href: ui.href(levelId, 'grammar', topic.id) }, [
+    return el('li', null, ui.outline(el('a', { class: 'topic-row', href: ui.href(levelId, 'grammar', topic.id) }, [
       el('span', { class: 'topic-row__num', 'aria-hidden': 'true', text: String(i + 1) }),
       el('span', { class: 'topic-row__text' }, [
         el('span', { class: 'topic-row__title', text: i18n.pick(topic.title) }),
         summary ? el('span', { class: 'topic-row__summary', text: i18n.pick(summary) }) : null
       ]),
       badges.length ? el('span', { class: 'topic-row__meta' }, badges) : null
-    ]));
+    ])));
   }
 
   function section(key, count, body) {

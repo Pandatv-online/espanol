@@ -229,6 +229,43 @@
     return list;
   }
 
+  // Hover/focus outline that draws itself: line A runs from the top-left corner over the top and right edges,
+  // line B from the bottom-right one over the bottom and left edges; they meet and close the shape.
+  // Paths follow the node's border centre line and corner radii, measured on every hover/focus (CSS animates the dash).
+  function outline(node) {
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('class', 'outline-draw');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    var lines = [0, 1].map(function () {
+      var p = document.createElementNS(SVG_NS, 'path');
+      p.setAttribute('pathLength', '1');
+      svg.appendChild(p);
+      return p;
+    });
+    function trace() {
+      var cs = getComputedStyle(node), n = function (v) { return parseFloat(v) || 0; };
+      var bt = n(cs.borderTopWidth), br = n(cs.borderRightWidth), bb = n(cs.borderBottomWidth), bl = n(cs.borderLeftWidth);
+      var x0 = -bl / 2, y0 = -bt / 2, x1 = node.clientWidth + br / 2, y1 = node.clientHeight + bb / 2;
+      var max = Math.min(x1 - x0, y1 - y0) / 2;
+      var r = ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'].map(function (c) {
+        return Math.max(0, Math.min(max, n(cs['border' + c + 'Radius']) - Math.max(bt, bl) / 2));
+      });
+      var k = 1 - Math.SQRT1_2; // corner-arc midpoint: where the two lines meet
+      var f = function (v) { return Math.round(v * 100) / 100; };
+      var pt = function (x, y) { return f(x) + ' ' + f(y); };
+      var arc = function (rad, x, y) { return ' A' + f(rad) + ' ' + f(rad) + ' 0 0 1 ' + pt(x, y); };
+      lines[0].setAttribute('d', 'M' + pt(x0 + r[0] * k, y0 + r[0] * k) + arc(r[0], x0 + r[0], y0) +
+        ' L' + pt(x1 - r[1], y0) + arc(r[1], x1, y0 + r[1]) + ' L' + pt(x1, y1 - r[2]) + arc(r[2], x1 - r[2] * k, y1 - r[2] * k));
+      lines[1].setAttribute('d', 'M' + pt(x1 - r[2] * k, y1 - r[2] * k) + arc(r[2], x1 - r[2], y1) +
+        ' L' + pt(x0 + r[3], y1) + arc(r[3], x0, y1 - r[3]) + ' L' + pt(x0, y0 + r[0]) + arc(r[0], x0 + r[0] * k, y0 + r[0] * k));
+    }
+    node.addEventListener('pointerenter', trace);
+    node.addEventListener('focus', trace);
+    node.appendChild(svg);
+    return node;
+  }
+
   // Polite screen-reader announcement (answer results etc.).
   function announce(text) {
     var live = document.getElementById('live');
@@ -271,6 +308,7 @@
     tabs: tabs,
     markSelected: markSelected,
     rovingTabs: rovingTabs,
+    outline: outline,
     announce: announce,
     shortcutsApply: shortcutsApply
   };

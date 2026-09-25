@@ -11,7 +11,7 @@
 | `node --test tests/` | Все юнит-тесты (52) через `tests/index.js` |
 | `node --test tests/store.test.js` | Один файл тестов |
 | `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28» или список ошибок и код 1 |
-| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 34 браузерных сценария по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
+| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 38 браузерных сценариев по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
 | `npx -y -p playwright@1.63.0 node tools/screenshot.js "$TMPDIR/eca-shots" '#/a1' '#/a2/grammar/a2-perfecto-indefinido/conj'` | Скриншоты 375/1280 × светлая/тёмная; код 1 при горизонтальном скролле или ошибке в консоли |
 | `npx -y playwright@1.63.0 install chromium` | Поставить браузер, если Playwright его не нашёл |
 
@@ -34,7 +34,7 @@ CONTENT.md     инструкция автора контента: слова, �
 
 - `index.html` — порядок `<script>` = порядок зависимостей; новый файл в `data/` подключается только здесь.
 - `js/app.js` — `parseRoute` (доступен и в Node), рендер экрана, тема, язык, сброс прогресса.
-- `js/ui.js` — `ECA.ui` (`el`, `es`, `richText`/`setRich`, `screenHead`, `tabs`, `markSelected`, `rovingTabs`, `badge`, `isTopicDone`, `announce`, `shortcutsApply`…), `ECA.views`, общие строки `section.* badge.* back.to empty.* soon.* tg.*`.
+- `js/ui.js` — `ECA.ui` (`el`, `es`, `richText`/`setRich`, `screenHead`, `tabs`, `markSelected`, `rovingTabs`, `badge`, `isTopicDone`, `outline`, `announce`, `shortcutsApply`…), `ECA.views`, общие строки `section.* badge.* back.to empty.* soon.* tg.*`.
 - `js/quiz.js` — единый движок теста обоих экранов: генерация вопросов, `seeded`, `session`, `attempt`, `finish`, `keyAction`.
 - `js/views/grammar.js` — экран грамматики: hero, полоса вкладок, отрисовка блоков (`ECA.grammarBlocks.render(block, lang) → Node`, `.types`), тест во вкладке `test`.
 - `js/views/vocab.js` — экран слов и чистый `ECA.vocabDeck` (колода карточек).
@@ -61,6 +61,7 @@ CONTENT.md     инструкция автора контента: слова, �
 - Клавиатура: `quiz.keyAction(key, {answered, options})` → `{pick:i}` (цифры) | `{next:true}` (Enter) | `null`; `ui.shortcutsApply(e, scope, screen)` пропускает клавиши, только если фокус в колоде/тесте, на `h1` экрана или на `body`.
 - Вкладки: `ui.tabs({items, active, onSelect, label, panelId, numbered})` — полоса `.tabs > .tab > .tab__num + .tab__label` (`numbered: false` — без номеров), `list.select(id)`; мини-вкладки и свои списки вкладок — через `ui.markSelected(buttons, i)` (aria-selected + roving tabindex) и `ui.rovingTabs(list, buttons, select)` (←/→ по кругу, Home, End).
 - «Пройдено» (`ui.isTopicDone`): слова — все выучены И тест ≥ 80 %; грамматика — тест ≥ 80 % (`ui.PASS_RATIO`).
+- Движение (раздел `motion` в `base.css`): `ui.outline(a)` добавляет в ссылку `svg.outline-draw` из двух путей (`pathLength=1`) — при `:hover`/`:focus-visible` линии рисуются из левого верхнего и правого нижнего углов и встречаются; пути меряются по рамке и радиусам на каждом наведении; сейчас так оформлены `.level-tile`, `.topic-card`, `.topic-row`. Параллакс `.site-header`/`.hero` — только CSS scroll-driven (`view-timeline: --band`), под `@supports` и `prefers-reduced-motion: no-preference`.
 - Тема оформления: `pref('theme')` или системная; ставится `data-theme` на `<html>` до отрисовки и переключаются `<meta name="theme-color">`.
 
 ## Соглашения кода
@@ -73,8 +74,8 @@ CONTENT.md     инструкция автора контента: слова, �
 - DOM — через `ui.el(tag, {class, text, on, dataset, …атрибуты}, children)` / `textContent`; `innerHTML` только через `ui.setRich` / `ui.richText` (пропускает `<b> <i> <em> <strong> <br>` без атрибутов).
 - `localStorage` — только через `ECA.store`.
 - CSS: цвета — только токены из `:root` в `css/base.css` (проверяет `tests/css.test.js`); шрифты `--font-display` (Playfair Display) и `--font-body` (Noto Sans); шкалы `--step-*`, `--space-*`, `--radius-*`; кнопки не меньше `--tap` (44px).
-- Токены — палитра старых страниц: `--bg --surface --surface-2 --ink --ink-soft --heading --em --link --line --accent* --sun* --ok* --bad* --focus --tg`; hero и полоса вкладок — `--hero-*` (`bg ink soft faint accent focus tint stripe…`); 5 цветов `blue amber teal coral purple` × `'' -soft -ink -on`.
-- Цвет компонента — класс `.c-blue/.c-amber/.c-teal/.c-coral/.c-purple` (задаёт `--c --c-soft --c-ink --c-on`, стоят в конце `base.css`); компонент читает `var(--c)`, а не конкретный цвет.
+- Токены — палитра старых страниц: `--bg --surface --surface-2 --ink --ink-soft --heading --em --link --line --accent* --sun* --ok* --bad* --focus --tg`; hero и полоса вкладок — `--hero-*` (`bg ink soft faint accent focus tint stripe…`); 5 цветов `blue amber teal coral purple` × `'' -soft -ink -on -hi` (`-hi` — выделенные слова на `--surface`: примеры, окончания `--ending`).
+- Цвет компонента — класс `.c-blue/.c-amber/.c-teal/.c-coral/.c-purple` (задаёт `--c --c-soft --c-ink --c-on --c-hi`, стоят в конце `base.css`); компонент читает `var(--c)`, а не конкретный цвет.
 - Тёмная тема: два блока (`@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` и `:root[data-theme="dark"]`) объявляют одинаковые токены; одинаковые значения внутри блока — через `var()`, не повтором литерала.
 - `.hero` (тема грамматики) красится одним правилом вместе с `.site-header` (navy + штриховка `repeating-linear-gradient`); `.hero + .tabs` стыкуются; при 4+ вкладках уже 560px подпись видна только у активной.
 - Общие компоненты (`.btn`, `.chip`, `.tabs`, `.mini-tabs`, `.badge`, `.options > .option`, `.feedback`, блоки грамматики `.rule-card`, `.trigger-card`, `.kw-box`, `.ex-box`, `.conj-card`, `.tip`, `.table`…) — в `base.css`; стили экранов — в `vocab.css` / `grammar.css`.

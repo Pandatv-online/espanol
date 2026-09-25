@@ -13,6 +13,7 @@
   --ink-soft: #6b6258;
   --heading: var(--navy);     /* titles on paper */
   --em: var(--blue);      /* highlighted form inside text */
+  --ending: var(--coral-hi);  /* verb ending in conjugation cards: a hue apart from the navy stem */
   --link: var(--em);
   --line: #d8cfc0;
   --line-strong: #8e8373;
@@ -55,6 +56,8 @@
   --teal: #0e7a6a;   --teal-soft: #d4f0eb;   --teal-ink: #063d34;   --teal-on: var(--white);
   --coral: #c94040;  --coral-soft: #fae5e5;  --coral-ink: #6b1a1a;  --coral-on: var(--white);
   --purple: #7a4fa0; --purple-soft: #ede2f5; --purple-ink: #3e2657; --purple-on: var(--white);
+  /* highlighted words on --surface (examples, endings): vivid, a hue apart from --ink, ≥ 4.5:1 */
+  --blue-hi: #1f64b8; --amber-hi: #9e5c00; --teal-hi: var(--teal); --coral-hi: var(--coral); --purple-hi: var(--purple);
 
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -119,6 +122,7 @@
     --teal: #4cc3ae;   --teal-soft: #0f3530;   --teal-ink: #bdebe2;   --teal-on: var(--bg);
     --coral: #ee8080;  --coral-soft: #43201f;  --coral-ink: #f8c9c9;  --coral-on: var(--bg);
     --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: var(--bg);
+  --blue-hi: var(--blue); --amber-hi: var(--amber); --teal-hi: var(--teal); --coral-hi: var(--coral); --purple-hi: var(--purple);
     --shadow-lift: 0 1px 0 var(--line), 0 8px 22px -12px rgb(0 0 0 / 0.7);
   }
 }
@@ -154,6 +158,7 @@
   --teal: #4cc3ae;   --teal-soft: #0f3530;   --teal-ink: #bdebe2;   --teal-on: var(--bg);
   --coral: #ee8080;  --coral-soft: #43201f;  --coral-ink: #f8c9c9;  --coral-on: var(--bg);
   --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: var(--bg);
+  --blue-hi: var(--blue); --amber-hi: var(--amber); --teal-hi: var(--teal); --coral-hi: var(--coral); --purple-hi: var(--purple);
   --shadow-lift: 0 1px 0 var(--line), 0 8px 22px -12px rgb(0 0 0 / 0.7);
 }
 
@@ -394,7 +399,7 @@ a, button, label, summary {
   text-decoration: none;
   transition: transform 160ms ease;
 }
-.level-tile:hover { border-color: var(--heading); transform: translateY(-2px); }
+.level-tile:hover { transform: translateY(-2px); }
 .level-tile__code {
   font-family: var(--font-display);
   font-weight: 900;
@@ -490,6 +495,7 @@ a, button, label, summary {
   gap: var(--space-3);
 }
 .topic-card {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas: "icon title" "meta meta";
@@ -503,7 +509,7 @@ a, button, label, summary {
   background: var(--surface);
   text-decoration: none;
 }
-.topic-card:hover { border-color: var(--heading); border-top-color: var(--c, var(--sun)); box-shadow: var(--shadow-lift); }
+.topic-card:hover { box-shadow: var(--shadow-lift); }
 .topic-card__icon {
   grid-area: icon;
   display: grid;
@@ -520,6 +526,7 @@ a, button, label, summary {
 
 .topic-list { display: grid; gap: var(--space-3); }
 .topic-row {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -530,7 +537,7 @@ a, button, label, summary {
   background: var(--surface);
   text-decoration: none;
 }
-.topic-row:hover { border-color: var(--heading); box-shadow: var(--shadow-lift); }
+.topic-row:hover { box-shadow: var(--shadow-lift); }
 .topic-row__num {
   flex: none;
   display: grid;
@@ -831,7 +838,7 @@ a, button, label, summary {
 .trigger-card__sub { margin-left: auto; font-size: 0.8125rem; color: var(--ink-soft); text-align: end; }
 .trigger-card__body { display: grid; gap: var(--space-2); padding: 0 var(--space-4) var(--space-3); }
 .trigger-card__ex { border-top: 1px dashed var(--line); padding-top: var(--space-2); font-size: 0.9375rem; }
-.trigger-card__ex b { color: var(--c-ink, var(--coral-ink)); }
+.trigger-card__ex b { color: var(--c-hi, var(--coral-hi)); }
 .phrase-list { display: flex; flex-wrap: wrap; gap: 6px; }
 .phrase {
   padding: 0.25em 0.75em;
@@ -886,7 +893,7 @@ a, button, label, summary {
   text-transform: uppercase;
 }
 .ex-row__es { padding: var(--space-2) var(--space-4); border-right: 1px solid var(--line); font-weight: 500; }
-.ex-row__es b { color: var(--c-ink, var(--em)); font-weight: 700; }
+.ex-row__es b { color: var(--c-hi, var(--blue-hi)); font-weight: 700; }
 .ex-row__tr { padding: var(--space-2) var(--space-4); color: var(--ink-soft); font-size: 0.9375rem; }
 @media (max-width: 559px) {
   .ex-row, .ex-row--badged { grid-template-columns: minmax(0, 1fr); }
@@ -1054,13 +1061,59 @@ a, button, label, summary {
 
 .icon { width: 1.25em; height: 1.25em; }
 
+/* ---------- motion ---------- */
+/* Outline that draws itself on hover and keyboard focus (ui.outline): two lines from opposite corners meet.
+   Each path has pathLength="1": dash offset 1 hides it, 0 draws it; leaving erases it faster than it drew. */
+.outline-draw {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+}
+.outline-draw path {
+  stroke: var(--c, var(--heading));
+  stroke-width: 2;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 260ms ease-in;
+}
+a:is(:hover, :focus-visible) > .outline-draw path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 640ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.level-tile[aria-current="page"] > .outline-draw { display: none; }
+
+/* Scroll parallax: while the navy band leaves the screen, its hatching drifts slower than the page
+   and the hero text lags behind and fades. Browsers without scroll-driven animations keep a still band. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header, .hero {
+      view-timeline: --band block;
+      animation: hatch-drift linear both;
+      animation-timeline: --band;
+      animation-range: exit;
+    }
+    .hero > * {
+      animation: hero-lag linear both;
+      animation-timeline: --band;
+      animation-range: exit;
+    }
+  }
+}
+@keyframes hatch-drift { to { background-position: 0 var(--space-7); } }
+@keyframes hero-lag { to { transform: translateY(var(--space-7)); opacity: 0.25; } }
+
 /* Colour role for a component: add one of these next to its class; defined last so it beats component defaults (e.g. "rule-card c-amber").
    Components read --c (line/fill), --c-soft (background), --c-ink (text on soft), --c-on (text on --c). */
-.c-blue   { --c: var(--blue);   --c-soft: var(--blue-soft);   --c-ink: var(--blue-ink);   --c-on: var(--blue-on); }
-.c-amber  { --c: var(--amber);  --c-soft: var(--amber-soft);  --c-ink: var(--amber-ink);  --c-on: var(--amber-on); }
-.c-teal   { --c: var(--teal);   --c-soft: var(--teal-soft);   --c-ink: var(--teal-ink);   --c-on: var(--teal-on); }
-.c-coral  { --c: var(--coral);  --c-soft: var(--coral-soft);  --c-ink: var(--coral-ink);  --c-on: var(--coral-on); }
-.c-purple { --c: var(--purple); --c-soft: var(--purple-soft); --c-ink: var(--purple-ink); --c-on: var(--purple-on); }
+.c-blue   { --c: var(--blue);   --c-soft: var(--blue-soft);   --c-ink: var(--blue-ink);   --c-on: var(--blue-on); --c-hi: var(--blue-hi); }
+.c-amber  { --c: var(--amber);  --c-soft: var(--amber-soft);  --c-ink: var(--amber-ink);  --c-on: var(--amber-on); --c-hi: var(--amber-hi); }
+.c-teal   { --c: var(--teal);   --c-soft: var(--teal-soft);   --c-ink: var(--teal-ink);   --c-on: var(--teal-on); --c-hi: var(--teal-hi); }
+.c-coral  { --c: var(--coral);  --c-soft: var(--coral-soft);  --c-ink: var(--coral-ink);  --c-on: var(--coral-on); --c-hi: var(--coral-hi); }
+.c-purple { --c: var(--purple); --c-soft: var(--purple-soft); --c-ink: var(--purple-ink); --c-on: var(--purple-on); --c-hi: var(--purple-hi); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

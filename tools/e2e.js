@@ -25,7 +25,7 @@ if (shotsIdx > 0 && (!shotsDir || shotsDir.startsWith('--'))) {
 }
 
 const checks = [];
-// opts: { locale, colorScheme, width, expectConsoleError }
+// opts: { locale, colorScheme, width, reducedMotion, expectConsoleError }
 const check = (name, fn, opts) => checks.push([name, fn, opts || {}]);
 
 const WORDS = '#/a1/words/a1-greetings';
@@ -202,15 +202,18 @@ check('dark theme: follows the system, toggle is remembered', async (page) => {
   const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const lum = (c) => c.match(/\d+/g).slice(0, 3).reduce((a, b) => a + Number(b), 0);
   assert.ok(lum(await bg()) < 200, 'system dark gives a dark page');
-  // The button is the "dark theme" switch: its moon icon and label mean the same in both states.
+  // The button shows the current theme; its accessible name starts with it and says what a click does.
   const toggle = () => page.evaluate(() => {
     const b = document.getElementById('theme-toggle');
-    return [b.getAttribute('aria-pressed'), b.querySelector('.theme-toggle__icon').textContent, b.getAttribute('aria-label')];
+    return [b.querySelector('.theme-toggle__icon').textContent, b.querySelector('.theme-toggle__text').textContent, b.getAttribute('aria-label')];
   });
-  assert.deepEqual(await toggle(), ['true', '☾', 'Тёмная тема']);
+  assert.deepEqual(await toggle(), ['☾', 'Тёмная', 'Тёмная тема — включить светлую']);
   await page.click('#theme-toggle');
   assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
-  assert.deepEqual(await toggle(), ['false', '☾', 'Тёмная тема']);
+  assert.deepEqual(await toggle(), ['☀', 'Светлая', 'Светлая тема — включить тёмную']);
+  await page.click('[data-lang="en"]');
+  assert.deepEqual(await toggle(), ['☀', 'Light', 'Light theme — switch to dark']);
+  await page.click('[data-lang="ru"]');
   assert.ok(lum(await bg()) > 600, 'light after toggle');
   await page.reload();
   assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
@@ -452,6 +455,53 @@ const CONTRAST_FN = `(node) => {
   return (l1 + 0.05) / (l2 + 0.05);
 }`;
 
+check('conjugation endings stand out from the stem and the card in all five colours, light and dark', async (page) => {
+  await page.goto(url + TABBED);
+  for (const theme of ['light', 'dark']) {
+    const rows = await page.evaluate(([theme, fn]) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      const contrast = eval(fn);
+      const L = (s) => ({ ru: s, en: s });
+      const node = ECA.grammarBlocks.render({ type: 'conj', verbs: ['blue', 'amber', 'teal', 'coral', 'purple'].map((c) =>
+        ({ inf: 'hablar', variants: [{ label: L(c), color: c, rows: [['yo', 'habl<b>é</b>']] }] })) }, 'ru');
+      document.getElementById('grammar-panel').appendChild(node);
+      const out = [...node.querySelectorAll('.form-row__word')].map((w) => {
+        const b = w.querySelector('b');
+        return [w.parentElement.parentElement.className, contrast(b), getComputedStyle(w).color, getComputedStyle(b).color];
+      });
+      node.remove();
+      return out;
+    }, [theme, CONTRAST_FN]);
+    for (const [cls, r, stem, ending] of rows) {
+      assert.ok(r >= 4.5, `${theme} ${cls}: ending ${r.toFixed(2)}:1`);
+      assert.notEqual(stem, ending, `${theme} ${cls}: ending has the stem's colour`);
+    }
+  }
+});
+
+check('highlighted words in examples: ≥ 4.5:1 on the card and clearly apart from the sentence (all colours, light and dark)', async (page) => {
+  await page.goto(url + TABBED);
+  for (const theme of ['light', 'dark']) {
+    const rows = await page.evaluate(([theme, fn]) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      const contrast = eval(fn);
+      const node = ECA.grammarBlocks.render({ type: 'examples', items: [null, 'blue', 'amber', 'teal', 'coral', 'purple'].map((c) =>
+        ({ es: 'Ayer <b>comí</b> paella.', ru: 'Вчера я ел паэлью.', en: 'I ate paella yesterday.', color: c || undefined })) }, 'ru');
+      document.getElementById('grammar-panel').appendChild(node);
+      // The sentence's own colour stands in as the "background" to measure how far the highlight is from it.
+      const vs = (b) => { const p = b.parentElement; const bg = p.style.backgroundColor; p.style.backgroundColor = getComputedStyle(p).color;
+        const r = contrast(b); p.style.backgroundColor = bg; return r; };
+      const out = [...node.querySelectorAll('.ex-row__es b')].map((b) => [b.closest('.ex-row').className, contrast(b), vs(b)]);
+      node.remove();
+      return out;
+    }, [theme, CONTRAST_FN]);
+    for (const [cls, onCard, fromText] of rows) {
+      assert.ok(onCard >= 4.5, `${theme} ${cls}: ${onCard.toFixed(2)}:1 on the card`);
+      assert.ok(fromText >= 1.7, `${theme} ${cls}: only ${fromText.toFixed(2)}:1 apart from the sentence`);
+    }
+  }
+});
+
 check('rule-card labels have contrast ≥ 4.5:1 in all five colours, light and dark', async (page) => {
   await page.goto(url + TABBED);
   for (const theme of ['light', 'dark']) {
@@ -654,6 +704,89 @@ check('4-column tables fit a 375px screen without scrolling inside', async (page
   assert.deepEqual(over, []);
 }, { width: 375 });
 
+// ---------- motion: drawn outline, scroll parallax ----------
+
+// State of the drawn outline inside `selector` (first match): two paths, their dash offset and end points.
+const outlineOf = (page, selector) => page.$eval(selector, (node) => {
+  const paths = [...node.querySelectorAll(':scope > .outline-draw path')];
+  const box = node.getBoundingClientRect();
+  const at = (p, t) => { if (!p.getAttribute('d')) return null; const q = p.getPointAtLength(p.getTotalLength() * t); return [q.x / box.width, q.y / box.height]; };
+  return {
+    count: paths.length,
+    offsets: paths.map((p) => parseFloat(getComputedStyle(p).strokeDashoffset)),
+    ends: paths.map((p) => [at(p, 0), at(p, 1)])
+  };
+});
+const settle = (page) => page.waitForTimeout(900);
+
+check('hover draws the outline: two lines from opposite corners meet; leaving erases it', async (page) => {
+  await page.goto(url + '#/a1');
+  for (const sel of ['.topic-card', '.topic-row', '.level-tile:not([aria-current])']) {
+    assert.deepEqual((await outlineOf(page, sel)).offsets, [1, 1], sel + ': hidden before hover');
+    await page.hover(sel);
+    await settle(page);
+    const o = await outlineOf(page, sel);
+    assert.equal(o.count, 2, sel + ': two lines');
+    assert.deepEqual(o.offsets, [0, 0], sel + ': both lines fully drawn');
+    // Line A runs from the top-left corner to the bottom-right one, line B back: together they close the outline.
+    const [[a0, a1], [b0, b1]] = o.ends;
+    assert.ok(a0[0] < 0.3 && a0[1] < 0.5 && a1[0] > 0.7 && a1[1] > 0.5, sel + ': line A top-left → bottom-right ' + JSON.stringify(o.ends[0]));
+    assert.deepEqual(b0.map((v) => v.toFixed(2)), a1.map((v) => v.toFixed(2)), sel + ': line B starts where A ends');
+    assert.deepEqual(b1.map((v) => v.toFixed(2)), a0.map((v) => v.toFixed(2)), sel + ': line B ends where A starts');
+    await page.mouse.move(1, 1);
+    await settle(page);
+    assert.deepEqual((await outlineOf(page, sel)).offsets, [1, 1], sel + ': erased after leaving');
+  }
+  const current = await page.$eval('.level-tile[aria-current] > .outline-draw', (s) => getComputedStyle(s).display);
+  assert.equal(current, 'none', 'the chosen level (filled amber) draws no outline');
+});
+
+check('keyboard focus draws the outline too', async (page) => {
+  await page.goto(url + '#/a1');
+  let onRow = false;
+  for (let i = 0; i < 40 && !onRow; i++) {
+    await page.keyboard.press('Tab');
+    onRow = await page.evaluate(() => document.activeElement.classList.contains('topic-row'));
+  }
+  assert.ok(onRow, 'Tab reaches a grammar row');
+  await settle(page);
+  assert.deepEqual((await outlineOf(page, '.topic-row:focus')).offsets, [0, 0]);
+});
+
+// Background offset of the hatching and the lag of the hero title as the band scrolls away.
+const parallax = (page, sel) => page.$eval(sel, (n) => ({
+  bg: getComputedStyle(n).backgroundPositionY,
+  title: n.querySelector('.hero__title') ? getComputedStyle(n.querySelector('.hero__title')).transform : null,
+  animated: n.getAnimations().length
+}));
+
+check('scroll parallax: the hatching of the header and hero drifts, the hero title lags behind', async (page) => {
+  await page.goto(url + TABBED);
+  const top = await parallax(page, '.hero');
+  const headTop = await parallax(page, '.site-header');
+  assert.equal(top.animated, 1, 'hero hatching is scroll-driven');
+  await page.evaluate(() => {
+    const hero = document.querySelector('.hero');
+    window.scrollTo(0, hero.getBoundingClientRect().top + scrollY + hero.offsetHeight / 2);
+  });
+  await page.waitForTimeout(100);
+  const mid = await parallax(page, '.hero');
+  assert.notEqual(mid.bg, top.bg, 'hero hatching moved');
+  assert.notEqual(mid.title, top.title, 'hero title lags');
+  assert.notEqual((await parallax(page, '.site-header')).bg, headTop.bg, 'header hatching moved');
+  await noHorizontalScroll(page, 'parallax');
+}, { width: 375 });
+
+check('reduced motion: no parallax, the outline appears at once', async (page) => {
+  await page.goto(url + TABBED);
+  assert.equal((await parallax(page, '.hero')).animated, 0, 'hero');
+  assert.equal((await parallax(page, '.site-header')).animated, 0, 'header');
+  await page.goto(url + '#/a1');
+  await page.hover('.topic-card');
+  await page.waitForTimeout(50);
+  assert.deepEqual((await outlineOf(page, '.topic-card')).offsets, [0, 0]);
+}, { reducedMotion: 'reduce' });
+
 // ---------- screenshots (optional) ----------
 
 async function shots(browser) {
@@ -704,7 +837,7 @@ async function shots(browser) {
   let failed = 0;
   for (const [name, fn, opts] of checks) {
     const context = await browser.newContext({
-      locale: opts.locale || 'ru-RU', colorScheme: opts.colorScheme || 'light',
+      locale: opts.locale || 'ru-RU', colorScheme: opts.colorScheme || 'light', reducedMotion: opts.reducedMotion || 'no-preference',
       viewport: { width: opts.width || 1280, height: 800 }
     });
     const page = await context.newPage();
