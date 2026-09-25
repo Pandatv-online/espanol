@@ -1,7 +1,7 @@
 // B2 · word topics. How to add a topic — see CONTENT.md.
 ECA.data.addVocab('B2', [
   {
-    id: 'b2-economy', level: 'B2', icon: '💶',
+    id: 'b2-economy', level: 'B2', icon: 'currency-eur',
     title: { ru: 'Экономика и деньги', en: 'Economy and money' },
     words: [
       { es: 'la inflación', ru: 'инфляция', en: 'inflation',
@@ -36,7 +36,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-society', level: 'B2', icon: '🏛️',
+    id: 'b2-society', level: 'B2', icon: 'bank',
     title: { ru: 'Общество и политика', en: 'Society and politics' },
     words: [
       { es: 'el gobierno', ru: 'правительство', en: 'government',
@@ -69,7 +69,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-science', level: 'B2', icon: '🔬',
+    id: 'b2-science', level: 'B2', icon: 'microscope',
     title: { ru: 'Наука и технологии', en: 'Science and technology' },
     words: [
       { es: 'la investigación', ru: 'исследование', en: 'research',
@@ -102,7 +102,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-arts', level: 'B2', icon: '🎭',
+    id: 'b2-arts', level: 'B2', icon: 'mask-happy',
     title: { ru: 'Искусство и культура', en: 'Art and culture' },
     words: [
       { es: 'la obra de arte', ru: 'произведение искусства', en: 'work of art',
@@ -135,7 +135,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-career', level: 'B2', icon: '💼',
+    id: 'b2-career', level: 'B2', icon: 'chart-line-up',
     title: { ru: 'Карьера и работа', en: 'Career and work' },
     words: [
       { es: 'el currículum', ru: 'резюме', en: 'CV, résumé',
@@ -169,7 +169,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-bureaucracy', level: 'B2', icon: '📋',
+    id: 'b2-bureaucracy', level: 'B2', icon: 'clipboard-text',
     title: { ru: 'Бюрократия и документы', en: 'Bureaucracy and paperwork' },
     words: [
       { es: 'el trámite', ru: 'формальность, процедура', en: 'formality, procedure',
@@ -202,7 +202,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-medicine', level: 'B2', icon: '🩺',
+    id: 'b2-medicine', level: 'B2', icon: 'first-aid-kit',
     title: { ru: 'Медицина и здоровье', en: 'Medicine and health' },
     words: [
       { es: 'el diagnóstico', ru: 'диагноз', en: 'diagnosis',
@@ -235,7 +235,7 @@ ECA.data.addVocab('B2', [
     ]
   },
   {
-    id: 'b2-environment', level: 'B2', icon: '🌆',
+    id: 'b2-environment', level: 'B2', icon: 'recycle',
     title: { ru: 'Окружающая среда и города', en: 'Environment and cities' },
     words: [
       { es: 'el calentamiento global', ru: 'глобальное потепление', en: 'global warming',

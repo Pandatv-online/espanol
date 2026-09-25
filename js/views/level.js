@@ -41,7 +41,7 @@
     var el = ui.el;
     var learned = store.learnedCount(topic.id, topic.words);
     return el('li', null, ui.outline(el('a', { class: 'topic-card c-' + CARD_COLORS[i % CARD_COLORS.length], href: ui.href(levelId, 'words', topic.id) }, [
-      el('span', { class: 'topic-card__icon', 'aria-hidden': 'true', text: topic.icon || '•' }),
+      el('span', { class: 'topic-card__icon', 'aria-hidden': 'true' }, ui.topicIcon(topic.icon)),
       el('span', { class: 'topic-card__title', text: i18n.pick(topic.title) }),
       el('span', { class: 'topic-card__meta' }, [
         ui.badge(i18n.t('badge.words', { n: learned, m: topic.words.length }), learned && learned === topic.words.length ? 'done' : null)

@@ -58,6 +58,8 @@ test('keys: 1–4 pick an option until answered, Enter goes on only after an ans
   assert.equal(quiz.keyAction('2', { answered: true, options: 3 }), null, 'answer is final');
   assert.equal(quiz.keyAction('Enter', { answered: false, options: 3 }), null);
   assert.deepEqual(quiz.keyAction('Enter', { answered: true, options: 3 }), { next: true });
+  assert.deepEqual(quiz.keyAction(' ', { answered: true, options: 3 }), { next: true }, 'Space goes on too');
+  assert.equal(quiz.keyAction(' ', { answered: false, options: 3 }), null);
   assert.equal(quiz.keyAction('a', { answered: false, options: 3 }), null);
 });
 

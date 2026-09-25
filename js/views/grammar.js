@@ -11,7 +11,7 @@
       'grammar.checkLead': '{n} вопросов с вариантами ответа. После каждого — пояснение, почему так.',
       'grammar.start': 'Начать тест',
       'grammar.progress': 'Вопрос {n} из {m}',
-      'grammar.keys': 'Клавиши 1–{n} — выбрать ответ, Enter — дальше.',
+      'grammar.keys': 'Клавиши 1–{n} — выбрать ответ, Enter или пробел — дальше.',
       'grammar.right': 'Верно!',
       'grammar.wrong': 'Неверно. Правильный ответ: {answer}.',
       'grammar.wrongLead': 'Неверно. Правильный ответ:',
@@ -33,7 +33,7 @@
       'grammar.checkLead': '{n} multiple-choice questions. After each one you’ll see why the answer is right.',
       'grammar.start': 'Start the test',
       'grammar.progress': 'Question {n} of {m}',
-      'grammar.keys': 'Keys 1–{n} pick an answer, Enter goes on.',
+      'grammar.keys': 'Keys 1–{n} pick an answer, Enter or Space goes on.',
       'grammar.right': 'Correct!',
       'grammar.wrong': 'Not quite. The right answer is {answer}.',
       'grammar.wrongLead': 'Not quite. The right answer is',
@@ -66,8 +66,8 @@
     if (!activeKeys.node.isConnected) { activeKeys = null; return; }
     if (!ui.shortcutsApply(e, activeKeys.node, activeKeys.screen)) return;
     var target = e.target;
-    // Enter on a link or an ordinary button keeps its native click.
-    if (e.key === 'Enter' && target && target.closest && target.closest('a, button:not(.option)')) return;
+    // Enter / Space on a link or an ordinary button keeps its native click; on the selected tab it goes on.
+    if ((e.key === 'Enter' || e.key === ' ') && target && target.closest && target.closest('a, button:not(.option):not([role="tab"])')) return;
     if (activeKeys.handle(e.key)) e.preventDefault();
   });
 

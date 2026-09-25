@@ -1,7 +1,7 @@
 // B1 · word topics. How to add a topic — see CONTENT.md.
 ECA.data.addVocab('B1', [
   {
-    id: 'b1-character-emotions', level: 'B1', icon: '🎭',
+    id: 'b1-character-emotions', level: 'B1', icon: 'smiley',
     title: { ru: 'Характер и эмоции', en: 'Personality and emotions' },
     words: [
       { es: 'el carácter', ru: 'характер', en: 'personality, character',
@@ -33,7 +33,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-studies', level: 'B1', icon: '🎓',
+    id: 'b1-studies', level: 'B1', icon: 'student',
     title: { ru: 'Учёба', en: 'Studies' },
     words: [
       { es: 'la asignatura', ru: 'учебный предмет', en: 'subject',
@@ -65,7 +65,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-technology', level: 'B1', icon: '💻',
+    id: 'b1-technology', level: 'B1', icon: 'laptop',
     title: { ru: 'Технологии', en: 'Technology' },
     words: [
       { es: 'el ordenador', ru: 'компьютер (в Лат. Америке — la computadora)', en: 'computer (Latin America: la computadora)',
@@ -96,7 +96,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-nature-ecology', level: 'B1', icon: '🌿',
+    id: 'b1-nature-ecology', level: 'B1', icon: 'leaf',
     title: { ru: 'Природа и экология', en: 'Nature and the environment' },
     words: [
       { es: 'la naturaleza', ru: 'природа', en: 'nature',
@@ -128,7 +128,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-renting', level: 'B1', icon: '🔑',
+    id: 'b1-renting', level: 'B1', icon: 'key',
     title: { ru: 'Аренда жилья', en: 'Renting a home' },
     words: [
       { es: 'alquilar', ru: 'снимать, сдавать (в аренду) (в Лат. Америке — rentar)', en: 'to rent (Latin America: rentar)',
@@ -161,7 +161,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-media', level: 'B1', icon: '📰',
+    id: 'b1-media', level: 'B1', icon: 'newspaper',
     title: { ru: 'СМИ', en: 'The media' },
     words: [
       { es: 'los medios de comunicación', ru: 'средства массовой информации', en: 'the media',
@@ -193,7 +193,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-relationships', level: 'B1', icon: '💞',
+    id: 'b1-relationships', level: 'B1', icon: 'heart',
     title: { ru: 'Отношения', en: 'Relationships' },
     words: [
       { es: 'la relación', ru: 'отношения', en: 'relationship',
@@ -225,7 +225,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-holidays-traditions', level: 'B1', icon: '🎉',
+    id: 'b1-holidays-traditions', level: 'B1', icon: 'confetti',
     title: { ru: 'Праздники и традиции', en: 'Festivals and traditions' },
     words: [
       { es: 'la fiesta', ru: 'праздник; вечеринка', en: 'festival, celebration; party',
@@ -256,7 +256,7 @@ ECA.data.addVocab('B1', [
     ]
   },
   {
-    id: 'b1-opinions', level: 'B1', icon: '💬',
+    id: 'b1-opinions', level: 'B1', icon: 'chat-circle-dots',
     title: { ru: 'Мнения и споры', en: 'Opinions and debate' },
     words: [
       { es: 'la opinión', ru: 'мнение', en: 'opinion',

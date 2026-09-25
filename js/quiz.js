@@ -146,7 +146,7 @@
 
   // Keyboard: digits pick an option while unanswered; Enter moves on after an answer.
   function keyAction(key, s) {
-    if (key === 'Enter') return s.answered ? { next: true } : null;
+    if (key === 'Enter' || key === ' ') return s.answered ? { next: true } : null;
     if (/^[1-9]$/.test(key)) {
       var i = Number(key) - 1;
       return !s.answered && i < s.options ? { pick: i } : null;

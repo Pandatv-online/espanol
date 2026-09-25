@@ -164,6 +164,22 @@ check('reset progress clears learned words and scores, keeps language', async (p
   assert.equal(await page.getAttribute('html', 'lang'), 'en');
 });
 
+check('every word topic card on every level draws its Phosphor icon in the card colour', async (page) => {
+  for (const lvl of ['a1', 'a2', 'b1', 'b2', 'c1', 'c2']) {
+    await page.goto(url + '#/' + lvl);
+    const icons = await page.$$eval('.topic-card__icon', (spans) => spans.map((s) => {
+      const svg = s.querySelector('svg.icon--topic');
+      return { svg: !!svg, paths: svg ? svg.querySelectorAll('path').length : 0, text: s.textContent.trim(),
+        color: getComputedStyle(s).color, bg: getComputedStyle(s).backgroundColor };
+    }));
+    assert.ok(icons.length >= 8, lvl + ': cards ' + icons.length);
+    icons.forEach((ic, i) => {
+      assert.ok(ic.svg && ic.paths >= 1 && ic.text === '', `${lvl} card ${i}: no svg icon`);
+      assert.notEqual(ic.color, ic.bg, `${lvl} card ${i}: icon colour equals its background`);
+    });
+  }
+}, { width: 375 });
+
 // ---------- navigation, errors ----------
 
 check('unknown address and topic show the not-found screen with a way back', async (page) => {
@@ -379,6 +395,56 @@ check('arrow keys mark words only with focus in the deck or on body', async (pag
   await page.keyboard.press('ArrowRight');
   await page.reload();
   assert.equal(await learnedCount(page), 2);
+});
+
+check('cards: after a click Space / Enter flip the card; ← goes back and undoes "know"; ↓ is "again"', async (page) => {
+  await page.goto(url + WORDS);
+  const word = () => page.textContent('.flashcard__word');
+  const flipped = () => page.locator('.flashcard.is-flipped').count();
+  const first = await word();
+  assert.ok(await page.isDisabled('[data-action="back"]'), 'nothing to go back to yet');
+  await page.click('[data-action="know"]');
+  const second = await word();
+  await page.keyboard.press('Space');
+  assert.equal(await flipped(), 1, 'Space flips the card, not "know" again');
+  await page.keyboard.press('Enter');
+  assert.equal(await flipped(), 0);
+  assert.equal(await word(), second);
+  assert.equal(await learnedCount(page), 1);
+  await page.keyboard.press('ArrowLeft');
+  assert.equal(await word(), first, '← shows the previous word');
+  assert.equal(await learnedCount(page), 0, '← undoes its "know"');
+  await page.keyboard.press('ArrowDown');
+  assert.equal(await word(), second);
+  await page.keyboard.press('ArrowLeft');
+  assert.equal(await word(), first, '← after "again" brings that word back');
+  assert.equal(await learnedCount(page), 0);
+});
+
+check('tests take keys right after the "Test" tab is clicked; Space goes on like Enter', async (page) => {
+  const answered = (s) => page.locator(s + ' .option.is-correct').count();
+  await page.goto(url + WORDS);
+  await page.click('#tab-quiz');
+  await page.waitForSelector('.quiz .option');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'tab-quiz');
+  await page.keyboard.press('1');
+  assert.equal(await answered('.quiz'), 1, 'digit with focus on the tab');
+  await page.keyboard.press(' ');
+  assert.match(await page.textContent('.quiz__count'), /^Вопрос 2 /);
+  await page.keyboard.press('2');
+  await page.keyboard.press('Enter');
+  assert.match(await page.textContent('.quiz__count'), /^Вопрос 3 /);
+  await page.click('.quiz .option');
+  await page.keyboard.press(' ');
+  assert.match(await page.textContent('.quiz__count'), /^Вопрос 4 /, 'Space on "Next" goes one question on');
+
+  await page.goto(url + GRAMMAR_TEST);
+  await page.locator('.grammar-quiz .btn--primary').click();
+  await page.focus('#tab-test');
+  await page.keyboard.press('1');
+  assert.equal(await answered('.grammar-quiz'), 1);
+  await page.keyboard.press(' ');
+  assert.match(await page.textContent('.grammar-quiz__progress'), /^Вопрос 2 /);
 });
 
 check('grammar digit keys pick an answer only with focus in the test or on body', async (page) => {

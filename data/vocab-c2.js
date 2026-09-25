@@ -1,7 +1,7 @@
 // C2 · word topics. How to add a topic — see CONTENT.md.
 ECA.data.addVocab('C2', [
   {
-    id: 'c2-idioms', level: 'C2', icon: '🧩',
+    id: 'c2-idioms', level: 'C2', icon: 'puzzle-piece',
     title: { ru: 'Идиомы и фразеологизмы', en: 'Idioms and set phrases' },
     words: [
       { es: 'tomar el pelo', ru: 'разыгрывать, морочить голову', en: "to pull someone's leg",
@@ -36,7 +36,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-proverbs', level: 'C2', icon: '📜',
+    id: 'c2-proverbs', level: 'C2', icon: 'scroll',
     title: { ru: 'Пословицы и поговорки', en: 'Proverbs and sayings' },
     words: [
       { es: 'Más vale tarde que nunca', ru: 'Лучше поздно, чем никогда', en: 'Better late than never',
@@ -69,7 +69,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-slang-spain', level: 'C2', icon: '🗣️',
+    id: 'c2-slang-spain', level: 'C2', icon: 'megaphone',
     title: { ru: 'Разговорный язык и сленг Испании', en: 'Colloquial Spanish and slang from Spain' },
     words: [
       { es: 'guay', ru: 'классный, клёвый', en: 'cool',
@@ -103,7 +103,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-latam', level: 'C2', icon: '🌎',
+    id: 'c2-latam', level: 'C2', icon: 'globe-hemisphere-west',
     title: { ru: 'Латиноамериканские варианты', en: 'Latin American Spanish' },
     words: [
       { es: 'el carro', ru: 'машина (Мексика, Колумбия; в Испании — el coche)', en: 'car (Mexico, Colombia; Spain: el coche)',
@@ -136,7 +136,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-formal', level: 'C2', icon: '🖋️',
+    id: 'c2-formal', level: 'C2', icon: 'pen-nib',
     title: { ru: 'Официально-деловой стиль', en: 'Formal and official style' },
     words: [
       { es: 'estimado/a', ru: 'уважаемый (в обращении)', en: 'dear (formal letter)',
@@ -170,7 +170,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-literary', level: 'C2', icon: '🪶',
+    id: 'c2-literary', level: 'C2', icon: 'feather',
     title: { ru: 'Литературная и книжная лексика', en: 'Literary and bookish vocabulary' },
     words: [
       { es: 'acaecer', ru: 'случаться, происходить', en: 'to occur, to befall',
@@ -205,7 +205,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-false-friends', level: 'C2', icon: '⚠️',
+    id: 'c2-false-friends', level: 'C2', icon: 'warning',
     title: { ru: 'Ложные друзья переводчика', en: 'False friends' },
     words: [
       { es: 'embarazada', ru: 'беременная (не «смущённая», как англ. embarrassed)', en: "pregnant (not 'embarrassed' — that's avergonzada)",
@@ -241,7 +241,7 @@ ECA.data.addVocab('C2', [
     ]
   },
   {
-    id: 'c2-look-alikes', level: 'C2', icon: '🔍',
+    id: 'c2-look-alikes', level: 'C2', icon: 'magnifying-glass',
     title: { ru: 'Тонкие различия: слова-двойники', en: 'Fine distinctions: look-alike words' },
     words: [
       { es: 'ser consciente de', ru: 'осознавать', en: 'to be aware of',

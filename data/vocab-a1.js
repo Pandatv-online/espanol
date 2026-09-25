@@ -1,7 +1,7 @@
 // A1 · word topics. How to add a topic — see CONTENT.md.
 ECA.data.addVocab('A1', [
   {
-    id: 'a1-greetings', level: 'A1', icon: '👋',
+    id: 'a1-greetings', level: 'A1', icon: 'hand-waving',
     title: { ru: 'Приветствия и знакомство', en: 'Greetings and introductions' },
     words: [
       { es: 'hola', ru: 'привет', en: 'hello',
@@ -35,7 +35,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-numbers', level: 'A1', icon: '🔢',
+    id: 'a1-numbers', level: 'A1', icon: 'hash',
     title: { ru: 'Числа', en: 'Numbers' },
     words: [
       { es: 'uno', ru: 'один', en: 'one',
@@ -66,7 +66,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-family', level: 'A1', icon: '👨‍👩‍👧',
+    id: 'a1-family', level: 'A1', icon: 'users-three',
     title: { ru: 'Семья', en: 'Family' },
     words: [
       { es: 'la familia', ru: 'семья', en: 'family',
@@ -97,7 +97,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-colors', level: 'A1', icon: '🎨',
+    id: 'a1-colors', level: 'A1', icon: 'palette',
     title: { ru: 'Цвета', en: 'Colours' },
     words: [
       { es: 'el color', ru: 'цвет', en: 'colour',
@@ -127,7 +127,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-food', level: 'A1', icon: '🍎',
+    id: 'a1-food', level: 'A1', icon: 'bowl-food',
     title: { ru: 'Еда и напитки', en: 'Food and drink' },
     words: [
       { es: 'el agua', ru: 'вода', en: 'water',
@@ -158,7 +158,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-home', level: 'A1', icon: '🏠',
+    id: 'a1-home', level: 'A1', icon: 'house',
     title: { ru: 'Дом', en: 'Home' },
     words: [
       { es: 'la casa', ru: 'дом', en: 'house, home',
@@ -189,7 +189,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-days-time', level: 'A1', icon: '📅',
+    id: 'a1-days-time', level: 'A1', icon: 'calendar-dots',
     title: { ru: 'Дни недели и время', en: 'Days and time' },
     words: [
       { es: 'el lunes', ru: 'понедельник', en: 'Monday',
@@ -219,7 +219,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-city', level: 'A1', icon: '🏙️',
+    id: 'a1-city', level: 'A1', icon: 'buildings',
     title: { ru: 'Город', en: 'Around town' },
     words: [
       { es: 'la ciudad', ru: 'город', en: 'city, town',
@@ -250,7 +250,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-clothes', level: 'A1', icon: '👕',
+    id: 'a1-clothes', level: 'A1', icon: 't-shirt',
     title: { ru: 'Одежда', en: 'Clothes' },
     words: [
       { es: 'la ropa', ru: 'одежда', en: 'clothes',
@@ -279,7 +279,7 @@ ECA.data.addVocab('A1', [
     ]
   },
   {
-    id: 'a1-body', level: 'A1', icon: '🧍',
+    id: 'a1-body', level: 'A1', icon: 'person',
     title: { ru: 'Тело', en: 'The body' },
     words: [
       { es: 'el cuerpo', ru: 'тело', en: 'body',

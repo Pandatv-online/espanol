@@ -120,6 +120,25 @@
     return svg;
   }
 
+  // Word topic icon from js/icons.js (Phosphor duotone, currentColor); unknown name → its text, e.g. an emoji.
+  function topicIcon(name) {
+    var spec = ECA.icons && ECA.icons[name];
+    if (!spec) return document.createTextNode(name || '\u2022');
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 256 256');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    svg.setAttribute('fill', 'currentColor');
+    svg.setAttribute('class', 'icon icon--topic');
+    spec.forEach(function (p) {
+      var path = document.createElementNS(SVG_NS, 'path');
+      path.setAttribute('d', p[0]);
+      if (p.length > 1) path.setAttribute('opacity', String(p[1]));
+      svg.appendChild(path);
+    });
+    return svg;
+  }
+
   function telegramLink(extraClass) {
     return el('a', {
       class: 'tg-link' + (extraClass ? ' ' + extraClass : ''),
@@ -282,6 +301,8 @@
     if (!node || node === document.body || node === document.documentElement) return true;
     if (node.isContentEditable || (node.closest && node.closest('input, textarea, select'))) return false;
     if (scope && scope.contains(node)) return true;
+    // the screen's own tabs: they keep ←/→ and Enter, everything else still reaches the deck or the test
+    if (screen && screen.contains(node) && node.closest && node.closest('[role="tablist"]')) return true;
     return node.tagName === 'H1' && !!screen && screen.contains(node);
   }
 
@@ -295,6 +316,7 @@
     setRich: setRich,
     clear: clear,
     icon: icon,
+    topicIcon: topicIcon,
     telegramLink: telegramLink,
     emptyState: emptyState,
     href: href,

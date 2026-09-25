@@ -3,7 +3,8 @@
   var ECA = (root.ECA = root.ECA || {});
 
   // ---------- flash-card deck: pure, no DOM, no storage ----------
-  // Deck = { queue: es[], total: number of topic words }. Functions never mutate their input.
+  // Deck = { queue: es[], total: number of topic words, history: steps [{ es, kind, wasLearned }] for "back" }.
+  // Functions never mutate their input.
   function shuffle(arr, rng) {
     if (!ECA.quiz) throw new Error('ECA.vocabDeck needs js/quiz.js loaded before js/views/vocab.js');
     return ECA.quiz.shuffle(arr, rng);
@@ -15,19 +16,36 @@
       opts = opts || {};
       var isLearned = opts.isLearned || function () { return false; };
       var pool = (words || []).filter(function (w) { return w && (opts.all || !isLearned(w.es)); });
-      return { queue: shuffle(pool.map(function (w) { return w.es; }), opts.rng), total: (words || []).length };
+      return { queue: shuffle(pool.map(function (w) { return w.es; }), opts.rng), total: (words || []).length, history: [] };
     },
-    // "Знаю": the word leaves the deck.
-    know: function (deck) { return { queue: deck.queue.slice(1), total: deck.total }; },
+    // "Знаю": the word leaves the deck. wasLearned — its mark before, so "back" can restore it.
+    know: function (deck, wasLearned) {
+      if (!deck.queue.length) return deck;
+      return { queue: deck.queue.slice(1), total: deck.total, history: step(deck, 'know', wasLearned) };
+    },
     // "Повторить": the word goes to the end of the deck.
     again: function (deck) {
-      return { queue: deck.queue.length ? deck.queue.slice(1).concat(deck.queue[0]) : [], total: deck.total };
+      if (!deck.queue.length) return deck;
+      return { queue: deck.queue.slice(1).concat(deck.queue[0]), total: deck.total, history: step(deck, 'again') };
     },
+    // "Назад": undoes the last step, its word is on top again.
+    back: function (deck) {
+      var h = deck.history || [];
+      if (!h.length) return deck;
+      var last = h[h.length - 1];
+      var queue = last.kind === 'again' ? deck.queue.slice(0, -1) : deck.queue;
+      return { queue: [last.es].concat(queue), total: deck.total, history: h.slice(0, -1) };
+    },
+    lastStep: function (deck) { var h = deck.history || []; return h.length ? h[h.length - 1] : null; },
     order: function (deck) { return deck.queue.slice(); },
     current: function (deck) { return deck.queue.length ? deck.queue[0] : null; },
     remaining: function (deck) { return deck.queue.length; },
     isDone: function (deck) { return deck.queue.length === 0; }
   };
+
+  function step(deck, kind, wasLearned) {
+    return (deck.history || []).concat({ es: deck.queue[0], kind: kind, wasLearned: !!wasLearned });
+  }
 
   ECA.vocabDeck = vocabDeck;
 
@@ -46,11 +64,13 @@
       'vocab.lead': '{m} слов · выучено {n}',
       'vocab.left': 'Осталось {n} из {m}',
       'vocab.flipHint': 'Нажмите, чтобы перевернуть',
+      'vocab.back': 'Назад',
       'vocab.again': 'Повторить',
       'vocab.know': 'Знаю',
-      'vocab.keys': 'Пробел или Enter — перевернуть · ← повторить · → знаю',
+      'vocab.keys': 'Пробел или Enter — перевернуть · ← назад · ↓ повторить · → знаю',
       'vocab.saidKnown': '«{es}» — выучено. Осталось {n} из {m}.',
       'vocab.saidAgain': '«{es}» — в конец колоды.',
+      'vocab.saidBack': 'Снова слово «{es}».',
       'vocab.saidNext': 'Следующее слово: {es}',
       'vocab.done.title': 'Все слова темы выучены',
       'vocab.done.text': 'Проверьте себя в тесте или пройдите карточки ещё раз — отметки «выучено» останутся.',
@@ -66,7 +86,7 @@
       'vocab.quiz.markYours': '(ваш ответ)',
       'vocab.quiz.next': 'Дальше',
       'vocab.quiz.finish': 'Показать результат',
-      'vocab.quiz.keys': 'Клавиши 1–4 — выбрать ответ, Enter — дальше',
+      'vocab.quiz.keys': 'Клавиши 1–4 — выбрать ответ, Enter или пробел — дальше',
       'vocab.quiz.resultTitle': 'Результат теста',
       'vocab.quiz.score': '{score} из {total}',
       'vocab.quiz.best': 'Лучший результат: {score} из {total}',
@@ -90,11 +110,13 @@
       'vocab.lead': '{m} words · {n} learned',
       'vocab.left': '{n} of {m} left',
       'vocab.flipHint': 'Tap to flip',
+      'vocab.back': 'Back',
       'vocab.again': 'Again',
       'vocab.know': 'I know it',
-      'vocab.keys': 'Space or Enter — flip · ← again · → I know it',
+      'vocab.keys': 'Space or Enter — flip · ← back · ↓ again · → I know it',
       'vocab.saidKnown': '“{es}” learned. {n} of {m} left.',
       'vocab.saidAgain': '“{es}” moved to the end of the deck.',
+      'vocab.saidBack': '“{es}” again.',
       'vocab.saidNext': 'Next word: {es}',
       'vocab.done.title': 'You’ve learned every word in this topic',
       'vocab.done.text': 'Check yourself with the test or go through the cards again — your “learned” marks stay.',
@@ -110,7 +132,7 @@
       'vocab.quiz.markYours': '(your answer)',
       'vocab.quiz.next': 'Next',
       'vocab.quiz.finish': 'See the result',
-      'vocab.quiz.keys': 'Keys 1–4 pick an answer, Enter goes next',
+      'vocab.quiz.keys': 'Keys 1–4 pick an answer, Enter or Space goes next',
       'vocab.quiz.resultTitle': 'Test result',
       'vocab.quiz.score': '{score} of {total}',
       'vocab.quiz.best': 'Best result: {score} of {total}',
@@ -220,8 +242,26 @@
       if (!state.deck) state.deck = vocabDeck.create(topic.words, { isLearned: isLearned });
       var deck = state.deck;
 
+      // "Назад": the last step is undone — its word is back on top, a "know" mark it set is removed.
+      function goBack() {
+        var last = vocabDeck.lastStep(state.deck);
+        if (!last) return;
+        var hadFocus = view.contains(document.activeElement);
+        if (last.kind === 'know' && !last.wasLearned) store.setLearned(topic.id, last.es, false);
+        state.deck = vocabDeck.back(state.deck);
+        state.flipped = false;
+        paint(hadFocus ? '.flashcard' : null);
+        ui.announce(t('vocab.saidBack', { es: last.es }));
+      }
+      function backButton() {
+        return el('button', { class: 'btn btn--ghost deck__btn deck__btn--back', type: 'button', 'data-action': 'back',
+          'aria-keyshortcuts': 'ArrowLeft', disabled: vocabDeck.lastStep(deck) ? null : '', on: { click: goBack } }, [
+          el('span', { 'aria-hidden': 'true', text: '←' }), el('span', { class: 'deck__btn-label', text: t('vocab.back') })
+        ]);
+      }
+
       if (vocabDeck.isDone(deck)) {
-        panel.appendChild(el('div', { class: 'deck-done' }, [
+        active.scope = panel.appendChild(el('div', { class: 'deck-done' }, [
           el('span', { class: 'deck-done__mark', 'aria-hidden': 'true' }, ui.icon('check')),
           el('h2', { class: 'deck-done__title', id: 'deck-done-title', tabindex: '-1', text: t('vocab.done.title') }),
           el('p', { class: 'deck-done__text', text: t('vocab.done.text') }),
@@ -232,9 +272,13 @@
                 state.deck = vocabDeck.create(topic.words, { isLearned: isLearned, all: true });
                 state.flipped = false;
                 paint('.flashcard');
-              } } })
+              } } }),
+            vocabDeck.lastStep(deck) ? backButton() : null
           ])
         ]));
+        active.onKey = function (e) {
+          if (e.key === 'ArrowLeft' && !inTabs(e.target)) { e.preventDefault(); goBack(); }
+        };
         return;
       }
 
@@ -275,8 +319,9 @@
       function act(kind) {
         var hadFocus = view.contains(document.activeElement);
         if (kind === 'know') {
+          var was = store.isLearned(topic.id, es);
           store.setLearned(topic.id, es, true);
-          state.deck = vocabDeck.know(deck);
+          state.deck = vocabDeck.know(deck, was);
         } else {
           state.deck = vocabDeck.again(deck);
         }
@@ -287,7 +332,8 @@
           : t('vocab.saidAgain', { es: es });
         if (!done) said += ' ' + t('vocab.saidNext', { es: vocabDeck.current(state.deck) });
         else said += ' ' + t('vocab.done.title');
-        paint(done ? '#deck-done-title' : hadFocus ? '[data-action="' + kind + '"]' : null);
+        // Focus goes to the new card, not the pressed button: Space / Enter then flip it instead of pressing again.
+        paint(done ? '#deck-done-title' : hadFocus ? '.flashcard' : null);
         ui.announce(said);
       }
 
@@ -300,9 +346,10 @@
         ]),
         card,
         el('div', { class: 'deck__actions' }, [
+          backButton(),
           el('button', { class: 'btn btn--ghost deck__btn', type: 'button', 'data-action': 'again',
-            'aria-keyshortcuts': 'ArrowLeft', on: { click: function () { act('again'); } } }, [
-            el('span', { 'aria-hidden': 'true', text: '←' }), t('vocab.again')
+            'aria-keyshortcuts': 'ArrowDown', on: { click: function () { act('again'); } } }, [
+            t('vocab.again'), el('span', { 'aria-hidden': 'true', text: '↓' })
           ]),
           el('button', { class: 'btn btn--ok deck__btn', type: 'button', 'data-action': 'know',
             'aria-keyshortcuts': 'ArrowRight', on: { click: function () { act('know'); } } }, [
@@ -312,11 +359,12 @@
         el('p', { class: 'kbd-hint', text: t('vocab.keys') })
       ]));
 
+      var KEYS = { ArrowLeft: goBack, ArrowDown: function () { act('again'); }, ArrowRight: function () { act('know'); } };
       active.onKey = function (e) {
         if (inTabs(e.target)) return;
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        if (KEYS[e.key]) {
           e.preventDefault();
-          act(e.key === 'ArrowRight' ? 'know' : 'again');
+          KEYS[e.key]();
         } else if ((e.key === ' ' || e.key === 'Enter') && !isControl(e.target)) {
           e.preventDefault();
           flip();
@@ -412,8 +460,8 @@
       ]));
 
       active.onKey = function (e) {
-        // Enter on a tab or a link keeps its native action.
-        if (e.key === 'Enter' && (inTabs(e.target) || (e.target && e.target.closest && e.target.closest('a')))) return;
+        // Enter / Space on a link or a button keeps its native action (the selected tab has none).
+        if ((e.key === 'Enter' || e.key === ' ') && isControl(e.target) && !inTabs(e.target)) return;
         var action = quiz.keyAction(e.key, { answered: answered, options: q.options.length });
         if (!action) return;
         e.preventDefault();

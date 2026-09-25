@@ -176,6 +176,7 @@ function validate(ECA) {
       if (!topic || typeof topic !== 'object') return report(where, '', 'тема должна быть объектом');
       topicHead(where, topic, lvl.id);
       if (!nonEmpty(topic.icon)) report(where, 'icon', 'нет иконки');
+      else if (ECA.icons && !ECA.icons[topic.icon]) report(where, 'icon', `иконки «${topic.icon}» нет в js/icons.js — пересоберите: node tools/icons.js`);
       const list = Array.isArray(topic.words) ? topic.words : [];
       if (list.length < MIN_WORDS) report(where, 'words', `слов ${list.length}, нужно не меньше ${MIN_WORDS}`);
       const seenEs = new Set();
@@ -276,6 +277,7 @@ function loadSite(rootDir) {
   const missing = onDisk.filter((f) => !files.includes(f));
   const notFound = files.filter((f) => !fs.existsSync(path.join(rootDir, f)));
   require(path.join(rootDir, 'js', 'data.js'));
+  if (fs.existsSync(path.join(rootDir, 'js', 'icons.js'))) require(path.join(rootDir, 'js', 'icons.js'));
   files.concat(missing).forEach((f) => { if (fs.existsSync(path.join(rootDir, f))) require(path.join(rootDir, f)); });
   return { ECA: globalThis.ECA, missing, notFound };
 }

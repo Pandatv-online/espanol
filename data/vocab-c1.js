@@ -1,7 +1,7 @@
 // C1 · word topics. How to add a topic — see CONTENT.md.
 ECA.data.addVocab('C1', [
   {
-    id: 'c1-abstract', level: 'C1', icon: '💭',
+    id: 'c1-abstract', level: 'C1', icon: 'lightbulb',
     title: { ru: 'Абстрактные понятия', en: 'Abstract concepts' },
     words: [
       { es: 'la conciencia', ru: 'сознание; совесть', en: 'consciousness; conscience',
@@ -35,7 +35,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-negotiation', level: 'C1', icon: '🤝',
+    id: 'c1-negotiation', level: 'C1', icon: 'handshake',
     title: { ru: 'Деловые переговоры', en: 'Business negotiations' },
     words: [
       { es: 'negociar', ru: 'вести переговоры', en: 'to negotiate',
@@ -69,7 +69,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-academic', level: 'C1', icon: '🎓',
+    id: 'c1-academic', level: 'C1', icon: 'graduation-cap',
     title: { ru: 'Академическая речь', en: 'Academic language' },
     words: [
       { es: 'plantear', ru: 'ставить (вопрос), поднимать', en: 'to raise, to pose',
@@ -103,7 +103,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-emotions', level: 'C1', icon: '💞',
+    id: 'c1-emotions', level: 'C1', icon: 'heartbeat',
     title: { ru: 'Эмоции и оттенки чувств', en: 'Emotions and shades of feeling' },
     words: [
       { es: 'la añoranza', ru: 'тоска (по дому, прошлому)', en: 'longing, nostalgia',
@@ -137,7 +137,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-literature', level: 'C1', icon: '📚',
+    id: 'c1-literature', level: 'C1', icon: 'book-open-text',
     title: { ru: 'Литература', en: 'Literature' },
     words: [
       { es: 'el narrador / la narradora', ru: 'рассказчик / рассказчица, повествователь', en: 'narrator',
@@ -170,7 +170,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-psychology', level: 'C1', icon: '🧠',
+    id: 'c1-psychology', level: 'C1', icon: 'brain',
     title: { ru: 'Психология', en: 'Psychology' },
     words: [
       { es: 'la autoestima', ru: 'самооценка', en: 'self-esteem',
@@ -203,7 +203,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-media', level: 'C1', icon: '📰',
+    id: 'c1-media', level: 'C1', icon: 'broadcast',
     title: { ru: 'СМИ и дебаты', en: 'Media and debate' },
     words: [
       { es: 'la línea editorial', ru: 'редакционная политика', en: 'editorial line',
@@ -237,7 +237,7 @@ ECA.data.addVocab('C1', [
     ]
   },
   {
-    id: 'c1-law', level: 'C1', icon: '⚖️',
+    id: 'c1-law', level: 'C1', icon: 'scales',
     title: { ru: 'Право и справедливость', en: 'Law and justice' },
     words: [
       { es: 'el juicio', ru: 'суд, судебный процесс', en: 'trial',

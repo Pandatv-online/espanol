@@ -1,7 +1,7 @@
 // A2 · word topics. How to add a topic — see CONTENT.md.
 ECA.data.addVocab('A2', [
   {
-    id: 'a2-shopping', level: 'A2', icon: '🛍️',
+    id: 'a2-shopping', level: 'A2', icon: 'shopping-bag',
     title: { ru: 'Покупки', en: 'Shopping' },
     words: [
       { es: 'la tienda', ru: 'магазин', en: 'shop',
@@ -34,7 +34,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-travel', level: 'A2', icon: '✈️',
+    id: 'a2-travel', level: 'A2', icon: 'airplane-tilt',
     title: { ru: 'Путешествия', en: 'Travel' },
     words: [
       { es: 'el viaje', ru: 'поездка, путешествие', en: 'trip, journey',
@@ -65,7 +65,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-work', level: 'A2', icon: '💼',
+    id: 'a2-work', level: 'A2', icon: 'briefcase',
     title: { ru: 'Работа и профессии', en: 'Work and jobs' },
     words: [
       { es: 'el trabajo', ru: 'работа', en: 'work, job',
@@ -96,7 +96,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-weather', level: 'A2', icon: '🌦️',
+    id: 'a2-weather', level: 'A2', icon: 'cloud-sun',
     title: { ru: 'Погода и времена года', en: 'Weather and seasons' },
     words: [
       { es: 'el tiempo', ru: 'погода; время', en: 'weather; time',
@@ -126,7 +126,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-health', level: 'A2', icon: '🩺',
+    id: 'a2-health', level: 'A2', icon: 'stethoscope',
     title: { ru: 'Здоровье', en: 'Health' },
     words: [
       { es: 'la salud', ru: 'здоровье', en: 'health',
@@ -157,7 +157,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-hobbies-sport', level: 'A2', icon: '⚽',
+    id: 'a2-hobbies-sport', level: 'A2', icon: 'soccer-ball',
     title: { ru: 'Хобби и спорт', en: 'Hobbies and sport' },
     words: [
       { es: 'el tiempo libre', ru: 'свободное время', en: 'free time',
@@ -188,7 +188,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-restaurant', level: 'A2', icon: '🍽️',
+    id: 'a2-restaurant', level: 'A2', icon: 'fork-knife',
     title: { ru: 'В ресторане', en: 'At the restaurant' },
     words: [
       { es: 'la carta', ru: 'меню (в Лат. Америке — el menú)', en: 'menu (Latin America: el menú)',
@@ -219,7 +219,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-transport', level: 'A2', icon: '🚌',
+    id: 'a2-transport', level: 'A2', icon: 'bus',
     title: { ru: 'Транспорт', en: 'Transport' },
     words: [
       { es: 'el autobús', ru: 'автобус', en: 'bus',
@@ -250,7 +250,7 @@ ECA.data.addVocab('A2', [
     ]
   },
   {
-    id: 'a2-daily-routine', level: 'A2', icon: '⏰',
+    id: 'a2-daily-routine', level: 'A2', icon: 'alarm',
     title: { ru: 'Распорядок дня', en: 'Daily routine' },
     words: [
       { es: 'despertarse', ru: 'просыпаться', en: 'to wake up',

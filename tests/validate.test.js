@@ -11,7 +11,7 @@ function words(n) {
     ex: i % 2 ? undefined : { es: 'Ejemplo ' + i, ru: 'Пример ' + i, en: 'Example ' + i } }));
 }
 function vocabTopic(over) {
-  return Object.assign({ id: 'a1-test', level: 'A1', icon: '👋', title: L('Тест', 'Test'), words: words(12) }, over);
+  return Object.assign({ id: 'a1-test', level: 'A1', icon: 'hand-waving', title: L('Тест', 'Test'), words: words(12) }, over);
 }
 function question(over) {
   return Object.assign({ prompt: L('Выберите', 'Choose'), es: 'Yo ___ Ana.', options: ['soy', 'es', 'eres'], answer: 0,
@@ -70,6 +70,14 @@ test('validate: level needs name and canDo in both languages', () => {
   const errors = validate(eca({ levels: [{ id: 'B2', name: L('Выше среднего', ''), canDo: L('', 'x') }] }));
   assert.equal(errors.length, 2);
   assert.match(errors[0], /^B2 · name\.en/);
+});
+
+test('validate: a word topic icon must be one of js/icons.js', () => {
+  const site = eca({ vocab: [vocabTopic(), vocabTopic({ id: 'a1-emoji', icon: '👋' })] });
+  site.icons = { 'hand-waving': [['M0,0Z']] };
+  const errors = validate(site);
+  assert.equal(errors.length, 1);
+  assert.match(errors[0], /^A1 · a1-emoji · icon/);
 });
 
 test('CLI: real site content is valid (exit code 0)', () => {

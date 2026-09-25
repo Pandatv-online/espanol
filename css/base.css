@@ -85,6 +85,9 @@
 
   --shadow-lift: 0 1px 0 var(--line), 0 8px 20px -12px rgb(13 43 78 / 0.35);
   --wrap: 60rem;
+  /* paper texture on the page background: fine grain + large soft mottling (SVG noise, tiles seamlessly) */
+  --paper-grain: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .25 0 0 0 0 .2 0 0 0 0 .14 .55 0 0 0 -.2'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  --paper-mottle: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='640'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='4' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .55 0 0 0 0 .42 0 0 0 0 .25 .45 0 0 0 -.17'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
   --gutter: clamp(1rem, 4vw, 1.5rem);
   --tap: 44px;
 }
@@ -124,6 +127,8 @@
     --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: var(--bg);
   --blue-hi: var(--blue); --amber-hi: var(--amber); --teal-hi: var(--teal); --coral-hi: var(--coral); --purple-hi: var(--purple);
     --shadow-lift: 0 1px 0 var(--line), 0 8px 22px -12px rgb(0 0 0 / 0.7);
+    --paper-grain: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 .95 0 0 0 0 .85 .3 0 0 0 -.12'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+    --paper-mottle: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='640'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='4' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 .02 0 0 0 0 .06 .7 0 0 0 -.25'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
   }
 }
 :root[data-theme="dark"] {
@@ -160,6 +165,8 @@
   --purple: #b48fd8; --purple-soft: #2e2140; --purple-ink: #e3d2f3; --purple-on: var(--bg);
   --blue-hi: var(--blue); --amber-hi: var(--amber); --teal-hi: var(--teal); --coral-hi: var(--coral); --purple-hi: var(--purple);
   --shadow-lift: 0 1px 0 var(--line), 0 8px 22px -12px rgb(0 0 0 / 0.7);
+  --paper-grain: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 .95 0 0 0 0 .85 .3 0 0 0 -.12'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  --paper-mottle: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='640'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='4' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 .02 0 0 0 0 .06 .7 0 0 0 -.25'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
 }
 
 /* ---------- base ---------- */
@@ -170,7 +177,13 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background-color: var(--bg);
+  /* paper, not a flat fill: grain, mottling and a soft light falling from the top */
+  background-image:
+    var(--paper-grain),
+    var(--paper-mottle),
+    radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--surface) 70%, transparent), transparent 70%),
+    radial-gradient(140% 90% at 50% 100%, color-mix(in srgb, var(--surface-2) 60%, transparent), transparent 65%);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--step-0);
@@ -518,9 +531,11 @@ a, button, label, summary {
   height: 2.75rem;
   border-radius: var(--radius-m);
   background: var(--c-soft, var(--sun-soft));
+  color: var(--c-hi, var(--sun-ink));
   font-size: 1.375rem;
   line-height: 1;
 }
+.topic-card__icon .icon { width: 1.625rem; height: 1.625rem; }
 .topic-card__title { grid-area: title; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; line-height: 1.3; color: var(--heading); }
 .topic-card__meta { grid-area: meta; display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
@@ -1040,7 +1055,6 @@ a, button, label, summary {
 /* ---------- footer ---------- */
 .site-footer {
   border-top: 1px solid var(--line);
-  background: var(--bg);
   padding-block: var(--space-6);
 }
 .site-footer__inner {

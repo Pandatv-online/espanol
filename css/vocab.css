@@ -70,8 +70,9 @@
 }
 .flashcard__ex { margin-top: var(--space-2); max-width: 34ch; text-align: start; }
 
-.deck__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.deck__actions { display: grid; grid-template-columns: auto 1fr 1fr; gap: var(--space-3); }
 .deck__btn { min-height: 52px; }
+.deck__btn:disabled { opacity: 0.45; cursor: default; }
 
 .deck-done {
   display: grid;
@@ -196,6 +197,12 @@
   .flashcard__face { min-height: 13rem; padding: var(--space-5) var(--space-4) var(--space-4); }
   .quiz__card, .quiz-result__top, .deck-done { padding: var(--space-4); }
   .words-table th, .words-table td { padding-inline: var(--space-2); }
+  /* "Back" shows only its arrow; the label stays for screen readers */
+  .deck__btn--back { position: relative; padding-inline: var(--space-4); }
+  .deck__btn--back .deck__btn-label {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
 }
 
 /* No flip animation: the faces simply swap. */

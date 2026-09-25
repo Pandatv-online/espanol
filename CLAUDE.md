@@ -8,10 +8,11 @@
 | Команда | Что делает |
 |---------|------------|
 | открыть `index.html` в браузере | Запустить сайт, сервер не нужен |
-| `node --test tests/` | Все юнит-тесты (52) через `tests/index.js` |
+| `node --test tests/` | Все юнит-тесты (54) через `tests/index.js` |
 | `node --test tests/store.test.js` | Один файл тестов |
+| `node tools/icons.js` | Пересобрать `js/icons.js` (иконки Phosphor Duotone, которые темы слов называют в `icon`); качает `@phosphor-icons/core` через `npm pack` |
 | `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28» или список ошибок и код 1 |
-| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 38 браузерных сценариев по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
+| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 41 браузерный сценарий по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
 | `npx -y -p playwright@1.63.0 node tools/screenshot.js "$TMPDIR/eca-shots" '#/a1' '#/a2/grammar/a2-perfecto-indefinido/conj'` | Скриншоты 375/1280 × светлая/тёмная; код 1 при горизонтальном скролле или ошибке в консоли |
 | `npx -y playwright@1.63.0 install chromium` | Поставить браузер, если Playwright его не нашёл |
 
@@ -19,12 +20,12 @@
 
 ```
 index.html     единственная страница: шапка, #screen, футер; шрифты Google Fonts; фиксирует порядок всех <script>
-js/            data, i18n, store, quiz — без DOM; ui.js — DOM-хелперы и реестр экранов; app.js — роутер
+js/            data, i18n, store, quiz, icons (генерируется tools/icons.js) — без DOM; ui.js — DOM-хелперы и реестр экранов; app.js — роутер
 js/views/      экраны: level.js (уровень), vocab.js (тема слов), grammar.js (тема грамматики + ECA.grammarBlocks)
 data/          контент: levels.js, vocab-<lvl>.js, grammar-<lvl>.js (+ grammar-a2-more.js, grammar-b1-more.js)
 css/           base.css — токены, общие компоненты и компоненты блоков грамматики; vocab.css, grammar.css — экраны
 tests/         node:test, *.test.js; index.js — точка входа для `node --test tests/`
-tools/         только для разработки: validate-content.js, e2e.js, screenshot.js
+tools/         только для разработки: validate-content.js, icons.js, e2e.js, screenshot.js
 archive/       старые HTML-страницы грамматики (образец стиля); PORT-CHECKLIST.md — что куда перенесено; сайт их не подключает
 docs/adr/      решения: статика без сборки, hash-роутинг, контент как JS, ru/en в данных, localStorage, node:test + Playwright
 CONTENT.md     инструкция автора контента: слова, «Как записывать слова», «Тема грамматики» (полная схема, типы блоков, правила оформления)
@@ -43,7 +44,7 @@ CONTENT.md     инструкция автора контента: слова, �
 
 ## Архитектура
 
-- Всё живёт в `window.ECA`; скрипты грузятся синхронно в `<head>`: `js/data, i18n, store, quiz` → `data/*.js` → `js/ui` → `views/level, vocab, grammar` → `js/app` (стартует на `DOMContentLoaded`).
+- Всё живёт в `window.ECA`; скрипты грузятся синхронно в `<head>`: `js/data, i18n, store, quiz, icons` → `data/*.js` → `js/ui` → `views/level, vocab, grammar` → `js/app` (стартует на `DOMContentLoaded`).
 - `ECA.data` — реестр: файлы данных при загрузке зовут `addLevels` / `addVocab(level, topics)` / `addGrammar(level, topics)`; чтение — `levels()`, `vocab(lvl)`, `grammar(lvl)`, `find('words'|'grammar', topicId)`.
 - `ECA.i18n`: язык = `store.pref('lang')`, иначе `detect(navigator.languages)` (ru/uk/be/kk → ru, остальное → en); `t(key, {param})` с фолбэком en → ru → сам ключ; `pick(obj, lang?)` — сторона `{ru,en}` (по умолчанию текущий язык, пустая → другая, строка — как есть); `onChange` → app сохраняет pref, перерисовывает шапку/футер (`data-i18n`, `data-i18n-aria`) и экран с `rerender: true`.
 - `ECA.store` — один JSON в `localStorage['eca:v1']`: `prefs` (`lang`, `theme`, `level`), `learned` (ключ `topicId|es`), `scores` (ключи `words:<id>`, `grammar:<id>` → лучший `{score,total}`); `recordScore` → `true` при новом рекорде; `resetProgress` сохраняет `lang` и `theme`; без хранилища — `onUnavailable` показывает заметку в футере.
@@ -56,9 +57,10 @@ CONTENT.md     инструкция автора контента: слова, �
 - `ctx = { route: {name, level, topicId, tab}, levelId, level, topic, state, rerender }`; app сам чистит контейнер, ставит `<title>`, после перехода скроллит вверх и фокусирует `h1`.
 - `ctx.state` живёт, пока не сменился hash, у грамматики — пока не сменилась тема (ключ уровень+тема): тест не сбрасывается при смене вкладки и языка; вкладка, колода, позиция и seed теста хранятся там.
 - Страница уровня: ступеньки уровней — ссылки `<a class="level-tile">` в `nav`, выбранная — `aria-current="page"` (при смене уровня фокус возвращается на неё); ниже — «Грамматика», затем «Слова».
-- Строка темы грамматики на странице уровня показывает `summary` или `hero.sub`; карточки слов по кругу красятся `.c-teal/blue/coral/amber/purple`.
+- Строка темы грамматики на странице уровня показывает `summary` или `hero.sub`; карточки слов по кругу красятся `.c-teal/blue/coral/amber/purple`, иконка темы — `ui.topicIcon(topic.icon)`: SVG из `ECA.icons` (`имя → [[d, opacity?], …]`, бокс 256, `currentColor` = `--c-hi`); неизвестное имя выводится текстом.
 - Ход теста у обоих экранов общий: `quiz.attempt(seed)` → `{seed, session, recorded, newBest}`; `quiz.session` (`start/pick/next/answered/finished/result`, повторный выбор игнорируется); `quiz.finish` пишет результат один раз и только когда отвечены все вопросы, `newBest` — только если был прежний результат и он побит.
-- Клавиатура: `quiz.keyAction(key, {answered, options})` → `{pick:i}` (цифры) | `{next:true}` (Enter) | `null`; `ui.shortcutsApply(e, scope, screen)` пропускает клавиши, только если фокус в колоде/тесте, на `h1` экрана или на `body`.
+- Клавиатура: `quiz.keyAction(key, {answered, options})` → `{pick:i}` (цифры) | `{next:true}` (Enter или пробел) | `null`; `ui.shortcutsApply(e, scope, screen)` пропускает клавиши, только если фокус в колоде/тесте, на вкладках экрана, на `h1` экрана или на `body` (на вкладках ←/→ остаются за вкладками; Enter/пробел на ссылке или обычной кнопке — нативные).
+- Колода карточек: пробел/Enter — перевернуть, ← — назад (`vocabDeck.back` по `history` колоды отменяет последний шаг и снимает «знаю», если слово не было выучено раньше), ↓ — «Повторить» (в конец), → — «Знаю»; после кнопки фокус уходит на новую карточку, чтобы пробел переворачивал её, а не нажимал кнопку снова.
 - Вкладки: `ui.tabs({items, active, onSelect, label, panelId, numbered})` — полоса `.tabs > .tab > .tab__num + .tab__label` (`numbered: false` — без номеров), `list.select(id)`; мини-вкладки и свои списки вкладок — через `ui.markSelected(buttons, i)` (aria-selected + roving tabindex) и `ui.rovingTabs(list, buttons, select)` (←/→ по кругу, Home, End).
 - «Пройдено» (`ui.isTopicDone`): слова — все выучены И тест ≥ 80 %; грамматика — тест ≥ 80 % (`ui.PASS_RATIO`).
 - Движение (раздел `motion` в `base.css`): `ui.outline(a)` добавляет в ссылку `svg.outline-draw` из двух путей (`pathLength=1`) — при `:hover`/`:focus-visible` линии рисуются из левого верхнего и правого нижнего углов и встречаются; пути меряются по рамке и радиусам на каждом наведении; сейчас так оформлены `.level-tile`, `.topic-card`, `.topic-row`. Параллакс `.site-header`/`.hero` — только CSS scroll-driven (`view-timeline: --band`), под `@supports` и `prefers-reduced-motion: no-preference`.
@@ -74,13 +76,13 @@ CONTENT.md     инструкция автора контента: слова, �
 - DOM — через `ui.el(tag, {class, text, on, dataset, …атрибуты}, children)` / `textContent`; `innerHTML` только через `ui.setRich` / `ui.richText` (пропускает `<b> <i> <em> <strong> <br>` без атрибутов).
 - `localStorage` — только через `ECA.store`.
 - CSS: цвета — только токены из `:root` в `css/base.css` (проверяет `tests/css.test.js`); шрифты `--font-display` (Playfair Display) и `--font-body` (Noto Sans); шкалы `--step-*`, `--space-*`, `--radius-*`; кнопки не меньше `--tap` (44px).
-- Токены — палитра старых страниц: `--bg --surface --surface-2 --ink --ink-soft --heading --em --link --line --accent* --sun* --ok* --bad* --focus --tg`; hero и полоса вкладок — `--hero-*` (`bg ink soft faint accent focus tint stripe…`); 5 цветов `blue amber teal coral purple` × `'' -soft -ink -on -hi` (`-hi` — выделенные слова на `--surface`: примеры, окончания `--ending`).
+- Токены — палитра старых страниц: `--bg --surface --surface-2 --ink --ink-soft --heading --em --link --line --accent* --sun* --ok* --bad* --focus --tg`; hero и полоса вкладок — `--hero-*` (`bg ink soft faint accent focus tint stripe…`); 5 цветов `blue amber teal coral purple` × `'' -soft -ink -on -hi` (`-hi` — выделенные слова на `--surface`: примеры, окончания `--ending`). Фон страницы — бумага: `body` кладёт поверх `--bg` токены `--paper-grain` (мелкое зерно) и `--paper-mottle` (крупные пятна) — SVG-шум `feTurbulence` в data-URI, свой в тёмной теме — и два мягких `radial-gradient`; карточки на `--surface` остаются гладкими.
 - Цвет компонента — класс `.c-blue/.c-amber/.c-teal/.c-coral/.c-purple` (задаёт `--c --c-soft --c-ink --c-on --c-hi`, стоят в конце `base.css`); компонент читает `var(--c)`, а не конкретный цвет.
 - Тёмная тема: два блока (`@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` и `:root[data-theme="dark"]`) объявляют одинаковые токены; одинаковые значения внутри блока — через `var()`, не повтором литерала.
 - `.hero` (тема грамматики) красится одним правилом вместе с `.site-header` (navy + штриховка `repeating-linear-gradient`); `.hero + .tabs` стыкуются; при 4+ вкладках уже 560px подпись видна только у активной.
 - Общие компоненты (`.btn`, `.chip`, `.tabs`, `.mini-tabs`, `.badge`, `.options > .option`, `.feedback`, блоки грамматики `.rule-card`, `.trigger-card`, `.kw-box`, `.ex-box`, `.conj-card`, `.tip`, `.table`…) — в `base.css`; стили экранов — в `vocab.css` / `grammar.css`.
 - Контент — только в `data/`; файлы данных не IIFE, а прямой вызов `ECA.data.addVocab('A1', [...])` / `addGrammar('A2', [...])`.
-- Тема слов: `{ id: 'a1-greetings', level, icon, title: {ru,en}, words: [{ es, ru, en, ex?: {es,ru,en} }] }`; ≥ 12 слов, `ex` у ≥ половины, существительные с артиклем (`el libro`), `es` уникален в теме.
+- Тема слов: `{ id: 'a1-greetings', level, icon: 'hand-waving', title: {ru,en}, words: [{ es, ru, en, ex?: {es,ru,en} }] }`; ≥ 12 слов, `ex` у ≥ половины, существительные с артиклем (`el libro`), `es` уникален в теме.
 - Тема грамматики: `{ id, level, title, hero: {es, sub}, tabs: [{ id, label, blocks: [{ type, heading?, … }] }], quiz }` — полный контракт в `CONTENT.md`, «Тема грамматики».
 - Блоки: `text rules triggers conj table markers examples tip`; цвета — только 5 названий палитры; 4–6 вкладок (id `[a-z0-9-]`, уникальны, не `test`, подпись ≤ 12), ≥ 20 примеров с `<b>` в `es`, у `conj` ≥ 2 вариантов (мини-вкладки), ячейки таблиц ≤ 30 символов.
 - `quiz`: 8–10 вопросов `{ prompt: {ru,en}, es?, options (3–4), answer, explain: {ru,en} }`; старый формат `sections` валидатор отвергает.
@@ -99,6 +101,7 @@ CONTENT.md     инструкция автора контента: слова, �
 ## Подводные камни
 
 - Node 22 не раскрывает каталог в `node --test tests/` — вход идёт через `tests/index.js`, не удалять.
+- Новое имя в `icon` темы слов — сначала `node tools/icons.js`, иначе валидатор: «иконки … нет в js/icons.js»; `js/icons.js` руками не правят.
 - Новый файл в `data/` без `<script>` в `index.html` на сайте не виден, валидатор падает («файл не подключён в index.html»).
 - `views/vocab.js` бросает ошибку, если `js/quiz.js` не загружен раньше.
 - `ui.js` регистрирует свои строки, только если `ECA.i18n` уже загружен.
