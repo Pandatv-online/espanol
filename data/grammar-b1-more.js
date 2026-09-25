@@ -12,18 +12,18 @@ ECA.data.addGrammar('B1', [
       {
         id: 'futuro', label: { ru: 'Futuro', en: 'Futuro' },
         blocks: [
-          { type: 'rules', items: [
+          { type: 'rules', heading: { ru: 'Как образуется', en: 'How it is formed' }, items: [
             { color: 'blue', label: { ru: 'Будущее', en: 'Future' }, title: { ru: 'Futuro simple', en: 'Futuro simple' }, es: 'infinitivo + -é, -ás, -á…',
               body: { ru: 'Строится от <b>целого инфинитива</b>, окончания одни для -ar, -er и -ir: <i>hablar → hablaré, comer → comeré, vivir → viviremos</i>.',
                       en: 'Built on the <b>whole infinitive</b>, with the same endings for -ar, -er and -ir: <i>hablar → hablaré, comer → comeré, vivir → viviremos</i>.' } },
-            { color: 'amber', label: { ru: 'Окончания', en: 'Endings' }, title: { ru: 'Одни на всех', en: 'One set for all' }, es: '-é, -ás, -á, -emos, -éis, -án',
+            { color: 'blue', label: { ru: 'Окончания', en: 'Endings' }, title: { ru: 'Одни на всех', en: 'One set for all' }, es: '-é, -ás, -á, -emos, -éis, -án',
               body: { ru: 'Ударение всегда на окончании. Тильда пишется везде, <b>кроме nosotros</b>: <i>hablaré, hablarás</i>, но <i>hablaremos</i>.',
                       en: 'The stress always falls on the ending. The written accent appears everywhere <b>except nosotros</b>: <i>hablaré, hablarás</i>, but <i>hablaremos</i>.' } }
           ] },
           { type: 'text', body: {
             ru: ['Переключайте <b>правильный</b> / <b>неправильный</b> глагол в каждой карточке: окончания одинаковые, меняется только основа.'],
             en: ['Switch between the <b>regular</b> and the <b>irregular</b> verb on each card: the endings are the same, only the stem changes.'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Правильные и неправильные', en: 'Regular and irregular' }, verbs: [
             { inf: 'hablar · hacer', tr: { ru: 'говорить · делать', en: 'to speak · to do' }, variants: [
               { label: { ru: 'правильный', en: 'regular' }, color: 'blue', rows: [['yo', 'hablar<b>é</b>'], ['tú', 'hablar<b>ás</b>'], ['él / ella', 'hablar<b>á</b>'], ['nosotros', 'hablar<b>emos</b>'], ['vosotros', 'hablar<b>éis</b>'], ['ellos', 'hablar<b>án</b>']] },
               { label: { ru: 'неправильный', en: 'irregular' }, color: 'coral', rows: [['yo', '<b>har</b>é'], ['tú', '<b>har</b>ás'], ['él / ella', '<b>har</b>á'], ['nosotros', '<b>har</b>emos'], ['vosotros', '<b>har</b>éis'], ['ellos', '<b>har</b>án']] }
@@ -53,31 +53,24 @@ ECA.data.addGrammar('B1', [
               ['hacer', 'har-', 'haré', 'haría'],
               ['decir', 'dir-', 'diré', 'diría']
             ] },
-          { type: 'text', color: 'amber', body: {
+          { type: 'text', color: 'coral', body: {
             ru: ['У дюжины частых глаголов меняется основа, окончания те же. Основа одинакова в обоих временах: <i>tendré — tendría</i>.',
                  'Три группы: <b>гласная → d</b> (<i>tener, poner, salir, venir, valer</i>); <b>выпадает -e-</b> (<i>poder, saber, querer, haber, caber</i>); <b>свои основы</b> (<i>hacer → har-, decir → dir-</i>).',
                  'Также <b>haber → habr-</b> (<i>habrá</i> — «будет, найдётся»), <b>caber → cabr-</b>, <b>valer → valdr-</b>.'],
             en: ['About a dozen common verbs change their stem; the endings stay the same. The stem is the same in both tenses: <i>tendré — tendría</i>.',
                  'Three groups: <b>vowel → d</b> (<i>tener, poner, salir, venir, valer</i>); <b>the -e- drops out</b> (<i>poder, saber, querer, haber, caber</i>); <b>stems of their own</b> (<i>hacer → har-, decir → dir-</i>).',
                  'Also <b>haber → habr-</b> (<i>habrá</i> — “there will be”), <b>caber → cabr-</b>, <b>valer → valdr-</b>.'] } },
-          { type: 'text', color: 'teal', body: {
+          { type: 'text', color: 'coral', body: {
             ru: ['<b>Производные наследуют основу:</b> <i>mantener → mantendré</i>, <i>suponer → supondré</i>, <i>componer → compondré</i>, <i>deshacer → desharé</i>, <i>convenir → convendrá</i>.'],
-            en: ['<b>Derived verbs inherit the stem:</b> <i>mantener → mantendré</i>, <i>suponer → supondré</i>, <i>componer → compondré</i>, <i>deshacer → desharé</i>, <i>convenir → convendrá</i>.'] } },
-          { type: 'examples', heading: { ru: 'Futuro в речи', en: 'Futuro in use' }, items: [
-            { color: 'blue', es: 'Mañana <b>tendremos</b> una reunión con el cliente.', ru: 'Завтра у нас будет встреча с клиентом.', en: 'Tomorrow we’ll have a meeting with the client.' },
-            { color: 'blue', es: '¿A qué hora <b>saldréis</b> de casa?', ru: 'Во сколько вы выйдете из дома?', en: 'What time will you leave home?' },
-            { color: 'blue', es: 'No te preocupes, te lo <b>diré</b> todo.', ru: 'Не волнуйся, я тебе всё расскажу.', en: 'Don’t worry, I’ll tell you everything.' },
-            { color: 'blue', es: 'Mis padres <b>vendrán</b> en Navidad.', ru: 'Мои родители приедут на Рождество.', en: 'My parents will come at Christmas.' },
-            { color: 'blue', es: 'Este verano <b>haré</b> un curso de surf.', ru: 'Этим летом я пройду курс сёрфинга.', en: 'This summer I’ll do a surfing course.' }
-          ] }
+            en: ['<b>Derived verbs inherit the stem:</b> <i>mantener → mantendré</i>, <i>suponer → supondré</i>, <i>componer → compondré</i>, <i>deshacer → desharé</i>, <i>convenir → convendrá</i>.'] } }
         ]
       },
       {
         id: 'condicional', label: { ru: 'Condicional', en: 'Condicional' },
         blocks: [
-          { type: 'rules', items: [
-            { color: 'blue', label: { ru: 'Условное', en: 'Conditional' }, title: { ru: 'Condicional simple', en: 'Condicional simple' }, es: 'infinitivo + -ía, -ías, -ía…',
-              body: { ru: 'Тот же принцип, что у Futuro: <b>целый инфинитив</b> + окончание, одно для всех групп. По-русски — «бы»: <i>hablaría</i> — «я бы сказал».',
+          { type: 'rules', heading: { ru: 'Как образуется', en: 'How it is formed' }, items: [
+            { color: 'amber', label: { ru: 'Условное', en: 'Conditional' }, title: { ru: 'Condicional simple', en: 'Condicional simple' }, es: 'infinitivo + -ía, -ías, -ía…',
+              body: { ru: 'Тот же принцип, что у Futuro: <b>целый инфинитив</b> + окончание, одно для всех групп. По-русски — «бы»: <i>hablaría</i> — «я бы поговорил».',
                       en: 'The same idea as the Futuro: the <b>whole infinitive</b> + an ending shared by all groups. In English it is “would”: <i>hablaría</i> — “I would speak”.' } },
             { color: 'amber', label: { ru: 'Окончания', en: 'Endings' }, title: { ru: 'Тильда везде', en: 'Accent everywhere' }, es: '-ía, -ías, -ía, -íamos, -íais, -ían',
               body: { ru: 'На <b>í</b> тильда во всех лицах. Формы <b>yo</b> и <b>él</b> совпадают: <i>(yo / él) hablaría</i> — если неясно, кто, добавьте местоимение.',
@@ -86,7 +79,7 @@ ECA.data.addGrammar('B1', [
           { type: 'text', body: {
             ru: ['Переключайте <b>Futuro</b> / <b>Condicional</b> у каждого глагола: основа одна, меняются только окончания. Следите за ударениями — они обязательны.'],
             en: ['Switch between <b>Futuro</b> and <b>Condicional</b> for each verb: the stem is the same, only the endings change. Mind the accents — they are required.'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Futuro или Condicional', en: 'Futuro or Condicional' }, verbs: [
             { inf: 'hablar', tr: { ru: '-ar · говорить', en: '-ar · to speak' }, variants: [
               { label: 'Futuro', color: 'blue', rows: [['yo', 'hablar<b>é</b>'], ['tú', 'hablar<b>ás</b>'], ['él / ella', 'hablar<b>á</b>'], ['nosotros', 'hablar<b>emos</b>'], ['vosotros', 'hablar<b>éis</b>'], ['ellos', 'hablar<b>án</b>']] },
               { label: 'Condicional', color: 'amber', rows: [['yo', 'hablar<b>ía</b>'], ['tú', 'hablar<b>ías</b>'], ['él / ella', 'hablar<b>ía</b>'], ['nosotros', 'hablar<b>íamos</b>'], ['vosotros', 'hablar<b>íais</b>'], ['ellos', 'hablar<b>ían</b>']] }
@@ -108,17 +101,7 @@ ECA.data.addGrammar('B1', [
               { label: 'Condicional', color: 'amber', rows: [['yo', 'dir<b>ía</b>'], ['tú', 'dir<b>ías</b>'], ['él / ella', 'dir<b>ía</b>'], ['nosotros', 'dir<b>íamos</b>'], ['vosotros', 'dir<b>íais</b>'], ['ellos', 'dir<b>ían</b>']] }
             ] }
           ] },
-          { type: 'table', heading: { ru: 'Hablar: все лица рядом', en: 'Hablar: every person side by side' },
-            head: ['', 'futuro (hablar)', 'condicional (hablar)'],
-            rows: [
-              ['yo', 'hablaré', 'hablaría'],
-              ['tú', 'hablarás', 'hablarías'],
-              ['él / ella / usted', 'hablará', 'hablaría'],
-              ['nosotros / nosotras', 'hablaremos', 'hablaríamos'],
-              ['vosotros / vosotras', 'hablaréis', 'hablaríais'],
-              ['ellos / ellas / ustedes', 'hablarán', 'hablarían']
-            ] },
-          { type: 'text', color: 'coral', body: {
+          { type: 'text', body: {
             ru: ['<b>Не путайте с Imperfecto:</b> у -er / -ir окончания похожи, но в Condicional перед ними стоит весь инфинитив. <i>comería</i> — «я бы поел», <i>comía</i> — «я ел (обычно)».'],
             en: ['<b>Don’t confuse it with the Imperfecto:</b> the -er / -ir endings look alike, but the Condicional keeps the whole infinitive in front. <i>comería</i> — “I would eat”, <i>comía</i> — “I used to eat”.'] } },
           { type: 'examples', heading: { ru: 'Condicional в речи', en: 'Condicional in use' }, items: [
@@ -130,7 +113,7 @@ ECA.data.addGrammar('B1', [
         ]
       },
       {
-        id: 'uso', label: { ru: 'Употребление', en: 'Uses' },
+        id: 'use', label: { ru: 'Употребление', en: 'Uses' },
         blocks: [
           { type: 'triggers', heading: { ru: 'Futuro', en: 'Futuro' }, items: [
             { num: '1', color: 'blue', title: { ru: 'Прогноз', en: 'Prediction' }, sub: { ru: 'что будет', en: 'what will happen' },
@@ -163,7 +146,7 @@ ECA.data.addGrammar('B1', [
               phrases: ['con más dinero', 'en tu lugar', 'sin ti'],
               ex: { es: 'Sin ti, no <b>podría</b> hacerlo.', ru: 'Без тебя я бы не смог это сделать.', en: 'I couldn’t do it without you.' } }
           ] },
-          { type: 'text', color: 'teal', body: {
+          { type: 'text', body: {
             ru: ['<b>Futuro или ir a?</b> Для близких планов и того, что уже видно по ситуации, чаще говорят <i>ir a + инфинитив</i>: <i>Voy a cenar con Ana</i>. Futuro звучит отстранённее: прогноз, обещание, план подальше.'],
             en: ['<b>Futuro or ir a?</b> For near plans and things you can already see coming, people more often say <i>ir a + infinitive</i>: <i>Voy a cenar con Ana</i>. The Futuro sounds more distant: a forecast, a promise, a longer-term plan.'] } },
           { type: 'table', heading: { ru: 'Одна фраза — два смысла', en: 'One sentence, two meanings' },
@@ -189,9 +172,9 @@ ECA.data.addGrammar('B1', [
         ]
       },
       {
-        id: 'prob', label: { ru: 'Вероятность', en: 'Probability' },
+        id: 'probability', label: { ru: 'Вероятность', en: 'Probability' },
         blocks: [
-          { type: 'rules', items: [
+          { type: 'rules', heading: { ru: 'Догадка', en: 'A guess' }, items: [
             { color: 'blue', label: { ru: 'Догадка', en: 'Guess' }, title: { ru: 'О настоящем → Futuro', en: 'About now → Futuro' }, es: 'estará = probablemente está',
               body: { ru: 'Futuro может значить не «будет», а «<b>наверное, сейчас</b>». <i>¿Dónde está Luis? — Estará en el trabajo</i> — «Наверное, на работе».',
                       en: 'The Futuro can mean not “will” but “<b>probably, right now</b>”. <i>¿Dónde está Luis? — Estará en el trabajo</i> — “He must be at work”.' } },
@@ -202,7 +185,7 @@ ECA.data.addGrammar('B1', [
           { type: 'text', body: {
             ru: ['Переключайте <b>сейчас</b> / <b>тогда</b>: в каждой вкладке уверенный ответ и догадка.'],
             en: ['Switch between <b>now</b> and <b>back then</b>: each tab shows a sure answer and a guess.'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Сейчас или тогда', en: 'Now or then' }, verbs: [
             { inf: '¿Dónde está Luis?', tr: { ru: 'где Луис?', en: 'where is Luis?' }, variants: [
               { label: { ru: 'сейчас', en: 'now' }, color: 'blue', rows: [['seguro', 'Está en el trabajo.'], ['suposición', '<b>Estará</b> en el trabajo.']] },
               { label: { ru: 'тогда', en: 'back then' }, color: 'amber', rows: [['seguro', 'Estaba en el trabajo.'], ['suposición', '<b>Estaría</b> en el trabajo.']] }
@@ -212,14 +195,14 @@ ECA.data.addGrammar('B1', [
               { label: { ru: 'тогда', en: 'back then' }, color: 'amber', rows: [['seguro', 'Eran las diez.'], ['suposición', '<b>Serían</b> las diez.']] }
             ] }
           ] },
-          { type: 'text', color: 'teal', body: {
+          { type: 'text', body: {
             ru: ['<b>В вопросе</b> это «интересно, …?», «что же…?»: <i>¿Dónde estará mi móvil?</i> — «Куда же подевался мой телефон?». Ответа от собеседника никто не ждёт.'],
             en: ['<b>In a question</b> it means “I wonder…”: <i>¿Dónde estará mi móvil?</i> — “Where on earth is my phone?”. Nobody really expects an answer.'] } },
-          { type: 'markers', groups: [
-            { color: 'teal', title: { ru: 'То же другими словами', en: 'Same idea, other words' },
+          { type: 'markers', heading: { ru: 'Синонимы', en: 'Synonyms' }, groups: [
+            { color: 'purple', title: { ru: 'То же другими словами', en: 'Same idea, other words' },
               tags: ['probablemente', 'seguramente', 'supongo que', 'debe de', 'a lo mejor'] }
           ] },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Догадки в речи', en: 'Guesses in use' }, items: [
             { badge: 'F', color: 'blue', es: 'No sé dónde está Luis. <b>Estará</b> en el trabajo.', ru: 'Не знаю, где Луис. Наверное, на работе.', en: 'I don’t know where Luis is. He must be at work.' },
             { badge: 'F', color: 'blue', es: '¿Quién <b>será</b> a estas horas?', ru: 'Кто бы это мог быть в такое время?', en: 'Who could that be at this hour?' },
             { badge: 'F', color: 'blue', es: 'Marta no contesta. <b>Tendrá</b> el móvil apagado.', ru: 'Марта не отвечает. Наверное, у неё выключен телефон.', en: 'Marta isn’t answering. She must have her phone off.' },
@@ -232,6 +215,13 @@ ECA.data.addGrammar('B1', [
       {
         id: 'examples', label: { ru: 'Примеры', en: 'Examples' },
         blocks: [
+          { type: 'examples', heading: { ru: 'Futuro в речи', en: 'Futuro in use' }, items: [
+            { color: 'blue', es: 'Mañana <b>tendremos</b> una reunión con el cliente.', ru: 'Завтра у нас будет встреча с клиентом.', en: 'Tomorrow we’ll have a meeting with the client.' },
+            { color: 'blue', es: '¿A qué hora <b>saldréis</b> de casa?', ru: 'Во сколько вы выйдете из дома?', en: 'What time will you leave home?' },
+            { color: 'blue', es: 'No te preocupes, te lo <b>diré</b> todo.', ru: 'Не волнуйся, я тебе всё расскажу.', en: 'Don’t worry, I’ll tell you everything.' },
+            { color: 'blue', es: 'Mis padres <b>vendrán</b> en Navidad.', ru: 'Мои родители приедут на Рождество.', en: 'My parents will come at Christmas.' },
+            { color: 'blue', es: 'Este verano <b>haré</b> un curso de surf.', ru: 'Этим летом я пройду курс сёрфинга.', en: 'This summer I’ll do a surfing course.' }
+          ] },
           { type: 'examples', heading: { ru: 'Futuro', en: 'Futuro' }, items: [
             { color: 'blue', es: 'Dentro de cinco años <b>hablaréis</b> español perfectamente.', ru: 'Через пять лет вы будете прекрасно говорить по-испански.', en: 'In five years you’ll speak Spanish perfectly.' },
             { color: 'blue', es: 'El tren <b>saldrá</b> a las siete y media.', ru: 'Поезд отправится в половине восьмого.', en: 'The train will leave at half past seven.' },
@@ -296,12 +286,12 @@ ECA.data.addGrammar('B1', [
       {
         id: 'por', label: { ru: 'Por', en: 'Por' },
         blocks: [
-          { type: 'rules', items: [
+          { type: 'rules', heading: { ru: 'Главная идея', en: 'The core idea' }, items: [
             { color: 'blue', label: { ru: 'Откуда и как', en: 'Where from and how' }, title: { ru: 'Por', en: 'Por' }, es: 'causa · camino · medio · cambio',
               body: { ru: '<b>Por</b> — откуда действие берётся и как проходит: причина, путь, способ, обмен. Вопросы: «почему? через что? каким образом? за сколько?».',
                       en: '<b>Por</b> shows where the action comes from and how it goes: cause, route, means, exchange. It answers “why? through what? how? for how much?”.' } }
           ] },
-          { type: 'triggers', items: [
+          { type: 'triggers', heading: { ru: 'Когда por', en: 'When to use por' }, items: [
             { num: '1', color: 'blue', title: { ru: 'Причина', en: 'Cause' }, sub: { ru: 'почему? из-за чего?', en: 'why? because of what?' },
               phrases: ['gracias por', 'por la lluvia', 'por culpa de'],
               ex: { es: 'Llegamos tarde <b>por</b> el tráfico.', ru: 'Мы опоздали из-за пробок.', en: 'We were late because of the traffic.' } },
@@ -341,12 +331,12 @@ ECA.data.addGrammar('B1', [
       {
         id: 'para', label: { ru: 'Para', en: 'Para' },
         blocks: [
-          { type: 'rules', items: [
+          { type: 'rules', heading: { ru: 'Главная идея', en: 'The core idea' }, items: [
             { color: 'amber', label: { ru: 'Куда и зачем', en: 'Where to and why' }, title: { ru: 'Para', en: 'Para' }, es: 'finalidad · destino · plazo',
               body: { ru: '<b>Para</b> — куда направлено действие: цель, получатель, пункт назначения, срок. Вопросы: «зачем? для кого? куда? к какому сроку?».',
                       en: '<b>Para</b> points to where the action is heading: goal, recipient, destination, deadline. It answers “what for? for whom? where to? by when?”.' } }
           ] },
-          { type: 'triggers', items: [
+          { type: 'triggers', heading: { ru: 'Когда para', en: 'When to use para' }, items: [
             { num: '1', color: 'amber', title: { ru: 'Цель', en: 'Purpose' }, sub: { ru: 'para + инфинитив = «чтобы»', en: 'para + infinitive = “in order to”' },
               phrases: ['para + infinitivo', '¿para qué?'],
               ex: { es: 'Voy al gimnasio <b>para</b> estar en forma.', ru: 'Я хожу в спортзал, чтобы быть в форме.', en: 'I go to the gym to keep fit.' } },
@@ -401,7 +391,7 @@ ECA.data.addGrammar('B1', [
           { type: 'text', body: {
             ru: ['Одна и та же фраза с <b>por</b> и с <b>para</b> — переключайте и сравнивайте смысл.'],
             en: ['The same sentence with <b>por</b> and with <b>para</b> — switch and compare the meaning.'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Одна фраза — два смысла', en: 'One phrase, two meanings' }, verbs: [
             { inf: 'Lo hago … ti', tr: { ru: 'ради тебя или для тебя?', en: 'for your sake or for you?' }, variants: [
               { label: 'por', color: 'blue', rows: [['frase', 'Lo hago <b>por</b> ti.'], ['idea', 'causa: por tu bien']] },
               { label: 'para', color: 'amber', rows: [['frase', 'Lo hago <b>para</b> ti.'], ['idea', 'destinatario: es tuyo']] }
@@ -437,10 +427,10 @@ ECA.data.addGrammar('B1', [
       {
         id: 'phrases', label: { ru: 'Выражения', en: 'Set phrases' },
         blocks: [
-          { type: 'text', color: 'amber', body: {
+          { type: 'text', body: {
             ru: ['Эти выражения просто запомните: <b>por favor</b> (пожалуйста), <b>por fin</b> (наконец), <b>por supuesto</b> (конечно), <b>por eso</b> (поэтому), <b>por ejemplo</b> (например), <b>para siempre</b> (навсегда). Правила здесь не помогут — это готовые блоки.'],
             en: ['Just learn these phrases: <b>por favor</b> (please), <b>por fin</b> (at last), <b>por supuesto</b> (of course), <b>por eso</b> (that’s why), <b>por ejemplo</b> (for example), <b>para siempre</b> (forever). The rules won’t help here — they are ready-made chunks.'] } },
-          { type: 'markers', groups: [
+          { type: 'markers', heading: { ru: 'Выражения', en: 'Phrases' }, groups: [
             { color: 'blue', title: { ru: 'С por', en: 'With por' },
               tags: ['por favor', 'por fin', 'por supuesto', 'por eso', 'por ejemplo', 'por cierto', 'por lo menos', 'por si acaso', 'por lo general', 'por primera vez', 'por todas partes', 'por desgracia'] },
             { color: 'amber', title: { ru: 'С para', en: 'With para' },
@@ -464,7 +454,7 @@ ECA.data.addGrammar('B1', [
               ['para nada', { ru: 'совсем не', en: 'not at all' }],
               ['no es para tanto', { ru: 'не так уж страшно', en: 'it’s not a big deal' }]
             ] },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Выражения в речи', en: 'Phrases in use' }, items: [
             { color: 'blue', es: '¡<b>Por fin</b> estás aquí!', ru: 'Наконец-то ты здесь!', en: 'You’re here at last!' },
             { color: 'blue', es: 'Lleva un paraguas <b>por si acaso</b>.', ru: 'Возьми зонт на всякий случай.', en: 'Take an umbrella just in case.' },
             { color: 'blue', es: '<b>Por cierto</b>, ¿has visto a Pedro?', ru: 'Кстати, ты видел Педро?', en: 'By the way, have you seen Pedro?' },

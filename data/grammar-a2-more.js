@@ -17,8 +17,8 @@ ECA.data.addGrammar('A2', [
                  'При спряжении <b>se</b> меняется по лицам: <b>me, te, se, nos, os, se</b> — и встаёт перед глаголом.'],
             en: ['A reflexive verb has <b>-se</b> at the end of the infinitive: <i>levantarse</i> (to get up), <i>ducharse</i> (to shower), <i>llamarse</i> (to be called). The action is done to oneself.',
                  'When conjugated, <b>se</b> changes with the person — <b>me, te, se, nos, os, se</b> — and goes before the verb.'] } },
-          { type: 'rules', items: [
-            { color: 'blue', label: { ru: 'Формула', en: 'Formula' }, title: { ru: 'Местоимение + глагол', en: 'Pronoun + verb' }, es: 'me + levanto',
+          { type: 'rules', heading: { ru: 'Как устроено', en: 'How it works' }, items: [
+            { color: 'coral', label: { ru: 'Формула', en: 'Formula' }, title: { ru: 'Местоимение + глагол', en: 'Pronoun + verb' }, es: 'me + levanto',
               body: { ru: 'Местоимение совпадает с лицом глагола: <i>yo <b>me</b> levanto</i>, <i>tú <b>te</b> levantas</i>. Отдельно <i>se</i> не пишут: не «levanto se».',
                       en: 'The pronoun matches the person of the verb: <i>yo <b>me</b> levanto</i>, <i>tú <b>te</b> levantas</i>. Never “levanto se”.' } },
             { color: 'teal', label: { ru: 'Не путать', en: 'Don’t mix up' }, title: { ru: 'Se — это 3-е лицо', en: 'Se is 3rd person' }, es: 'él se · ellos se · usted se',
@@ -30,12 +30,12 @@ ECA.data.addGrammar('A2', [
             rows: [
               ['yo', 'me levanto', 'me llamo', 'me acuesto'],
               ['tú', 'te levantas', 'te llamas', 'te acuestas'],
-              ['él / ella / usted', 'se levanta', 'se llama', 'se acuesta'],
-              ['nosotros / nosotras', 'nos levantamos', 'nos llamamos', 'nos acostamos'],
-              ['vosotros / vosotras', 'os levantáis', 'os llamáis', 'os acostáis'],
-              ['ellos / ellas / ustedes', 'se levantan', 'se llaman', 'se acuestan']
+              ['él / ella', 'se levanta', 'se llama', 'se acuesta'],
+              ['nosotros', 'nos levantamos', 'nos llamamos', 'nos acostamos'],
+              ['vosotros', 'os levantáis', 'os llamáis', 'os acostáis'],
+              ['ellos', 'se levantan', 'se llaman', 'se acuestan']
             ] },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Presente в речи', en: 'Presente in use' }, items: [
             { color: 'teal', es: '<b>Me levanto</b> a las siete.', ru: 'Я встаю в семь.', en: 'I get up at seven.' },
             { color: 'teal', es: '¿Cómo <b>te llamas</b>?', ru: 'Как тебя зовут?', en: 'What’s your name?' },
             { color: 'teal', es: 'Los viernes <b>nos acostamos</b> tarde.', ru: 'По пятницам мы ложимся поздно.', en: 'On Fridays we go to bed late.' }
@@ -43,12 +43,12 @@ ECA.data.addGrammar('A2', [
           { type: 'markers', heading: { ru: 'Частые возвратные глаголы', en: 'Common reflexive verbs' }, groups: [
             { color: 'teal', title: { ru: 'Распорядок дня', en: 'Daily routine' },
               tags: ['despertarse', 'levantarse', 'ducharse', 'lavarse', 'peinarse', 'afeitarse', 'maquillarse', 'vestirse', 'acostarse'] },
-            { color: 'coral', title: { ru: 'Чувства', en: 'Feelings' },
+            { color: 'teal', title: { ru: 'Чувства', en: 'Feelings' },
               tags: ['aburrirse', 'enfadarse', 'preocuparse', 'alegrarse', 'ponerse nervioso', 'enamorarse'] },
-            { color: 'purple', title: { ru: 'Движение и перемены', en: 'Movement and change' },
+            { color: 'teal', title: { ru: 'Движение и перемены', en: 'Movement and change' },
               tags: ['sentarse', 'quedarse', 'irse', 'mudarse', 'casarse', 'dormirse'] }
           ] },
-          { type: 'text', color: 'coral', body: {
+          { type: 'text', body: {
             ru: ['<b>«Друг друга»:</b> во множественном числе <i>nos, os, se</i> могут значить взаимное действие: <i>Nos vemos mañana.</i> — «Увидимся завтра». <i>Ana y Luis se quieren.</i> — «Ана и Луис любят друг друга».'],
             en: ['<b>“Each other”:</b> in the plural, <i>nos, os, se</i> can show a mutual action: <i>Nos vemos mañana.</i> — “See you tomorrow”. <i>Ana y Luis se quieren.</i> — “Ana and Luis love each other”.'] } }
         ]
@@ -59,7 +59,7 @@ ECA.data.addGrammar('A2', [
           { type: 'text', body: {
             ru: ['Переключайте время у каждого глагола. В <b>Perfecto</b> местоимение стоит перед <i>haber</i>: <i>me he levantado</i>, а participio не меняется. В <b>Indefinido</b> — как обычно, перед глаголом: <i>me levanté</i>.'],
             en: ['Switch the tense for each verb. In the <b>Perfecto</b> the pronoun goes before <i>haber</i>: <i>me he levantado</i>, and the participle does not change. In the <b>Indefinido</b> it goes before the verb as usual: <i>me levanté</i>.'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Три времени', en: 'Three tenses' }, verbs: [
             { inf: 'levantarse', tr: { ru: 'вставать', en: 'to get up' }, variants: [
               { label: 'Presente', color: 'teal', rows: [['yo', '<b>me</b> levanto'], ['tú', '<b>te</b> levantas'], ['él / ella', '<b>se</b> levanta'], ['nosotros', '<b>nos</b> levantamos'], ['vosotros', '<b>os</b> levantáis'], ['ellos', '<b>se</b> levantan']] },
               { label: 'Perfecto', color: 'blue', rows: [['yo', '<b>me</b> he levantado'], ['tú', '<b>te</b> has levantado'], ['él / ella', '<b>se</b> ha levantado'], ['nosotros', '<b>nos</b> hemos levantado'], ['vosotros', '<b>os</b> habéis levantado'], ['ellos', '<b>se</b> han levantado']] },
@@ -81,7 +81,7 @@ ECA.data.addGrammar('A2', [
               { label: 'Indefinido', color: 'amber', rows: [['yo', 'me vest<b>í</b>'], ['tú', 'te vest<b>iste</b>'], ['él / ella', 'se v<b>i</b>stió'], ['nosotros', 'nos vest<b>imos</b>'], ['vosotros', 'os vest<b>isteis</b>'], ['ellos', 'se v<b>i</b>stieron']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', body: {
+          { type: 'text', body: {
             ru: ['<b>Смена корня</b> работает так же, как у обычных глаголов: <i>acostarse, dormirse</i> (o → ue), <i>despertarse, sentarse</i> (e → ie), <i>vestirse</i> (e → i). В формах <i>nosotros</i> и <i>vosotros</i> корень не меняется: <i>nos acostamos</i>.'],
             en: ['<b>Stem changes</b> work just as with ordinary verbs: <i>acostarse, dormirse</i> (o → ue), <i>despertarse, sentarse</i> (e → ie), <i>vestirse</i> (e → i). The <i>nosotros</i> and <i>vosotros</i> forms keep the original stem: <i>nos acostamos</i>.'] } },
           { type: 'examples', heading: { ru: 'В разных временах', en: 'In different tenses' }, items: [
@@ -101,31 +101,31 @@ ECA.data.addGrammar('A2', [
                  'С инфинитивом местоимение можно <b>приклеить в конец</b> или поставить перед всей конструкцией: <i>Voy a ducharme = Me voy a duchar.</i> Местоимение всё равно согласуется с лицом: <i>vamos a levantarnos</i>.'],
             en: ['With a normal verb form, put it <b>before</b> the verb: <i>Me ducho.</i> <b>No</b> goes even earlier: <i>No me levanto temprano.</i>',
                  'With an infinitive, the pronoun can be <b>attached to the end</b> or placed before the whole phrase: <i>Voy a ducharme = Me voy a duchar.</i> It still matches the person: <i>vamos a levantarnos</i>.'] } },
-          { type: 'rules', items: [
-            { color: 'blue', title: { ru: 'Спрягаемая форма', en: 'Conjugated verb' }, es: 'no + me + ducho',
+          { type: 'rules', heading: { ru: 'Где стоит местоимение', en: 'Where the pronoun goes' }, items: [
+            { color: 'coral', title: { ru: 'Спрягаемая форма', en: 'Conjugated verb' }, es: 'no + me + ducho',
               body: { ru: 'Только перед глаголом. В Perfecto — перед <i>haber</i>: <i>No me he duchado.</i>', en: 'Only before the verb. In the Perfecto — before <i>haber</i>: <i>No me he duchado.</i>' } },
-            { color: 'teal', title: { ru: 'Инфинитив', en: 'Infinitive' }, es: 'voy a ducharme',
+            { color: 'purple', title: { ru: 'Инфинитив', en: 'Infinitive' }, es: 'voy a ducharme',
               body: { ru: 'Приклеивается в конец или встаёт перед первым глаголом: <i>Quiero sentarme = Me quiero sentar.</i>', en: 'Attached to the end or placed before the first verb: <i>Quiero sentarme = Me quiero sentar.</i>' } },
             { color: 'purple', title: { ru: 'Герундий', en: 'Gerund' }, es: 'estoy duchándome',
               body: { ru: 'Те же два места: <i>Estoy duchándome = Me estoy duchando.</i> Приклеив местоимение, ставьте знак ударения: <i>duchándome</i>.', en: 'The same two places: <i>Estoy duchándome = Me estoy duchando.</i> When you attach it, add a written accent: <i>duchándome</i>.' } },
-            { color: 'coral', title: { ru: 'Просьба, команда', en: 'Commands' }, es: '¡levántate! · ¡no te levantes!',
+            { color: 'purple', title: { ru: 'Просьба, команда', en: 'Commands' }, es: '¡levántate! · ¡no te levantes!',
               body: { ru: 'В утвердительном императиве — только в конце, со знаком ударения; в отрицательном — перед глаголом. Подробно — на уровне B1.', en: 'In an affirmative command it is always attached, with an accent; in a negative one it goes before the verb. More at B1.' } }
           ] },
           { type: 'conj', heading: { ru: 'Два места — один смысл', en: 'Two places, one meaning' }, verbs: [
             { inf: 'ir a ducharse', tr: { ru: 'собираться в душ', en: 'to be going to shower' }, variants: [
-              { label: { ru: 'в конце', en: 'attached' }, color: 'teal', rows: [['yo', 'voy a duchar<b>me</b>'], ['tú', 'vas a duchar<b>te</b>'], ['él / ella', 'va a duchar<b>se</b>'], ['nosotros', 'vamos a duchar<b>nos</b>'], ['vosotros', 'vais a duchar<b>os</b>'], ['ellos', 'van a duchar<b>se</b>']] },
-              { label: { ru: 'впереди', en: 'in front' }, color: 'blue', rows: [['yo', '<b>me</b> voy a duchar'], ['tú', '<b>te</b> vas a duchar'], ['él / ella', '<b>se</b> va a duchar'], ['nosotros', '<b>nos</b> vamos a duchar'], ['vosotros', '<b>os</b> vais a duchar'], ['ellos', '<b>se</b> van a duchar']] }
+              { label: { ru: 'в конце', en: 'attached' }, color: 'purple', rows: [['yo', 'voy a duchar<b>me</b>'], ['tú', 'vas a duchar<b>te</b>'], ['él / ella', 'va a duchar<b>se</b>'], ['nosotros', 'vamos a duchar<b>nos</b>'], ['vosotros', 'vais a duchar<b>os</b>'], ['ellos', 'van a duchar<b>se</b>']] },
+              { label: { ru: 'впереди', en: 'in front' }, color: 'coral', rows: [['yo', '<b>me</b> voy a duchar'], ['tú', '<b>te</b> vas a duchar'], ['él / ella', '<b>se</b> va a duchar'], ['nosotros', '<b>nos</b> vamos a duchar'], ['vosotros', '<b>os</b> vais a duchar'], ['ellos', '<b>se</b> van a duchar']] }
             ] },
             { inf: 'estar vistiéndose', tr: { ru: 'одеваться сейчас', en: 'to be getting dressed' }, variants: [
-              { label: { ru: 'в конце', en: 'attached' }, color: 'teal', rows: [['yo', 'estoy vistiéndo<b>me</b>'], ['tú', 'estás vistiéndo<b>te</b>'], ['él / ella', 'está vistiéndo<b>se</b>'], ['nosotros', 'estamos vistiéndo<b>nos</b>'], ['vosotros', 'estáis vistiéndo<b>os</b>'], ['ellos', 'están vistiéndo<b>se</b>']] },
-              { label: { ru: 'впереди', en: 'in front' }, color: 'blue', rows: [['yo', '<b>me</b> estoy vistiendo'], ['tú', '<b>te</b> estás vistiendo'], ['él / ella', '<b>se</b> está vistiendo'], ['nosotros', '<b>nos</b> estamos vistiendo'], ['vosotros', '<b>os</b> estáis vistiendo'], ['ellos', '<b>se</b> están vistiendo']] }
+              { label: { ru: 'в конце', en: 'attached' }, color: 'purple', rows: [['yo', 'estoy vistiéndo<b>me</b>'], ['tú', 'estás vistiéndo<b>te</b>'], ['él / ella', 'está vistiéndo<b>se</b>'], ['nosotros', 'estamos vistiéndo<b>nos</b>'], ['vosotros', 'estáis vistiéndo<b>os</b>'], ['ellos', 'están vistiéndo<b>se</b>']] },
+              { label: { ru: 'впереди', en: 'in front' }, color: 'coral', rows: [['yo', '<b>me</b> estoy vistiendo'], ['tú', '<b>te</b> estás vistiendo'], ['él / ella', '<b>se</b> está vistiendo'], ['nosotros', '<b>nos</b> estamos vistiendo'], ['vosotros', '<b>os</b> estáis vistiendo'], ['ellos', '<b>se</b> están vistiendo']] }
             ] }
           ] },
-          { type: 'examples', items: [
-            { color: 'teal', es: '<b>Voy a ducharme</b> ahora.', ru: 'Сейчас пойду в душ.', en: 'I’m going to have a shower now.' },
-            { color: 'blue', es: 'No <b>me levanto</b> temprano los domingos.', ru: 'По воскресеньям я не встаю рано.', en: 'I don’t get up early on Sundays.' },
-            { color: 'blue', es: '¿<b>Te vas a quedar</b> en casa esta noche?', ru: 'Ты останешься сегодня вечером дома?', en: 'Are you going to stay at home tonight?' },
-            { color: 'teal', es: 'No quiero <b>enfadarme</b> contigo.', ru: 'Я не хочу на тебя злиться.', en: 'I don’t want to get angry with you.' },
+          { type: 'examples', heading: { ru: 'Место в речи', en: 'Position in use' }, items: [
+            { color: 'purple', es: '<b>Voy a ducharme</b> ahora.', ru: 'Сейчас пойду в душ.', en: 'I’m going to have a shower now.' },
+            { color: 'coral', es: 'No <b>me levanto</b> temprano los domingos.', ru: 'По воскресеньям я не встаю рано.', en: 'I don’t get up early on Sundays.' },
+            { color: 'coral', es: '¿<b>Te vas a quedar</b> en casa esta noche?', ru: 'Ты останешься сегодня вечером дома?', en: 'Are you going to stay at home tonight?' },
+            { color: 'purple', es: 'No quiero <b>enfadarme</b> contigo.', ru: 'Я не хочу на тебя злиться.', en: 'I don’t want to get angry with you.' },
             { color: 'purple', es: '¡Un momento! <b>Estamos vistiéndonos</b>.', ru: 'Минутку! Мы одеваемся.', en: 'Just a moment! We’re getting dressed.' }
           ] },
           { type: 'tip', title: { ru: 'Как запомнить', en: 'How to remember' }, body: {
@@ -151,27 +151,27 @@ ECA.data.addGrammar('A2', [
               ['acordar / acordarse de', { ru: 'договориться', en: 'to agree on' }, { ru: 'помнить, вспоминать', en: 'to remember' }],
               ['parecer / parecerse a', { ru: 'казаться', en: 'to seem' }, { ru: 'быть похожим на', en: 'to look like' }]
             ] },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'С se и без', en: 'With and without se' }, verbs: [
             { inf: 'llamar · llamarse', tr: { ru: 'звонить · зваться', en: 'to call · to be called' }, variants: [
-              { label: 'llamar', color: 'amber', rows: [['yo', 'llamo a Ana'], ['tú', 'llamas a Ana'], ['él / ella', 'llama a Ana'], ['nosotros', 'llamamos a Ana'], ['vosotros', 'llamáis a Ana'], ['ellos', 'llaman a Ana']] },
+              { label: 'llamar', color: 'coral', rows: [['yo', 'llamo a Ana'], ['tú', 'llamas a Ana'], ['él / ella', 'llama a Ana'], ['nosotros', 'llamamos a Ana'], ['vosotros', 'llamáis a Ana'], ['ellos', 'llaman a Ana']] },
               { label: 'llamarse', color: 'teal', rows: [['yo', '<b>me</b> llamo'], ['tú', '<b>te</b> llamas'], ['él / ella', '<b>se</b> llama'], ['nosotros', '<b>nos</b> llamamos'], ['vosotros', '<b>os</b> llamáis'], ['ellos', '<b>se</b> llaman']] }
             ] },
             { inf: 'ir · irse', tr: { ru: 'идти · уходить', en: 'to go · to leave' }, variants: [
-              { label: 'ir', color: 'amber', rows: [['yo', 'voy a casa'], ['tú', 'vas a casa'], ['él / ella', 'va a casa'], ['nosotros', 'vamos a casa'], ['vosotros', 'vais a casa'], ['ellos', 'van a casa']] },
+              { label: 'ir', color: 'coral', rows: [['yo', 'voy a casa'], ['tú', 'vas a casa'], ['él / ella', 'va a casa'], ['nosotros', 'vamos a casa'], ['vosotros', 'vais a casa'], ['ellos', 'van a casa']] },
               { label: 'irse', color: 'teal', rows: [['yo', '<b>me</b> voy'], ['tú', '<b>te</b> vas'], ['él / ella', '<b>se</b> va'], ['nosotros', '<b>nos</b> vamos'], ['vosotros', '<b>os</b> vais'], ['ellos', '<b>se</b> van']] }
             ] }
           ] },
-          { type: 'text', color: 'amber', body: {
+          { type: 'text', body: {
             ru: ['С частями тела ставят артикль, а не «мой»: <i>Me lavo <b>los</b> dientes</i>, а не <i>mis dientes</i>. То же с одеждой: <i>Me pongo <b>el</b> abrigo.</i>'],
             en: ['With body parts use the article, not “my”: <i>Me lavo <b>los</b> dientes</i>, not <i>mis dientes</i>. The same goes for clothes: <i>Me pongo <b>el</b> abrigo.</i>'] } },
           { type: 'examples', heading: { ru: 'Примеры попарно', en: 'Examples in pairs' }, items: [
             { badge: 'se', color: 'teal', es: '<b>Me lavo</b> los dientes después de comer.', ru: 'Я чищу зубы после еды.', en: 'I brush my teeth after eating.' },
-            { color: 'amber', es: '<b>Llamo</b> a mi madre todos los días.', ru: 'Я звоню маме каждый день.', en: 'I call my mother every day.' },
-            { color: 'amber', es: 'El bebé <b>duerme</b> diez horas.', ru: 'Малыш спит десять часов.', en: 'The baby sleeps for ten hours.' },
-            { badge: 'se', color: 'teal', es: 'Anoche <b>me dormí</b> en el sofá.', ru: 'Вчера вечером я заснул на диване.', en: 'Last night I fell asleep on the sofa.' },
-            { color: 'amber', es: '¿<b>Quedamos</b> a las siete en la plaza?', ru: 'Встретимся в семь на площади?', en: 'Shall we meet at seven in the square?' },
+            { color: 'coral', es: '<b>Llamo</b> a mi madre todos los días.', ru: 'Я звоню маме каждый день.', en: 'I call my mother every day.' },
+            { color: 'coral', es: 'El bebé <b>duerme</b> diez horas.', ru: 'Малыш спит десять часов.', en: 'The baby sleeps for ten hours.' },
+            { badge: 'se', color: 'amber', es: 'Anoche <b>me dormí</b> en el sofá.', ru: 'Вчера вечером я заснул на диване.', en: 'Last night I fell asleep on the sofa.' },
+            { color: 'coral', es: '¿<b>Quedamos</b> a las siete en la plaza?', ru: 'Встретимся в семь на площади?', en: 'Shall we meet at seven in the square?' },
             { badge: 'se', color: 'teal', es: 'Hoy <b>me quedo</b> en casa.', ru: 'Сегодня я остаюсь дома.', en: 'I’m staying at home today.' },
-            { badge: 'se', color: 'teal', es: 'Hace frío: <b>ponte</b> el abrigo.', ru: 'Холодно: надень пальто.', en: 'It’s cold: put your coat on.' },
+            { badge: 'se', color: 'purple', es: 'Hace frío: <b>ponte</b> el abrigo.', ru: 'Холодно: надень пальто.', en: 'It’s cold: put your coat on.' },
             { badge: 'se', color: 'teal', es: 'Mi hermana <b>se parece</b> mucho a mi padre.', ru: 'Моя сестра очень похожа на папу.', en: 'My sister looks a lot like my father.' },
             { badge: 'se', color: 'teal', es: '¿<b>Te acuerdas</b> de mí?', ru: 'Ты меня помнишь?', en: 'Do you remember me?' }
           ] }
@@ -186,17 +186,17 @@ ECA.data.addGrammar('A2', [
             { color: 'teal', es: '¿A qué hora <b>os acostáis</b> entre semana?', ru: 'Во сколько вы ложитесь спать в будни?', en: 'What time do you go to bed on weekdays?' }
           ] },
           { type: 'examples', heading: { ru: 'Чувства и перемены', en: 'Feelings and changes' }, items: [
-            { color: 'coral', es: 'Mis hijos <b>se aburren</b> en los museos.', ru: 'Моим детям скучно в музеях.', en: 'My children get bored in museums.' },
+            { color: 'teal', es: 'Mis hijos <b>se aburren</b> en los museos.', ru: 'Моим детям скучно в музеях.', en: 'My children get bored in museums.' },
             { color: 'coral', es: 'No <b>te preocupes</b>, todo va a salir bien.', ru: 'Не волнуйся, всё будет хорошо.', en: 'Don’t worry, everything will be fine.' },
-            { color: 'coral', es: 'Siempre <b>me pongo</b> nervioso en los exámenes.', ru: 'Я всегда нервничаю на экзаменах.', en: 'I always get nervous in exams.' },
-            { color: 'purple', es: 'Mis amigos <b>se casaron</b> el verano pasado.', ru: 'Мои друзья поженились прошлым летом.', en: 'My friends got married last summer.' },
-            { color: 'purple', es: 'El año pasado <b>nos mudamos</b> a Málaga.', ru: 'В прошлом году мы переехали в Малагу.', en: 'Last year we moved to Málaga.' }
+            { color: 'teal', es: 'Siempre <b>me pongo</b> nervioso en los exámenes.', ru: 'Я всегда нервничаю на экзаменах.', en: 'I always get nervous in exams.' },
+            { color: 'amber', es: 'Mis amigos <b>se casaron</b> el verano pasado.', ru: 'Мои друзья поженились прошлым летом.', en: 'My friends got married last summer.' },
+            { color: 'amber', es: 'El año pasado <b>nos mudamos</b> a Málaga.', ru: 'В прошлом году мы переехали в Малагу.', en: 'Last year we moved to Málaga.' }
           ] },
           { type: 'examples', heading: { ru: 'В дороге и в гостях', en: 'Travelling and visiting' }, items: [
-            { color: 'purple', es: 'Es tarde, <b>nos vamos</b>.', ru: 'Уже поздно, мы уходим.', en: 'It’s late, we’re leaving.' },
-            { color: 'purple', es: '¿Dónde <b>os alojáis</b> en Granada?', ru: 'Где вы остановились в Гранаде?', en: 'Where are you staying in Granada?' },
+            { color: 'teal', es: 'Es tarde, <b>nos vamos</b>.', ru: 'Уже поздно, мы уходим.', en: 'It’s late, we’re leaving.' },
+            { color: 'teal', es: '¿Dónde <b>os alojáis</b> en Granada?', ru: 'Где вы остановились в Гранаде?', en: 'Where are you staying in Granada?' },
             { color: 'purple', es: '<b>Siéntese</b>, por favor.', ru: 'Садитесь, пожалуйста.', en: 'Please sit down.' },
-            { color: 'coral', es: 'Marta y yo <b>nos conocemos</b> desde niños.', ru: 'Мы с Мартой знаем друг друга с детства.', en: 'Marta and I have known each other since we were children.' }
+            { color: 'teal', es: 'Marta y yo <b>nos conocemos</b> desde niños.', ru: 'Мы с Мартой знаем друг друга с детства.', en: 'Marta and I have known each other since we were children.' }
           ] }
         ]
       }
@@ -246,11 +246,11 @@ ECA.data.addGrammar('A2', [
       {
         id: 'form', label: { ru: 'Форма', en: 'Form' },
         blocks: [
-          { type: 'rules', items: [
+          { type: 'rules', heading: { ru: 'Формула', en: 'The formula' }, items: [
             { color: 'blue', label: { ru: 'Формула', en: 'Formula' }, title: { ru: 'Ir + a + инфинитив', en: 'Ir + a + infinitive' }, es: 'voy a comer',
               body: { ru: '<b>Ir</b> в настоящем времени + <b>a</b> + инфинитив: <i>Voy a comer</i> — «Я собираюсь поесть, я сейчас поем».',
                       en: '<b>Ir</b> in the present + <b>a</b> + infinitive: <i>Voy a comer</i> — “I’m going to eat”.' } },
-            { color: 'amber', label: { ru: 'Главное', en: 'Key point' }, title: { ru: 'Спрягается только ir', en: 'Only ir changes' }, es: 'voy a salir',
+            { color: 'blue', label: { ru: 'Главное', en: 'Key point' }, title: { ru: 'Спрягается только ir', en: 'Only ir changes' }, es: 'voy a salir',
               body: { ru: 'Инфинитив не меняется. Не забывайте <b>a</b>: <i>voy a salir</i>, а не <i>voy salir</i>.',
                       en: 'The infinitive stays the same. Don’t forget the <b>a</b>: <i>voy a salir</i>, not <i>voy salir</i>.' } }
           ] },
@@ -259,68 +259,68 @@ ECA.data.addGrammar('A2', [
             rows: [
               ['yo', 'voy', 'a comer'],
               ['tú', 'vas', 'a comer'],
-              ['él / ella / usted', 'va', 'a comer'],
-              ['nosotros / nosotras', 'vamos', 'a comer'],
-              ['vosotros / vosotras', 'vais', 'a comer'],
-              ['ellos / ellas / ustedes', 'van', 'a comer']
+              ['él / ella', 'va', 'a comer'],
+              ['nosotros', 'vamos', 'a comer'],
+              ['vosotros', 'vais', 'a comer'],
+              ['ellos', 'van', 'a comer']
             ] },
           { type: 'text', heading: { ru: 'Вопрос, отрицание, местоимения', en: 'Questions, negation, pronouns' }, body: {
             ru: ['Вопрос: <i>¿Qué vas a hacer mañana?</i> Отрицание — <b>no</b> перед ir: <i>No voy a salir.</i>',
                  'Местоимение приклеивается к инфинитиву или встаёт перед ir: <i>Voy a llamarte = Te voy a llamar.</i>'],
             en: ['Question: <i>¿Qué vas a hacer mañana?</i> Negation — <b>no</b> before ir: <i>No voy a salir.</i>',
                  'A pronoun is attached to the infinitive or placed before ir: <i>Voy a llamarte = Te voy a llamar.</i>'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Варианты фразы', en: 'Variants of the phrase' }, verbs: [
             { inf: 'ir a viajar', tr: { ru: 'собираться путешествовать', en: 'to be going to travel' }, variants: [
               { label: { ru: 'утверждение', en: 'affirmative' }, color: 'blue', rows: [['yo', '<b>voy a</b> viajar'], ['tú', '<b>vas a</b> viajar'], ['él / ella', '<b>va a</b> viajar'], ['nosotros', '<b>vamos a</b> viajar'], ['vosotros', '<b>vais a</b> viajar'], ['ellos', '<b>van a</b> viajar']] },
               { label: { ru: 'отрицание', en: 'negative' }, color: 'coral', rows: [['yo', '<b>no voy a</b> viajar'], ['tú', '<b>no vas a</b> viajar'], ['él / ella', '<b>no va a</b> viajar'], ['nosotros', '<b>no vamos a</b> viajar'], ['vosotros', '<b>no vais a</b> viajar'], ['ellos', '<b>no van a</b> viajar']] },
-              { label: { ru: 'вопрос', en: 'question' }, color: 'teal', rows: [['yo', '¿<b>voy a</b> viajar?'], ['tú', '¿<b>vas a</b> viajar?'], ['él / ella', '¿<b>va a</b> viajar?'], ['nosotros', '¿<b>vamos a</b> viajar?'], ['vosotros', '¿<b>vais a</b> viajar?'], ['ellos', '¿<b>van a</b> viajar?']] }
+              { label: { ru: 'вопрос', en: 'question' }, color: 'purple', rows: [['yo', '¿<b>voy a</b> viajar?'], ['tú', '¿<b>vas a</b> viajar?'], ['él / ella', '¿<b>va a</b> viajar?'], ['nosotros', '¿<b>vamos a</b> viajar?'], ['vosotros', '¿<b>vais a</b> viajar?'], ['ellos', '¿<b>van a</b> viajar?']] }
             ] },
             { inf: 'llamarte', tr: { ru: 'место местоимения', en: 'pronoun position' }, variants: [
               { label: { ru: 'в конце', en: 'attached' }, color: 'blue', rows: [['yo', 'voy a llamar<b>te</b>'], ['nosotros', 'vamos a llamar<b>te</b>'], ['ellos', 'van a llamar<b>te</b>']] },
               { label: { ru: 'впереди', en: 'in front' }, color: 'teal', rows: [['yo', '<b>te</b> voy a llamar'], ['nosotros', '<b>te</b> vamos a llamar'], ['ellos', '<b>te</b> van a llamar']] }
             ] }
           ] },
-          { type: 'examples', items: [
-            { color: 'blue', es: '¿Qué <b>vas a hacer</b> el sábado?', ru: 'Что ты будешь делать в субботу?', en: 'What are you going to do on Saturday?' },
+          { type: 'examples', heading: { ru: 'Форма в речи', en: 'The form in use' }, items: [
+            { color: 'purple', es: '¿Qué <b>vas a hacer</b> el sábado?', ru: 'Что ты будешь делать в субботу?', en: 'What are you going to do on Saturday?' },
             { color: 'coral', es: 'No <b>voy a comprar</b> ese coche.', ru: 'Я не буду покупать эту машину.', en: 'I’m not going to buy that car.' },
             { color: 'teal', es: 'Te <b>voy a llamar</b> mañana.', ru: 'Я позвоню тебе завтра.', en: 'I’m going to call you tomorrow.' },
-            { color: 'blue', es: '¿<b>Vais a venir</b> a la cena?', ru: 'Вы придёте на ужин?', en: 'Are you coming to the dinner?' },
-            { color: 'teal', es: 'Mis padres <b>van a regalarme</b> una bici.', ru: 'Родители собираются подарить мне велосипед.', en: 'My parents are going to give me a bike.' }
+            { color: 'purple', es: '¿<b>Vais a venir</b> a la cena?', ru: 'Вы придёте на ужин?', en: 'Are you coming to the dinner?' },
+            { color: 'blue', es: 'Mis padres <b>van a regalarme</b> una bici.', ru: 'Родители собираются подарить мне велосипед.', en: 'My parents are going to give me a bike.' }
           ] }
         ]
       },
       {
         id: 'use', label: { ru: 'Употребление', en: 'Use' },
         blocks: [
-          { type: 'triggers', items: [
+          { type: 'triggers', heading: { ru: 'Четыре случая', en: 'Four uses' }, items: [
             { num: '1', color: 'blue', title: { ru: 'Планы и намерения', en: 'Plans and intentions' }, sub: { ru: 'уже решил', en: 'already decided' },
               body: { ru: 'То, что вы уже решили сделать: <i>Este verano voy a viajar a México.</i>', en: 'Something you have already decided to do: <i>Este verano voy a viajar a México.</i>' },
               phrases: ['este verano', 'mañana', 'el año que viene'],
               ex: { es: 'Este verano <b>voy a viajar</b> a México.', ru: 'Этим летом я поеду в Мексику.', en: 'This summer I’m going to travel to Mexico.' } },
-            { num: '2', color: 'teal', title: { ru: 'Прогноз по тому, что видно', en: 'A prediction from what you see' }, sub: { ru: 'признаки уже есть', en: 'the signs are there' },
+            { num: '2', color: 'blue', title: { ru: 'Прогноз по тому, что видно', en: 'A prediction from what you see' }, sub: { ru: 'признаки уже есть', en: 'the signs are there' },
               body: { ru: 'Вывод из того, что видно или известно сейчас: <i>Mira las nubes: va a llover.</i>', en: 'A conclusion from what you can see or know now: <i>Mira las nubes: va a llover.</i>' },
               phrases: ['mira', 'cuidado', 'ya es tarde'],
               ex: { es: '¡Cuidado! Te <b>vas a caer</b>.', ru: 'Осторожно! Ты сейчас упадёшь.', en: 'Careful! You’re going to fall.' } },
-            { num: '3', color: 'coral', title: { ru: '«Давайте!»', en: '“Let’s!”' }, sub: { ru: 'приглашение', en: 'an invitation' },
+            { num: '3', color: 'blue', title: { ru: '«Давайте!»', en: '“Let’s!”' }, sub: { ru: 'приглашение', en: 'an invitation' },
               body: { ru: '<b>¡Vamos a…!</b> часто значит «давайте»: <i>¡Vamos a bailar!</i>', en: '<b>¡Vamos a…!</b> often means “let’s”: <i>¡Vamos a bailar!</i>' },
               phrases: ['¡vamos a…!'],
               ex: { es: '¡<b>Vamos a brindar</b> por los novios!', ru: 'Давайте выпьем за молодожёнов!', en: 'Let’s drink a toast to the bride and groom!' } },
-            { num: '4', color: 'purple', title: { ru: 'План в прошлом', en: 'A plan in the past' }, sub: { ru: 'собирался, но…', en: 'was going to, but…' },
+            { num: '4', color: 'blue', title: { ru: 'План в прошлом', en: 'A plan in the past' }, sub: { ru: 'собирался, но…', en: 'was going to, but…' },
               body: { ru: 'Тот же оборот с <i>ir</i> в Imperfecto — «собирался»: <i>Iba a llamarte, pero me dormí.</i>', en: 'The same phrase with <i>ir</i> in the imperfecto means “was going to”: <i>Iba a llamarte, pero me dormí.</i>' },
               phrases: ['iba a', 'íbamos a'],
               ex: { es: '<b>Íbamos a salir</b>, pero empezó a llover.', ru: 'Мы собирались выйти, но пошёл дождь.', en: 'We were going to go out, but it started to rain.' } }
           ] },
           { type: 'markers', heading: { ru: 'Слова-подсказки', en: 'Signal words' }, groups: [
             { color: 'blue', title: { ru: 'Скоро', en: 'Soon' }, tags: ['ahora', 'luego', 'esta tarde', 'esta noche', 'mañana', 'pasado mañana'] },
-            { color: 'teal', title: { ru: 'Позже', en: 'Later' }, tags: ['este fin de semana', 'la semana que viene', 'el próximo mes', 'el año que viene', 'dentro de dos días', 'en verano'] }
+            { color: 'blue', title: { ru: 'Позже', en: 'Later' }, tags: ['este fin de semana', 'la semana que viene', 'el próximo mes', 'el año que viene', 'dentro de dos días', 'en verano'] }
           ] },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Примеры по случаям', en: 'Examples by use' }, items: [
             { color: 'blue', es: 'Esta noche <b>vamos a cenar</b> en casa.', ru: 'Сегодня вечером мы будем ужинать дома.', en: 'Tonight we’re going to have dinner at home.' },
-            { color: 'teal', es: 'Mira el cielo: <b>va a llover</b>.', ru: 'Посмотри на небо: сейчас пойдёт дождь.', en: 'Look at the sky: it’s going to rain.' },
+            { color: 'blue', es: 'Mira el cielo: <b>va a llover</b>.', ru: 'Посмотри на небо: сейчас пойдёт дождь.', en: 'Look at the sky: it’s going to rain.' },
             { color: 'blue', es: 'El año que viene <b>voy a estudiar</b> en Salamanca.', ru: 'В следующем году я буду учиться в Саламанке.', en: 'Next year I’m going to study in Salamanca.' },
-            { color: 'teal', es: 'Ya son las nueve: <b>vamos a llegar</b> tarde.', ru: 'Уже девять: мы опоздаем.', en: 'It’s already nine: we’re going to be late.' },
-            { color: 'coral', es: '¡<b>Vamos a bailar</b>!', ru: 'Пойдём танцевать!', en: 'Let’s dance!' },
-            { color: 'purple', es: '<b>Iba a llamarte</b>, pero me dormí.', ru: 'Я собирался тебе позвонить, но заснул.', en: 'I was going to call you, but I fell asleep.' }
+            { color: 'blue', es: 'Ya son las nueve: <b>vamos a llegar</b> tarde.', ru: 'Уже девять: мы опоздаем.', en: 'It’s already nine: we’re going to be late.' },
+            { color: 'blue', es: '¡<b>Vamos a bailar</b>!', ru: 'Пойдём танцевать!', en: 'Let’s dance!' },
+            { color: 'blue', es: '<b>Iba a llamarte</b>, pero me dormí.', ru: 'Я собирался тебе позвонить, но заснул.', en: 'I was going to call you, but I fell asleep.' }
           ] }
         ]
       },
@@ -339,7 +339,7 @@ ECA.data.addGrammar('A2', [
               [{ ru: 'Где чаще', en: 'Where it’s common' }, { ru: 'в разговоре', en: 'in conversation' }, { ru: 'в текстах, прогнозах', en: 'in writing, forecasts' }],
               [{ ru: 'Пример', en: 'Example' }, 'Voy a comprar pan.', 'Algún día seré rico.']
             ] },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Ir a или Futuro', en: 'Ir a or Futuro' }, verbs: [
             { inf: 'hablar', tr: { ru: 'правильный', en: 'regular' }, variants: [
               { label: 'ir a', color: 'blue', rows: [['yo', '<b>voy a</b> hablar'], ['tú', '<b>vas a</b> hablar'], ['él / ella', '<b>va a</b> hablar'], ['nosotros', '<b>vamos a</b> hablar'], ['vosotros', '<b>vais a</b> hablar'], ['ellos', '<b>van a</b> hablar']] },
               { label: 'Futuro', color: 'amber', rows: [['yo', 'hablar<b>é</b>'], ['tú', 'hablar<b>ás</b>'], ['él / ella', 'hablar<b>á</b>'], ['nosotros', 'hablar<b>emos</b>'], ['vosotros', 'hablar<b>éis</b>'], ['ellos', 'hablar<b>án</b>']] }
@@ -363,7 +363,7 @@ ECA.data.addGrammar('A2', [
             { badge: 'fut', color: 'amber', es: 'Según el pronóstico, mañana <b>nevará</b> en el norte.', ru: 'По прогнозу, завтра на севере пойдёт снег.', en: 'According to the forecast, it will snow in the north tomorrow.' },
             { badge: 'ir', color: 'blue', es: '<b>Vamos a tener</b> un bebé en mayo.', ru: 'В мае у нас будет ребёнок. (уже известно)', en: 'We’re going to have a baby in May. (already known)' },
             { badge: 'fut', color: 'amber', es: 'Tranquila, te lo <b>diré</b> todo.', ru: 'Не волнуйся, я тебе всё расскажу. (обещание)', en: 'Don’t worry, I’ll tell you everything. (a promise)' },
-            { badge: 'pr', color: 'teal', es: 'El avión <b>sale</b> a las seis y cuarto.', ru: 'Самолёт вылетает в четверть седьмого. (расписание)', en: 'The plane leaves at a quarter past six. (a timetable)' }
+            { badge: 'pr', es: 'El avión <b>sale</b> a las seis y cuarto.', ru: 'Самолёт вылетает в четверть седьмого. (расписание)', en: 'The plane leaves at a quarter past six. (a timetable)' }
           ] },
           { type: 'tip', title: { ru: 'Как выбрать', en: 'How to choose' }, body: {
             ru: ['Уже решили или видите признаки — <b>ir a</b>. Мечтаете, обещаете, гадаете о далёком — <b>Futuro</b>. В разговоре не уверены — берите <b>ir a</b>: это почти никогда не ошибка.'],
@@ -441,19 +441,19 @@ ECA.data.addGrammar('A2', [
             en: ['<b>más</b> + adjective, adverb or noun + <b>que</b>: <i>Mi hermano es más alto que yo.</i>',
                  '<b>menos … que</b> means “less … than”: <i>Este hotel es menos caro que el otro.</i> With a verb: <i>Trabajo más que tú.</i>',
                  'Before a number use <b>más de / menos de</b>: <i>Hay más de cien personas.</i>'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Больше или меньше', en: 'More or less' }, verbs: [
             { inf: 'más · menos', tr: { ru: 'с чем сравниваем', en: 'what we compare' }, variants: [
               { label: 'más … que', color: 'blue', rows: [['adjetivo', 'es <b>más</b> alto <b>que</b> yo'], ['adverbio', 'corre <b>más</b> rápido <b>que</b> tú'], ['sustantivo', 'tiene <b>más</b> amigos <b>que</b> él'], ['verbo', 'trabaja <b>más que</b> nadie'], ['número', 'cuesta <b>más de</b> cien euros']] },
               { label: 'menos … que', color: 'coral', rows: [['adjetivo', 'es <b>menos</b> caro <b>que</b> el otro'], ['adverbio', 'habla <b>menos</b> claro <b>que</b> tú'], ['sustantivo', 'tiene <b>menos</b> tiempo <b>que</b> yo'], ['verbo', 'duerme <b>menos que</b> antes'], ['número', 'tarda <b>menos de</b> una hora']] }
             ] }
           ] },
-          { type: 'rules', items: [
+          { type: 'rules', heading: { ru: 'Два правила', en: 'Two rules' }, items: [
             { color: 'blue', title: { ru: 'После que — yo, tú', en: 'After que — yo, tú' }, es: 'más alto que yo',
               body: { ru: 'После <b>que</b> ставят <i>yo, tú</i>, а не <i>mí, ti</i>: <i>Eres más alta que yo</i>, а не «que mí».', en: 'After <b>que</b> use <i>yo, tú</i>, not <i>mí, ti</i>: <i>Eres más alta que yo</i>, never “que mí”.' } },
             { color: 'coral', title: { ru: 'Прилагательное согласуется', en: 'The adjective agrees' }, es: 'más altas que',
               body: { ru: 'Прилагательное меняется по роду и числу, а <i>más</i> и <i>menos</i> — нет: <i>Mis hermanas son más altas que yo.</i>', en: 'The adjective agrees in gender and number, but <i>más</i> and <i>menos</i> never change: <i>Mis hermanas son más altas que yo.</i>' } }
           ] },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Más и menos в речи', en: 'Más and menos in use' }, items: [
             { color: 'blue', es: 'Mi hermano es <b>más alto que</b> yo.', ru: 'Мой брат выше меня.', en: 'My brother is taller than me.' },
             { color: 'coral', es: 'El tren es <b>menos rápido que</b> el avión.', ru: 'Поезд медленнее самолёта.', en: 'The train is slower than the plane.' },
             { color: 'blue', es: 'Hay <b>más de</b> cien personas en la plaza.', ru: 'На площади больше ста человек.', en: 'There are more than a hundred people in the square.' },
@@ -474,7 +474,7 @@ ECA.data.addGrammar('A2', [
             en: ['With adjectives and adverbs use <b>tan … como</b>: <i>Ana es tan alta como su madre.</i>',
                  'With nouns use <b>tanto / tanta / tantos / tantas … como</b>, matching gender and number: <i>Tengo tantos libros como tú.</i>',
                  'With verbs use <b>tanto como</b>: <i>Juan trabaja tanto como Pedro.</i>'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Tan или tanto', en: 'Tan or tanto' }, verbs: [
             { inf: 'tan · tanto · como', tr: { ru: 'так же, как', en: 'as … as' }, variants: [
               { label: 'tan', color: 'teal', rows: [['adjetivo', 'es <b>tan</b> alta <b>como</b> su madre'], ['adverbio', 'conduce <b>tan</b> bien <b>como</b> tú']] },
               { label: 'tanto / -a / -os', color: 'purple', rows: [['masculino', '<b>tanto</b> dinero <b>como</b>'], ['femenino', '<b>tanta</b> paciencia <b>como</b>'], ['masc. plural', '<b>tantos</b> libros <b>como</b>'], ['fem. plural', '<b>tantas</b> horas <b>como</b>']] },
@@ -487,7 +487,7 @@ ECA.data.addGrammar('A2', [
           { type: 'text', color: 'purple', body: {
             ru: ['<b>Ещё два способа:</b> <i>igual de … que</i> — разговорное «такой же … как»: <i>Es igual de alto que yo.</i> И <i>el mismo / la misma … que</i> — «тот же, что»: <i>Tengo el mismo móvil que tú.</i>'],
             en: ['<b>Two more ways:</b> <i>igual de … que</i> is a colloquial “just as … as”: <i>Es igual de alto que yo.</i> And <i>el mismo / la misma … que</i> means “the same … as”: <i>Tengo el mismo móvil que tú.</i>'] } },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Равенство в речи', en: 'Equality in use' }, items: [
             { color: 'teal', es: 'Este libro es <b>tan interesante como</b> la película.', ru: 'Эта книга такая же интересная, как фильм.', en: 'This book is as interesting as the film.' },
             { color: 'purple', es: 'No tengo <b>tanto tiempo como</b> tú.', ru: 'У меня не так много времени, как у тебя.', en: 'I don’t have as much time as you.' },
             { color: 'teal', es: 'El piso nuevo no es <b>tan luminoso como</b> el antiguo.', ru: 'Новая квартира не такая светлая, как старая.', en: 'The new flat isn’t as bright as the old one.' },
@@ -505,7 +505,7 @@ ECA.data.addGrammar('A2', [
                  '«Очень-очень» — окончание <b>-ísimo</b>: <i>caro → carísimo</i>, <i>fácil → facilísimo</i>, <i>mucho → muchísimo</i>. С ним <i>muy</i> уже не нужно.'],
             en: ['“The most” is <b>el / la / los / las</b> (+ noun) + <b>más</b> + adjective + <b>de</b>: <i>Es la ciudad más bonita de España.</i>',
                  '“Really, extremely” is the ending <b>-ísimo</b>: <i>caro → carísimo</i>, <i>fácil → facilísimo</i>, <i>mucho → muchísimo</i>. Don’t add <i>muy</i> to it.'] } },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Два способа', en: 'Two ways' }, verbs: [
             { inf: 'el más · -ísimo', tr: { ru: 'самый · очень-очень', en: 'the most · extremely' }, variants: [
               { label: 'el / la más', color: 'purple', rows: [['el', '<b>el</b> chico <b>más</b> alto <b>de</b>'], ['la', '<b>la</b> calle <b>más</b> larga <b>de</b>'], ['los', '<b>los</b> días <b>más</b> fríos <b>de</b>'], ['las', '<b>las</b> playas <b>más</b> bonitas <b>de</b>']] },
               { label: '-ísimo', color: 'amber', rows: [['caro', 'car<b>ísimo</b>'], ['fácil', 'facil<b>ísimo</b>'], ['mucho', 'much<b>ísimo</b>'], ['rico', 'ri<b>quísimo</b>'], ['largo', 'lar<b>guísimo</b>'], ['feliz', 'feli<b>císimo</b>']] }
@@ -517,7 +517,7 @@ ECA.data.addGrammar('A2', [
           { type: 'text', color: 'amber', body: {
             ru: ['<b>-ísimo и орфография:</b> последняя гласная уходит (<i>caro → carísimo</i>), а согласные сохраняют звук: <i>rico → riquísimo</i> (c → qu), <i>largo → larguísimo</i> (g → gu), <i>feliz → felicísimo</i> (z → c). Окончание согласуется: <i>carísima, carísimos</i>.'],
             en: ['<b>-ísimo and spelling:</b> the final vowel drops (<i>caro → carísimo</i>) and consonants keep their sound: <i>rico → riquísimo</i> (c → qu), <i>largo → larguísimo</i> (g → gu), <i>feliz → felicísimo</i> (z → c). The ending agrees: <i>carísima, carísimos</i>.'] } },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Превосходная в речи', en: 'Superlatives in use' }, items: [
             { color: 'purple', es: 'Es <b>el mejor</b> restaurante <b>de</b> la ciudad.', ru: 'Это лучший ресторан в городе.', en: 'It’s the best restaurant in town.' },
             { color: 'amber', es: 'Este hotel es <b>carísimo</b>.', ru: 'Этот отель ужасно дорогой.', en: 'This hotel is extremely expensive.' },
             { color: 'purple', es: 'Agosto es <b>el mes más caluroso del</b> año.', ru: 'Август — самый жаркий месяц в году.', en: 'August is the hottest month of the year.' },
@@ -543,7 +543,7 @@ ECA.data.addGrammar('A2', [
               ['grande (edad)', 'mayor', 'el / la mayor'],
               ['pequeño (edad)', 'menor', 'el / la menor']
             ] },
-          { type: 'conj', verbs: [
+          { type: 'conj', heading: { ru: 'Mejor и peor', en: 'Mejor and peor' }, verbs: [
             { inf: 'mejor · peor', tr: { ru: 'при существительном и при глаголе', en: 'with a noun and with a verb' }, variants: [
               { label: { ru: 'прилагательное', en: 'adjective' }, color: 'amber', rows: [['bueno', 'un vino <b>mejor</b>'], ['buenos', 'unos vinos <b>mejores</b>'], ['malo', 'un día <b>peor</b>'], ['malas', 'unas notas <b>peores</b>']] },
               { label: { ru: 'наречие', en: 'adverb' }, color: 'blue', rows: [['bien', 'canta <b>mejor</b> que yo'], ['mal', 'juegan <b>peor</b> que antes']] }
@@ -555,7 +555,7 @@ ECA.data.addGrammar('A2', [
           { type: 'text', color: 'coral', body: {
             ru: ['<b>Mayor / menor — о возрасте</b>, о размере — <i>más grande / más pequeño</i>: <i>Mi casa es más grande que la tuya.</i> <i>Mi hermano mayor</i> — «мой старший брат».'],
             en: ['<b>Mayor / menor are about age</b>; for size say <i>más grande / más pequeño</i>: <i>Mi casa es más grande que la tuya.</i> <i>Mi hermano mayor</i> means “my older brother”.'] } },
-          { type: 'examples', items: [
+          { type: 'examples', heading: { ru: 'Особые формы в речи', en: 'Special forms in use' }, items: [
             { color: 'amber', es: 'Este restaurante es <b>mejor que</b> el otro.', ru: 'Этот ресторан лучше, чем тот.', en: 'This restaurant is better than the other one.' },
             { color: 'blue', es: 'Hoy me encuentro <b>peor que</b> ayer.', ru: 'Сегодня я чувствую себя хуже, чем вчера.', en: 'I feel worse today than yesterday.' },
             { color: 'amber', es: 'Mi hermana <b>mayor</b> vive en Londres.', ru: 'Моя старшая сестра живёт в Лондоне.', en: 'My older sister lives in London.' },
