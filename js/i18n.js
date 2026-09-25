@@ -31,10 +31,11 @@
     });
   }
 
-  function pick(obj) {
+  // {ru, en} → the side for `lang` (default: the active language), falling back to the other side.
+  function pick(obj, lang) {
     if (obj == null) return '';
     if (typeof obj === 'string') return obj;
-    var v = obj[current];
+    var v = obj[lang || current];
     if (v == null || v === '') v = obj.en != null && obj.en !== '' ? obj.en : obj.ru;
     return v == null ? '' : v;
   }

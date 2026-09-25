@@ -140,7 +140,7 @@ function validate(ECA) {
       });
     },
     markers: (w, b, f) => each(w, `${f}.groups`, b.groups, (g0, g) => {
-      color(w, `${g}.color`, g0.color);
+      color(w, `${g}.color`, g0.color, true);
       both(w, g0.title, `${g}.title`);
       list(w, `${g}.tags`, g0.tags).forEach((t, ti) => {
         if (!nonEmpty(t)) report(w, `${g}.tags[${ti}]`, 'пустая метка'); else spanish(w, `${g}.tags[${ti}]`, t);
@@ -198,44 +198,12 @@ function validate(ECA) {
       const where = [lvl.id, topic && topic.id ? topic.id : 'тема #' + (ti + 1)];
       if (!topic || typeof topic !== 'object') return report(where, '', 'тема должна быть объектом');
       topicHead(where, topic, lvl.id);
-      if (Array.isArray(topic.tabs)) {
-        tabbedTopic(where, topic);
-        if (topic.sections !== undefined) report(where, 'sections', 'у темы должно быть либо tabs, либо sections — не оба');
-      } else legacyTopic(where, topic);
+      if (topic.sections !== undefined) report(where, 'sections', 'старый формат sections не поддерживается — перенесите всё во вкладки (tabs)');
+      tabbedTopic(where, topic);
       quizCheck(where, topic);
     });
   });
   return errors;
-
-  // Legacy format (kept while topics are being moved to tabs): sections one after another.
-  function legacyTopic(where, topic) {
-      both(where, topic.summary, 'summary');
-      const sections = Array.isArray(topic.sections) ? topic.sections : [];
-      if (!sections.length) report(where, 'sections', 'нет ни одного раздела объяснения');
-      sections.forEach((s, si) => {
-        const f = `sections[${si}]`;
-        both(where, s && s.heading, `${f}.heading`);
-        ['ru', 'en'].forEach((l) => {
-          const paras = s && s.body && s.body[l];
-          if (!Array.isArray(paras) || !paras.length) return report(where, `${f}.body.${l}`, 'нужен список абзацев');
-          paras.forEach((p, pi) => {
-            if (!nonEmpty(p)) report(where, `${f}.body.${l}[${pi}]`, 'пустой абзац');
-            else richTags(where, `${f}.body.${l}[${pi}]`, p);
-          });
-        });
-        if (s && s.table !== undefined) {
-          const tb = s.table;
-          if (!tb || !Array.isArray(tb.head) || !Array.isArray(tb.rows)) report(where, `${f}.table`, 'нужны head: [] и rows: [[]]');
-          else tb.rows.forEach((r, ri) => {
-            if (!Array.isArray(r) || r.length !== tb.head.length) report(where, `${f}.table.rows[${ri}]`, `в строке должно быть ${tb.head.length} ячеек`);
-          });
-        }
-        if (s && s.examples !== undefined) {
-          if (!Array.isArray(s.examples)) report(where, `${f}.examples`, 'нужен список');
-          else s.examples.forEach((ex, ei) => trio(where, ex, `${f}.examples[${ei}]`));
-        }
-      });
-  }
 
   function quizCheck(where, topic) {
       const quiz = Array.isArray(topic.quiz) ? topic.quiz : [];
@@ -264,6 +232,7 @@ function validate(ECA) {
       spanishRich(where, 'hero.es', topic.hero.es);
       plainBoth(where, topic.hero.sub, 'hero.sub');
     }
+    if (!Array.isArray(topic.tabs)) return report(where, 'tabs', 'нет вкладок — нужен список tabs (см. CONTENT.md, «Тема грамматики»)');
     const tabs = topic.tabs;
     if (tabs.length < TABS_MIN || tabs.length > TABS_MAX) report(where, 'tabs', `вкладок ${tabs.length}, нужно ${TABS_MIN}–${TABS_MAX} (плюс «Тест», его не описывают)`);
     const ids = new Set();

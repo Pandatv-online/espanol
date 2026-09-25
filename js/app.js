@@ -195,7 +195,7 @@
     if (opts.rerender) return;
     var levelSwitch = prev && prev.route.name === 'level' && route.name === 'level' && prev.hash !== hash;
     if (levelSwitch) {
-      var btn = screenEl.querySelector('[aria-pressed="true"][data-level]');
+      var btn = screenEl.querySelector('[aria-current="page"][data-level]');
       if (btn) btn.focus({ preventScroll: true });
       return;
     }

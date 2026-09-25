@@ -184,33 +184,47 @@
 
   function doneBadge(kind, topic) { return isTopicDone(kind, topic) ? badge(t('badge.passed'), 'done') : null; }
 
-  // Accessible tabs: [{id, label}], roving tabindex, arrow keys.
-  // Drawn as the numbered navy strip of the old pages; `numbered: false` drops the number circles.
+  // Marks tab `i` of `buttons` selected; only the selected tab is in the Tab order (roving tabindex).
+  function markSelected(buttons, i) {
+    buttons.forEach(function (b, j) {
+      b.setAttribute('aria-selected', i === j ? 'true' : 'false');
+      b.tabIndex = i === j ? 0 : -1;
+    });
+  }
+
+  // Keyboard of a tab list: ←/→ (wrapping), Home, End focus a tab and call select(index).
+  function rovingTabs(list, buttons, select) {
+    list.addEventListener('keydown', function (e) {
+      var i = buttons.indexOf(document.activeElement);
+      if (i < 0 || e.altKey || e.ctrlKey || e.metaKey) return;
+      var n = buttons.length;
+      var next = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+      if (next == null) return;
+      e.preventDefault();
+      next = (next + n) % n;
+      buttons[next].focus();
+      select(next);
+    });
+  }
+
+  // Accessible tabs: [{id, label}]. Drawn as the numbered navy strip of the old pages;
+  // `numbered: false` drops the number circles. `list.select(id)` marks another tab selected.
   function tabs(opts) {
     var list = el('div', { class: 'tabs', role: 'tablist', 'aria-label': opts.label || null });
+    var ids = opts.items.map(function (item) { return item.id; });
     var buttons = opts.items.map(function (item, i) {
-      var selected = item.id === opts.active;
       return el('button', {
         class: 'tab', type: 'button', role: 'tab', id: 'tab-' + item.id,
-        'aria-selected': selected ? 'true' : 'false',
         'aria-controls': opts.panelId || null,
-        tabindex: selected ? '0' : '-1',
         on: { click: function () { opts.onSelect(item.id); } }
       }, [
         opts.numbered === false ? null : el('span', { class: 'tab__num', 'aria-hidden': 'true', text: String(i + 1) }),
         el('span', { class: 'tab__label', text: item.label })
       ]);
     });
-    list.addEventListener('keydown', function (e) {
-      var i = buttons.indexOf(document.activeElement);
-      if (i < 0) return;
-      var next = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? buttons.length - 1 : null;
-      if (next == null) return;
-      e.preventDefault();
-      next = (next + buttons.length) % buttons.length;
-      buttons[next].focus();
-      buttons[next].click();
-    });
+    markSelected(buttons, ids.indexOf(opts.active));
+    rovingTabs(list, buttons, function (i) { buttons[i].click(); });
+    list.select = function (id) { markSelected(buttons, ids.indexOf(id)); };
     append(list, buttons);
     return list;
   }
@@ -255,6 +269,8 @@
     doneBadge: doneBadge,
     quizBadges: quizBadges,
     tabs: tabs,
+    markSelected: markSelected,
+    rovingTabs: rovingTabs,
     announce: announce,
     shortcutsApply: shortcutsApply
   };

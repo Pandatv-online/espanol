@@ -30,7 +30,6 @@ const check = (name, fn, opts) => checks.push([name, fn, opts || {}]);
 
 const WORDS = '#/a1/words/a1-greetings';
 const GRAMMAR = '#/a1/grammar/a1-presente-ar';
-// The test is the last tab of a tabbed topic; a legacy topic ignores the tab and shows its test below the sections.
 const GRAMMAR_TEST = GRAMMAR + '/test';
 const TABBED = '#/a2/grammar/a2-perfecto-indefinido';
 
@@ -54,15 +53,16 @@ async function finishWordsQuiz(page) {
   return page.textContent('.quiz-result');
 }
 
-// Opens the topic where it shows a table: the first tab with a table block, or the legacy page.
+// Opens the first tab of the topic that has a table block and waits until that tab is the selected one.
 async function openGrammarTable(page, hash) {
   await page.goto(url + hash);
   const tab = await page.evaluate((id) => {
-    const t = ECA.data.find('grammar', id);
-    const hit = t && t.tabs && t.tabs.find((x) => x.blocks.some((b) => b.type === 'table'));
+    const hit = ECA.data.find('grammar', id).tabs.find((x) => x.blocks.some((b) => b.type === 'table'));
     return hit ? hit.id : null;
   }, hash.split('/').pop());
-  if (tab) await page.goto(url + hash + '/' + tab);
+  assert.ok(tab, hash + ': a tab with a table');
+  await page.goto(url + hash + '/' + tab);
+  await page.waitForSelector(`#tab-${tab}[aria-selected="true"]`);
 }
 
 async function finishGrammarQuiz(page) {
@@ -80,8 +80,11 @@ check('first visit (ru browser): RU interface, A1 selected, hash #/a1', async (p
   await page.goto(url);
   assert.equal(await page.getAttribute('html', 'lang'), 'ru');
   assert.equal(new URL(page.url()).hash, '#/a1');
-  assert.equal(await page.getAttribute('[data-level="A1"]', 'aria-pressed'), 'true');
-  assert.equal(await page.locator('.level-tile[aria-pressed="true"]').count(), 1);
+  // Level steps are navigation: real links (Cmd/middle-click work), the chosen one is aria-current.
+  assert.equal(await page.locator('nav.level-steps a.level-tile[href]').count(), 6);
+  assert.equal(await page.getAttribute('[data-level="A1"]', 'aria-current'), 'page');
+  assert.equal(await page.locator('.level-tile[aria-current="page"]').count(), 1);
+  assert.equal(await page.getAttribute('[data-level="B1"]', 'href'), '#/b1');
 });
 
 check('first visit (en browser): EN interface', async (page) => {
@@ -105,7 +108,7 @@ check('level change: B1 in address and remembered after reload', async (page) =>
   await page.goto(url + '#/a1');
   await page.click('[data-level="B1"]');
   await page.waitForFunction(() => location.hash === '#/b1');
-  assert.equal(await page.getAttribute('[data-level="B1"]', 'aria-pressed'), 'true');
+  assert.equal(await page.getAttribute('[data-level="B1"]', 'aria-current'), 'page');
   await page.goto(url);
   assert.equal(new URL(page.url()).hash, '#/b1');
 });
@@ -138,9 +141,9 @@ check('words test to the result; best score shown as a badge', async (page) => {
 
 check('grammar test to the result', async (page) => {
   await page.goto(url + GRAMMAR);
-  assert.ok(await page.locator('.grammar-section, .gblock').count() > 0, 'topic has an explanation');
+  assert.ok(await page.locator('.gblock').count() > 0, 'topic has an explanation');
   await openGrammarTable(page, GRAMMAR);
-  assert.ok(await page.locator('.grammar-table, .table').count() > 0, 'topic has a table');
+  assert.ok(await page.locator('#grammar-panel .table').count() > 0, 'topic has a table');
   await page.goto(url + GRAMMAR_TEST);
   const result = await finishGrammarQuiz(page);
   assert.match(result, /\d+/);
@@ -225,14 +228,14 @@ check('Spanish text and brand names are protected from auto-translate', async (p
 
 // ---------- tabbed grammar topic ----------
 
-const tabState = (page) => page.$$eval('.grammar-tabs [role="tab"]', (bs) => bs.map((b) => [b.id, b.getAttribute('aria-selected'), b.textContent]));
+const tabState = (page) => page.$$eval('.grammar-tabs [role="tab"]', (bs) => bs.map((b) => [b.id, b.getAttribute('aria-selected'), b.querySelector('.tab__label').textContent]));
 
 check('tabbed grammar: hero, numbered tabs with "Test" last, tab in the address, arrows, unknown tab → first', async (page) => {
   await page.goto(url + TABBED);
   assert.match(await page.textContent('.hero h1'), /Perfecto vs Indefinido/);
   assert.equal(await page.getAttribute('.hero h1', 'lang'), 'es');
   let tabs = await tabState(page);
-  assert.deepEqual(tabs.map((t) => t[2]), ['1Разница', '2Спряжение', '3Неправильные', '4Маркеры', '5Примеры', '6Тест']);
+  assert.deepEqual(tabs.map((t) => t[2]), ['Разница', 'Спряжение', 'Неправильные', 'Маркеры', 'Примеры', 'Тест']);
   assert.equal(tabs[0][1], 'true');
   assert.equal(await page.getAttribute('#grammar-panel', 'role'), 'tabpanel');
   assert.equal(await page.getAttribute('#grammar-panel', 'aria-labelledby'), 'tab-diff');
@@ -428,11 +431,211 @@ check('all 6 levels have word and grammar topics; each topic opens cleanly', asy
         }, title, { timeout: 5000 }).catch(() => { throw new Error(`${id}: heading never became "${title}"`); });
         const text = await page.textContent('#screen');
         assert.ok(!/Такой темы нет|скоро откроется|Что-то пошло не так/.test(text), `${id} renders`);
-        assert.equal(await page.locator(kind === 'words' ? '.flashcard' : '.grammar-section, .gblock').count() > 0, true, `${id} content`);
+        assert.equal(await page.locator(kind === 'words' ? '.flashcard' : '.gblock').count() > 0, true, `${id} content`);
       }
     }
   }
 });
+
+// ---------- task 19: strict schema, review defects ----------
+
+// WCAG contrast of an element's text against the first opaque background up the tree (text opacity blended in).
+const CONTRAST_FN = `(node) => {
+  const rgb = (s) => (s.match(/[\\d.]+/g) || []).map(Number);
+  const bgOf = (n) => { for (; n; n = n.parentElement) { const c = rgb(getComputedStyle(n).backgroundColor); if (c.length === 3 || c[3] === 1) return c.slice(0, 3); } return [255, 255, 255]; };
+  const cs = getComputedStyle(node);
+  const bg = bgOf(node);
+  let fg = rgb(cs.color); const a = (fg[3] == null ? 1 : fg[3]) * Number(cs.opacity);
+  fg = fg.slice(0, 3).map((v, i) => v * a + bg[i] * (1 - a));
+  const lum = (c) => { const [r, g, b] = c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+  const [l1, l2] = [lum(fg), lum(bg)].sort((x, y) => y - x);
+  return (l1 + 0.05) / (l2 + 0.05);
+}`;
+
+check('rule-card labels have contrast ≥ 4.5:1 in all five colours, light and dark', async (page) => {
+  await page.goto(url + TABBED);
+  for (const theme of ['light', 'dark']) {
+    const ratios = await page.evaluate(([theme, fn]) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      const contrast = eval(fn);
+      const L = (s) => ({ ru: s, en: s });
+      const node = ECA.grammarBlocks.render({ type: 'rules', items: ['blue', 'amber', 'teal', 'coral', 'purple'].map((c) =>
+        ({ color: c, label: L('Метка'), title: L(c), body: L('текст') })) }, 'ru');
+      document.getElementById('grammar-panel').appendChild(node);
+      return [...node.querySelectorAll('.rule-card__label')].map((n) => [n.parentElement.className, contrast(n)]);
+    }, [theme, CONTRAST_FN]);
+    for (const [cls, r] of ratios) assert.ok(r >= 4.5, `${theme} ${cls}: ${r.toFixed(2)}:1`);
+  }
+});
+
+check('hero: tokens of .hero, square bottom only above tabs, no focus ring on the programmatically focused title', async (page) => {
+  await page.goto(url + '#/a2');
+  await page.evaluate((h) => { location.hash = h; }, TABBED);
+  await page.waitForFunction(() => document.activeElement && document.activeElement.matches('.hero__title'));
+  const r = await page.evaluate(() => {
+    const hero = document.querySelector('.grammar-hero');
+    const plain = document.createElement('header');
+    plain.className = 'hero';
+    document.getElementById('screen').appendChild(plain);
+    const h = getComputedStyle(hero), p = getComputedStyle(plain), t = getComputedStyle(document.activeElement);
+    return { active: document.activeElement.className, outline: t.outlineStyle, heroBottom: h.borderBottomLeftRadius,
+      plainBottom: p.borderBottomLeftRadius, sameBg: h.backgroundColor === p.backgroundColor, plainBg: p.backgroundColor };
+  });
+  assert.match(r.active, /hero__title/, 'focus lands on the hero title');
+  assert.equal(r.outline, 'none', 'no focus ring after load');
+  assert.equal(r.heroBottom, '0px', 'hero above the tab strip: square bottom');
+  assert.notEqual(r.plainBottom, '0px', 'a hero alone keeps round corners');
+  assert.ok(r.sameBg && r.plainBg !== 'rgba(0, 0, 0, 0)', '.hero itself carries the navy band');
+});
+
+check('tab strip with 6 tabs at 320px: the chosen tab is never clipped, each tab named by its label; level page: Grammar before Words', async (page) => {
+  await page.goto(url + TABBED);
+  const ids = await page.$$eval('.grammar-tabs [role="tab"]', (bs) => bs.map((b) => b.id));
+  assert.equal(ids.length, 6);
+  for (const id of ids) {
+    await page.click('#' + id);
+    const r = await page.evaluate((id) => {
+      const strip = document.querySelector('.grammar-tabs'), box = strip.getBoundingClientRect();
+      const x = document.getElementById(id).getBoundingClientRect();
+      const small = [...strip.children].filter((b) => b.offsetWidth < 44 || b.offsetHeight < 44).map((b) => b.id);
+      return { inside: x.left >= box.left - 0.5 && x.right <= box.right + 0.5, small, pageOver: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+    }, id);
+    assert.ok(r.inside, `${id}: the selected tab is fully visible in the strip`);
+    assert.deepEqual(r.small, [], 'every tab ≥ 44×44');
+    assert.ok(r.pageOver <= 0, 'the page does not scroll sideways');
+  }
+  for (const name of ['Разница', 'Спряжение', 'Неправильные', 'Маркеры', 'Примеры', 'Тест']) {
+    assert.equal(await page.getByRole('tab', { name, exact: true }).count(), 1, `tab named «${name}»`);
+  }
+  await page.goto(url + '#/a1');
+  assert.deepEqual(await page.$$eval('.topic-section h2', (hs) => hs.map((h) => h.firstChild.textContent.trim())), ['Грамматика', 'Слова']);
+}, { width: 320 });
+
+check('a started test survives a tab change through location.hash and a language switch', async (page) => {
+  await page.goto(url + TABBED + '/test');
+  await page.locator('.grammar-quiz .btn--primary').click();
+  const first = await page.textContent('.grammar-question__prompt');
+  await page.locator('.grammar-quiz .option').first().click();
+  await page.locator('[data-next]').click();
+  const second = await page.textContent('.grammar-question__es');
+  await page.evaluate((h) => { location.hash = h; }, TABBED + '/conj');
+  await page.waitForSelector('#tab-conj[aria-selected="true"]');
+  await page.evaluate((h) => { location.hash = h; }, TABBED + '/test');
+  await page.waitForSelector('.grammar-quiz__progress');
+  assert.match(await page.textContent('.grammar-quiz__progress'), /Вопрос 2 из 10/);
+  assert.equal(await page.textContent('.grammar-question__es'), second, 'same question');
+  await page.click('[data-lang="en"]');
+  assert.match(await page.textContent('.grammar-quiz__progress'), /Question 2 of 10/);
+  assert.equal(await page.textContent('.grammar-question__es'), second, 'same question after the language switch');
+  assert.ok(first);
+});
+
+check('grammar blocks escape dangerous markup from data', async (page) => {
+  await page.goto(url + TABBED);
+  const out = await page.evaluate(() => {
+    const bad = '<a href="https://x.test">link</a> <script>window.pwned=1</script> <b onclick="window.pwned=2">form</b> <img src=x onerror="window.pwned=3">';
+    const L = (s) => ({ ru: s, en: s });
+    const blocks = [
+      { type: 'text', body: L(bad) }, { type: 'text', color: 'amber', body: L([bad]) },
+      { type: 'rules', items: [{ color: 'teal', title: L('t'), body: L(bad), es: bad }] },
+      { type: 'triggers', items: [{ num: '1', title: L('t'), body: L(bad), phrases: [bad], ex: { es: bad, ru: bad, en: bad } }] },
+      { type: 'conj', verbs: [{ inf: bad, variants: [{ label: bad, color: 'blue', rows: [['yo', bad]] }, { label: 'x', color: 'amber', rows: [['yo', bad]] }] }] },
+      { type: 'table', head: ['', bad], rows: [[bad, bad]] }, { type: 'markers', groups: [{ title: L(bad), tags: [bad] }] },
+      { type: 'examples', items: [{ es: bad, ru: bad, en: bad }] }, { type: 'tip', title: L(bad), body: L(bad) }
+    ];
+    return blocks.map((b) => {
+      const node = ECA.grammarBlocks.render(b, 'ru');
+      document.getElementById('grammar-panel').appendChild(node);
+      return { type: b.type, tags: node.querySelectorAll('a, script, img').length,
+        attrs: [...node.querySelectorAll('b, i, em, strong')].filter((x) => x.attributes.length).length,
+        literal: node.textContent.includes('<script>'), pwned: window.pwned || 0 };
+    });
+  });
+  for (const r of out) {
+    assert.equal(r.tags, 0, `${r.type}: no <a>/<script>/<img> elements`);
+    assert.equal(r.attrs, 0, `${r.type}: no attributes on <b>`);
+    assert.ok(r.literal, `${r.type}: the markup is shown as text`);
+    assert.equal(r.pwned, 0, `${r.type}: nothing ran`);
+  }
+});
+
+check('markers without colour are neutral; a table without heading is a named region', async (page) => {
+  await page.goto(url + TABBED);
+  const r = await page.evaluate(() => {
+    const L = (s) => ({ ru: s, en: s });
+    const panel = document.getElementById('grammar-panel');
+    const m = ECA.grammarBlocks.render({ type: 'markers', groups: [{ title: L('Союзы'), tags: ['aunque'] }] }, 'ru');
+    const tb = ECA.grammarBlocks.render({ type: 'table', head: ['', 'hablar', 'comer'], rows: [['yo', 'hablo', 'como']] }, 'ru');
+    panel.append(m, tb);
+    const box = m.querySelector('.kw-box');
+    const surface = getComputedStyle(document.querySelector('.ex-box') || panel).backgroundColor;
+    const probe = document.createElement('div'); probe.style.background = 'var(--surface)'; panel.appendChild(probe);
+    return { cls: box.className, bg: getComputedStyle(box).backgroundColor, surface: getComputedStyle(probe).backgroundColor,
+      name: tb.querySelector('[role="region"]').getAttribute('aria-label') };
+  });
+  assert.equal(r.cls, 'kw-box', 'no colour class');
+  assert.equal(r.bg, r.surface, 'neutral paper background');
+  assert.match(r.name || '', /hablar, comer/, 'region named by its columns');
+});
+
+// Every topic, every tab, at 320px in the dark theme: no errors, no sideways scroll, mini-tabs switch, the test finishes.
+check('all 28 grammar topics: every tab, mini-tabs and the test work (320px, dark)', async (page) => {
+  await page.goto(url + '#/a1');
+  const topics = await page.evaluate(() => ECA.data.levels().flatMap((l) => ECA.data.grammar(l.id).map((t) =>
+    ({ hash: `#/${l.id.toLowerCase()}/grammar/${t.id}`, tabs: t.tabs.map((x) => x.id) }))));
+  assert.equal(topics.length, 28);
+  for (const t of topics) {
+    await page.goto(url + t.hash);
+    for (const id of t.tabs) {
+      await page.click(`#tab-${id}`);
+      await page.waitForSelector(`#tab-${id}[aria-selected="true"]`);
+      assert.ok(await page.locator('#grammar-panel .gblock').count() > 0, `${t.hash}/${id}: blocks drawn`);
+      await noHorizontalScroll(page, `${t.hash}/${id}`);
+      const cards = page.locator('#grammar-panel .conj-card');
+      for (let i = 0; i < await cards.count(); i++) {
+        const card = cards.nth(i);
+        const shown = () => card.locator('.conj-forms:not([hidden])').getAttribute('id');
+        const before = await shown();
+        await card.locator('.mini-tab').nth(1).click();
+        assert.notEqual(await shown(), before, `${t.hash}/${id}: mini-tab switches card ${i}`);
+      }
+    }
+    await page.click('#tab-test');
+    const result = await finishGrammarQuiz(page);
+    assert.match(result, /Результат: \d+ из \d+/, `${t.hash}: test finishes`);
+    await noHorizontalScroll(page, `${t.hash}/test`);
+  }
+}, { width: 320, colorScheme: 'dark' });
+
+check('EN interface: every grammar topic has English tab labels and hero line', async (page) => {
+  await page.goto(url + '#/a1');
+  const bad = await page.evaluate(async () => {
+    const out = [];
+    for (const l of ECA.data.levels()) for (const t of ECA.data.grammar(l.id)) {
+      location.hash = `#/${l.id.toLowerCase()}/grammar/${t.id}`;
+      await new Promise((r) => setTimeout(r, 30));
+      const text = [...document.querySelectorAll('.tab__label, .hero__sub, #grammar-panel')].map((n) => n.textContent).join(' ');
+      if (/[а-яё]/i.test(text)) out.push(t.id);
+    }
+    return out;
+  });
+  assert.deepEqual(bad, []);
+}, { locale: 'en-US' });
+
+check('4-column tables fit a 375px screen without scrolling inside', async (page) => {
+  await page.goto(url + '#/a1');
+  const topics = await page.evaluate(() => ECA.data.levels().flatMap((l) => ECA.data.grammar(l.id).flatMap((t) =>
+    t.tabs.filter((x) => x.blocks.some((b) => b.type === 'table' && b.head.length <= 4)).map((x) => `#/${l.id.toLowerCase()}/grammar/${t.id}/${x.id}`))));
+  const over = [];
+  for (const hash of topics) {
+    await page.goto(url + hash);
+    await page.waitForSelector('#grammar-panel .gblock');
+    over.push(...(await page.$$eval('#grammar-panel .table-wrap', (ws, h) => ws
+      .filter((w) => w.querySelector('tr').children.length <= 4 && w.scrollWidth > w.clientWidth)
+      .map((w) => `${h}: ${w.scrollWidth - w.clientWidth}px`), hash)));
+  }
+  assert.deepEqual(over, []);
+}, { width: 375 });
 
 // ---------- screenshots (optional) ----------
 

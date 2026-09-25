@@ -1,25 +1,14 @@
-/* Grammar screen (task 03). Uses tokens and components from base.css. */
+/* Grammar screen. Uses tokens and components from base.css. */
 
 .grammar-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: calc(-1 * var(--space-2)); margin-bottom: var(--space-5); }
 .grammar-badges[hidden] { display: none; }
 
-.grammar { display: grid; gap: var(--space-6); min-width: 0; }
-.grammar-section { display: grid; gap: var(--space-3); min-width: 0; }
-.grammar-section__title {
-  font-family: var(--font-display);
-  font-size: var(--step-1);
-  line-height: 1.25;
-  font-weight: 600;
-  text-wrap: balance;
-}
-
-/* Wide tables scroll inside their own block; the page never scrolls sideways. */
-.grammar-section .table-wrap { max-width: 100%; }
-.grammar-section .table-wrap:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .grammar-table td, .grammar-table thead th { white-space: nowrap; }
 .grammar-table thead th:empty { min-width: 0; }
-
-.grammar-examples { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); max-width: 66ch; }
+/* phones: phrases in cells wrap between words, so a table up to 4 columns fits without scrolling inside */
+@media (max-width: 559px) {
+  .grammar-table td, .grammar-table thead th, .grammar-table tbody th { white-space: normal; hyphens: manual; }
+}
 
 /* ---------- quiz ---------- */
 .grammar-quiz { margin-top: var(--space-7); display: grid; gap: var(--space-4); min-width: 0; }
@@ -72,18 +61,10 @@
 .grammar-result__best { color: var(--ink-soft); }
 .grammar-result__best:empty { display: none; }
 
-/* ---------- tabbed topic (task 12): hero + numbered tabs + typed blocks ---------- */
+/* ---------- topic: hero + numbered tabs + typed blocks ---------- */
 .grammar-back { margin-bottom: var(--space-3); }
-.grammar-hero { background: var(--hero-bg); color: var(--hero-ink); }
-.grammar-hero .hero__title { overflow-wrap: anywhere; text-wrap: balance; }
-.grammar-hero .hero__title:focus { outline: none; }
-.grammar-hero .hero__title:focus-visible { outline: 3px solid var(--hero-focus); outline-offset: 4px; }
 .grammar-hero .grammar-badges { margin: var(--space-1) 0 0; }
 
-/* the strip scrolls inside itself instead of widening the page (6+ tabs at 320px) */
-.grammar-tabs { min-width: 0; max-width: 100%; }
-/* keeps the visually hidden labels (base.css, 4+ tabs under 560px) inside the scrolling strip */
-.grammar-tabs .tab { position: relative; }
 .grammar-panel { display: grid; gap: var(--space-6); min-width: 0; }
 .gblock { display: grid; gap: var(--space-3); min-width: 0; }
 .gblock > .group-title { margin: 0; }

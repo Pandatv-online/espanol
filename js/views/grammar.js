@@ -1,5 +1,4 @@
 // Grammar topic screen: hero + numbered tabs of typed blocks + a last "Test" tab.
-// Topics still in the legacy `sections` format are drawn the old way (sections, then the quiz).
 (function (root) {
   'use strict';
   var ECA = (root.ECA = root.ECA || {});
@@ -22,12 +21,12 @@
       'grammar.toResult': 'Результат',
       'grammar.resultTitle': 'Результат: {score} из {total}',
       'grammar.passed': 'Тема пройдена — 80% верных ответов или больше.',
-      'grammar.notPassed': 'Для зачёта нужно 80% верных ответов. Перечитайте разделы выше и попробуйте ещё раз.',
       'grammar.newBest': 'Это ваш лучший результат.',
       'grammar.best': 'Лучший результат: {score} из {total}.',
       'grammar.retry': 'Ещё раз',
       'grammar.tabTest': 'Тест',
       'grammar.tabsLabel': 'Разделы темы',
+      'grammar.tableOf': 'Таблица: {cols}',
       'grammar.notPassedTabs': 'Для зачёта нужно 80% верных ответов. Перечитайте вкладки темы и попробуйте ещё раз.'
     },
     en: {
@@ -45,12 +44,12 @@
       'grammar.toResult': 'See result',
       'grammar.resultTitle': 'Result: {score} of {total}',
       'grammar.passed': 'Topic passed — 80% or more correct answers.',
-      'grammar.notPassed': 'You need 80% correct answers to pass. Reread the sections above and try again.',
       'grammar.newBest': 'This is your best result.',
       'grammar.best': 'Best result: {score} of {total}.',
       'grammar.retry': 'Try again',
       'grammar.tabTest': 'Test',
       'grammar.tabsLabel': 'Topic sections',
+      'grammar.tableOf': 'Table: {cols}',
       'grammar.notPassedTabs': 'You need 80% correct answers to pass. Reread the topic tabs and try again.'
     }
   });
@@ -72,84 +71,28 @@
     if (activeKeys.handle(e.key)) e.preventDefault();
   });
 
-  function renderSection(section) {
-    var node = el('section', { class: 'grammar-section' }, [
-      el('h2', { class: 'grammar-section__title', text: i18n.pick(section.heading) })
-    ]);
-    var paragraphs = (section.body && i18n.pick(section.body)) || [];
-    if (paragraphs.length) {
-      node.appendChild(el('div', { class: 'prose' }, paragraphs.map(function (p) { return ui.setRich(el('p'), p); })));
-    }
-    if (section.table) node.appendChild(renderTable(section.table, i18n.pick(section.heading)));
-    if (section.examples && section.examples.length) {
-      node.appendChild(el('ul', { class: 'grammar-examples' }, section.examples.map(function (ex) {
-        return el('li', { class: 'example' }, [
-          ui.es(ex.es, 'span'),
-          el('span', { class: 'example__tr', text: i18n.pick(ex) })
-        ]);
-      })));
-      node.querySelectorAll('.grammar-examples .es').forEach(function (n) { n.classList.add('example__es'); });
-    }
-    return node;
-  }
-
-  function renderTable(table, label) {
-    var rowHeads = table.head[0] === '';
-    var thead = el('thead', null, el('tr', null, table.head.map(function (h) {
-      return el('th', { scope: 'col', text: h });
-    })));
-    var tbody = el('tbody', null, table.rows.map(function (row) {
-      return el('tr', null, row.map(function (cell, i) {
-        return rowHeads && i === 0 ? el('th', { scope: 'row', text: cell }) : el('td', { text: cell });
-      }));
-    }));
-    // Focusable region, so a keyboard user can scroll a wide table.
-    return el('div', { class: 'table-wrap', role: 'region', tabindex: '0', 'aria-label': label },
-      el('table', { class: 'table grammar-table', lang: 'es' }, [thead, tbody]));
-  }
-
   // ---------- blocks of the tabbed schema (see CONTENT.md, «Тема грамматики») ----------
   var uid = 0;
-  function pick(v, lang) {
-    if (v == null || typeof v === 'string') return v || '';
-    return v[lang] || v.ru || v.en || '';
-  }
+  var pick = i18n.pick;
   function paras(v, lang) { var x = pick(v, lang); return Array.isArray(x) ? x : [x]; }
   function rich(tag, str, attrs) { return ui.setRich(el(tag, attrs || null), str); }
   function colorClass(c) { return c ? 'c-' + c : null; }
   function cls() { return [].slice.call(arguments).filter(Boolean).join(' '); }
 
-  // A tab list inside a card: arrows move between tabs; each tab shows its own panel.
+  // A tab list inside a card: each tab shows its own panel (arrows, Home, End via ui.rovingTabs).
   function miniTabs(label, items, onSelect) {
-    var buttons = [];
     var list = el('div', { class: 'mini-tabs', role: 'tablist', 'aria-label': label });
-    function select(i, focus) {
-      buttons.forEach(function (b, j) {
-        b.setAttribute('aria-selected', i === j ? 'true' : 'false');
-        b.tabIndex = i === j ? 0 : -1;
-      });
-      onSelect(i);
-      if (focus) buttons[i].focus();
-    }
-    items.forEach(function (item, i) {
-      var b = el('button', {
+    var buttons = items.map(function (item, i) {
+      return el('button', {
         class: cls('mini-tab', colorClass(item.color)), type: 'button', role: 'tab', id: item.id,
         'aria-controls': item.panel, lang: item.lang || null, text: item.text,
-        on: { click: function () { select(i, false); } }
+        on: { click: function () { select(i); } }
       });
-      buttons.push(b);
-      list.appendChild(b);
     });
-    list.addEventListener('keydown', function (e) {
-      var i = buttons.indexOf(document.activeElement);
-      if (i < 0) return;
-      var n = buttons.length;
-      var next = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
-      if (next == null) return;
-      e.preventDefault();
-      select((next + n) % n, true);
-    });
-    select(0, false);
+    function select(i) { ui.markSelected(buttons, i); onSelect(i); }
+    ui.rovingTabs(list, buttons, select);
+    ui.append(list, buttons);
+    select(0);
     return list;
   }
 
@@ -230,8 +173,10 @@
           return rowHeads && i === 0 ? cell('th', c, { scope: 'row' }) : cell('td', c);
         }));
       }));
-      // Focusable region, so a keyboard user can scroll a wide table.
-      return el('div', { class: 'table-wrap', role: 'region', tabindex: '0', 'aria-label': b.heading ? pick(b.heading, lang) : null },
+      // Focusable region, so a keyboard user can scroll a wide table; without a heading it is named by its columns.
+      var name = b.heading ? pick(b.heading, lang)
+        : t('grammar.tableOf', { cols: b.head.map(function (h) { return pick(h, lang); }).filter(Boolean).join(', ') });
+      return el('div', { class: 'table-wrap', role: 'region', tabindex: '0', 'aria-label': name },
         el('table', { class: 'table grammar-table' }, [thead, tbody]));
     },
     markers: function (b, lang) {
@@ -271,7 +216,7 @@
   }
   ECA.grammarBlocks = { render: renderBlock, types: Object.keys(BLOCKS) };
 
-  // ---------- test (shared by both formats) ----------
+  // ---------- test ----------
   // Paints the test into `quizBody`; the attempt lives in state.quiz, so it survives tab switches and language changes.
   function mountQuiz(quizBody, container, topic, state, opts) {
     var quizKey = 'grammar:' + topic.id;
@@ -403,7 +348,7 @@
         el('div', { class: 'meter', 'aria-hidden': 'true' },
           el('div', { class: 'meter__fill', style: 'width:' + Math.round(r.score / r.total * 100) + '%' })),
         el('p', { class: 'feedback ' + (passed ? 'feedback--ok' : 'feedback--bad'),
-          text: passed ? t('grammar.passed') : t(opts.tabbed ? 'grammar.notPassedTabs' : 'grammar.notPassed') }),
+          text: t(passed ? 'grammar.passed' : 'grammar.notPassedTabs') }),
         el('p', { class: 'grammar-result__best',
           text: state.quiz.newBest ? t('grammar.newBest')
             : best ? t('grammar.best', { score: best.score, total: best.total }) : null }),
@@ -437,20 +382,7 @@
     return section;
   }
 
-  function renderLegacy(container, ctx) {
-    var topic = ctx.topic;
-    var badges = badgesNode(topic);
-    container.appendChild(ui.screenHead({
-      back: ui.backLink(ctx.levelId, 'grammar'),
-      title: i18n.pick(topic.title),
-      lead: i18n.pick(topic.summary)
-    }));
-    container.appendChild(badges);
-    container.appendChild(el('div', { class: 'grammar' }, (topic.sections || []).map(renderSection)));
-    container.appendChild(quizSection(container, topic, ctx.state, { tabbed: false, onRecord: badges.paint }));
-  }
-
-  function renderTabbed(container, ctx) {
+  function render(container, ctx) {
     var topic = ctx.topic, lang = i18n.lang();
     var TEST = 'test';
     var ids = topic.tabs.map(function (tab) { return tab.id; }).concat(TEST);
@@ -478,11 +410,7 @@
       onSelect: function (id) {
         if (id === active) return;
         active = id;
-        strip.querySelectorAll('[role="tab"]').forEach(function (b) {
-          var on = b.id === 'tab-' + id;
-          b.setAttribute('aria-selected', on ? 'true' : 'false');
-          b.tabIndex = on ? 0 : -1;
-        });
+        strip.select(id);
         replaceHash(base + '/' + encodeURIComponent(id));
         paintPanel();
         showActive();
@@ -506,7 +434,7 @@
       ui.clear(panel);
       panel.setAttribute('aria-labelledby', 'tab-' + active);
       if (active === TEST) {
-        panel.appendChild(quizSection(container, topic, ctx.state, { tabbed: true, onRecord: badges.paint }));
+        panel.appendChild(quizSection(container, topic, ctx.state, { onRecord: badges.paint }));
         return;
       }
       var tab = topic.tabs[ids.indexOf(active)];
@@ -518,10 +446,6 @@
   function replaceHash(hash) {
     if (root.location.hash === hash) return;
     try { root.history.replaceState(null, '', hash); } catch (e) { /* some file:// setups refuse; the tab still switches */ }
-  }
-
-  function render(container, ctx) {
-    if (Array.isArray(ctx.topic.tabs)) renderTabbed(container, ctx); else renderLegacy(container, ctx);
   }
 
   ECA.views.register('grammar', render);

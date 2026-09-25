@@ -20,13 +20,13 @@
 
   function levelPicker(activeId) {
     var el = ui.el;
-    return el('div', { class: 'level-steps', role: 'group', 'aria-label': i18n.t('level.pick') },
+    // Steps navigate, so they are links (Cmd/middle-click, copy address); the chosen one is aria-current.
+    return el('nav', { class: 'level-steps', 'aria-label': i18n.t('level.pick') },
       data.levels().map(function (lvl, i) {
         var active = lvl.id === activeId;
-        return el('button', {
-          type: 'button', class: 'level-tile', 'data-level': lvl.id, style: '--step:' + i,
-          'aria-pressed': active ? 'true' : 'false',
-          on: { click: function () { root.location.hash = ui.href(lvl.id); } }
+        return el('a', {
+          class: 'level-tile', href: ui.href(lvl.id), 'data-level': lvl.id, style: '--step:' + i,
+          'aria-current': active ? 'page' : null
         }, [
           el('span', { class: 'level-tile__code', text: lvl.id }),
           el('span', { class: 'level-tile__name', text: i18n.pick(lvl.name) })

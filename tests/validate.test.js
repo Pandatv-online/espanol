@@ -18,9 +18,12 @@ function question(over) {
     explain: L('yo → soy', 'yo → soy') }, over);
 }
 function grammarTopic(over) {
-  return Object.assign({ id: 'a1-ser', level: 'A1', title: L('Ser', 'Ser'), summary: L('Глагол ser', 'The verb ser'),
-    sections: [{ heading: L('Формы', 'Forms'), body: { ru: ['<b>soy</b>'], en: ['<b>soy</b>'] },
-      table: { head: ['', 'ser'], rows: [['yo', 'soy']] }, examples: [{ es: 'Soy Ana.', ru: 'Я Ана.', en: "I'm Ana." }] }],
+  const ex = (i) => ({ es: `<b>Soy</b> Ana ${i}.`, ru: `Я Ана ${i}.`, en: `I'm Ana ${i}.` });
+  const tab = (id, blocks) => ({ id, label: L('Раздел', 'Part'), blocks });
+  return Object.assign({ id: 'a1-ser', level: 'A1', title: L('Ser', 'Ser'), hero: { es: 'El verbo <b>ser</b>', sub: L('Глагол ser', 'The verb ser') },
+    tabs: [tab('forms', [{ type: 'table', head: ['', 'ser'], rows: [['yo', 'soy']] }]), tab('use', [{ type: 'text', body: L('<b>soy</b>', '<b>soy</b>') }]),
+      tab('notes', [{ type: 'tip', title: L('Шпаргалка', 'Tip'), body: L('yo → soy', 'yo → soy') }]),
+      tab('examples', [{ type: 'examples', items: Array.from({ length: 20 }, (_, i) => ex(i)) }])],
     quiz: Array.from({ length: 8 }, () => question()) }, over);
 }
 function eca({ vocab = [], grammar = [], levels = [level] } = {}) {

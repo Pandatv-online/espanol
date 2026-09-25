@@ -35,3 +35,13 @@ test('pick and onChange follow setLang', () => {
   assert.equal(i18n.pick({ ru: 'слово', en: 'word' }), 'word');
   assert.deepEqual(seen, ['ru', 'en']);
 });
+
+test('pick: an explicit language wins over the active one; strings and lists pass through', () => {
+  i18n.setLang('ru');
+  const v = { ru: 'Разница', en: 'Difference' };
+  assert.equal(i18n.pick(v), 'Разница');
+  assert.equal(i18n.pick(v, 'en'), 'Difference');
+  assert.equal(i18n.pick({ ru: 'только', en: '' }, 'en'), 'только');
+  assert.equal(i18n.pick('hablar', 'en'), 'hablar');
+  assert.deepEqual(i18n.pick({ ru: ['а'], en: ['b'] }, 'en'), ['b']);
+});

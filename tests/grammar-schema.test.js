@@ -1,4 +1,4 @@
-// Validator rules for the tabbed grammar schema (tabs → blocks). Legacy `sections` topics are covered in validate.test.js.
+// Validator rules for the grammar schema (tabs → blocks). The old `sections` format is rejected.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { validate } = require('../tools/validate-content.js');
@@ -82,7 +82,7 @@ test('tabbed topic: each schema rule is reported at its path', () => {
   assert.equal(errors.split('\n').length, expect.length, 'no extra errors:\n' + errors);
 });
 
-test('tabbed topic: 4–6 tabs, reserved id "test", hero required, not both tabs and sections', () => {
+test('tabbed topic: 4–6 tabs, reserved id "test", hero required, no sections next to tabs', () => {
   const three = tabbedTopic(); three.id = 'a2-three'; three.tabs = three.tabs.slice(0, 3);
   three.tabs[2].blocks.push({ type: 'examples', items: Array.from({ length: 20 }, (_, i) => example(i)) });
   const reserved = tabbedTopic(); reserved.id = 'a2-reserved'; reserved.tabs[0].id = 'test';
@@ -92,7 +92,25 @@ test('tabbed topic: 4–6 tabs, reserved id "test", hero required, not both tabs
   assert.match(errors, /a2-three · tabs — вкладок 3, нужно 4–6/);
   assert.match(errors, /a2-reserved · tabs\[0\]\.id — .*test/);
   assert.match(errors, /a2-nohero · hero/);
-  assert.match(errors, /a2-mixed · sections — .*либо tabs, либо sections/);
+  assert.match(errors, /a2-mixed · sections — .*старый формат/);
+});
+
+test('the old `sections` format is rejected, with or without tabs', () => {
+  const old = { id: 'a2-old', level: 'A2', title: L('Старая', 'Old'), summary: L('Кратко', 'In short'),
+    sections: [{ heading: L('Формы', 'Forms'), body: { ru: ['<b>he</b>'], en: ['<b>he</b>'] } }], quiz: Array.from({ length: 8 }, question) };
+  const errors = validate(eca([old])).join('\n');
+  assert.match(errors, /a2-old · sections — .*старый формат/);
+  assert.match(errors, /a2-old · tabs — /);
+});
+
+test('markers: a group colour is optional (no colour = neutral box), a wrong one is still an error', () => {
+  const t = tabbedTopic();
+  const groups = t.tabs[2].blocks[1].groups;
+  delete groups[0].color;
+  groups.push({ color: 'green', title: L('Другие', 'Others'), tags: ['ayer'] });
+  const errors = validate(eca([t]));
+  assert.equal(errors.length, 1, errors.join('\n'));
+  assert.match(errors[0], /groups\[1\]\.color/);
 });
 
 test('tabbed topic: Spanish fields hold no Cyrillic; hero.sub is plain one-line text', () => {
