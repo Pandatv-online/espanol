@@ -1067,6 +1067,7 @@ a, button, label, summary {
 .footer-tg { display: grid; justify-items: start; gap: var(--space-3); }
 .footer-tg__caption { color: var(--ink-soft); font-size: 0.9375rem; max-width: 36ch; }
 .footer-meta { display: grid; justify-items: start; gap: 0; font-size: 0.875rem; color: var(--ink-soft); }
+.footer-meta__catalog { color: var(--link); min-height: var(--tap); display: inline-flex; align-items: center; }
 .footer-meta__by { min-height: var(--tap); display: flex; align-items: center; gap: 0.35em; }
 /* verzo.pro: a plain text link, no button look */
 .footer-meta__by a { color: var(--link); font-weight: 400; text-decoration: underline; min-height: var(--tap); display: inline-flex; align-items: center; }

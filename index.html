@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Español con amigos</title>
   <meta name="description" content="Español con amigos — бесплатный сайт для изучения испанского: слова с карточками и тестами, грамматика с объяснениями. Уровни A1–C2, интерфейс на русском и английском.">
+  <link rel="canonical" href="https://espanolconamigos.com/">
+  <link rel="describedby" href="llms.txt">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Español con amigos">
   <meta property="og:description" content="Учите испанский по уровням A1–C2: карточки слов, тесты и понятная грамматика. На русском и английском. Learn Spanish words and grammar, level by level.">
+  <meta property="og:url" content="https://espanolconamigos.com/">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#0d2b4e" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#07111f" media="(prefers-color-scheme: dark)">
@@ -74,8 +77,8 @@
   <main id="main" class="wrap site-main" tabindex="-1">
     <noscript>
       <div class="noscript">
-        <p><b>Для этого сайта нужен JavaScript.</b> Включите его в настройках браузера, чтобы учить слова и грамматику. А учебные материалы есть в нашем Telegram-канале: <a href="https://t.me/espanolconamigos" target="_blank" rel="noopener" lang="es" translate="no">Español con amigos<span class="visually-hidden" lang="ru"> (откроется в новой вкладке)</span></a>.</p>
-        <p lang="en"><b>This site needs JavaScript.</b> Turn it on in your browser settings to study words and grammar. You can also find learning materials in our Telegram channel: <a href="https://t.me/espanolconamigos" target="_blank" rel="noopener" lang="es" translate="no">Español con amigos<span class="visually-hidden" lang="en"> (opens in a new tab)</span></a>.</p>
+        <p><b>Для карточек и тестов нужен JavaScript.</b> Уроки и словарь можно читать без него: <a href="learn/ru/index.html">все темы по уровням</a>.</p>
+        <p lang="en"><b>Flashcards and quizzes need JavaScript.</b> You can still read the lessons and vocabulary: <a href="learn/en/index.html">all topics by level</a>.</p>
       </div>
     </noscript>
     <div id="screen"></div>
@@ -88,6 +91,7 @@
         <p class="footer-tg__caption" data-i18n="tg.caption">Больше учебных материалов — в нашем Telegram-канале</p>
       </div>
       <div class="footer-meta">
+        <p><a class="footer-meta__catalog" id="all-topics-link" href="learn/ru/index.html" data-i18n="footer.allTopics">Все темы</a></p>
         <p class="footer-meta__by"><span data-i18n="footer.by">Сайт сделал</span> <a href="https://verzo.pro" target="_blank" rel="noopener" translate="no">verzo.pro<span class="visually-hidden" data-i18n="tg.newTab"> (откроется в новой вкладке)</span></a></p>
         <button type="button" class="linkish" id="reset-progress" data-i18n="footer.reset">Сбросить прогресс</button>
         <p class="footer-meta__note" id="storage-note" hidden data-i18n="footer.noStorage">Прогресс не сохраняется в этом браузере</p>

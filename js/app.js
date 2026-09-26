@@ -37,6 +37,7 @@
       'theme.toDark': 'Светлая тема — включить тёмную',
       'theme.toLight': 'Тёмная тема — включить светлую',
       'footer.by': 'Сайт сделал',
+      'footer.allTopics': 'Все темы',
       'footer.reset': 'Сбросить прогресс',
       'footer.resetConfirm': 'Сбросить выученные слова и результаты тестов? Язык и тема останутся.',
       'footer.resetDone': 'Прогресс сброшен',
@@ -57,6 +58,7 @@
       'theme.toDark': 'Light theme — switch to dark',
       'theme.toLight': 'Dark theme — switch to light',
       'footer.by': 'Website by',
+      'footer.allTopics': 'All topics',
       'footer.reset': 'Reset progress',
       'footer.resetConfirm': 'Reset learned words and test results? Language and theme stay as they are.',
       'footer.resetDone': 'Progress reset',
@@ -114,6 +116,7 @@
     html.lang = i18n.lang();
     document.querySelectorAll('[data-i18n]').forEach(function (n) { n.textContent = i18n.t(n.getAttribute('data-i18n')); });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (n) { n.setAttribute('aria-label', i18n.t(n.getAttribute('data-i18n-aria'))); });
+    document.getElementById('all-topics-link').setAttribute('href', 'learn/' + i18n.lang() + '/index.html');
     document.querySelectorAll('[data-lang]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-lang') === i18n.lang() ? 'true' : 'false');
     });
