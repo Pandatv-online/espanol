@@ -1,0 +1,434 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Español con amigos · промо для Telegram</title>
+<link rel="stylesheet" href="fonts.css">
+<style>body{margin:0;background:#242321;display:grid;place-items:center;min-height:100vh}canvas{max-width:100vw;max-height:100vh;object-fit:contain}</style>
+<canvas id="c"></canvas>
+<script src="core.js"></script>
+<script src="studio.js"></script>
+<script src="cels.js"></script>
+<script>
+'use strict';
+/* FILM BRIEF
+Subject: promo for the Telegram channel t.me/espanolconamigos. A small round "amigo"
+  is curious about Spanish, sees words turn into cards, grammar fall into place,
+  hops up the levels A1 -> C2, meets friends and points to the channel.
+Duration 29 s; 9:16 vertical, 1080x1920 (Telegram phone feed / stories).
+Look: ink brush-pen on warm paper, flat print fills with slight misregistration;
+  palette and the navy striped band come from the site (css/base.css).
+Techniques: whole cels with assisted inbetweens for the amigo; brush draw-on doodles.
+Cast: one amigo (amber), two friends (teal, coral) from the same drawings.
+  Keys: stand, blink, think, crouch, air, land, cheer, wave-a, wave-b.
+Hardest action: five hops up the stairs (crouch 5f, push 2f, air 8f on ones along an arc,
+  land 3f, settle 4f). Feet planted on the step top at crouch/land.
+Exposure: character on twos for holds/settles, ones in the air; camera locked.
+Beat sheet:
+  0.0  hook     4.5s  amigo blinks, wonders "¿...?", jumps with excitement   strum in
+  4.5  words    5.5s  three cards drop and flip es -> ru                    whooshes
+  10.0 grammar  5.5s  hablar conjugation writes itself, endings in coral     plucks
+  15.5 levels   6.0s  amigo hops A1 -> C2, steps fill, cheer at C2           boings, chime
+  21.5 friends  3.5s  three amigos hop, ¡Hola! ¿Qué tal? ¡Vamos!            pops
+  25.0 end      4.0s  navy band: Español con amigos, link, plane lands      final chord
+Sources: Caveat, Playfair Display, Noto Sans (Google Fonts, OFL), embedded in fonts.css.
+*/
+const C = {paper:'#f5f0e8', surface:'#fffdf8', ink:'#1a1510', soft:'#5b5146', navy:'#0d2b4e',
+  amber:'#e8a020', amberSoft:'#fef3da', coral:'#c94040', teal:'#0e7a6a', blue:'#1a4f8a', purple:'#7a4fa0', tg:'#2a9fd8'};
+const HAND = '"Caveat", cursive', TITLE = '"Playfair Display", Georgia, serif', UI = '"Noto Sans", sans-serif';
+const SAMPLE = 'Хочешь заговорить по-испански? ¡Hola! ¿Qué tal? ñ é á';
+for (const f of ['700 80px "Caveat"', '500 80px "Caveat"', '900 80px "Playfair Display"', '700 80px "Playfair Display"', '600 80px "Noto Sans"'])
+  _photoLoads.push(document.fonts.load(f, SAMPLE));
+
+// ---------- type ----------
+// Text that writes on from left to right: the clip edge is a slanted ragged pen front.
+function txt(c, s, x, y, o = {}) {
+  const {font = HAND, size = 90, weight = 700, color = C.ink, align = 'center', p = 1} = o;
+  if (p <= 0) return 0;
+  c.save(); c.font = `${weight} ${size}px ${font}`; c.textBaseline = 'alphabetic';
+  const w = c.measureText(s).width, left = align === 'center' ? x - w / 2 : align === 'right' ? x - w : x;
+  if (p < 1) {
+    const fx = left - 12 + (w + 24) * p, path = new Path2D();
+    path.moveTo(left - 30, y - size * 1.1); path.lineTo(fx + size * .25, y - size * 1.1);
+    path.lineTo(fx - size * .15, y + size * .45); path.lineTo(left - 30, y + size * .45); path.closePath(); c.clip(path);
+  }
+  c.fillStyle = color; c.textAlign = 'left'; c.fillText(s, left, y); c.restore(); return w;
+}
+const prog = (tau, t0, dur) => clamp((tau - t0) / dur, 0, 1);
+
+// ---------- the amigo: whole drawings generated from authored pose parameters ----------
+const PRESS = [[0,.25],[.15,.9],[.5,1],[.85,.85],[1,.3]];
+function bodyPts({rx, ry, cy, lean = 0}) {
+  const pts = [];
+  for (let k = 0; k < 20; k++) {
+    const a = -2.2 + k / 20 * TAU, ca = Math.cos(a), sa = Math.sin(a);
+    let x = rx * Math.sign(ca) * Math.pow(Math.abs(ca), .82), y = ry * Math.sign(sa) * Math.pow(Math.abs(sa), .86);
+    if (y > 0) y *= .9;
+    pts.push([x - lean * y, cy + y]);
+  }
+  return pts;
+}
+function eyePts(cx, cy, rx, ry, happy) {
+  return Array.from({length: 8}, (_, k) => {
+    const a = k / 8 * TAU; let y = Math.sin(a) * ry;
+    if (happy) y = -Math.abs(Math.sin(a)) * ry * (Math.sin(a) < 0 ? 1 : .35) + ry * .3;
+    return [cx + Math.cos(a) * rx, cy + y];
+  });
+}
+function pose(p) {
+  const b = {rx: 104, ry: 98, cy: -122, lean: 0, ...p.body};
+  const B = bodyPts(b), top = b.cy, eyeY = top - 16 + (p.look?.[1] || 0), eyeX = p.look?.[0] || 0;
+  const ex = 30 - b.lean * 14, eye = p.eye || {rx: 10, ry: 14};
+  const strokes = [];
+  const add = (id, points, width, extra = {}) => strokes.push({id, points, width, opacity: 1, pressure: PRESS, ...extra});
+  // legs and feet sit behind the body fill, so they go first; arms are drawn over it
+  add('legL', p.legL, 4.6, {corner: .9}); add('legR', p.legR, 4.6, {corner: .9});
+  const fL = p.legL[2], fR = p.legR[2];
+  add('footL', [[fL[0] + 8, fL[1] - 1], [fL[0] - 8, fL[1] - 7], [fL[0] - 24, fL[1] + 1]], 5.4);
+  add('footR', [[fR[0] - 8, fR[1] - 1], [fR[0] + 8, fR[1] - 7], [fR[0] + 24, fR[1] + 1]], 5.4);
+  add('body', B, 5.2, {close: true});
+  // a few describing strokes on the shadow side, following the contour
+  for (let k = 0; k < 5; k++) {
+    const q = B[8 + k], cx = -b.lean * 0, cyy = b.cy, dx = cx - q[0], dy = cyy - q[1], d = Math.hypot(dx, dy);
+    const i0 = [q[0] + dx / d * 14, q[1] + dy / d * 14], i1 = [q[0] + dx / d * (30 + (k % 2) * 8), q[1] + dy / d * (30 + (k % 2) * 8)];
+    add('shade/' + k, [i0, [lerp(i0[0], i1[0], .5) + 3, lerp(i0[1], i1[1], .5)], i1], 2.2, {opacity: .55});
+  }
+  add('eyeL', eyePts(-ex + eyeX, eyeY, eye.rx, eye.ry, eye.happy), 3, {close: true, pressure: [[0,1],[1,1]]});
+  add('eyeR', eyePts(ex + eyeX, eyeY, eye.rx, eye.ry, eye.happy), 3, {close: true, pressure: [[0,1],[1,1]]});
+  add('browL', p.browL || [[-ex - 16, eyeY - 30], [-ex, eyeY - 34], [-ex + 14, eyeY - 30]], 3);
+  add('browR', p.browR || [[ex - 14, eyeY - 30], [ex, eyeY - 34], [ex + 16, eyeY - 30]], 3);
+  add('mouth', p.mouth.map(([x, y]) => [x - b.lean * 10, top + y]), 4);
+  add('armL', p.armL, 4.8, {corner: 1.1}); add('armR', p.armR, 4.8, {corner: 1.1});
+  const hand = q => Array.from({length: 6}, (_, k) => [q[0] + Math.cos(k / 6 * TAU) * 10, q[1] + Math.sin(k / 6 * TAU) * 10]);
+  add('handL', hand(p.armL[2]), 3.6, {close: true, pressure: [[0,1],[1,1]]}); add('handR', hand(p.armR[2]), 3.6, {close: true, pressure: [[0,1],[1,1]]});
+  return {strokes, open: !eye.happy && eye.ry > 6};
+}
+const legs = (h = -34, k = -16, s = 1) => [[[-36 * s, h], [-40 * s, k], [-42, 0]], [[36 * s, h], [40 * s, k], [42, 0]]];
+const [SL, SR] = legs();
+const SMILE = [[-24, 20], [-9, 31], [9, 31], [24, 20]];
+const POSES = {
+  stand: pose({legL: SL, legR: SR, armL: [[-100, -112], [-126, -82], [-132, -50]], armR: [[100, -112], [126, -82], [132, -50]], mouth: SMILE}),
+  blink: pose({legL: SL, legR: SR, armL: [[-100, -112], [-126, -82], [-132, -50]], armR: [[100, -112], [126, -82], [132, -50]], mouth: SMILE, eye: {rx: 11, ry: 2}}),
+  think: pose({body: {lean: .1, cy: -124}, look: [8, -8], legL: SL, legR: SR,
+    armL: [[-102, -100], [-128, -72], [-130, -42]], armR: [[96, -150], [150, -196], [112, -236]],
+    mouth: [[-18, 26], [-6, 22], [6, 26], [18, 22]], browL: [[-58, -168], [-42, -176], [-26, -174]], browR: [[2, -184], [18, -194], [34, -186]]}),
+  crouch: pose({body: {rx: 118, ry: 82, cy: -98}, legL: [[-40, -24], [-64, -12], [-44, 0]], legR: [[40, -24], [64, -12], [44, 0]],
+    armL: [[-112, -90], [-142, -60], [-156, -30]], armR: [[112, -90], [142, -60], [156, -30]], eye: {rx: 11, ry: 8},
+    mouth: [[-20, 22], [-7, 24], [7, 24], [20, 22]]}),
+  air: pose({body: {rx: 90, ry: 114, cy: -150}, legL: [[-30, -48], [-36, -24], [-30, -6]], legR: [[30, -48], [36, -24], [30, -6]],
+    armL: [[-84, -178], [-118, -226], [-124, -268]], armR: [[84, -178], [118, -226], [124, -268]], eye: {rx: 11, ry: 17},
+    mouth: [[-14, 24], [-8, 40], [8, 40], [14, 24]]}),
+  land: pose({body: {rx: 122, ry: 80, cy: -94}, legL: [[-42, -22], [-66, -10], [-46, 0]], legR: [[42, -22], [66, -10], [46, 0]],
+    armL: [[-116, -96], [-156, -112], [-188, -102]], armR: [[116, -96], [156, -112], [188, -102]], eye: {rx: 12, ry: 12},
+    mouth: [[-22, 18], [-8, 30], [8, 30], [22, 18]]}),
+  cheer: pose({body: {ry: 102, cy: -126}, legL: SL, legR: SR, armL: [[-94, -150], [-136, -204], [-150, -256]], armR: [[94, -150], [136, -204], [150, -256]],
+    eye: {rx: 13, ry: 12, happy: true}, mouth: [[-30, 16], [-12, 40], [12, 40], [30, 16]]}),
+  waveA: pose({legL: SL, legR: SR, armL: [[-100, -112], [-126, -82], [-132, -50]], armR: [[98, -140], [152, -176], [176, -244]],
+    eye: {rx: 13, ry: 12, happy: true}, mouth: [[-28, 16], [-10, 34], [10, 34], [28, 16]]}),
+  waveB: pose({legL: SL, legR: SR, armL: [[-100, -112], [-126, -82], [-132, -50]], armR: [[98, -140], [150, -184], [130, -254]],
+    eye: {rx: 13, ry: 12, happy: true}, mouth: [[-28, 16], [-10, 34], [10, 34], [28, 16]]}),
+};
+// a drawing = compiled cel + raw geometry for fills; compiled once, held for its exposure
+const DRAW = new Map();
+function drawing(id, raw) {
+  if (!DRAW.has(id)) DRAW.set(id, {cel: compileCel(raw, {id}), raw, body: raw.strokes.find(s => s.id === 'body').points,
+    eyes: raw.strokes.filter(s => s.id.startsWith('eye')).map(s => s.points), hands: raw.strokes.filter(s => s.id.startsWith('hand')).map(s => s.points), open: raw.open});
+  return DRAW.get(id);
+}
+function tween(a, b, u) { const r = inbetweenCel(POSES[a], POSES[b], u); r.open = u < .5 ? POSES[a].open : POSES[b].open; return drawing(`${a}>${b}@${u}`, r); }
+const key1 = id => drawing(id, POSES[id]);
+// Exposure sheet with root offsets: rows [drawingId | [a,b,u], frames, dx, dy]
+function actor(rows) {
+  const D = {}, ent = [], off = {};
+  rows.forEach(([d, frames, dx = 0, dy = 0], k) => {
+    const id = 'r' + k; D[id] = Array.isArray(d) ? tween(...d) : key1(d); off[id] = [dx, dy]; ent.push({id, frames});
+  });
+  const sheet = exposureSheet(ent, D, 24);
+  return {duration: sheet.duration, at: t => { const q = sheet.at(Math.max(0, t)); return {d: q.drawing, off: off[q.id]}; }};
+}
+function amigo(c, d, x, y, s = 1, fill = C.amber) {
+  c.save(); c.translate(x, y); c.scale(s, s);
+  c.fillStyle = 'rgba(26,21,16,.12)'; c.beginPath(); c.ellipse(0, 4, 70, 9, 0, 0, TAU); c.fill();
+  const legsOnly = {strokes: d.cel.strokes.filter(t => /^(leg|foot)/.test(t.id))};
+  drawCel(c, legsOnly, {material: 'ink', color: C.ink});
+  const body = curvePath(d.body, true, Math.PI);
+  c.save(); c.translate(6, 5); c.fillStyle = fill; c.fill(body); c.restore();   // print fill, slightly off-register
+  c.save(); c.clip(body); c.globalAlpha = .35; c.fillStyle = '#fff8e8'; c.beginPath(); c.ellipse(-36, d.body[0][1] + 0 + 70, 34, 24, -.5, 0, TAU); c.fill(); c.restore();
+  c.fillStyle = fill; for (const h of d.hands) c.fill(curvePath(h, true, Math.PI));
+  drawCel(c, {strokes: d.cel.strokes.filter(t => !/^(leg|foot)/.test(t.id))}, {material: 'ink', color: C.ink});
+  c.fillStyle = C.ink;
+  for (const e of d.eyes) {
+    c.fill(curvePath(e, true, Math.PI));
+    if (d.open) { const cx = e.reduce((a, q) => a + q[0], 0) / 8, cy = e.reduce((a, q) => a + q[1], 0) / 8;
+      c.save(); c.fillStyle = C.surface; c.beginPath(); c.arc(cx - 3, cy - 5, 3.6, 0, TAU); c.fill(); c.restore(); }
+  }
+  c.restore();
+}
+// One hop as exposure rows: crouch, push, eight airborne drawings along an arc, land, settle.
+function hopRows(from, to, lift, end = 'stand') {
+  const P = u => { const q = arc(from, to, u, lift); return [q[0], q[1]]; };
+  const rows = [[['stand', 'crouch', .5], 2, ...from], ['crouch', 4, ...from], [['crouch', 'air', .5], 1, ...P(.04)], ['air', 1, ...P(.1)]];
+  for (let k = 0; k < 7; k++) { const u = .2 + k * .12; rows.push([k < 5 ? 'air' : ['air', 'land', .5], 1, ...P(Math.min(1, u))]); }
+  rows.push(['land', 3, ...to], [['land', end, .45], 2, ...to], [end, 2, ...to]);
+  return rows;
+}
+
+// ---------- doodles ----------
+function sunDoodle(c, x, y, p, s = 1) {
+  c.save(); c.translate(x, y); c.scale(s, s);
+  if (p > .3) { c.fillStyle = alpha(C.amber, .85); c.beginPath(); c.arc(4, 4, 38, 0, TAU); c.fill(); }
+  brush(c, ellPts(0, 0, 40, 40, 0, 24), {w: 5, color: C.ink, p: p * 1.6, seed: 11, close: true});
+  for (let k = 0; k < 8; k++) { const a = k / 8 * TAU; brush(c, [[Math.cos(a) * 56, Math.sin(a) * 56], [Math.cos(a) * 78, Math.sin(a) * 78]], {w: 5, color: C.ink, p: clamp(p * 2 - .6 - k * .05, 0, 1), seed: 20 + k}); }
+  c.restore();
+}
+function houseDoodle(c, x, y, p, s = 1) {
+  c.save(); c.translate(x, y); c.scale(s, s);
+  if (p > .4) { c.fillStyle = alpha(C.coral, .8); c.fill(polyPath([[-44, -6], [0, -50], [44, -6]])); c.fillStyle = alpha(C.amberSoft, 1); c.fillRect(-36, -4, 72, 56); }
+  brush(c, [[-58, -2], [0, -58], [58, -2]], {w: 5, color: C.ink, p: p * 2, seed: 31, smooth: false});
+  brush(c, [[-38, -10], [-38, 54], [38, 54], [38, -10]], {w: 5, color: C.ink, p: clamp(p * 2 - .5, 0, 1), seed: 32, smooth: false});
+  brush(c, [[-10, 54], [-10, 20], [10, 20], [10, 54]], {w: 4, color: C.ink, p: clamp(p * 2 - 1, 0, 1), seed: 33, smooth: false});
+  c.restore();
+}
+function cupDoodle(c, x, y, p, s = 1) {
+  c.save(); c.translate(x, y); c.scale(s, s);
+  if (p > .4) { c.fillStyle = alpha(C.teal, .7); c.fill(polyPath([[-34, -16], [34, -16], [26, 40], [-26, 40]])); }
+  brush(c, [[-40, -20], [-30, 44], [30, 44], [40, -20]], {w: 5, color: C.ink, p: p * 1.6, seed: 41});
+  brush(c, [[38, -6], [60, -2], [58, 22], [34, 24]], {w: 4.5, color: C.ink, p: clamp(p * 2 - .7, 0, 1), seed: 42});
+  for (let k = 0; k < 3; k++) brush(c, [[-16 + k * 16, -34], [-8 + k * 16, -50], [-18 + k * 16, -66], [-10 + k * 16, -82]], {w: 3, color: C.soft, p: clamp(p * 2 - 1 - k * .1, 0, 1), seed: 43 + k});
+  c.restore();
+}
+function check(c, x, y, p, s = 1, color = C.teal) { brush(c, [[x - 22 * s, y], [x - 6 * s, y + 18 * s], [x + 28 * s, y - 26 * s]], {w: 8 * s, color, p, seed: 51 + x % 7, smooth: false}); }
+function bubble(c, x, y, w, h, tail, text, p, o = {}) {
+  if (p <= 0) return;
+  const {fill = C.surface, size = 72, color = C.ink, seed = 61} = o, k = easeOutBack(clamp(p * 1.6, 0, 1));
+  c.save(); c.translate(x, y); c.scale(k, k);
+  const pts = [[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [tail + 26, h / 2], [tail, h / 2 + 46], [tail - 8, h / 2], [-w / 2, h / 2]];
+  const path = curvePath(pts, true, .5);
+  c.fillStyle = fill; c.fill(path);
+  brush(c, pts, {w: 4.5, color: C.ink, close: true, seed, smooth: true, amp: 1.2});
+  if (text) txt(c, text, 0, size * .32, {size, color, p: clamp(p * 1.6 - .5, 0, 1) * 1.2});
+  c.restore();
+}
+function stripes(c, y0, y1, color = C.navy) {
+  resetT(c); c.fillStyle = color; c.fillRect(0, y0, W, y1 - y0);
+  c.save(); c.beginPath(); c.rect(0, y0, W, y1 - y0); c.clip(); c.strokeStyle = 'rgba(255,255,255,.045)'; c.lineWidth = 9;
+  c.beginPath(); for (let x = -H; x < W + H; x += 26) { c.moveTo(x, y0); c.lineTo(x + (y1 - y0), y1); } c.stroke(); c.restore();
+}
+function edge(c, y, seed, color = C.amber, p = 1) { brush(c, [[-20, y], [W * .3, y + 5], [W * .62, y - 4], [W + 20, y + 3]], {w: 7, color, p, seed, amp: 2}); }
+
+// ---------- scenes ----------
+function hook(c, tau) {
+  paper(c, C.paper, null, 3);
+  txt(c, 'Хочешь заговорить', CX, 380, {size: 128, p: prog(tau, .2, .9)});
+  txt(c, 'по-испански?', CX, 540, {size: 160, color: C.navy, p: prog(tau, 1.0, .8)});
+  brush(c, [[CX - 350, 585], [CX - 80, 598], [CX + 160, 586], [CX + 370, 592]], {w: 9, color: C.amber, p: prog(tau, 1.7, .5), seed: 4});
+  bubble(c, CX + 230, 860, 320, 180, -100, '¿...?', prog(tau, 1.9, .5), {size: 96, color: C.coral});
+  const a = HOOK.at(tau), [dx, dy] = a.off;
+  amigo(c, a.d, CX - 40 + dx, 1560 + dy, 1.75);
+  if (tau > 3.65 && tau < 4.15) { const k = prog(tau, 3.65, .5); speedLines(c, CX - 40, 1560, -Math.PI / 2, 7, 6, .5 * (1 - k)); }
+}
+const HOOK = actor([['stand', 18], ['blink', 2], ['stand', 14], [['stand', 'think', .4], 2], [['stand', 'think', .8], 2], ['think', 30],
+  [['think', 'stand', .5], 2], ...hopRows([0, 0], [0, 0], 190, 'cheer'), ['cheer', 30]]);
+
+const CARDS = [
+  {es: 'el sol', ru: 'солнце', icon: sunDoodle, col: C.amber},
+  {es: 'la casa', ru: 'дом', icon: houseDoodle, col: C.coral},
+  {es: 'el café', ru: 'кофе', icon: cupDoodle, col: C.teal},
+];
+function words(c, tau) {
+  paper(c, C.paper, null, 7);
+  txt(c, 'Слова —', CX, 260, {size: 140, color: C.navy, p: prog(tau, .1, .5)});
+  txt(c, 'на карточках', CX, 400, {size: 130, p: prog(tau, .45, .6)});
+  CARDS.forEach((cd, k) => {
+    const t0 = .5 + k * .3, y = 520 + k * 360, inK = easeOutBack(prog(tau, t0, .45), 1.2), x = lerp(W + 500, CX + 20, inK);
+    const fl = prog(tau, 2.2 + k * .55, .4), ang = fl * Math.PI, sx = Math.abs(Math.cos(ang)), back = fl > .5;
+    c.save(); c.translate(x, y + 140); c.rotate((k - 1) * .02); c.scale(Math.max(.02, sx), 1);
+    c.fillStyle = 'rgba(26,21,16,.12)'; c.fillRect(-400, -130, 820, 290);
+    c.fillStyle = back ? C.navy : C.surface; c.fillRect(-410, -140, 820, 280);
+    c.fillStyle = cd.col; c.fillRect(-410, -140, 22, 280);
+    brush(c, rectPts(-410, -140, 820, 280), {w: 3.5, color: C.ink, close: true, smooth: false, seed: 70 + k, amp: 1});
+    if (!back) {
+      cd.icon(c, -250, 0, prog(tau, t0 + .25, .8), 1.25);
+      txt(c, cd.es, 90, 36, {font: TITLE, weight: 900, size: 104, color: C.navy});
+    } else {
+      txt(c, cd.ru, 0, 40, {size: 140, color: C.surface});
+      check(c, 310, -10, prog(tau, 2.55 + k * .55, .25), 1, C.amber);
+    }
+    c.restore();
+  });
+  const a = WORDS.at(tau), [dx, dy] = a.off;
+  amigo(c, a.d, 190 + dx, 1820 + dy, .7);
+}
+const WORDS = actor([['stand', 20], ['think', 24], ['blink', 2], ['think', 10], [['think', 'waveA', .5], 2], ['waveA', 8], ['waveB', 8], ['waveA', 8], ['waveB', 8], ['waveA', 8], ['cheer', 40]]);
+
+const CONJ = [['yo', 'o'], ['tú', 'as'], ['él / ella', 'a'], ['nosotros', 'amos'], ['vosotros', 'áis'], ['ellos', 'an']];
+function grammar(c, tau) {
+  paper(c, C.paper, null, 9);
+  stripes(c, 0, 520); edge(c, 520, 5, C.amber, prog(tau, 0, .5));
+  txt(c, 'Грамматика —', CX, 230, {size: 138, color: C.surface, p: prog(tau, .1, .6)});
+  txt(c, 'по полочкам', CX, 380, {size: 138, color: C.amber, p: prog(tau, .6, .6)});
+  const x0 = 110, y0 = 610, w = 860, rowH = 118;
+  c.save(); c.fillStyle = 'rgba(26,21,16,.1)'; c.fillRect(x0 + 10, y0 + 12, w, 900);
+  c.fillStyle = C.surface; c.fillRect(x0, y0, w, 900); c.restore();
+  brush(c, rectPts(x0, y0, w, 900), {w: 3.5, color: C.ink, close: true, smooth: false, seed: 88, amp: 1});
+  txt(c, 'hablar', x0 + 50, y0 + 110, {font: TITLE, weight: 900, size: 88, color: C.navy, align: 'left', p: prog(tau, .7, .5)});
+  txt(c, '— говорить', x0 + 360, y0 + 106, {size: 76, color: C.soft, align: 'left', p: prog(tau, 1.0, .5)});
+  brush(c, [[x0 + 40, y0 + 150], [x0 + w - 40, y0 + 154]], {w: 3, color: C.soft, p: prog(tau, 1.1, .4), seed: 89});
+  const hl = prog(tau, 3.5, .6);
+  if (hl > 0) { c.save(); c.globalAlpha = .55; c.fillStyle = C.amber;
+    c.fillRect(x0 + 552, y0 + 180, 270 * hl, rowH * 6 - 10); c.restore(); }
+  CONJ.forEach(([who, end], k) => {
+    const t0 = 1.3 + k * .32, y = y0 + 255 + k * rowH, p = prog(tau, t0, .35);
+    txt(c, who, x0 + 60, y, {size: 74, color: C.soft, align: 'left', p});
+    const ws = (() => { c.save(); c.font = `900 80px ${TITLE}`; const m = c.measureText('habl').width; c.restore(); return m; })();
+    txt(c, 'habl', x0 + 560 - ws, y, {font: TITLE, weight: 900, size: 80, color: C.navy, align: 'left', p});
+    const pe = prog(tau, t0 + .18, .3), bump = 1 + .25 * Math.sin(Math.PI * pe);
+    c.save(); c.translate(x0 + 560, y); c.scale(bump, bump);
+    txt(c, end, 0, 0, {font: TITLE, weight: 900, size: 80, color: C.coral, align: 'left', p: pe}); c.restore();
+  });
+  const a = GRAM.at(tau), [dx, dy] = a.off;
+  amigo(c, a.d, 880 + dx, 1820 + dy, .7, C.amber);
+}
+const GRAM = actor([['stand', 16], [['stand', 'think', .5], 2], ['think', 40], ['blink', 2], ['think', 26], [['think', 'stand', .5], 2],
+  ...hopRows([0, 0], [0, 0], 120, 'cheer'), ['cheer', 60]]);
+
+const LV = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], LVC = [C.teal, C.blue, C.amber, C.coral, C.purple, C.navy];
+const STEP = k => ({x: 70 + k * 157, y: 1690 - k * 168, w: 157});
+const STAIR = (() => {
+  const rows = [['stand', 12, STEP(0).x + 78, STEP(0).y]];
+  for (let k = 0; k < 5; k++) {
+    const a = STEP(k), b = STEP(k + 1);
+    rows.push(...hopRows([a.x + 78, a.y], [b.x + 78, b.y], 110, k === 4 ? 'cheer' : 'stand'));
+  }
+  rows.push(['cheer', 60, STEP(5).x + 78, STEP(5).y]);
+  return actor(rows);
+})();
+const HOP_FRAMES = 22, landAt = k => (12 + HOP_FRAMES * k + 15) / 24;   // contact frame of hop k (0..4)
+function levels(c, tau) {
+  paper(c, C.paper, null, 11);
+  txt(c, 'Тесты и уровни', CX, 270, {size: 136, color: C.navy, p: prog(tau, .1, .7)});
+  txt(c, 'от A1 до C2', CX, 410, {size: 124, p: prog(tau, .7, .5)});
+  for (let k = 0; k < 6; k++) {
+    const s = STEP(k), lit = k === 0 ? 1 : prog(tau, landAt(k - 1), .2);
+    c.fillStyle = C.surface; c.fillRect(s.x, s.y, s.w, H - s.y);
+    if (lit > 0) { c.save(); c.globalAlpha = .9 * lit; c.fillStyle = LVC[k]; c.fillRect(s.x + 5, s.y + 5, s.w, 70); c.restore(); }
+    brush(c, [[s.x, H + 20], [s.x, s.y], [s.x + s.w, s.y], [s.x + s.w, H + 20]], {w: 4, color: C.ink, smooth: false, seed: 100 + k, amp: 1.1});
+    txt(c, LV[k], s.x + s.w / 2, s.y + 60, {font: UI, weight: 600, size: 48, color: lit > .5 ? C.surface : C.navy});
+    if (k > 0) check(c, s.x + s.w / 2, s.y + 150, prog(tau, landAt(k - 1) + .1, .25), 1.1, C.teal);
+  }
+  const done = landAt(4);
+  if (tau > done) { const s = STEP(5), k = prog(tau, done, .5);
+    dotBurst(c, s.x + 78, s.y - 190, 120, 12, C.amber, 7, easeOut(k));
+    bubble(c, s.x - 200, s.y - 270, 320, 150, 150, '¡Bravo!', prog(tau, done + .2, .5), {size: 80, color: C.navy}); }
+  const a = STAIR.at(tau), [x, y] = a.off;
+  amigo(c, a.d, x, y, .58);
+}
+
+const FRIENDS = [
+  {x: 230, fill: C.teal, say: '¡Hola!', t: .3, seed: 1},
+  {x: 540, fill: C.amber, say: '¿Qué tal?', t: .65, seed: 2},
+  {x: 850, fill: C.coral, say: '¡Vamos!', t: 1.0, seed: 3},
+].map(f => ({...f, act: actor([['stand', Math.round(f.t * 24)], ...hopRows([0, 0], [0, 0], 90, 'cheer'), ['cheer', 70]])}));
+function friends(c, tau) {
+  paper(c, C.paper, null, 13);
+  txt(c, 'Учим испанский', CX, 290, {size: 136, color: C.navy, p: prog(tau, .05, .6)});
+  txt(c, 'вместе', CX, 440, {size: 150, p: prog(tau, .55, .4)});
+  brush(c, [[CX - 190, 478], [CX, 490], [CX + 190, 480]], {w: 9, color: C.amber, p: prog(tau, .9, .3), seed: 14});
+  FRIENDS.forEach((f, k) => {
+    const a = f.act.at(tau), [dx, dy] = a.off;
+    amigo(c, a.d, f.x + dx, 1520 + dy, .78, f.fill);
+    const by = 960 + (k % 2) * 140;
+    bubble(c, f.x, by, 290, 140, k === 0 ? 40 : k === 2 ? -40 : 0, f.say, prog(tau, f.t + .9, .5), {size: 70, seed: 140 + k, color: C.navy});
+  });
+}
+
+const PLANE = [[-120, 1700], [200, 1560], [420, 1350], [300, 1220], [180, 1330], [380, 1480], [700, 1420], [900, 1290]];
+const PLANE_PATH = motionPath(PLANE);
+function plane(c, x, y, ang, s = 1) {
+  c.save(); c.translate(x, y); c.rotate(ang); c.scale(s, s);
+  const body = [[46, 0], [-40, -30], [-22, 0], [-40, 26]];
+  c.fillStyle = C.surface; c.fill(polyPath(body)); c.fillStyle = alpha(C.tg, .9); c.fill(polyPath([[46, 0], [-22, 0], [-40, 26]]));
+  brush(c, body, {w: 3.6, color: C.ink, close: true, smooth: false, seed: 150, amp: .6});
+  brush(c, [[46, 0], [-22, 0]], {w: 2.6, color: C.ink, smooth: false, seed: 151, amp: .4}); c.restore();
+}
+function ending(c, tau) {
+  paper(c, C.paper, null, 15);
+  const drop = easeOutQuint(prog(tau, 0, .5)), bandH = 1060 * drop;
+  stripes(c, 0, bandH); edge(c, bandH, 16, C.amber, prog(tau, .3, .5));
+  c.save(); c.translate(0, bandH - 1060);
+  txt(c, 'Español', CX, 470, {font: TITLE, weight: 900, size: 190, color: C.surface});
+  txt(c, 'con amigos', CX, 660, {font: TITLE, weight: 900, size: 150, color: C.amber});
+  txt(c, 'испанский с друзьями', CX, 850, {size: 84, color: C.surface, p: prog(tau, .6, .7)});
+  c.restore();
+  txt(c, 'Подписывайся!', CX, 1240, {size: 120, color: C.navy, p: prog(tau, .8, .6)});
+  const pill = easeOutBack(prog(tau, 1.2, .4)), pw = 900, ph = 130, py = 1420;
+  if (pill > 0) {
+    c.save(); c.translate(CX, py); c.scale(pill, pill);
+    c.fillStyle = C.amber; c.fill(roundRectPath(-pw / 2 + 8, -ph / 2 + 8, pw, ph, ph / 2));
+    c.fillStyle = C.surface; c.fill(roundRectPath(-pw / 2, -ph / 2, pw, ph, ph / 2));
+    brush(c, smoothPts(rectPts(-pw / 2, -ph / 2, pw, ph), true, 10, .3), {w: 4.5, color: C.ink, close: true, seed: 160, amp: 1});
+    txt(c, 't.me/espanolconamigos', 0, 22, {font: UI, weight: 600, size: 62, color: C.navy});
+    c.restore();
+  }
+  const fp = prog(tau, 1.0, 1.5), u = easeInOutSine(fp);
+  if (fp > 0) {
+    c.save(); c.setLineDash([4, 18]); c.lineCap = 'round'; c.strokeStyle = alpha(C.soft, .7); c.lineWidth = 4;
+    const trail = []; for (let k = 0; k <= 40; k++) { const v = u * k / 40; trail.push(PLANE_PATH.at(v).p); }
+    c.beginPath(); trail.forEach((q, k) => k ? c.lineTo(...q) : c.moveTo(...q)); c.stroke(); c.restore();
+    const q = PLANE_PATH.at(Math.min(u, .999));
+    plane(c, q.p[0], q.p[1], Math.atan2(q.tangent[1], q.tangent[0]), 1.3);
+  }
+  const a = END.at(tau), [dx, dy] = a.off;
+  amigo(c, a.d, 240 + dx, 1800 + dy, .62);
+}
+const END = actor([['stand', 30], ['waveA', 6], ['waveB', 6], ['waveA', 6], ['waveB', 6], ['waveA', 6], ['waveB', 6], ['waveA', 6], ['waveB', 6], ['waveA', 6], ['waveB', 6], ['cheer', 30]]);
+
+// ---------- score: Andalusian cadence Am-G-F-E, tresillo strums, claps; cues follow the picture ----------
+const SC = {hook: 0, words: 4.5, grammar: 10, levels: 15.5, friends: 21.5, end: 25, dur: 29};
+function score(ac, t0, dest) {
+  const m = ac.createGain(); m.gain.value = .55; m.connect(dest);
+  const CH = [[110, [220, 261.63, 329.63]], [98, [196, 246.94, 293.66]], [87.31, [174.61, 220, 261.63]], [82.41, [164.81, 207.65, 246.94]]];
+  const beat = .5;
+  for (let bar = 0; bar * 4 * beat < SC.end + .01; bar++) {
+    const [bass, ch] = CH[bar % 4], tb = bar * 4 * beat + .1;
+    note(ac, m, bass, t0, tb, 1.6, 'sine', .22); note(ac, m, bass, t0, tb + 3 * beat, .6, 'sine', .14);
+    for (const [pos, g] of [[0, .09], [1.5, .07], [3, .08]]) ch.forEach((f, j) => note(ac, m, f, t0, tb + pos * beat + j * .018, .55, 'triangle', g));
+    if (bar > 0) for (const b of [1, 3]) noiseBurst(ac, m, t0, tb + b * beat, .07, .05, bar * 10 + b);
+  }
+  // melody fragments in A harmonic minor
+  const A = [440, 493.88, 523.25, 587.33, 659.25, 698.46, 830.61, 880];
+  [[1.0, 4], [1.25, 5], [1.5, 4], [1.75, 3], [2.1, 2], [6.2, 4], [6.45, 6], [6.7, 7], [12.0, 7], [12.25, 5], [12.5, 4], [12.75, 2]]
+    .forEach(([t, k]) => note(ac, m, A[k], t0, t, .45, 'sine', .07));
+  // cues
+  const whoosh = t => { const sr = ac.sampleRate, d = .3, buf = ac.createBuffer(1, sr * d, sr), ch = buf.getChannelData(0), r = rng(Math.round(t * 100));
+    for (let i = 0; i < ch.length; i++) ch[i] = (r() * 2 - 1) * Math.sin(Math.PI * i / ch.length);
+    const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = buf; f.type = 'bandpass'; f.frequency.setValueAtTime(600, t0 + t); f.frequency.linearRampToValueAtTime(2400, t0 + t + d); g.gain.value = .25;
+    s.connect(f); f.connect(g); g.connect(m); s.start(t0 + t); };
+  const boing = (t, f0 = 300) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f0, t0 + t); o.frequency.exponentialRampToValueAtTime(f0 * 2.2, t0 + t + .18);
+    g.gain.setValueAtTime(0, t0 + t); g.gain.linearRampToValueAtTime(.12, t0 + t + .02); g.gain.exponentialRampToValueAtTime(.001, t0 + t + .3); o.connect(g); g.connect(m); o.start(t0 + t); o.stop(t0 + t + .35); };
+  const pop = (t, f = 880) => { note(ac, m, f, t0, t, .12, 'sine', .14); note(ac, m, f * 1.5, t0, t + .04, .1, 'sine', .08); };
+  pop(SC.hook + 1.95, 660); boing(SC.hook + 77 / 24 + 6 / 24);
+  [0, 1, 2].forEach(k => { whoosh(SC.words + .5 + k * .3); whoosh(SC.words + 2.2 + k * .55); pop(SC.words + 2.6 + k * .55, 990); });
+  CONJ.forEach((_, k) => note(ac, m, A[k % 8] * 2, t0, SC.grammar + 1.5 + k * .32, .2, 'triangle', .06));
+  for (let k = 0; k < 5; k++) { boing(SC.levels + (12 + HOP_FRAMES * k + 6) / 24, 260 + k * 40); pop(SC.levels + landAt(k) + .1, 600 + k * 90); }
+  [880, 1108.73, 1318.51].forEach((f, j) => note(ac, m, f, t0, SC.levels + landAt(4) + j * .08, 1.2, 'sine', .1));
+  FRIENDS.forEach(f => { boing(SC.friends + f.t + 6 / 24, 320); pop(SC.friends + f.t + .9, 760); });
+  whoosh(SC.end); whoosh(SC.end + 1.0);
+  // final: E -> Am, ringing
+  [164.81, 207.65, 246.94, 329.63].forEach((f, j) => note(ac, m, f, t0, SC.end + .1 + j * .03, 1.2, 'triangle', .08));
+  note(ac, m, 82.41, t0, SC.end + .1, 1.2, 'sine', .2);
+  [220, 261.63, 329.63, 440, 523.25].forEach((f, j) => note(ac, m, f, t0, SC.end + 1.3 + j * .05, 2.6, 'triangle', .09));
+  note(ac, m, 110, t0, SC.end + 1.3, 2.6, 'sine', .24);
+}
+
+defineFilm({
+  palette: makePalette({paper: C.paper, ink: C.ink}, 'paperInk'),
+  format: {ar: '9:16', width: 1080}, fps: 24, score,
+  timeline: [
+    {name: 'hook', dur: SC.words - SC.hook, fn: hook},
+    {name: 'words', dur: SC.grammar - SC.words, fn: words},
+    {name: 'grammar', dur: SC.levels - SC.grammar, fn: grammar},
+    {name: 'levels', dur: SC.friends - SC.levels, fn: levels},
+    {name: 'friends', dur: SC.end - SC.friends, fn: friends},
+    {name: 'end', dur: SC.dur - SC.end, fn: ending},
+  ],
+});
+</script>
