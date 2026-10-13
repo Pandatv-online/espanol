@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>Español con amigos · промо для Telegram</title>
+<title>Español con amigos · промо-ролик</title>
 <link rel="stylesheet" href="fonts.css">
 <style>body{margin:0;background:#242321;display:grid;place-items:center;min-height:100vh}canvas{max-width:100vw;max-height:100vh;object-fit:contain}</style>
 <canvas id="c"></canvas>
@@ -10,10 +10,10 @@
 <script>
 'use strict';
 /* FILM BRIEF
-Subject: promo for the Telegram channel t.me/espanolconamigos. A small round "amigo"
+Subject: promo for the site espanolconamigos.com. A small round "amigo"
   is curious about Spanish, sees words turn into cards, grammar fall into place,
   hops up the levels A1 -> C2, meets friends and points to the channel.
-Duration 29 s; 9:16 vertical, 1080x1920 (Telegram phone feed / stories).
+Duration 29 s; 9:16 vertical, 1080x1920 (phone feeds / stories).
 Look: ink brush-pen on warm paper, flat print fills with slight misregistration;
   palette and the navy striped band come from the site (css/base.css).
 Techniques: whole cels with assisted inbetweens for the amigo; brush draw-on doodles.
@@ -32,7 +32,7 @@ Beat sheet:
 Sources: Caveat, Playfair Display, Noto Sans (Google Fonts, OFL), embedded in fonts.css.
 */
 const C = {paper:'#f5f0e8', surface:'#fffdf8', ink:'#1a1510', soft:'#5b5146', navy:'#0d2b4e',
-  amber:'#e8a020', amberSoft:'#fef3da', coral:'#c94040', teal:'#0e7a6a', blue:'#1a4f8a', purple:'#7a4fa0', tg:'#2a9fd8'};
+  amber:'#e8a020', amberSoft:'#fef3da', coral:'#c94040', teal:'#0e7a6a', blue:'#1a4f8a', purple:'#7a4fa0'};
 const HAND = '"Caveat", cursive', TITLE = '"Playfair Display", Georgia, serif', UI = '"Noto Sans", sans-serif';
 const SAMPLE = 'Хочешь заговорить по-испански? ¡Hola! ¿Qué tal? ñ é á';
 for (const f of ['700 80px "Caveat"', '500 80px "Caveat"', '900 80px "Playfair Display"', '700 80px "Playfair Display"', '600 80px "Noto Sans"'])
@@ -345,7 +345,7 @@ const PLANE_PATH = motionPath(PLANE);
 function plane(c, x, y, ang, s = 1) {
   c.save(); c.translate(x, y); c.rotate(ang); c.scale(s, s);
   const body = [[46, 0], [-40, -30], [-22, 0], [-40, 26]];
-  c.fillStyle = C.surface; c.fill(polyPath(body)); c.fillStyle = alpha(C.tg, .9); c.fill(polyPath([[46, 0], [-22, 0], [-40, 26]]));
+  c.fillStyle = C.surface; c.fill(polyPath(body)); c.fillStyle = alpha(C.amber, .9); c.fill(polyPath([[46, 0], [-22, 0], [-40, 26]]));
   brush(c, body, {w: 3.6, color: C.ink, close: true, smooth: false, seed: 150, amp: .6});
   brush(c, [[46, 0], [-22, 0]], {w: 2.6, color: C.ink, smooth: false, seed: 151, amp: .4}); c.restore();
 }
@@ -358,21 +358,23 @@ function ending(c, tau) {
   txt(c, 'con amigos', CX, 660, {font: TITLE, weight: 900, size: 150, color: C.amber});
   txt(c, 'испанский с друзьями', CX, 850, {size: 84, color: C.surface, p: prog(tau, .6, .7)});
   c.restore();
-  txt(c, 'Подписывайся!', CX, 1240, {size: 120, color: C.navy, p: prog(tau, .8, .6)});
+  txt(c, 'Заходи на сайт!', CX, 1240, {size: 120, color: C.navy, p: prog(tau, .8, .6)});
+  const fp = prog(tau, 1.0, 1.5), u = easeInOutSine(fp);
+  if (fp > 0) {
+    c.save(); c.setLineDash([4, 18]); c.lineCap = 'round'; c.strokeStyle = alpha(C.soft, .7); c.lineWidth = 4;
+    const trail = []; for (let k = 0; k <= 40; k++) { const v = u * k / 40; trail.push(PLANE_PATH.at(v).p); }
+    c.beginPath(); trail.forEach((q, k) => k ? c.lineTo(...q) : c.moveTo(...q)); c.stroke(); c.restore();
+  }
   const pill = easeOutBack(prog(tau, 1.2, .4)), pw = 900, ph = 130, py = 1420;
   if (pill > 0) {
     c.save(); c.translate(CX, py); c.scale(pill, pill);
     c.fillStyle = C.amber; c.fill(roundRectPath(-pw / 2 + 8, -ph / 2 + 8, pw, ph, ph / 2));
     c.fillStyle = C.surface; c.fill(roundRectPath(-pw / 2, -ph / 2, pw, ph, ph / 2));
     brush(c, smoothPts(rectPts(-pw / 2, -ph / 2, pw, ph), true, 10, .3), {w: 4.5, color: C.ink, close: true, seed: 160, amp: 1});
-    txt(c, 't.me/espanolconamigos', 0, 22, {font: UI, weight: 600, size: 62, color: C.navy});
+    txt(c, 'espanolconamigos.com', 0, 24, {font: UI, weight: 600, size: 70, color: C.navy});
     c.restore();
   }
-  const fp = prog(tau, 1.0, 1.5), u = easeInOutSine(fp);
   if (fp > 0) {
-    c.save(); c.setLineDash([4, 18]); c.lineCap = 'round'; c.strokeStyle = alpha(C.soft, .7); c.lineWidth = 4;
-    const trail = []; for (let k = 0; k <= 40; k++) { const v = u * k / 40; trail.push(PLANE_PATH.at(v).p); }
-    c.beginPath(); trail.forEach((q, k) => k ? c.lineTo(...q) : c.moveTo(...q)); c.stroke(); c.restore();
     const q = PLANE_PATH.at(Math.min(u, .999));
     plane(c, q.p[0], q.p[1], Math.atan2(q.tangent[1], q.tangent[0]), 1.3);
   }
