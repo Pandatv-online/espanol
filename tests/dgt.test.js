@@ -56,6 +56,6 @@ test('validate: extra questions for a missing topic and a wrong source are repor
   const e = eca([topic({ questions: Array.from({ length: 10 }, (_, i) => question(i, i === 0 ? { source: 'blog' } : {})) })]);
   e.data.dgtOrphans = () => ['nope'];
   const errs = validate(e).join('\n');
-  assert.match(errs, /addDgtQuestions: темы с таким id нет/);
+  assert.match(errs, /addDgtQuestions \/ addDgtBlocks: темы или вкладки с таким id нет/);
   assert.match(errs, /source может быть только/);
 });

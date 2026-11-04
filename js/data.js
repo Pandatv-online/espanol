@@ -27,6 +27,28 @@
         else dgtOrphans.push(id);
       }
     },
+    // Extra blocks for tabs of topics already added: { topicId: [{ tab, at, block }] }; `at` is the index in the
+    // tab's original block list (-1 = at the end). Used for the photo blocks of data/dgt-fotos.js.
+    addDgtBlocks: function (map) {
+      for (var id in map) {
+        var topic = null, i;
+        for (i = 0; i < dgtTopics.length; i++) if (dgtTopics[i] && dgtTopics[i].id === id) topic = dgtTopics[i];
+        if (!topic) { dgtOrphans.push(id); continue; }
+        var items = map[id].map(function (it, n) { return { it: it, n: n }; });
+        // insert from the back so earlier positions keep pointing at the original blocks
+        items.sort(function (a, b) {
+          var pa = a.it.at < 0 ? Infinity : a.it.at, pb = b.it.at < 0 ? Infinity : b.it.at;
+          return pb - pa || b.n - a.n;
+        });
+        items.forEach(function (x) {
+          var tab = null;
+          for (var j = 0; j < (topic.tabs || []).length; j++) if (topic.tabs[j].id === x.it.tab) tab = topic.tabs[j];
+          if (!tab) { dgtOrphans.push(id + '/' + x.it.tab); return; }
+          var at = x.it.at < 0 || x.it.at > tab.blocks.length ? tab.blocks.length : x.it.at;
+          tab.blocks.splice(at, 0, x.it.block);
+        });
+      }
+    },
     dgtOrphans: function () { return dgtOrphans.slice(); },
     levels: function () { return levelList.slice(); },
     vocab: function (level) { return (vocabByLevel[String(level).toUpperCase()] || []).slice(); },

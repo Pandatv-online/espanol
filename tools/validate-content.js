@@ -214,7 +214,7 @@ function validate(ECA, opts) {
     });
   });
   if (typeof data.dgt === 'function') (data.dgt() || []).forEach((topic, ti) => dgtTopic(['DGT', topic && topic.id ? topic.id : 'тема #' + (ti + 1)], topic));
-  if (typeof data.dgtOrphans === 'function') data.dgtOrphans().forEach((id) => report(['DGT', id], '', 'addDgtQuestions: темы с таким id нет (файл с вопросами подключён раньше темы?)'));
+  if (typeof data.dgtOrphans === 'function') data.dgtOrphans().forEach((id) => report(['DGT', id], '', 'addDgtQuestions / addDgtBlocks: темы или вкладки с таким id нет (файл подключён раньше темы?)'));
   return errors;
 
   // An image path under img/dgt/; with opts.rootDir the file must exist.
