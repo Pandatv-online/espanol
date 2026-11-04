@@ -814,6 +814,8 @@ check('DGT practice: answer shows explanation, hint and rule; finishing records 
   await page.locator('.dgt-option').first().click();
   assert.ok(await page.locator('.feedback .dgt-ref').count(), 'rule reference');
   assert.ok(await page.locator('.feedback .dgt-hint').count(), 'memory hint');
+  assert.ok(await page.evaluate(() => ECA.data.dgt().every((t) => t.questions.length >= 10)), 'every topic has questions');
+  assert.ok(await page.evaluate(() => ECA.data.dgt().some((t) => t.questions.some((q) => q.source === 'dgt'))), 'official DGT questions loaded');
   await page.locator('[data-next]').click();
   for (let i = 0; i < 60 && (await page.locator('#dgt-result').count()) === 0; i++) {
     await page.keyboard.press('1');

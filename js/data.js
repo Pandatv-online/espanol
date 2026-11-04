@@ -6,6 +6,7 @@
   var vocabByLevel = {};
   var grammarByLevel = {};
   var dgtTopics = [];      // Spanish driving-theory topics (DGT), not tied to a CEFR level
+  var dgtOrphans = [];     // questions added for a topic id that doesn't exist (reported by the validator)
 
   function push(map, level, topics) {
     var key = String(level).toUpperCase();
@@ -17,6 +18,16 @@
     addVocab: function (level, topics) { push(vocabByLevel, level, topics); },
     addGrammar: function (level, topics) { push(grammarByLevel, level, topics); },
     addDgt: function (topics) { dgtTopics = dgtTopics.concat(topics || []); },
+    // Extra questions for topics already added: { topicId: [question, …] } (e.g. official DGT test items).
+    addDgtQuestions: function (map) {
+      for (var id in map) {
+        var topic = null;
+        for (var i = 0; i < dgtTopics.length; i++) if (dgtTopics[i] && dgtTopics[i].id === id) topic = dgtTopics[i];
+        if (topic) topic.questions = (topic.questions || []).concat(map[id]);
+        else dgtOrphans.push(id);
+      }
+    },
+    dgtOrphans: function () { return dgtOrphans.slice(); },
     levels: function () { return levelList.slice(); },
     vocab: function (level) { return (vocabByLevel[String(level).toUpperCase()] || []).slice(); },
     grammar: function (level) { return (grammarByLevel[String(level).toUpperCase()] || []).slice(); },

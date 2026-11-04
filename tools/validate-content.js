@@ -214,6 +214,7 @@ function validate(ECA, opts) {
     });
   });
   if (typeof data.dgt === 'function') (data.dgt() || []).forEach((topic, ti) => dgtTopic(['DGT', topic && topic.id ? topic.id : 'тема #' + (ti + 1)], topic));
+  if (typeof data.dgtOrphans === 'function') data.dgtOrphans().forEach((id) => report(['DGT', id], '', 'addDgtQuestions: темы с таким id нет (файл с вопросами подключён раньше темы?)'));
   return errors;
 
   // An image path under img/dgt/; with opts.rootDir the file must exist.
@@ -291,6 +292,7 @@ function validate(ECA, opts) {
       if (q.hint !== undefined) plainBoth(where, q.hint, `${f}.hint`);
       if (!nonEmpty(q.ref)) report(where, `${f}.ref`, 'нет ссылки на правило (например «RGC, art. 57.1»)');
       if (q.img !== undefined) { dgtImg(where, `${f}.img`, q.img); plainBoth(where, q.alt, `${f}.alt`); }
+      if (q.source !== undefined && q.source !== 'dgt') report(where, `${f}.source`, 'source может быть только «dgt» (официальный вопрос DGT)');
     });
   }
 

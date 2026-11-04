@@ -51,3 +51,11 @@ test('validate: DGT topic rules', () => {
   assert.match(errs(topic({ tabs: [{ id: 'x', label: L('X', 'X'), blocks: [{ type: 'figure', src: 'img/dgt/a.svg' }] }] })), /alt/);
   assert.match(errs(topic({ questions: Array.from({ length: 10 }, () => question(1)) })), /id вопроса повторяется/);
 });
+
+test('validate: extra questions for a missing topic and a wrong source are reported', () => {
+  const e = eca([topic({ questions: Array.from({ length: 10 }, (_, i) => question(i, i === 0 ? { source: 'blog' } : {})) })]);
+  e.data.dgtOrphans = () => ['nope'];
+  const errs = validate(e).join('\n');
+  assert.match(errs, /addDgtQuestions: темы с таким id нет/);
+  assert.match(errs, /source может быть только/);
+});

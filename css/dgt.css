@@ -90,3 +90,4 @@
 .dgt-review__right { color: var(--ok); }
 .dgt-review__explain { line-height: 1.55; }
 .dgt-hero + .dgt-quiz { margin-top: var(--space-5); }
+.dgt-q__source { margin: 0 0 var(--space-1); }

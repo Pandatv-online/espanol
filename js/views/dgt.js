@@ -62,7 +62,8 @@
       'dgt.examPassed': 'Экзамен сдан: ошибок {m} из {err} допустимых.',
       'dgt.examFailed': 'Не сдан: ошибок {m}, а можно не больше {err}.',
       'dgt.answered': 'Отвечено {n} из {m}',
-      'dgt.noQuestions': 'Вопросов пока нет'
+      'dgt.noQuestions': 'Вопросов пока нет',
+      'dgt.official': 'Вопрос DGT'
     },
     en: {
       'dgt.title': 'Spanish driving theory test',
@@ -119,7 +120,8 @@
       'dgt.examPassed': 'Exam passed: {m} mistakes, {err} allowed.',
       'dgt.examFailed': 'Not passed: {m} mistakes, at most {err} allowed.',
       'dgt.answered': 'Answered {n} of {m}',
-      'dgt.noQuestions': 'No questions yet'
+      'dgt.noQuestions': 'No questions yet',
+      'dgt.official': 'DGT question'
     }
   });
 
@@ -249,6 +251,7 @@
     return el('div', { class: 'dgt-q' }, [
       q.img ? el('img', { class: 'dgt-q__img' + (/senal-/.test(q.img) ? ' dgt-q__img--sign' : ''), src: q.img, alt: pick(q.alt, lang) || '' }) : null,
       el('div', { class: 'grammar-question dgt-q__prompt', id: 'dgt-prompt', tabindex: '-1' }, [
+        q.source === 'dgt' ? el('p', { class: 'dgt-q__source' }, ui.badge(t('dgt.official'), 'cat')) : null,
         el('p', { class: 'grammar-question__es', lang: 'es', text: q.es }),
         tr ? el('p', { class: 'dgt-q__tr', text: pick(q.tr, lang) }) : null
       ]),
