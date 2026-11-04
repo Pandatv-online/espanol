@@ -18,7 +18,9 @@
       'dgt.topics': 'Темы',
       'dgt.questionsN': '{n} вопросов',
       'dgt.soon': 'Скоро',
-      'dgt.soonList': 'Знаки · Скорость · Обгон · Остановка и стоянка · Алкоголь и лекарства · Первая помощь · Мотоциклы (A)',
+      'dgt.catPick': 'Категория экзамена',
+      'dgt.catB': 'B — легковые',
+      'dgt.catA': 'A — мотоциклы',
       'dgt.disclaimer': 'Это не официальный сайт DGT. Правила изложены по Reglamento General de Circulación; часть иллюстраций — из бесплатного пособия DGT «Manual básico» (lectura fácil).',
       'dgt.dgtLink': 'Пособие на сайте DGT',
       'dgt.back': '← Права в Испании',
@@ -73,7 +75,9 @@
       'dgt.topics': 'Topics',
       'dgt.questionsN': '{n} questions',
       'dgt.soon': 'Coming soon',
-      'dgt.soonList': 'Signs · Speed · Overtaking · Stopping and parking · Alcohol and medicines · First aid · Motorcycles (A)',
+      'dgt.catPick': 'Exam category',
+      'dgt.catB': 'B — cars',
+      'dgt.catA': 'A — motorcycles',
       'dgt.disclaimer': 'This is not an official DGT website. The rules follow the Reglamento General de Circulación; some illustrations come from the free DGT “Manual básico” (easy-read).',
       'dgt.dgtLink': 'The manual on the DGT website',
       'dgt.back': '← Driving test',
@@ -127,15 +131,36 @@
 
   var EXAM = { count: 30, minutes: 30, mistakes: 3 };
   var PASS = 0.9;                       // the DGT exam: 27 of 30
-  var EXAM_KEY = 'dgt:exam';
+  function examKey(cat) { return 'dgt:exam:' + cat; }
   var DGT_URL = 'https://www.dgt.es/nuestros-servicios/permisos-de-conducir/accesibilidad/';
   ECA.dgt = { EXAM: EXAM, PASS: PASS };
 
   function passed(best) { return !!best && best.total > 0 && best.score / best.total >= PASS; }
   function topicKey(topic) { return 'dgt:' + topic.id; }
-  function allQuestions() {
-    return data.dgt().reduce(function (all, topic) { return all.concat(topic.questions || []); }, []);
+  // Questions of every topic for category `cat` (none → all categories).
+  function allQuestions(cat) {
+    return data.dgt().reduce(function (all, topic) {
+      return cat && (topic.cats || []).indexOf(cat) < 0 ? all : all.concat(topic.questions || []);
+    }, []);
   }
+  function examCat() { return store.pref('dgtCat') === 'A' ? 'A' : 'B'; }
+
+  // Topics still being written: shown on the hub as «coming soon» until a data file adds them.
+  var PLANNED = [
+    { id: 'senales', ru: 'Знаки и разметка', en: 'Signs and markings' },
+    { id: 'velocidad', ru: 'Скорость и дистанция', en: 'Speed and distance' },
+    { id: 'maniobras', ru: 'Манёвры', en: 'Manoeuvres' },
+    { id: 'via', ru: 'Дорога и полосы', en: 'The road and lanes' },
+    { id: 'luces', ru: 'Свет', en: 'Lights' },
+    { id: 'documentacion', ru: 'Документы и баллы', en: 'Documents and points' },
+    { id: 'conductor', ru: 'Алкоголь, усталость, лекарства', en: 'Alcohol, fatigue, medicines' },
+    { id: 'seguridad', ru: 'Ремни, дети, груз', en: 'Belts, children, loads' },
+    { id: 'conduccion', ru: 'Безопасное вождение', en: 'Safe driving' },
+    { id: 'mecanica', ru: 'Устройство машины', en: 'The vehicle' },
+    { id: 'accidentes', ru: 'ДТП и первая помощь', en: 'Accidents and first aid' },
+    { id: 'eficiente', ru: 'Экономичное вождение', en: 'Eco-driving' },
+    { id: 'motos', ru: 'Мотоциклы (A)', en: 'Motorcycles (A)' }
+  ];
 
   // One live test at a time; the listener drops it once its node leaves the page.
   var activeKeys = null;
@@ -360,12 +385,11 @@
   }
 
   function mountExam(body, container, state) {
-    var pool = allQuestions();
     var timer = null;
 
     function begin() {
-      var seed = newSeed();
-      state.exam = { seed: seed, questions: quiz.fromDgt(pool, { rng: quiz.seeded(seed), count: EXAM.count }),
+      var seed = newSeed(), cat = examCat(), pool = allQuestions(cat);
+      state.exam = { cat: cat, seed: seed, questions: quiz.fromDgt(pool, { rng: quiz.seeded(seed), count: EXAM.count }),
         picks: [], index: 0, startedAt: Date.now(), done: false, recorded: false, newBest: false };
       paint('#dgt-prompt');
     }
@@ -376,8 +400,8 @@
       if (ex.done) return;
       ex.done = true;
       var r = session.result({ picks: ex.picks }, ex.questions);
-      var had = !!store.best(EXAM_KEY);
-      var isBest = store.recordScore(EXAM_KEY, r.score, r.total);
+      var key = examKey(ex.cat || 'B'), had = !!store.best(key);
+      var isBest = store.recordScore(key, r.score, r.total);
       ex.newBest = had && !!isBest;
       ex.recorded = true;
       paint('#dgt-result');
@@ -394,8 +418,13 @@
     }
 
     function intro() {
-      var best = store.best(EXAM_KEY);
+      var cat = examCat(), best = store.best(examKey(cat)), pool = allQuestions(cat);
+      var cats = el('div', { class: 'btn-row dgt-cats', role: 'group', 'aria-label': t('dgt.catPick') }, ['B', 'A'].map(function (c) {
+        return el('button', { class: 'chip', type: 'button', 'aria-pressed': String(c === cat), text: t('dgt.cat' + c),
+          on: { click: function () { store.setPref('dgtCat', c); paint(null); } } });
+      }));
       ui.append(body, [
+        cats,
         el('p', { class: 'grammar-quiz__lead', text: t('dgt.examLead', { n: Math.min(EXAM.count, pool.length), min: EXAM.minutes, err: EXAM.mistakes }) }),
         best ? el('p', { class: 'grammar-result__best', text: t('dgt.best', { score: best.score, total: best.total }) }) : null,
         el('div', { class: 'btn-row' }, [
@@ -445,7 +474,7 @@
 
     function result() {
       var ex = state.exam, qs = ex.questions, r = session.result({ picks: ex.picks }, qs);
-      var mistakes = r.total - r.score, ok = mistakes <= EXAM.mistakes, best = store.best(EXAM_KEY);
+      var mistakes = r.total - r.score, ok = mistakes <= EXAM.mistakes, best = store.best(examKey(ex.cat || 'B'));
       ui.append(body, [
         el('p', { class: 'grammar-result__score', id: 'dgt-result', tabindex: '-1', text: t('dgt.result', { score: r.score, total: r.total }) }),
         meter(r.score / r.total),
@@ -472,10 +501,17 @@
     ]);
   }
 
+  function soonNode() {
+    var have = data.dgt().map(function (x) { return x.id; });
+    var left = PLANNED.filter(function (x) { return have.indexOf(x.id) < 0; });
+    return left.length ? el('p', { class: 'dgt-soon' }, [el('b', { text: t('dgt.soon') + ': ' }),
+      left.map(function (x) { return pick(x); }).join(' · ')]) : null;
+  }
+
   function backLink() { return el('p', { class: 'grammar-back' }, el('a', { class: 'backlink', href: '#/dgt', text: t('dgt.back') })); }
 
   ECA.views.register('dgt', function (container) {
-    var topics = data.dgt(), examBest = store.best(EXAM_KEY), n = allQuestions().length;
+    var topics = data.dgt(), examBest = store.best(examKey(examCat())), n = allQuestions(examCat()).length;
     container.appendChild(hero(t('dgt.title'), t('dgt.lead'),
       el('div', { class: 'grammar-badges hero__meta' }, [ui.badge(t('dgt.cats', { cats: 'A · B' }), 'cat')])));
 
@@ -502,7 +538,7 @@
           el('span', { class: 'topic-row__meta' }, badges)
         ])));
       })) : ui.emptyState({ title: t('dgt.noQuestions') }),
-      el('p', { class: 'dgt-soon' }, [el('b', { text: t('dgt.soon') + ': ' }), t('dgt.soonList')])
+      soonNode()
     ]));
 
     container.appendChild(el('p', { class: 'dgt-disclaimer' }, [
