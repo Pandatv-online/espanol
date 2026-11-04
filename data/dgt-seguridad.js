@@ -26,11 +26,10 @@ ECA.data.addDgt([
             }
           },
           {
-            type: 'rules', heading: { ru: 'Можно без ремня (только в городе)', en: 'Exempt (in town only)' },
+            type: 'rules', heading: { ru: 'Кому можно без ремня', en: 'Who is exempt' },
             items: [
-              { color: 'blue', title: { ru: 'Задний ход и парковка', en: 'Reversing and parking' }, es: 'maniobras de <b>marcha atrás</b> o estacionamiento', body: { ru: 'Пока паркуетесь задним ходом.', en: 'While reversing to park.' } },
-              { color: 'amber', title: { ru: 'Таксист на работе', en: 'Taxi driver on duty' }, es: '<b>taxistas</b> de servicio', body: { ru: 'Таксист с пассажиром, в городе.', en: 'A taxi driver at work, in town.' } },
-              { color: 'teal', title: { ru: 'Инструктор', en: 'Instructor' }, es: '<b>profesores</b> de autoescuela con alumno', body: { ru: 'Инструктор, отвечающий за дублирующие педали.', en: 'An instructor in charge of the dual controls.' } },
+              { color: 'blue', title: { ru: 'Задний ход и парковка', en: 'Reversing and parking' }, es: 'maniobras de <b>marcha atrás</b> o estacionamiento', body: { ru: 'Только пока паркуетесь задним ходом, в городе.', en: 'Only while reversing to park, in town.' } },
+              { color: 'coral', title: { ru: 'Больше не исключение', en: 'No longer exempt' }, es: '<b>taxistas</b>, repartidores y profesores de autoescuela', body: { ru: 'С 1 октября 2026 года таксисты (и VTC), курьеры и инструкторы автошкол тоже пристёгиваются — прежние исключения отменены.', en: 'Since 1 October 2026 taxi (and VTC) drivers, delivery drivers and driving instructors must buckle up too — the old exemptions are gone.' } },
               { color: 'purple', title: { ru: 'По здоровью — везде', en: 'Medical — everywhere' }, es: '<b>certificado médico</b>', body: { ru: 'Освобождённые по медицинским причинам — с медицинской справкой, на любой дороге.', en: 'Those exempt on medical grounds — with a certificate, on any road.' } }
             ]
           },
@@ -234,23 +233,23 @@ ECA.data.addDgt([
           { es: 'En trayectos cortos.', ru: 'В коротких поездках.', en: 'On short trips.' }
         ],
         answer: 0,
-        explain: { ru: 'Исключения только в городе: задний ход и парковка, таксист на работе, инструктор с учеником. Скорость и длина поездки — не исключения.', en: 'Exemptions in town only: reversing and parking, a taxi driver at work, an instructor with a learner. Speed or trip length are not.' },
+        explain: { ru: 'В городе ремень можно не пристёгивать только при манёврах задним ходом и парковке. Таксисты, курьеры и инструкторы с октября 2026 года тоже пристёгиваются. Скорость и длина поездки — не исключения.', en: 'In town you may unbuckle only while reversing or parking. Taxi drivers, couriers and instructors must buckle up since October 2026. Speed or trip length are not exemptions.' },
         hint: { ru: 'Паркуешься задом — можно отстегнуться.', en: 'Reversing into a space — you may unbuckle.' },
         ref: 'RGC, art. 119'
       },
       {
         id: 'sg-07',
-        es: 'Fuera de poblado, ¿está exento del cinturón un taxista de servicio?',
-        tr: { ru: 'Освобождён ли от ремня таксист на работе за городом?', en: 'Is a taxi driver on duty exempt from the belt out of town?' },
+        es: 'Un taxista presta servicio dentro de poblado. ¿Está exento de utilizar el cinturón de seguridad?',
+        tr: { ru: 'Таксист работает в городе. Освобождён ли он от ремня безопасности?', en: 'A taxi driver is working in town. Are they exempt from wearing a seat belt?' },
         options: [
-          { es: 'No; la exención solo vale en poblado.', ru: 'Нет: исключение действует только в городе.', en: 'No; the exemption applies only in town.' },
-          { es: 'Sí, siempre.', ru: 'Да, всегда.', en: 'Yes, always.' },
+          { es: 'No, debe utilizarlo como cualquier conductor.', ru: 'Нет, он пристёгивается, как любой водитель.', en: 'No, they must wear it like any driver.' },
+          { es: 'Sí, siempre que circule por ciudad.', ru: 'Да, если едет по городу.', en: 'Yes, as long as they drive in town.' },
           { es: 'Sí, si lleva pasajeros.', ru: 'Да, если везёт пассажиров.', en: 'Yes, if carrying passengers.' }
         ],
         answer: 0,
-        explain: { ru: 'Исключения для таксистов, инструкторов и парковки работают только в населённом пункте. На трассе пристёгиваются все.', en: 'Exemptions for taxi drivers, instructors and parking apply only in town. Out of town everyone buckles up.' },
-        hint: { ru: 'Трасса — без исключений.', en: 'Open road — no exemptions.' },
-        ref: 'RGC, art. 119'
+        explain: { ru: 'Раньше таксист в городе мог ехать без ремня. С 1 октября 2026 года это исключение (как и для курьеров и инструкторов автошкол) отменено.', en: 'Taxi drivers used to be exempt in town. Since 1 October 2026 that exemption (like those for couriers and driving instructors) is abolished.' },
+        hint: { ru: 'Старые учебники врут: таксист тоже пристёгивается.', en: 'Old books are wrong: taxi drivers buckle up too.' },
+        ref: 'RGC, art. 119 (reforma 2026)'
       },
       {
         id: 'sg-08',

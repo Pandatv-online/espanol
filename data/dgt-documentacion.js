@@ -364,15 +364,15 @@ ECA.data.addDgt([
       },
       {
         id: 'do-14',
-        es: 'En la ITV el vehículo tiene un defecto grave. ¿Qué ocurre?',
-        tr: { ru: 'На ITV у машины нашли серьёзный дефект. Что дальше?', en: 'At the ITV the vehicle has a serious defect. What happens?' },
+        es: 'El resultado de la ITV es desfavorable por defectos graves. ¿Qué ocurre?',
+        tr: { ru: 'Результат ITV — «неблагоприятный» (серьёзные дефекты). Что дальше?', en: 'The ITV result is unfavourable (serious defects). What happens?' },
         options: [
           { es: 'Debe repararse y volver a inspeccionarse; no puede circular salvo para ir al taller y a la ITV.', ru: 'Нужно отремонтировать и пройти повторно; ездить можно только в мастерскую и на ITV.', en: 'It must be repaired and re-inspected; it may only be driven to the garage and the ITV.' },
           { es: 'Puede circular normalmente un año más.', ru: 'Можно ездить ещё год.', en: 'It may be driven normally for another year.' },
           { es: 'Se da de baja automáticamente.', ru: 'Машину автоматически снимают с учёта.', en: 'It is automatically deregistered.' }
         ],
         answer: 0,
-        explain: { ru: 'С серьёзным дефектом машина не годна к движению; её ремонтируют и снова везут на осмотр.', en: 'With a serious defect the vehicle is unfit; it is repaired and re-inspected.' },
+        explain: { ru: '«Desfavorable» (серьёзные дефекты): ездить можно только в мастерскую и обратно на ITV, срок на ремонт — 2 месяца, это не «2 месяца свободной езды». «Negativa» (очень серьёзные дефекты): ехать нельзя вообще — только на эвакуаторе.', en: '“Desfavorable” (serious defects): you may only drive to the garage and back to the ITV, with 2 months to repair — not “2 months of free driving”. “Negativa” (very serious defects): no driving at all — tow truck only.' },
         hint: { ru: 'Не прошёл — в ремонт и назад.', en: 'Failed — fix it and come back.' },
         ref: 'RD 920/2017 (ITV)'
       },

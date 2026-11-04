@@ -1,11 +1,12 @@
 // Official DGT questions from the magazine «Tráfico y Seguridad Vial», supplement «¿Aprobaría usted el examen?»
 // (50 preguntas, selección de la Subdirección Adjunta de Conocimiento Vial, DGT). Spanish wording and answers are DGT's;
-// translations, explanations and hints are ours. Left out: three items that need the magazine's picture and one outdated
-// item (overtaking 20 km/h above the limit, abolished in 2019). Loaded after the topic files: it adds to their questions.
+// translations, explanations and hints are ours; pictures (img/dgt/dgt-test-NN.jpg) are the magazine's. Left out: one
+// outdated item, nº 47 (overtaking 20 km/h above the limit, abolished in 2019). Loaded after the topic files.
 ECA.data.addDgtQuestions({
   prioridad: [
     {
       id: 'of-14', source: 'dgt',
+      img: 'img/dgt/dgt-test-14.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 14', en: 'Picture for DGT question 14' },
       es: 'Se ve obligado a trasladar en su turismo a un herido. ¿Debe respetar las normas de circulación?',
       tr: { ru: 'Вам пришлось везти раненого на своей машине. Нужно ли соблюдать правила движения?', en: 'You have to take an injured person in your car. Must you follow the traffic rules?' },
       options: [
@@ -20,6 +21,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-16', source: 'dgt',
+      img: 'img/dgt/dgt-test-16.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 16', en: 'Picture for DGT question 16' },
       es: 'En los estrechamientos en tramos de gran pendiente, si no hay señalización expresa al efecto, tendrá la preferencia de paso el vehículo que circule en sentido…',
       tr: { ru: 'В узком месте на крутом уклоне без знаков приоритет у машины, которая едет…', en: 'At a narrowing on a steep slope with no signs, priority goes to the vehicle travelling…' },
       options: [
@@ -34,9 +36,9 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-24', source: 'dgt',
-      es: 'En una glorieta regulada exclusivamente por la señal de intersección con circulación giratoria, ¿quién tiene prioridad de paso?',
-      tr: { ru: 'На кольце, где стоит только знак «Пересечение с круговым движением», у кого приоритет?', en: 'At a roundabout marked only by the “roundabout ahead” sign, who has priority?' },
-      img: 'img/dgt/senal-p4.svg', alt: { ru: 'Знак P-4', en: 'Sign P-4' },
+      img: 'img/dgt/dgt-test-24.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 24', en: 'Picture for DGT question 24' },
+      es: 'En una glorieta regulada exclusivamente por esta señal, ¿quién tiene prioridad de paso?',
+      tr: { ru: 'На кольце, где стоит только этот знак (круговое движение), у кого приоритет?', en: 'At a roundabout regulated only by this sign (roundabout), who has priority?' },
       options: [
         { es: 'Siempre el vehículo que tenga libre su derecha.', ru: 'Всегда тот, у кого свободно справа.', en: 'Always the vehicle with a clear right.' },
         { es: 'El vehículo que pretende acceder a la glorieta.', ru: 'Тот, кто хочет въехать на кольцо.', en: 'The vehicle trying to enter.' },
@@ -51,7 +53,8 @@ ECA.data.addDgtQuestions({
   senales: [
     {
       id: 'of-23', source: 'dgt',
-      es: 'En una vía, la separación entre los trazos de la línea discontinua es sensiblemente más corta que en el caso general; ¿qué puede anunciar?',
+      img: 'img/dgt/dgt-test-23.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 23', en: 'Picture for DGT question 23' },
+      es: 'En esta vía, la separación entre los trazos de la línea discontinua es sensiblemente más corta que en el caso general; ¿qué puede anunciar?',
       tr: { ru: 'Промежутки между штрихами прерывистой линии заметно короче обычного. О чём это может предупреждать?', en: 'The gaps in a broken line are noticeably shorter than usual. What can this announce?' },
       options: [
         { es: 'La proximidad de una travesía.', ru: 'Близость участка дороги через город.', en: 'A road through a town ahead.' },
@@ -64,7 +67,8 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 167'
     },
     {
-      id: 'of-25', source: 'dgt',
+      id: 'of-26', source: 'dgt',
+      img: 'img/dgt/dgt-test-26.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 26', en: 'Picture for DGT question 26' },
       es: 'Las señales horizontales o marcas viales de color blanco, ¿tienen el mismo significado que las señales verticales?',
       tr: { ru: 'Имеет ли белая дорожная разметка такое же значение, как дорожные знаки?', en: 'Do white road markings have the same meaning as vertical signs?' },
       options: [
@@ -78,24 +82,70 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 165'
     },
     {
-      id: 'of-26', source: 'dgt',
-      es: 'En una intersección con señal de stop no hay línea de detención; ¿dónde hay que detenerse?',
-      tr: { ru: 'На перекрёстке со знаком «Стоп» нет стоп-линии. Где останавливаться?', en: 'At a junction with a Stop sign there is no stop line. Where must you stop?' },
-      img: 'img/dgt/senal-r2.svg', alt: { ru: 'Знак R-2', en: 'Sign R-2' },
+      id: 'of-25', source: 'dgt',
+      img: 'img/dgt/dgt-test-25.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 25', en: 'Picture for DGT question 25' },
+      es: 'En esta intersección no hay línea de detención; ¿dónde hay que detenerse?',
+      tr: { ru: 'На этом перекрёстке нет стоп-линии. Где нужно останавливаться?', en: 'There is no stop line at this junction. Where must you stop?' },
       options: [
         { es: 'Antes de entrar en la intersección.', ru: 'Перед въездом на перекрёсток.', en: 'Before entering the junction.' },
         { es: 'A una distancia mínima de 5 metros antes de la intersección.', ru: 'Минимум за 5 м до перекрёстка.', en: 'At least 5 m before the junction.' },
         { es: 'Dentro de la intersección.', ru: 'Внутри перекрёстка.', en: 'Inside the junction.' }
       ],
       answer: 0,
-      explain: { ru: 'Без стоп-линии останавливаются непосредственно перед перекрёстком, там, откуда видно дорогу. «5 метров» — ловушка.', en: 'Without a stop line, stop just before the junction where you can see. “5 metres” is a trap.' },
+      explain: { ru: 'Без стоп-линии останавливаются непосредственно перед перекрёстком (и перед пешеходным переходом), там, откуда видно дорогу. «5 метров» — ловушка.', en: 'Without a stop line, stop just before the junction (and before the crossing), where you can see. “5 metres” is a trap.' },
       hint: { ru: 'Стоп — там, откуда видно.', en: 'Stop where you can see.' },
       ref: 'RGC, art. 151'
+    },
+    {
+      id: 'of-27', source: 'dgt',
+      img: 'img/dgt/dgt-test-27.jpg', alt: { ru: 'Регулировщик стоит, вытянув руки в стороны', en: 'An officer standing with both arms stretched out sideways' },
+      es: 'A la vista de la señal que realiza el agente, ¿cuándo podrá reanudar la marcha?',
+      tr: { ru: 'Регулировщик подаёт этот сигнал. Когда можно продолжить движение?', en: 'Seeing this officer’s signal, when may you move on?' },
+      options: [
+        { es: 'Cuando baje los brazos.', ru: 'Когда он опустит руки.', en: 'When he lowers his arms.' },
+        { es: 'Solo cuando cambie de posición o efectúe otra señal.', ru: 'Только когда он сменит положение или подаст другой сигнал.', en: 'Only when he changes position or gives another signal.' },
+        { es: 'Solo cuando lo indique con otra señal.', ru: 'Только когда покажет это другим сигналом.', en: 'Only when he indicates it with another signal.' }
+      ],
+      answer: 1,
+      explain: { ru: 'Вытянутые в стороны руки — стоп для тех, кто подъезжает поперёк линии рук. Сигнал действует, даже если руки опущены, пока регулировщик не повернётся или не подаст другой сигнал.', en: 'Arms out sideways mean stop for those approaching across the arms’ line. It stays in force even with arms lowered, until the officer turns or gives another signal.' },
+      hint: { ru: 'Руки — шлагбаум, и он не поднимается от того, что руки устали.', en: 'The arms are a barrier — tired arms don’t lift it.' },
+      ref: 'RGC, art. 143'
+    },
+    {
+      id: 'of-28', source: 'dgt',
+      img: 'img/dgt/dgt-test-28.jpg', alt: { ru: 'Синий знак с изображением въезда в туннель', en: 'A blue sign showing a tunnel entrance' },
+      es: 'Esta señal, ¿puede indicar el principio de un paso inferior?',
+      tr: { ru: 'Может ли этот знак обозначать начало путепровода (проезда под другой дорогой)?', en: 'Can this sign mark the start of an underpass?' },
+      options: [
+        { es: 'No, indica únicamente el principio de un túnel.', ru: 'Нет, только начало туннеля.', en: 'No, only the start of a tunnel.' },
+        { es: 'Sí, y también el principio de un túnel o de un tramo equiparado a túnel.', ru: 'Да, а также начало туннеля или участка, приравненного к туннелю.', en: 'Yes, and also a tunnel or a stretch treated as a tunnel.' },
+        { es: 'No, indica el final de un túnel o paso inferior.', ru: 'Нет, это конец туннеля или путепровода.', en: 'No, it marks the end of a tunnel or underpass.' }
+      ],
+      answer: 1,
+      explain: { ru: 'Знак S-5 «Туннель» ставят перед туннелем, путепроводом или участком, приравненным к туннелю; там действуют правила туннеля (свет, дистанция, без обгона и разворота).', en: 'Sign S-5 “Tunnel” is placed before a tunnel, underpass or a stretch treated as a tunnel; tunnel rules apply (lights, distance, no overtaking or U-turns).' },
+      hint: { ru: 'Под дорогой — значит «как туннель».', en: 'Under a road counts as a tunnel.' },
+      ref: 'RGC, art. 159'
+    },
+    {
+      id: 'of-29', source: 'dgt',
+      img: 'img/dgt/dgt-test-29.jpg', alt: { ru: 'Круглый знак с красной каймой: «2 m» между двумя стрелками, направленными друг к другу', en: 'A red-rimmed round sign: “2 m” between two arrows pointing inwards' },
+      es: 'La señal prohíbe el paso a los vehículos…',
+      tr: { ru: 'Этот знак запрещает проезд машинам…', en: 'This sign prohibits vehicles…' },
+      options: [
+        { es: 'cuya anchura máxima, incluida la carga, supere la indicada.', ru: '…ширина которых вместе с грузом больше указанной.', en: '…whose width, including load, exceeds the figure.' },
+        { es: 'cuya altura máxima, incluida la carga, supere la indicada.', ru: '…высота которых вместе с грузом больше указанной.', en: '…whose height, including load, exceeds the figure.' },
+        { es: 'cuya longitud máxima, incluida la carga, supere la indicada.', ru: '…длина которых вместе с грузом больше указанной.', en: '…whose length, including load, exceeds the figure.' }
+      ],
+      answer: 0,
+      explain: { ru: 'Стрелки по бокам, направленные друг к другу, — ограничение ширины (R-203). Стрелки сверху и снизу — высота, спереди и сзади грузовика — длина.', en: 'Arrows at the sides pointing inwards limit width (R-203). Top and bottom arrows limit height; arrows front and back of a lorry limit length.' },
+      hint: { ru: 'Стрелки «сжимают» с боков — ширина.', en: 'Arrows squeeze from the sides — width.' },
+      ref: 'RGC, art. 153'
     }
   ],
   velocidad: [
     {
       id: 'of-09', source: 'dgt',
+      img: 'img/dgt/dgt-test-09.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 9', en: 'Picture for DGT question 9' },
       es: '¿A qué velocidad máxima puede circular por una autopista un turismo que arrastra un remolque ligero?',
       tr: { ru: 'С какой максимальной скоростью легковая с лёгким прицепом может ехать по автописте?', en: 'What is the top speed on a motorway for a car towing a light trailer?' },
       options: [
@@ -110,7 +160,8 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-22', source: 'dgt',
-      es: 'Circula con su turismo detrás de un camión por una vía interurbana con un carril para cada sentido; si no pretende adelantarlo, ¿qué distancia de seguridad debe dejar?',
+      img: 'img/dgt/dgt-test-22.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 22', en: 'Picture for DGT question 22' },
+      es: 'Circula con su turismo por esta vía interurbana con un carril para cada sentido; si no pretende adelantar al camión, ¿qué distancia de seguridad debe dejar?',
       tr: { ru: 'Вы едете за грузовиком по загородной дороге с одной полосой в каждую сторону и не собираетесь его обгонять. Какую дистанцию держать?', en: 'You’re behind a lorry on a rural road with one lane each way and don’t intend to overtake. What gap should you keep?' },
       options: [
         { es: '150 metros.', ru: '150 м.', en: '150 m.' },
@@ -124,6 +175,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-31', source: 'dgt',
+      img: 'img/dgt/dgt-test-31.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 31', en: 'Picture for DGT question 31' },
       es: 'Los excesos de velocidad…',
       tr: { ru: 'Превышение скорости…', en: 'Speeding…' },
       options: [
@@ -139,7 +191,8 @@ ECA.data.addDgtQuestions({
   ],
   maniobras: [
     {
-      id: 'of-03', source: 'dgt',
+      id: 'of-05', source: 'dgt',
+      img: 'img/dgt/dgt-test-05.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 5', en: 'Picture for DGT question 5' },
       es: 'En un túnel con un carril para cada sentido de circulación, ¿está permitido adelantar?',
       tr: { ru: 'Можно ли обгонять в туннеле с одной полосой в каждую сторону?', en: 'May you overtake in a tunnel with one lane in each direction?' },
       options: [
@@ -154,6 +207,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-04', source: 'dgt',
+      img: 'img/dgt/dgt-test-04.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 4', en: 'Picture for DGT question 4' },
       es: 'Como norma general, ¿dónde está prohibido adelantar?',
       tr: { ru: 'Где, как правило, запрещён обгон?', en: 'As a rule, where is overtaking prohibited?' },
       options: [
@@ -167,7 +221,8 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 87'
     },
     {
-      id: 'of-05', source: 'dgt',
+      id: 'of-03', source: 'dgt',
+      img: 'img/dgt/dgt-test-03.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 3', en: 'Picture for DGT question 3' },
       es: '¿Qué es una detención?',
       tr: { ru: 'Что такое «detención» (вынужденная остановка)?', en: 'What is a “detención”?' },
       options: [
@@ -182,7 +237,8 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-50', source: 'dgt',
-      es: 'Al adelantar a un vehículo de dos ruedas, ¿qué separación lateral de seguridad es obligatorio dejar?',
+      img: 'img/dgt/dgt-test-50.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 50', en: 'Picture for DGT question 50' },
+      es: 'Al adelantar a este vehículo de dos ruedas, ¿qué separación lateral de seguridad es obligatorio dejar?',
       tr: { ru: 'Какой боковой интервал обязателен при обгоне двухколёсного?', en: 'What side gap is compulsory when overtaking a two-wheeler?' },
       options: [
         { es: 'Aquella que le permita realizar el adelantamiento sin ocupar nunca el carril contiguo de la calzada.', ru: 'Такой, чтобы обогнать, не заезжая на соседнюю полосу.', en: 'One that lets you pass without ever entering the next lane.' },
@@ -198,6 +254,7 @@ ECA.data.addDgtQuestions({
   via: [
     {
       id: 'of-10', source: 'dgt',
+      img: 'img/dgt/dgt-test-10.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 10', en: 'Picture for DGT question 10' },
       es: 'La utilización del carril habilitado para VAO…',
       tr: { ru: 'Использование полосы VAO…', en: 'Use of the VAO (high-occupancy) lane…' },
       options: [
@@ -212,6 +269,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-13', source: 'dgt',
+      img: 'img/dgt/dgt-test-13.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 13', en: 'Picture for DGT question 13' },
       es: 'A un turismo, ¿cuándo le está permitido circular por el arcén?',
       tr: { ru: 'Когда легковой можно ехать по обочине?', en: 'When may a car drive on the hard shoulder?' },
       options: [
@@ -226,6 +284,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-15', source: 'dgt',
+      img: 'img/dgt/dgt-test-15.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 15', en: 'Picture for DGT question 15' },
       es: 'Como norma general, en una vía interurbana que no dispone de zona peatonal, ¿por qué lado deben circular los peatones?',
       tr: { ru: 'По какой стороне загородной дороги без тротуара обычно идут пешеходы?', en: 'On a rural road with no footway, which side should pedestrians walk on?' },
       options: [
@@ -240,6 +299,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-37', source: 'dgt',
+      img: 'img/dgt/dgt-test-37.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 37', en: 'Picture for DGT question 37' },
       es: 'Las autovías y las autopistas, en general, son en relación con las carreteras convencionales…',
       tr: { ru: 'Автовии и автописты по сравнению с обычными дорогами в целом…', en: 'Compared with conventional roads, motorways are generally…' },
       options: [
@@ -256,6 +316,7 @@ ECA.data.addDgtQuestions({
   luces: [
     {
       id: 'of-07', source: 'dgt',
+      img: 'img/dgt/dgt-test-07.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 7', en: 'Picture for DGT question 7' },
       es: 'La luz antiniebla trasera deberá utilizarse en caso de…',
       tr: { ru: 'Задний противотуманный фонарь включают при…', en: 'The rear fog light must be used in…' },
       options: [
@@ -270,6 +331,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-08', source: 'dgt',
+      img: 'img/dgt/dgt-test-08.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 8', en: 'Picture for DGT question 8' },
       es: 'Un turismo que circula entre la puesta y la salida del sol, ¿debe llevar iluminadas las placas de matrícula?',
       tr: { ru: 'Должны ли быть освещены номерные знаки у легковой, которая едет от заката до рассвета?', en: 'Must a car driving between sunset and sunrise have its number plates lit?' },
       options: [
@@ -284,6 +346,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-18', source: 'dgt',
+      img: 'img/dgt/dgt-test-18.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 18', en: 'Picture for DGT question 18' },
       es: 'Circulando por autopista, prevé que su vehículo va a quedar inmovilizado por circunstancias del tráfico; ¿cómo deberá advertirlo?',
       tr: { ru: 'На автописте вы видите, что сейчас встанете из-за затора. Как предупредить едущих сзади?', en: 'On a motorway you see you’re about to stop because of traffic. How should you warn others?' },
       options: [
@@ -297,7 +360,8 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 109'
     },
     {
-      id: 'of-33', source: 'dgt',
+      id: 'of-34', source: 'dgt',
+      img: 'img/dgt/dgt-test-34.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 34', en: 'Picture for DGT question 34' },
       es: 'Las lámparas de xenón…',
       tr: { ru: 'Ксеноновые лампы…', en: 'Xenon lamps…' },
       options: [
@@ -314,6 +378,7 @@ ECA.data.addDgtQuestions({
   documentacion: [
     {
       id: 'of-01', source: 'dgt',
+      img: 'img/dgt/dgt-test-01.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 1', en: 'Picture for DGT question 1' },
       es: 'Conducir, con un permiso de la clase B, un turismo que arrastra un remolque ligero, ¿está permitido?',
       tr: { ru: 'Можно ли с правами B водить легковую с лёгким прицепом?', en: 'With a B licence, may you drive a car towing a light trailer?' },
       options: [
@@ -328,6 +393,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-02', source: 'dgt',
+      img: 'img/dgt/dgt-test-02.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 2', en: 'Picture for DGT question 2' },
       es: 'Si realiza una reforma de importancia en un vehículo, ¿es obligatorio pasar una inspección técnica extraordinaria?',
       tr: { ru: 'Если вы серьёзно переделали машину, нужен ли внеочередной техосмотр?', en: 'After a major modification to a vehicle, is an extra technical inspection compulsory?' },
       options: [
@@ -342,6 +408,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-20', source: 'dgt',
+      img: 'img/dgt/dgt-test-20.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 20', en: 'Picture for DGT question 20' },
       es: 'Arrojar un cigarro por la ventanilla de un turismo, ¿puede suponer una infracción?',
       tr: { ru: 'Выбросить сигарету из окна машины — это нарушение?', en: 'Can throwing a cigarette out of a car window be an offence?' },
       options: [
@@ -358,6 +425,7 @@ ECA.data.addDgtQuestions({
   conductor: [
     {
       id: 'of-36', source: 'dgt',
+      img: 'img/dgt/dgt-test-36.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 36', en: 'Picture for DGT question 36' },
       es: 'Conducir con sueño, ¿por qué es peligroso?',
       tr: { ru: 'Почему опасно вести машину сонным?', en: 'Why is driving while sleepy dangerous?' },
       options: [
@@ -371,7 +439,8 @@ ECA.data.addDgtQuestions({
       ref: 'DGT, Manual básico, tema 3'
     },
     {
-      id: 'of-39', source: 'dgt',
+      id: 'of-43', source: 'dgt',
+      img: 'img/dgt/dgt-test-43.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 43', en: 'Picture for DGT question 43' },
       es: 'Hablar por un teléfono con dispositivo de manos libres durante la conducción…',
       tr: { ru: 'Разговор по телефону через громкую связь за рулём…', en: 'Talking on a hands-free phone while driving…' },
       options: [
@@ -386,6 +455,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-40', source: 'dgt',
+      img: 'img/dgt/dgt-test-40.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 40', en: 'Picture for DGT question 40' },
       es: 'Un conductor que es requerido por los agentes para una prueba de alcoholemia, ¿está obligado a someterse a ella?',
       tr: { ru: 'Обязан ли водитель пройти тест на алкоголь, если этого требует полицейский?', en: 'Must a driver take an alcohol test when asked by officers?' },
       options: [
@@ -399,7 +469,8 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 21'
     },
     {
-      id: 'of-42', source: 'dgt',
+      id: 'of-44', source: 'dgt',
+      img: 'img/dgt/dgt-test-44.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 44', en: 'Picture for DGT question 44' },
       es: 'Un conductor novel, ¿puede sentirse fatigado más fácilmente?',
       tr: { ru: 'Может ли водитель-новичок уставать быстрее?', en: 'Can a novice driver tire more easily?' },
       options: [
@@ -413,7 +484,8 @@ ECA.data.addDgtQuestions({
       ref: 'DGT, Manual básico, tema 3'
     },
     {
-      id: 'of-44', source: 'dgt',
+      id: 'of-42', source: 'dgt',
+      img: 'img/dgt/dgt-test-42.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 42', en: 'Picture for DGT question 42' },
       es: 'La persona que conduce bajo los efectos de las drogas…',
       tr: { ru: 'Человек, который ведёт машину под действием наркотиков…', en: 'A person driving under the influence of drugs…' },
       options: [
@@ -428,6 +500,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-45', source: 'dgt',
+      img: 'img/dgt/dgt-test-45.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 45', en: 'Picture for DGT question 45' },
       es: 'Tomar un analgésico para el dolor de cabeza, ¿puede afectar a la conducción?',
       tr: { ru: 'Может ли обезболивающее от головной боли повлиять на вождение?', en: 'Can taking a painkiller for a headache affect driving?' },
       options: [
@@ -444,6 +517,7 @@ ECA.data.addDgtQuestions({
   seguridad: [
     {
       id: 'of-06', source: 'dgt',
+      img: 'img/dgt/dgt-test-06.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 6', en: 'Picture for DGT question 6' },
       es: 'Si por cualquier circunstancia tuviera que realizar la operación de descarga de su vehículo dentro de la vía pública, ¿cómo deberá hacerlo?',
       tr: { ru: 'Если пришлось разгружать машину прямо на дороге, как это делать?', en: 'If you must unload your vehicle on the public road, how should you do it?' },
       options: [
@@ -457,7 +531,8 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 16'
     },
     {
-      id: 'of-32', source: 'dgt',
+      id: 'of-35', source: 'dgt',
+      img: 'img/dgt/dgt-test-35.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 35', en: 'Picture for DGT question 35' },
       es: '¿Es recomendable la utilización de los reposacabezas en todos los asientos de un turismo?',
       tr: { ru: 'Рекомендуется ли использовать подголовники на всех сиденьях легковой?', en: 'Is it advisable to use head restraints in every seat of a car?' },
       options: [
@@ -472,6 +547,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-38', source: 'dgt',
+      img: 'img/dgt/dgt-test-38.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 38', en: 'Picture for DGT question 38' },
       es: 'Los sistemas de seguridad pasiva incluyen…',
       tr: { ru: 'К системам пассивной безопасности относятся…', en: 'Passive safety systems include…' },
       options: [
@@ -486,6 +562,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-49', source: 'dgt',
+      img: 'img/dgt/dgt-test-49.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 49', en: 'Picture for DGT question 49' },
       es: 'En un turismo con cinco plazas, como norma general, ¿en qué asiento debe viajar un niño de tres años?',
       tr: { ru: 'На каком месте пятиместной легковой, как правило, должен ехать трёхлетний ребёнок?', en: 'In a five-seat car, as a rule, where should a three-year-old sit?' },
       options: [
@@ -501,7 +578,8 @@ ECA.data.addDgtQuestions({
   ],
   conduccion: [
     {
-      id: 'of-11', source: 'dgt',
+      id: 'of-12', source: 'dgt',
+      img: 'img/dgt/dgt-test-12.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 12', en: 'Picture for DGT question 12' },
       es: 'Si queda inmovilizado por una emergencia en un túnel, deberá…',
       tr: { ru: 'Если ваша машина встала в туннеле из-за чрезвычайной ситуации, нужно…', en: 'If you are stopped by an emergency in a tunnel, you must…' },
       options: [
@@ -516,6 +594,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-41', source: 'dgt',
+      img: 'img/dgt/dgt-test-41.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 41', en: 'Picture for DGT question 41' },
       es: 'Circulando en un día de calor…',
       tr: { ru: 'В жаркий день…', en: 'Driving on a hot day…' },
       options: [
@@ -531,7 +610,8 @@ ECA.data.addDgtQuestions({
   ],
   mecanica: [
     {
-      id: 'of-12', source: 'dgt',
+      id: 'of-11', source: 'dgt',
+      img: 'img/dgt/dgt-test-11.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 11', en: 'Picture for DGT question 11' },
       es: 'Antes de repostar combustible es necesario…',
       tr: { ru: 'Перед заправкой нужно…', en: 'Before refuelling you must…' },
       options: [
@@ -546,6 +626,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-17', source: 'dgt',
+      img: 'img/dgt/dgt-test-17.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 17', en: 'Picture for DGT question 17' },
       es: 'Un turismo con cortinillas contra el sol en las ventanillas traseras, ¿puede circular?',
       tr: { ru: 'Может ли ездить легковая со шторками от солнца на задних окнах?', en: 'May a car with sun blinds on the rear windows be driven?' },
       options: [
@@ -560,6 +641,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-19', source: 'dgt',
+      img: 'img/dgt/dgt-test-19.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 19', en: 'Picture for DGT question 19' },
       es: '¿Cómo se deben regular los espejos en los vehículos?',
       tr: { ru: 'Как регулировать зеркала?', en: 'How should mirrors be adjusted?' },
       options: [
@@ -573,7 +655,8 @@ ECA.data.addDgtQuestions({
       ref: 'DGT, Manual básico, tema 6'
     },
     {
-      id: 'of-35', source: 'dgt',
+      id: 'of-32', source: 'dgt',
+      img: 'img/dgt/dgt-test-32.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 32', en: 'Picture for DGT question 32' },
       es: 'La presión de los neumáticos deberá comprobarse con los neumáticos…',
       tr: { ru: 'Давление в шинах проверяют на шинах…', en: 'Tyre pressure should be checked with the tyres…' },
       options: [
@@ -590,6 +673,7 @@ ECA.data.addDgtQuestions({
   accidentes: [
     {
       id: 'of-21', source: 'dgt',
+      img: 'img/dgt/dgt-test-21.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 21', en: 'Picture for DGT question 21' },
       es: 'En caso de un accidente donde la ayuda ya está organizada, ¿debe detenerse a prestar auxilio?',
       tr: { ru: 'Нужно ли останавливаться у ДТП, где помощь уже организована?', en: 'At a crash where help is already organised, must you stop to help?' },
       options: [
@@ -603,7 +687,8 @@ ECA.data.addDgtQuestions({
       ref: 'RGC, art. 129'
     },
     {
-      id: 'of-34', source: 'dgt',
+      id: 'of-33', source: 'dgt',
+      img: 'img/dgt/dgt-test-33.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 33', en: 'Picture for DGT question 33' },
       es: '¿Es conveniente circular en paralelo junto a un vehículo de dos ruedas?',
       tr: { ru: 'Стоит ли ехать рядом (параллельно) с двухколёсным?', en: 'Is it advisable to ride alongside a two-wheeler?' },
       options: [
@@ -617,7 +702,8 @@ ECA.data.addDgtQuestions({
       ref: 'DGT, Manual básico, tema 16'
     },
     {
-      id: 'of-43', source: 'dgt',
+      id: 'of-39', source: 'dgt',
+      img: 'img/dgt/dgt-test-39.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 39', en: 'Picture for DGT question 39' },
       es: 'Los accidentes de tráfico generan…',
       tr: { ru: 'ДТП приводят к…', en: 'Road crashes cause…' },
       options: [
@@ -634,6 +720,7 @@ ECA.data.addDgtQuestions({
   eficiente: [
     {
       id: 'of-30', source: 'dgt',
+      img: 'img/dgt/dgt-test-30.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 30', en: 'Picture for DGT question 30' },
       es: 'Para ahorrar carburante, ¿qué debe hacer?',
       tr: { ru: 'Что делать, чтобы сэкономить топливо?', en: 'What should you do to save fuel?' },
       options: [
@@ -650,6 +737,7 @@ ECA.data.addDgtQuestions({
   motos: [
     {
       id: 'of-46', source: 'dgt',
+      img: 'img/dgt/dgt-test-46.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 46', en: 'Picture for DGT question 46' },
       es: 'El conductor de una motocicleta que cuenta con estructura de autoprotección y cinturón de seguridad, ¿está obligado a utilizar casco?',
       tr: { ru: 'Должен ли надевать шлем водитель мотоцикла с защитным каркасом и ремнём безопасности?', en: 'Must the rider of a motorbike with a protective cell and seat belt wear a helmet?' },
       options: [
@@ -664,6 +752,7 @@ ECA.data.addDgtQuestions({
     },
     {
       id: 'of-48', source: 'dgt',
+      img: 'img/dgt/dgt-test-48.jpg', alt: { ru: 'Иллюстрация к вопросу DGT 48', en: 'Picture for DGT question 48' },
       es: 'Cuando el casco no tiene pantalla de protección, ¿es conveniente ponerse unas gafas de seguridad?',
       tr: { ru: 'Если у шлема нет визора, стоит ли надевать защитные очки?', en: 'If the helmet has no visor, should you wear safety goggles?' },
       options: [
