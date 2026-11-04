@@ -94,6 +94,23 @@
     });
   }
 
+  // Driving-theory questions (DGT): question order and option order shuffled, texts kept in every language,
+  // so one attempt survives a RU/EN switch. `count` takes the first n after shuffling (the mock exam takes 30).
+  function fromDgt(questions, opts) {
+    opts = opts || {};
+    var rng = opts.rng || Math.random;
+    var list = shuffle(questions || [], rng);
+    if (opts.count > 0) list = list.slice(0, opts.count);
+    return list.map(function (item) {
+      var order = shuffle(item.options.map(function (_, i) { return i; }), rng);
+      var q = {};
+      for (var k in item) q[k] = item[k];
+      q.options = order.map(function (i) { return item.options[i]; });
+      q.answer = order.indexOf(item.answer);
+      return q;
+    });
+  }
+
   // Deterministic random source (mulberry32): one seed gives the same quiz in RU and EN.
   function seeded(seed) {
     var a = seed >>> 0;
@@ -155,7 +172,7 @@
   }
 
   ECA.quiz = {
-    fromVocab: fromVocab, fromGrammar: fromGrammar, shuffle: shuffle, seeded: seeded,
+    fromVocab: fromVocab, fromGrammar: fromGrammar, fromDgt: fromDgt, shuffle: shuffle, seeded: seeded,
     session: session, attempt: attempt, finish: finish, keyAction: keyAction
   };
 })(typeof window !== 'undefined' ? window : globalThis);

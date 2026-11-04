@@ -770,6 +770,87 @@ check('4-column tables fit a 375px screen without scrolling inside', async (page
   assert.deepEqual(over, []);
 }, { width: 375 });
 
+// ---------- driving theory (DGT) ----------
+
+check('DGT hub: header link opens it and is marked current; topic row, exam card, EN switch', async (page) => {
+  await page.goto(url + '#/a1');
+  await page.click('[data-nav="dgt"]');
+  await page.waitForSelector('.dgt-hero');
+  assert.equal(await page.getAttribute('[data-nav="dgt"]', 'aria-current'), 'page');
+  assert.equal(await page.getAttribute('[data-nav="es"]', 'aria-current'), null);
+  assert.equal(await page.locator('.topic-row').count(), await page.evaluate(() => ECA.data.dgt().length));
+  assert.ok(await page.locator('a[href="#/dgt/examen"]').count());
+  await page.click('[data-lang="en"]');
+  assert.match(await page.textContent('h1'), /driving/i);
+  await noHorizontalScroll(page, 'dgt hub');
+}, { width: 320 });
+
+check('DGT topic: every tab renders, images load, unknown tab falls back to the first', async (page) => {
+  await page.goto(url + '#/dgt');
+  for (const topic of await page.evaluate(() => ECA.data.dgt().map((t) => ({ id: t.id, tabs: t.tabs.map((x) => x.id) })))) {
+    await page.goto(url + '#/dgt/' + topic.id + '/nope');
+    await page.waitForSelector(`#tab-${topic.tabs[0]}[aria-selected="true"]`);
+    assert.equal(await page.evaluate(() => location.hash), '#/dgt/' + topic.id);
+    for (const tab of topic.tabs) {
+      await page.click('#tab-' + tab);
+      assert.ok(await page.locator('#dgt-panel .gblock').count(), topic.id + '/' + tab + ': blocks');
+      const broken = await page.evaluate(() => Promise.all([...document.querySelectorAll('#dgt-panel img')].map((img) => {
+        img.loading = 'eager';
+        return img.decode().then(() => null, () => img.getAttribute('src'));
+      })));
+      assert.deepEqual(broken.filter(Boolean), [], 'images');
+      await noHorizontalScroll(page, topic.id + '/' + tab);
+    }
+  }
+}, { width: 375, colorScheme: 'dark' });
+
+check('DGT practice: answer shows explanation, hint and rule; finishing records the score; translation toggle', async (page) => {
+  await page.goto(url + '#/dgt/prioridad/test');
+  await page.click('.dgt-quiz .btn--primary');
+  assert.ok(await page.locator('.dgt-option__tr').count(), 'translation on by default');
+  await page.click('.dgt-tr-toggle');
+  assert.equal(await page.locator('.dgt-option__tr').count(), 0, 'translation off');
+  await page.click('.dgt-tr-toggle');
+  await page.locator('.dgt-option').first().click();
+  assert.ok(await page.locator('.feedback .dgt-ref').count(), 'rule reference');
+  assert.ok(await page.locator('.feedback .dgt-hint').count(), 'memory hint');
+  await page.locator('[data-next]').click();
+  for (let i = 0; i < 60 && (await page.locator('#dgt-result').count()) === 0; i++) {
+    await page.keyboard.press('1');
+    await page.keyboard.press('Enter');
+  }
+  assert.match(await page.textContent('#dgt-result'), /\d+ из \d+/);
+  assert.ok(await page.evaluate(() => ECA.store.best('dgt:prioridad')), 'score stored');
+  await page.goto(url + '#/dgt');
+  assert.ok(await page.locator('.topic-row .badge--score').count(), 'hub shows the score');
+});
+
+check('DGT exam: 30 questions, choice can change, back works, result with review; timer runs out', async (page) => {
+  await page.goto(url + '#/dgt/examen');
+  await page.click('.dgt-quiz .btn--primary');
+  assert.match(await page.textContent('.dgt-quiz .grammar-quiz__progress'), /из 30/);
+  await page.locator('.dgt-option').nth(0).click();
+  await page.locator('.dgt-option').nth(1).click();
+  assert.equal(await page.locator('.dgt-option.is-picked').count(), 1, 'one pick, changeable');
+  assert.equal(await page.locator('.dgt-option.is-correct, .dgt-option.is-wrong').count(), 0, 'nothing revealed');
+  await page.locator('[data-next]').click();
+  await page.getByRole('button', { name: 'Назад' }).click();
+  assert.equal(await page.getAttribute('.dgt-option.is-picked', 'aria-pressed'), 'true');
+  for (let i = 0; i < 30; i++) await page.locator('[data-next]').click();
+  assert.match(await page.textContent('#dgt-result'), /из 30/);
+  assert.ok(await page.locator('.dgt-review__item').count() >= 1, 'review of mistakes');
+  // time out: move the start back past 30 minutes and repaint
+  await page.click('.dgt-quiz .btn--primary');
+  await page.evaluate(() => { ECA.__t = Date.now; Date.now = () => ECA.__t() + 31 * 60000; });
+  await page.waitForSelector('#dgt-result', { timeout: 3000 });
+}, { width: 375 });
+
+check('DGT unknown topic: "no such topic" with a way back to the section', async (page) => {
+  await page.goto(url + '#/dgt/nope');
+  assert.equal(await page.textContent('h1'), 'Такой темы нет');
+  assert.equal(await page.getAttribute('.notfound .btn--primary', 'href'), '#/dgt');
+});
+
 // ---------- motion: drawn outline, scroll parallax ----------
 
 // State of the drawn outline inside `selector` (first match): two paths, their dash offset and end points.
@@ -870,7 +951,11 @@ async function shots(browser) {
     ['tabbed-conj', async (p) => { await p.goto(url + TABBED + '/conj'); await p.locator('.conj-card .mini-tab').nth(1).click(); }],
     ['tabbed-irreg', async (p) => p.goto(url + TABBED + '/irreg')],
     ['tabbed-keys', async (p) => p.goto(url + TABBED + '/keys')],
-    ['tabbed-test', async (p) => { await p.goto(url + TABBED + '/test'); await p.locator('.grammar-quiz .btn--primary').click(); }]
+    ['tabbed-test', async (p) => { await p.goto(url + TABBED + '/test'); await p.locator('.grammar-quiz .btn--primary').click(); }],
+    ['dgt-hub', async (p) => p.goto(url + '#/dgt')],
+    ['dgt-signs', async (p) => p.goto(url + '#/dgt/prioridad/senales')],
+    ['dgt-practice', async (p) => { await p.goto(url + '#/dgt/prioridad/test'); await p.locator('.dgt-quiz .btn--primary').click(); await p.locator('.dgt-option').first().click(); }],
+    ['dgt-exam', async (p) => { await p.goto(url + '#/dgt/examen'); await p.locator('.dgt-quiz .btn--primary').click(); }]
   ];
   for (const scheme of ['light', 'dark']) {
     for (const width of [375, 1280]) {

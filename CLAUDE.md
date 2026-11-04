@@ -1,18 +1,18 @@
 <!-- autopilot:start -->
 # Español con amigos — сайт для изучения испанского
 
-Статический сайт без сборки: грамматика (тема-страница с нумерованными вкладками + тест последней вкладкой) и слова (карточки, тест, список) по уровням A1–C2 для русско- и англоязычных учеников; интерфейс RU/EN, прогресс в `localStorage`. Работает с `file://` и с GitHub Pages (`.nojekyll`). Вид — как у старых страниц автора (`archive/*.html`): navy-hero со штриховкой, янтарный акцент, бумажный фон.
+Статический сайт без сборки: грамматика (тема-страница с нумерованными вкладками + тест последней вкладкой) и слова (карточки, тест, список) по уровням A1–C2 для русско- и англоязычных учеников; плюс раздел «Права в Испании» (`#/dgt`) — теория экзамена DGT (A, B): вопросы на испанском с переводом, объяснением, подсказкой и статьёй Reglamento, пробный экзамен; интерфейс RU/EN, прогресс в `localStorage`. Работает с `file://` и с GitHub Pages (`.nojekyll`). Вид — как у старых страниц автора (`archive/*.html`): navy-hero со штриховкой, янтарный акцент, бумажный фон.
 
 ## Команды
 
 | Команда | Что делает |
 |---------|------------|
 | открыть `index.html` в браузере | Запустить сайт, сервер не нужен |
-| `node --test tests/` | Все юнит-тесты (54) через `tests/index.js` |
+| `node --test tests/` | Все юнит-тесты (59) через `tests/index.js` |
 | `node --test tests/store.test.js` | Один файл тестов |
 | `node tools/icons.js` | Пересобрать `js/icons.js` (иконки Phosphor Duotone, которые темы слов называют в `icon`); качает `@phosphor-icons/core` через `npm pack` |
-| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28» или список ошибок и код 1 |
-| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 41 браузерный сценарий по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
+| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28, тем DGT 1 (вопросов 43)» или список ошибок и код 1 |
+| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 46 браузерных сценариев по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
 | `npx -y -p playwright@1.63.0 node tools/screenshot.js "$TMPDIR/eca-shots" '#/a1' '#/a2/grammar/a2-perfecto-indefinido/conj'` | Скриншоты 375/1280 × светлая/тёмная; код 1 при горизонтальном скролле или ошибке в консоли |
 | `npx -y playwright@1.63.0 install chromium` | Поставить браузер, если Playwright его не нашёл |
 
@@ -21,9 +21,10 @@
 ```
 index.html     единственная страница: шапка, #screen, футер; шрифты Google Fonts; фиксирует порядок всех <script>
 js/            data, i18n, store, quiz, icons (генерируется tools/icons.js) — без DOM; ui.js — DOM-хелперы и реестр экранов; app.js — роутер
-js/views/      экраны: level.js (уровень), vocab.js (тема слов), grammar.js (тема грамматики + ECA.grammarBlocks)
-data/          контент: levels.js, vocab-<lvl>.js, grammar-<lvl>.js (+ grammar-a2-more.js, grammar-b1-more.js)
-css/           base.css — токены, общие компоненты и компоненты блоков грамматики; vocab.css, grammar.css — экраны
+js/views/      экраны: level.js (уровень), vocab.js (тема слов), grammar.js (тема грамматики + ECA.grammarBlocks), dgt.js (права: хаб, тема, экзамен)
+data/          контент: levels.js, vocab-<lvl>.js, grammar-<lvl>.js (+ grammar-a2-more.js, grammar-b1-more.js), dgt-<тема>.js
+img/dgt/       картинки раздела прав: знаки и схемы (svg, свои), фото и рисунки из пособия DGT
+css/           base.css — токены, общие компоненты и компоненты блоков грамматики; vocab.css, grammar.css, dgt.css — экраны
 tests/         node:test, *.test.js; index.js — точка входа для `node --test tests/`
 tools/         только для разработки: validate-content.js, icons.js, e2e.js, screenshot.js
 archive/       старые HTML-страницы грамматики (образец стиля); PORT-CHECKLIST.md — что куда перенесено; сайт их не подключает
@@ -50,7 +51,8 @@ CONTENT.md     инструкция автора контента: слова, �
 - `ECA.store` — один JSON в `localStorage['eca:v1']`: `prefs` (`lang`, `theme`, `level`), `learned` (ключ `topicId|es`), `scores` (ключи `words:<id>`, `grammar:<id>` → лучший `{score,total}`); `recordScore` → `true` при новом рекорде; `resetProgress` сохраняет `lang` и `theme`; без хранилища — `onUnavailable` показывает заметку в футере.
 - `ECA.quiz`: `fromVocab` — 10 вопросов, направления es→язык и язык→es чередуются, отвлекающие варианты — из той же темы, затем из других тем уровня; `fromGrammar` — вопросы из `topic.quiz` с перемешанными вариантами.
 - `Question = { prompt, promptLang, es?, options (3–4), optionsLang, answer (индекс), explain? }`.
-- Маршруты: `#/<lvl>` · `#/<lvl>/words/<id>` · `#/<lvl>/words/<id>/quiz` · `#/<lvl>/grammar/<id>` · `#/<lvl>/grammar/<id>/<tab>`; в URL `a1`…`c2`, внутри `A1`…`C2`.
+- Маршруты: `#/<lvl>` · `#/<lvl>/words/<id>` · `#/<lvl>/words/<id>/quiz` · `#/<lvl>/grammar/<id>` · `#/<lvl>/grammar/<id>/<tab>`; в URL `a1`…`c2`, внутри `A1`…`C2`. Права: `#/dgt` (экран `dgt`) · `#/dgt/examen` (`dgt-exam`) · `#/dgt/<id>[/<tab>]` (`dgt-topic`) — без уровня, `pref('level')` не трогают; шапка — `nav.site-nav` с `aria-current` у раздела.
+- Права (`js/views/dgt.js`): `ECA.data.addDgt/dgt()/find('dgt', id)`; `quiz.fromDgt(questions, {rng, count})` перемешивает вопросы и варианты, тексты на всех языках (смена языка не пересобирает тест); тренировка — `quiz.session` с ключом `dgt:<id>`, экзамен — свои `picks` (ответ можно менять, «Назад»), 30 вопросов / 30 минут / ≤ 3 ошибок, ключ `dgt:exam`; зачёт темы — 90 %; перевод вопросов — `pref('dgtTr')` (`off` прячет).
 - Вкладка грамматики: id вкладки из данных или `test` (тест, всегда последняя); нет вкладки → первая; неизвестная → первая и адрес чистится `replaceState`; переключение — `replaceState` (без записи в историю).
 - Пустой hash → `store.pref('level')` или `A1` через `replaceState`; неразобранный адрес → «Такой страницы нет»; темы нет или её `level` ≠ уровню из URL → «Такой темы нет»; экран бросил исключение → «Что-то пошло не так»; экран не зарегистрирован → «скоро».
 - Экран: `ECA.views.register(name, render(container, ctx))`, имена `level`, `words` (и `/quiz`: `ctx.route.tab === 'quiz'`), `grammar` (`ctx.route.tab` — id вкладки или `null`).

@@ -22,7 +22,7 @@ test('the two dark-theme blocks (system and toggle) declare the same tokens', ()
 
 test('component rules use colour tokens only: no hex / rgb() literals outside the token blocks', () => {
   const tokenBlocks = /:root(?::not\(\[data-theme="light"\]\)|\[data-theme="dark"\])?\s*\{[^}]*\}/g;
-  for (const f of ['base.css', 'vocab.css', 'grammar.css']) {
+  for (const f of ['base.css', 'vocab.css', 'grammar.css', 'dgt.css']) {
     const rules = read(f).replace(tokenBlocks, '').split('}');
     const bad = rules.filter((r) => COLOR.test(r)).map((r) => r.trim().split('{')[0].trim());
     assert.deepEqual(bad, [], f);

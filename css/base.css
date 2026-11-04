@@ -291,6 +291,22 @@ a, button, label, summary {
 }
 .brand__accent { color: var(--hero-accent); }
 .site-controls { display: flex; align-items: center; gap: var(--space-2); }
+/* site sections: Spanish / Driving test */
+.site-nav { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-pill);
+  color: var(--hero-ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+.site-nav__link:hover { background: var(--hero-faint); }
+.site-nav__link[aria-current="page"] { background: var(--hero-accent); border-color: var(--hero-accent); color: var(--hero-on-accent); }
 .tagline {
   margin-top: var(--space-2);
   color: var(--hero-soft);

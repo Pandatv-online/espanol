@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/vocab.css">
   <link rel="stylesheet" href="css/grammar.css">
+  <link rel="stylesheet" href="css/dgt.css">
 
   <!-- Order matters: shared modules, data, helpers, views, app (see interfaces). -->
   <script src="js/data.js"></script>
@@ -46,10 +47,12 @@
   <script src="data/grammar-b2.js"></script>
   <script src="data/grammar-c1.js"></script>
   <script src="data/grammar-c2.js"></script>
+  <script src="data/dgt-prioridad.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/views/level.js"></script>
   <script src="js/views/vocab.js"></script>
   <script src="js/views/grammar.js"></script>
+  <script src="js/views/dgt.js"></script>
   <script src="js/app.js"></script>
 </head>
 <body>
@@ -74,6 +77,10 @@
     </div>
     <div class="wrap">
       <p class="tagline" data-i18n="site.tagline">Учите испанские слова и грамматику по уровням, от A1 до C2.</p>
+      <nav class="site-nav" aria-label="Разделы сайта" data-i18n-aria="nav.label">
+        <a class="site-nav__link" href="#/" data-nav="es" data-i18n="nav.es">Испанский</a>
+        <a class="site-nav__link" href="#/dgt" data-nav="dgt" data-i18n="nav.dgt">Права в Испании</a>
+      </nav>
     </div>
   </header>
 

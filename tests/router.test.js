@@ -20,3 +20,11 @@ test('parseRoute: anything else is notfound (keeping a valid level for the way b
   assert.deepEqual(parseRoute('#/a2/grammar/x/test/more'), { name: 'notfound', level: 'A2' });
   assert.deepEqual(parseRoute('#main'), { name: 'notfound', level: null });
 });
+
+test('parseRoute: driving-theory section (#/dgt)', () => {
+  assert.deepEqual(parseRoute('#/dgt'), { name: 'dgt', level: null });
+  assert.deepEqual(parseRoute('#/dgt/examen'), { name: 'dgt-exam', level: null });
+  assert.deepEqual(parseRoute('#/dgt/prioridad'), { name: 'dgt-topic', level: null, topicId: 'prioridad', tab: null });
+  assert.deepEqual(parseRoute('#/dgt/prioridad/test'), { name: 'dgt-topic', level: null, topicId: 'prioridad', tab: 'test' });
+  assert.deepEqual(parseRoute('#/dgt/prioridad/test/x'), { name: 'notfound', level: null, dgt: true });
+});

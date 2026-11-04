@@ -1,0 +1,92 @@
+/* Driving theory (DGT) screens. Uses tokens and components from base.css and grammar.css. */
+
+.dgt-hero .hero__sub { margin-inline: auto; }
+.dgt-exam-card { display: grid; gap: var(--space-3); margin-block: var(--space-6) var(--space-2); }
+.dgt-exam-card .grammar-quiz__title, .dgt-exam-card p { margin: 0; }
+.badge--cat { background: var(--sun-soft); color: var(--amber-ink); font-weight: 700; letter-spacing: 0.02em; }
+
+.dgt-soon { margin-top: var(--space-4); color: var(--ink-soft); font-size: 0.9375rem; max-width: 66ch; }
+.dgt-disclaimer { margin-top: var(--space-7); color: var(--ink-soft); font-size: 0.875rem; max-width: 66ch; line-height: 1.6; }
+
+/* ---------- figures and signs inside the topic ---------- */
+.dgt-figure { margin: 0; display: grid; gap: var(--space-2); justify-items: start; }
+.dgt-figure img {
+  display: block;
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--white);
+}
+.dgt-figure figcaption { display: grid; gap: 2px; color: var(--ink-soft); font-size: 0.875rem; max-width: 60ch; }
+.dgt-figure__credit { font-size: 0.75rem; }
+
+.sign-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+.sign-card {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface);
+}
+.sign-card__img { flex: none; width: 4rem; height: 4rem; object-fit: contain; }
+.sign-card__text { display: grid; gap: var(--space-1); min-width: 0; }
+.sign-card__name { margin: 0; font-weight: 700; color: var(--heading); line-height: 1.35; }
+.sign-card__code {
+  display: inline-block;
+  padding: 0 0.4em;
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.sign-card__meaning { margin: 0; color: var(--ink-soft); font-size: 0.9375rem; line-height: 1.5; }
+
+/* ---------- questions ---------- */
+.dgt-quiz { margin-top: 0; }
+.dgt-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3); }
+.dgt-bar .grammar-quiz__progress { margin: 0; }
+.dgt-tr-toggle { min-height: 36px; padding-inline: var(--space-3); font-size: 0.8125rem; }
+.dgt-clock { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--heading); }
+
+.dgt-q { display: grid; gap: var(--space-4); min-width: 0; }
+.dgt-q__img {
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--white);
+}
+.dgt-q__img--sign { width: 7rem; padding: var(--space-2); }
+.dgt-q__prompt { gap: var(--space-1); }
+.dgt-q__tr { margin: 0; color: var(--ink-soft); font-size: 0.9375rem; line-height: 1.5; }
+
+.dgt-option { gap: var(--space-3); }
+.dgt-option__text { display: grid; gap: 2px; min-width: 0; }
+.dgt-option__es { overflow-wrap: anywhere; }
+.dgt-option__tr { color: var(--ink-soft); font-size: 0.875rem; font-weight: 400; line-height: 1.4; }
+.option.is-picked { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 4px 0 0 var(--sun); }
+.option.is-picked .grammar-option__key { background: var(--accent); color: var(--accent-ink); }
+
+.dgt-hint { margin: 0; padding: var(--space-2) var(--space-3); border-radius: var(--radius-s); background: var(--sun-soft); color: var(--ink); font-weight: 400; line-height: 1.5; }
+.dgt-hint b { color: var(--amber-ink); }
+.dgt-ref { margin: 0; color: var(--ink-soft); font-size: 0.8125rem; font-weight: 400; }
+
+/* ---------- review of mistakes ---------- */
+.dgt-review { display: grid; gap: var(--space-3); }
+.dgt-review .group-title { margin-top: var(--space-4); }
+.dgt-review__list { margin: 0; padding-left: 1.4rem; display: grid; gap: var(--space-4); }
+.dgt-review__item { display: grid; gap: var(--space-1); }
+.dgt-review__item p { margin: 0; }
+.dgt-review__q { font-weight: 700; color: var(--heading); }
+.dgt-review__yours { color: var(--bad); }
+.dgt-review__right { color: var(--ok); }
+.dgt-review__explain { line-height: 1.55; }
+.dgt-hero + .dgt-quiz { margin-top: var(--space-5); }

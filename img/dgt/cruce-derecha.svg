@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><title>Intersección sin señalizar: usted y un turismo que llega por su derecha</title>
+<rect width="240" height="240" fill="#dfe8d6"/>
+<rect x="88" y="0" width="64" height="240" fill="#8d9298"/><rect x="0" y="88" width="240" height="64" fill="#8d9298"/>
+<g stroke="#fff" stroke-width="2" stroke-dasharray="10 8"><path d="M120 0 V86 M120 154 V240 M0 120 H86 M154 120 H240"/></g>
+<g stroke="#fff" stroke-width="3"><path d="M120 156 H152 M88 84 H120 M84 120 V152 M156 88 V120"/></g>
+<g><rect x="125" y="176" width="22" height="38" rx="6" fill="#1d5fc4"/><rect x="128" y="182" width="16" height="9" rx="2" fill="#cfe2ff"/></g>
+<path d="M136 172 V160" stroke="#1d5fc4" stroke-width="3" marker-end="url(#a)"/>
+<g><rect x="178" y="93" width="38" height="22" rx="6" fill="#d6141f"/><rect x="180" y="96" width="9" height="16" rx="2" fill="#ffd9d9"/></g>
+<path d="M174 104 H160" stroke="#d6141f" stroke-width="3" marker-end="url(#b)"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#1d5fc4"/></marker><marker id="b" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d6141f"/></marker></defs>
+<text x="136" y="232" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="14" fill="#1a1a1a">TÚ</text>
+</svg>

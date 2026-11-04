@@ -9,6 +9,12 @@
     if (path === '') return { name: 'level', level: null };
     if (hash && String(hash).charAt(1) !== '/' && String(hash).charAt(0) === '#') return { name: 'notfound', level: null };
     var parts = path.split('/').map(function (p) { try { return decodeURIComponent(p); } catch (e) { return p; } });
+    if (parts[0] === 'dgt') {
+      if (parts.length === 1) return { name: 'dgt', level: null };
+      if (parts.length === 2 && parts[1] === 'examen') return { name: 'dgt-exam', level: null };
+      if (parts[1] && parts.length <= 3 && (parts.length === 2 || parts[2])) return { name: 'dgt-topic', level: null, topicId: parts[1], tab: parts[2] || null };
+      return { name: 'notfound', level: null, dgt: true };
+    }
     if (!LEVEL_RE.test(parts[0])) return { name: 'notfound', level: null };
     var level = parts[0].toUpperCase();
     if (parts.length === 1) return { name: 'level', level: level };
@@ -46,6 +52,11 @@
       'notfound.topic': 'Такой темы нет',
       'notfound.text': 'Возможно, ссылка устарела или в ней опечатка.',
       'notfound.toLevel': 'К уровню {level}',
+      'notfound.toDgt': 'К разделу «Права»',
+      'nav.label': 'Разделы сайта',
+      'nav.es': 'Испанский',
+      'nav.dgt': 'Права в Испании',
+      'nav.dgtExam': 'Пробный экзамен DGT',
       'error.title': 'Что-то пошло не так',
       'error.text': 'Эта страница не открылась из-за ошибки. Обновите страницу или выберите другую тему.'
     },
@@ -67,6 +78,11 @@
       'notfound.topic': 'This topic doesn’t exist',
       'notfound.text': 'The link may be outdated or mistyped.',
       'notfound.toLevel': 'Go to level {level}',
+      'notfound.toDgt': 'Go to Driving test',
+      'nav.label': 'Site sections',
+      'nav.es': 'Spanish',
+      'nav.dgt': 'Driving test',
+      'nav.dgtExam': 'DGT mock exam',
       'error.title': 'Something went wrong',
       'error.text': 'This page failed to open because of an error. Reload the page or pick another topic.'
     }
@@ -131,12 +147,38 @@
     document.getElementById('storage-note').hidden = store.available;
   }
 
-  function notFound(container, levelId, kind) {
+  function notFound(container, levelId, kind, dgt) {
     var lvl = levelId || defaultLevel();
     container.appendChild(ui.el('section', { class: 'notfound' }, [
       ui.screenHead({ title: i18n.t(kind === 'topic' ? 'notfound.topic' : 'notfound.page'), lead: i18n.t('notfound.text') }),
-      ui.el('a', { class: 'btn btn--primary', href: ui.href(lvl), text: i18n.t('notfound.toLevel', { level: lvl }) })
+      dgt ? ui.el('a', { class: 'btn btn--primary', href: '#/dgt', text: i18n.t('notfound.toDgt') })
+        : ui.el('a', { class: 'btn btn--primary', href: ui.href(lvl), text: i18n.t('notfound.toLevel', { level: lvl }) })
     ]));
+  }
+
+  // Driving-theory screens live outside the levels: their own hub, topics and the mock exam.
+  function renderDgt(route, ctx) {
+    var view = ECA.views.get(route.name);
+    if (route.name === 'dgt-topic') {
+      ctx.topic = data.find('dgt', route.topicId);
+      if (!ctx.topic) { notFound(screenEl, null, 'topic', true); return null; }
+    }
+    try {
+      if (view) view(screenEl, ctx); else notFound(screenEl, null, 'page', true);
+    } catch (e) {
+      if (root.console) console.error(e);
+      ui.clear(screenEl);
+      notFound(screenEl, null, 'page', true);
+    }
+    return ctx.topic ? i18n.pick(ctx.topic.title) : i18n.t(route.name === 'dgt-exam' ? 'nav.dgtExam' : 'nav.dgt');
+  }
+
+  function paintNav(route) {
+    var dgt = /^dgt/.test(route.name) || !!route.dgt;
+    document.querySelectorAll('[data-nav]').forEach(function (a) {
+      var on = a.getAttribute('data-nav') === (dgt ? 'dgt' : 'es');
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
   }
 
   function soon(container, ctx) {
@@ -164,7 +206,8 @@
     }
 
     // A grammar tab lives in the address, but the screen state (e.g. a test in progress) belongs to the topic.
-    var key = route.name === 'grammar' ? [route.level, route.topicId].join('/') : hash;
+    var key = route.name === 'grammar' ? [route.level, route.topicId].join('/')
+      : route.name === 'dgt-topic' ? 'dgt/' + route.topicId : hash;
     var sameScreen = prev && prev.key === key;
     var state = sameScreen ? prev.state : {};
     current = { hash: hash, key: key, route: route, state: state };
@@ -173,8 +216,14 @@
     var ctx = { route: route, levelId: route.level, level: level, topic: null, state: state, rerender: !!opts.rerender };
 
     ui.clear(screenEl);
+    paintNav(route);
     var title = 'Español con amigos';
-    if (route.name !== 'notfound' && !level) {
+    if (/^dgt/.test(route.name)) {
+      var dgtTitle = renderDgt(route, ctx);
+      if (dgtTitle) title = dgtTitle + ' | ' + title;
+    } else if (route.dgt) {
+      notFound(screenEl, null, 'page', true);
+    } else if (route.name !== 'notfound' && !level) {
       notFound(screenEl, null, 'page');
     } else if (route.name === 'notfound') {
       notFound(screenEl, level ? level.id : null, 'page');

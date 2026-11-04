@@ -17,8 +17,16 @@ const CYRILLIC = /[\u0400-\u04FF]/;
 const CELL_MAX = 30;
 const EXAMPLES_MIN = 20;
 const COLORS = ['blue', 'amber', 'teal', 'coral', 'purple'];
+// Driving theory (DGT)
+const DGT_CATS = ['A', 'B'];
+const DGT_TABS_MAX = 6;
+const DGT_QUESTIONS_MIN = 10;
+const DGT_CELL_MAX = 48;
+const DGT_IMG = /^img\/dgt\/[a-z0-9-]+\.(svg|png|jpe?g|webp)$/;
+const DGT_RESERVED = ['examen'];
 
-function validate(ECA) {
+function validate(ECA, opts) {
+  opts = opts || {};
   const errors = [];
   const data = ECA && ECA.data;
   if (!data) return ['ECA.data is missing'];
@@ -131,12 +139,12 @@ function validate(ECA) {
         });
       });
     }),
-    table: (w, b, f) => {
+    table: (w, b, f, max = CELL_MAX) => {
       const head = list(w, `${f}.head`, b.head);
-      head.forEach((c, ci) => { if (c !== '') cell(w, `${f}.head[${ci}]`, c, CELL_MAX); });
+      head.forEach((c, ci) => { if (c !== '') cell(w, `${f}.head[${ci}]`, c, max); });
       list(w, `${f}.rows`, b.rows).forEach((r, ri) => {
         if (!Array.isArray(r) || r.length !== head.length) report(w, `${f}.rows[${ri}]`, `в строке должно быть ${head.length} ячеек`);
-        (Array.isArray(r) ? r : []).forEach((c, ci) => { if (c !== '') cell(w, `${f}.rows[${ri}][${ci}]`, c, CELL_MAX); });
+        (Array.isArray(r) ? r : []).forEach((c, ci) => { if (c !== '') cell(w, `${f}.rows[${ri}][${ci}]`, c, max); });
       });
     },
     markers: (w, b, f) => each(w, `${f}.groups`, b.groups, (g0, g) => {
@@ -204,7 +212,86 @@ function validate(ECA) {
       quizCheck(where, topic);
     });
   });
+  if (typeof data.dgt === 'function') (data.dgt() || []).forEach((topic, ti) => dgtTopic(['DGT', topic && topic.id ? topic.id : 'тема #' + (ti + 1)], topic));
   return errors;
+
+  // An image path under img/dgt/; with opts.rootDir the file must exist.
+  function dgtImg(where, field, src) {
+    if (typeof src !== 'string' || !DGT_IMG.test(src)) return report(where, field, `путь к картинке «${src}» — нужно img/dgt/<имя>.svg|png|jpg|webp`);
+    if (opts.rootDir && !fs.existsSync(path.join(opts.rootDir, src))) report(where, field, `файла ${src} нет`);
+  }
+
+  // Driving theory topic: tabs of grammar blocks plus figure/signs, and Spanish exam-style questions.
+  function dgtTopic(where, topic) {
+    if (!topic || typeof topic !== 'object') return report(where, '', 'тема должна быть объектом');
+    if (!nonEmpty(topic.id) || !TAB_ID.test(topic.id)) report(where, 'id', 'нужен id из латиницы, цифр и дефиса');
+    else if (DGT_RESERVED.includes(topic.id)) report(where, 'id', `id «${topic.id}» занят адресом #/dgt/${topic.id}`);
+    else if (seenIds.has(topic.id)) report(where, 'id', 'id уже занят темой в ' + seenIds.get(topic.id));
+    else seenIds.set(topic.id, 'DGT');
+    both(where, topic.title, 'title');
+    if (topic.summary !== undefined) plainBoth(where, topic.summary, 'summary');
+    const cats = Array.isArray(topic.cats) ? topic.cats : [];
+    if (!cats.length || cats.some((c) => !DGT_CATS.includes(c))) report(where, 'cats', `категории — непустой список из ${DGT_CATS.join(', ')}`);
+    if (!topic.hero || typeof topic.hero !== 'object') report(where, 'hero', 'нужен hero: { es, sub: { ru, en } }');
+    else { spanishRich(where, 'hero.es', topic.hero.es); plainBoth(where, topic.hero.sub, 'hero.sub'); }
+
+    const tabs = Array.isArray(topic.tabs) ? topic.tabs : [];
+    if (!tabs.length || tabs.length > DGT_TABS_MAX) report(where, 'tabs', `вкладок ${tabs.length}, нужно 1–${DGT_TABS_MAX} (плюс «Тест»)`);
+    const tabIds = new Set();
+    tabs.forEach((tab, ti) => {
+      const f = `tabs[${ti}]`;
+      if (!tab || typeof tab !== 'object') return report(where, f, 'вкладка должна быть объектом');
+      if (!nonEmpty(tab.id) || !TAB_ID.test(tab.id)) report(where, `${f}.id`, 'нужен id из латиницы, цифр и дефиса');
+      else if (tab.id === 'test') report(where, `${f}.id`, 'id «test» занят вкладкой «Тест»');
+      else if (tabIds.has(tab.id)) report(where, `${f}.id`, `id «${tab.id}» повторяется`);
+      tabIds.add(tab.id);
+      both(where, tab.label, `${f}.label`);
+      if (tab.label) ['ru', 'en'].forEach((l) => {
+        if (nonEmpty(tab.label[l]) && tab.label[l].length > LABEL_MAX) report(where, `${f}.label.${l}`, `подпись длиннее ${LABEL_MAX} символов`);
+      });
+      list(where, `${f}.blocks`, tab.blocks).forEach((b, bi) => {
+        const bf = `${f}.blocks[${bi}]`;
+        if (!b || typeof b !== 'object') return report(where, bf, 'блок должен быть объектом');
+        if (b.heading !== undefined) both(where, b.heading, `${bf}.heading`);
+        if (b.type === 'figure') {
+          dgtImg(where, `${bf}.src`, b.src);
+          plainBoth(where, b.alt, `${bf}.alt`);
+          if (b.caption !== undefined) plainBoth(where, b.caption, `${bf}.caption`);
+          if (b.credit !== undefined && !nonEmpty(b.credit)) report(where, `${bf}.credit`, 'пустое поле');
+        } else if (b.type === 'signs') {
+          each(where, `${bf}.items`, b.items, (it, g) => {
+            dgtImg(where, `${g}.src`, it.src);
+            if (!nonEmpty(it.code)) report(where, `${g}.code`, 'нет кода знака (R-1, P-2…)');
+            trio(where, it, g);
+            spanish(where, `${g}.es`, it.es);
+          });
+        } else if (b.type === 'table') BLOCKS.table(where, b, bf, DGT_CELL_MAX);
+        else if (BLOCKS[b.type]) BLOCKS[b.type](where, b, bf);
+        else report(where, `${bf}.type`, `неизвестный тип блока «${b.type}» (можно: figure, signs, ${Object.keys(BLOCKS).join(', ')})`);
+      });
+    });
+
+    const qs = Array.isArray(topic.questions) ? topic.questions : [];
+    if (qs.length < DGT_QUESTIONS_MIN) report(where, 'questions', `вопросов ${qs.length}, нужно не меньше ${DGT_QUESTIONS_MIN}`);
+    qs.forEach((q, qi) => {
+      const f = `questions[${qi}]` + (q && nonEmpty(q.id) ? ` (${q.id})` : '');
+      if (!q || typeof q !== 'object') return report(where, f, 'вопрос должен быть объектом');
+      if (!nonEmpty(q.id) || !TAB_ID.test(q.id)) report(where, `${f}.id`, 'нужен id из латиницы, цифр и дефиса');
+      else if (seenIds.has('q:' + q.id)) report(where, `${f}.id`, 'id вопроса повторяется');
+      else seenIds.set('q:' + q.id, topic.id);
+      if (!nonEmpty(q.es)) report(where, `${f}.es`, 'нет вопроса на испанском'); else spanish(where, `${f}.es`, q.es);
+      plainBoth(where, q.tr, `${f}.tr`);
+      const o = Array.isArray(q.options) ? q.options : [];
+      if (o.length < 3 || o.length > 4) report(where, `${f}.options`, `вариантов ${o.length}, нужно 3–4`);
+      o.forEach((opt, oi) => { trio(where, opt, `${f}.options[${oi}]`); if (opt) spanish(where, `${f}.options[${oi}].es`, opt.es); });
+      if (new Set(o.map((opt) => String(opt && opt.es).trim())).size !== o.length) report(where, `${f}.options`, 'варианты повторяются');
+      if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer >= o.length) report(where, `${f}.answer`, `answer = ${q.answer}, а варианты пронумерованы 0–${Math.max(o.length - 1, 0)}`);
+      richBoth(where, q.explain, `${f}.explain`);
+      if (q.hint !== undefined) plainBoth(where, q.hint, `${f}.hint`);
+      if (!nonEmpty(q.ref)) report(where, `${f}.ref`, 'нет ссылки на правило (например «RGC, art. 57.1»)');
+      if (q.img !== undefined) { dgtImg(where, `${f}.img`, q.img); plainBoth(where, q.alt, `${f}.alt`); }
+    });
+  }
 
   function quizCheck(where, topic) {
       const quiz = Array.isArray(topic.quiz) ? topic.quiz : [];
@@ -291,7 +378,7 @@ if (require.main === module) {
     console.error('Файл данных не загрузился: ' + (e && e.stack ? e.stack.split('\n').slice(0, 3).join('\n') : e));
     process.exit(1);
   }
-  const errors = validate(result.ECA);
+  const errors = validate(result.ECA, { rootDir });
   result.missing.forEach((f) => errors.push(`${f} — файл не подключён в index.html, на сайте его не будет видно`));
   result.notFound.forEach((f) => errors.push(`${f} — подключён в index.html, но файла нет`));
   if (errors.length) {
@@ -302,7 +389,9 @@ if (require.main === module) {
   const levels = d.levels();
   const nVocab = levels.reduce((n, l) => n + d.vocab(l.id).length, 0);
   const nGrammar = levels.reduce((n, l) => n + d.grammar(l.id).length, 0);
-  console.log(`OK: уровней ${levels.length}, тем слов ${nVocab}, тем грамматики ${nGrammar}`);
+  const dgt = d.dgt ? d.dgt() : [];
+  const nDgtQ = dgt.reduce((n, t) => n + t.questions.length, 0);
+  console.log(`OK: уровней ${levels.length}, тем слов ${nVocab}, тем грамматики ${nGrammar}, тем DGT ${dgt.length} (вопросов ${nDgtQ})`);
 }
 
 module.exports = { validate, loadSite };
