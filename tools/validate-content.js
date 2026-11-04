@@ -53,6 +53,7 @@ function validate(ECA, opts) {
   const richText = (where, field, str) => {
     if (!nonEmpty(str)) return report(where, field, 'пустое поле');
     richTags(where, field, str);
+    if (/&[a-z#0-9]+;/i.test(str)) report(where, field, 'HTML-сущность (&gt; и т. п.) будет показана как текст — пишите символ или слово');
   };
   // { ru, en } where each side is a string or a list of paragraphs.
   const richBoth = (where, obj, field) => {
