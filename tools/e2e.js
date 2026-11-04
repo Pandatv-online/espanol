@@ -845,6 +845,31 @@ check('DGT exam: 30 questions, choice can change, back works, result with review
   await page.waitForSelector('#dgt-result', { timeout: 3000 });
 }, { width: 375 });
 
+check('DGT exam by category: B leaves out motorcycle-only questions, A includes them', async (page) => {
+  await page.goto(url + '#/dgt/examen');
+  const ids = await page.evaluate(() => ({
+    motos: ECA.data.find('dgt', 'motos').questions.map((q) => q.id)
+  }));
+  await page.getByRole('button', { name: /^B/ }).click();
+  await page.click('.dgt-quiz .btn--primary');
+  const examB = await page.evaluate(() => {
+    // the attempt lives in the screen state; read the questions back from the page data
+    return [...document.querySelectorAll('#dgt-prompt .grammar-question__es')].map((n) => n.textContent);
+  });
+  assert.ok(examB.length === 1);
+  const motoTexts = await page.evaluate((list) => list.map((id) => ECA.data.find('dgt', 'motos').questions.find((q) => q.id === id).es), ids.motos);
+  for (let i = 0; i < 30; i++) {
+    const es = await page.textContent('#dgt-prompt .grammar-question__es');
+    assert.ok(!motoTexts.includes(es), 'B exam must not include motorcycle-only questions: ' + es);
+    await page.locator('[data-next]').click();
+  }
+  await page.goto('about:blank');
+  await page.goto(url + '#/dgt/examen');
+  await page.getByRole('button', { name: /^A/ }).click();
+  assert.equal(await page.getAttribute('.dgt-cats .chip[aria-pressed="true"]', 'aria-pressed'), 'true');
+  assert.match(await page.textContent('.dgt-cats .chip[aria-pressed="true"]'), /^A/);
+});
+
 check('DGT unknown topic: "no such topic" with a way back to the section', async (page) => {
   await page.goto(url + '#/dgt/nope');
   assert.equal(await page.textContent('h1'), 'Такой темы нет');

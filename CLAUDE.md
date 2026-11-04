@@ -11,8 +11,8 @@
 | `node --test tests/` | Все юнит-тесты (59) через `tests/index.js` |
 | `node --test tests/store.test.js` | Один файл тестов |
 | `node tools/icons.js` | Пересобрать `js/icons.js` (иконки Phosphor Duotone, которые темы слов называют в `icon`); качает `@phosphor-icons/core` через `npm pack` |
-| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28, тем DGT 1 (вопросов 43)» или список ошибок и код 1 |
-| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 46 браузерных сценариев по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
+| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28, тем DGT 14 (вопросов 435)» или список ошибок и код 1 |
+| `npx -y -p playwright@1.63.0 node tools/e2e.js` | 47 браузерных сценариев по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
 | `npx -y -p playwright@1.63.0 node tools/screenshot.js "$TMPDIR/eca-shots" '#/a1' '#/a2/grammar/a2-perfecto-indefinido/conj'` | Скриншоты 375/1280 × светлая/тёмная; код 1 при горизонтальном скролле или ошибке в консоли |
 | `npx -y playwright@1.63.0 install chromium` | Поставить браузер, если Playwright его не нашёл |
 
