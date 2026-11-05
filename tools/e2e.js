@@ -81,7 +81,7 @@ check('first visit (ru browser): RU interface, A1 selected, hash #/a1', async (p
   assert.equal(await page.getAttribute('html', 'lang'), 'ru');
   assert.equal(new URL(page.url()).hash, '#/a1');
   // Level steps are navigation: real links (Cmd/middle-click work), the chosen one is aria-current.
-  assert.equal(await page.locator('nav.level-steps a.level-tile[href]').count(), 6);
+  assert.equal(await page.locator('nav .level-steps a.level-tile[href]').count(), 6);
   assert.equal(await page.getAttribute('[data-level="A1"]', 'aria-current'), 'page');
   assert.equal(await page.locator('.level-tile[aria-current="page"]').count(), 1);
   assert.equal(await page.getAttribute('[data-level="B1"]', 'href'), '#/b1');

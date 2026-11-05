@@ -8,6 +8,7 @@
       'level.pick': 'Уровень',
       'level.progress': 'Выучено {n} из {m} слов · тестов пройдено {k} из {l}',
       'level.progressDgt': 'Выучено {n} из {m} знаков · тестов пройдено {k} из {l}',
+      'level.trackNote': 'DGT, permiso B · теория, знаки, тесты',
       'level.signsLead': 'Все знаки из официального каталога (BOE, RD 465/2025): карточки, список и тест.',
       'level.topics': 'Тем: {n}',
       'level.current': '{code}, {name}'
@@ -16,6 +17,7 @@
       'level.pick': 'Level',
       'level.progress': 'Learned {n} of {m} words · tests passed {k} of {l}',
       'level.progressDgt': 'Learned {n} of {m} signs · tests passed {k} of {l}',
+      'level.trackNote': 'DGT, permiso B · theory, signs, tests',
       'level.signsLead': 'Every sign from the official catalogue (BOE, RD 465/2025): flashcards, list and test.',
       'level.topics': 'Topics: {n}',
       'level.current': '{code}, {name}'
@@ -24,9 +26,12 @@
 
   function levelPicker(activeId) {
     var el = ui.el;
+    var all = data.levels();
+    var cefr = all.filter(function (l) { return l.kind !== 'dgt'; });
+    var tracks = all.filter(function (l) { return l.kind === 'dgt'; });
     // Steps navigate, so they are links (Cmd/middle-click, copy address); the chosen one is aria-current.
-    return el('nav', { class: 'level-steps', 'aria-label': i18n.t('level.pick') },
-      data.levels().map(function (lvl, i) {
+    return el('nav', { class: 'level-nav', 'aria-label': i18n.t('level.pick') }, [
+      el('div', { class: 'level-steps' }, cefr.map(function (lvl, i) {
         var active = lvl.id === activeId;
         return ui.outline(el('a', {
           class: 'level-tile', href: ui.href(lvl.id), 'data-level': lvl.id, style: '--step:' + i,
@@ -35,7 +40,21 @@
           el('span', { class: 'level-tile__code', text: lvl.id }),
           el('span', { class: 'level-tile__name', text: i18n.pick(lvl.name) })
         ]));
-      }));
+      })),
+      // Separate tracks (the driving test) sit under the staircase: they are not a CEFR step.
+      tracks.length ? el('div', { class: 'track-row' }, tracks.map(function (lvl) {
+        return ui.outline(el('a', {
+          class: 'track-tile', href: ui.href(lvl.id), 'data-level': lvl.id,
+          'aria-current': lvl.id === activeId ? 'page' : null
+        }, [
+          ui.signImg('R-2', 'track-tile__icon', ''),
+          el('span', { class: 'track-tile__text' }, [
+            el('span', { class: 'track-tile__name', text: i18n.pick(lvl.name) }),
+            el('span', { class: 'track-tile__code', text: i18n.t('level.trackNote') })
+          ])
+        ]));
+      })) : null
+    ]);
   }
 
   // Word cards take turns through the old pages' category colours.

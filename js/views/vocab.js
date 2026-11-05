@@ -62,6 +62,8 @@
       'vocab.tab.quiz': 'Тест',
       'vocab.tab.list': 'Список слов',
       'vocab.lead': '{m} слов · выучено {n}',
+      'vocab.leadSigns': '{m} знаков · выучено {n} · официальный каталог BOE',
+      'vocab.tab.signList': 'Все знаки',
       'vocab.left': 'Осталось {n} из {m}',
       'vocab.flipHint': 'Нажмите, чтобы перевернуть',
       'vocab.signHint': 'Что означает этот знак? Нажмите, чтобы проверить',
@@ -112,6 +114,8 @@
       'vocab.tab.quiz': 'Test',
       'vocab.tab.list': 'Word list',
       'vocab.lead': '{m} words · {n} learned',
+      'vocab.leadSigns': '{m} signs · {n} learned · official BOE catalogue',
+      'vocab.tab.signList': 'All signs',
       'vocab.left': '{n} of {m} left',
       'vocab.flipHint': 'Tap to flip',
       'vocab.signHint': 'What does this sign mean? Tap to check',
@@ -214,7 +218,7 @@
       var head = ui.screenHead({
         back: ui.backLink(levelId, 'words'),
         title: i18n.pick(topic.title),
-        lead: t('vocab.lead', { m: topic.words.length, n: learned })
+        lead: t(topic.kind === 'signs' ? 'vocab.leadSigns' : 'vocab.lead', { m: topic.words.length, n: learned })
       });
       if (badges.length) head.appendChild(el('div', { class: 'vocab-badges' }, badges));
 
@@ -229,7 +233,7 @@
           items: [
             { id: 'cards', label: t('vocab.tab.cards') },
             { id: 'quiz', label: t('vocab.tab.quiz') },
-            { id: 'list', label: t('vocab.tab.list') }
+            { id: 'list', label: t(topic.kind === 'signs' ? 'vocab.tab.signList' : 'vocab.tab.list') }
           ]
         }),
         panel
