@@ -17,8 +17,17 @@ const CYRILLIC = /[\u0400-\u04FF]/;
 const CELL_MAX = 30;
 const EXAMPLES_MIN = 20;
 const COLORS = ['blue', 'amber', 'teal', 'coral', 'purple'];
+// DGT track (driving theory): question banks, sign pictures, fewer formal requirements.
+const DGT = 'DGT';
+const DGT_QUIZ_MIN = 10;
+const DGT_QUIZ_MAX = 300;
+const DGT_TABS_MIN = 2;
+const SIGN_CODE = /^[A-Z]{1,3}-\d+[a-z]?(\.\d+)?[a-z]?$/;
 
-function validate(ECA) {
+// opts.fileExists(relPath) → bool: when given, sign pictures and figures must exist on disk.
+function validate(ECA, opts) {
+  opts = opts || {};
+  const fileExists = typeof opts.fileExists === 'function' ? opts.fileExists : null;
   const errors = [];
   const data = ECA && ECA.data;
   if (!data) return ['ECA.data is missing'];
@@ -96,7 +105,27 @@ function validate(ECA) {
       spanish(where, field, c);
     }
   };
+  const signCode = (where, field, code) => {
+    if (!nonEmpty(code) || !SIGN_CODE.test(code)) return report(where, field, `код знака «${code}» — нужен вид P-1, R-101a, S-13`);
+    if (fileExists && !fileExists(`img/signs/${code}.png`)) report(where, field, `нет картинки img/signs/${code}.png`);
+  };
+  const imgPath = (where, field, src) => {
+    if (!nonEmpty(src) || !/^img\/[a-z0-9/_.-]+\.(svg|png|jpg|webp)$/i.test(src)) return report(where, field, `путь «${src}» — нужен относительный img/…(.svg|.png|.jpg|.webp)`);
+    if (fileExists && !fileExists(src)) report(where, field, `файла ${src} нет`);
+  };
   const BLOCKS = {
+    signs: (w, b, f) => list(w, `${f}.items`, b.items).forEach((it, i) => {
+      const g = `${f}.items[${i}]`;
+      if (typeof it === 'string') return signCode(w, g, it);
+      if (!it || typeof it !== 'object') return report(w, g, 'нужен код знака или { code, note: { ru, en } }');
+      signCode(w, `${g}.code`, it.code);
+      if (it.note !== undefined) richBoth(w, it.note, `${g}.note`);
+    }),
+    figure: (w, b, f) => {
+      imgPath(w, `${f}.src`, b.src);
+      plainBoth(w, b.alt, `${f}.alt`);
+      if (b.caption !== undefined) richBoth(w, b.caption, `${f}.caption`);
+    },
     text: (w, b, f) => { color(w, `${f}.color`, b.color, true); richBoth(w, b.body, `${f}.body`); },
     rules: (w, b, f) => each(w, `${f}.items`, b.items, (it, g) => {
       color(w, `${g}.color`, it.color);
@@ -176,6 +205,7 @@ function validate(ECA) {
       if (!topic || typeof topic !== 'object') return report(where, '', 'тема должна быть объектом');
       topicHead(where, topic, lvl.id);
       if (!nonEmpty(topic.icon)) report(where, 'icon', 'нет иконки');
+      else if (/^sign:/.test(topic.icon)) signCode(where, 'icon', topic.icon.slice(5));
       else if (ECA.icons && !ECA.icons[topic.icon]) report(where, 'icon', `иконки «${topic.icon}» нет в js/icons.js — пересоберите: node tools/icons.js`);
       const list = Array.isArray(topic.words) ? topic.words : [];
       if (list.length < MIN_WORDS) report(where, 'words', `слов ${list.length}, нужно не меньше ${MIN_WORDS}`);
@@ -191,6 +221,7 @@ function validate(ECA) {
           seenEs.add(key);
         }
         if (w.ex !== undefined) { withEx++; trio(where, w.ex, `${f}.ex`); }
+        if (w.sign !== undefined) signCode(where, `${f}.sign`, w.sign);
       });
       if (list.length && withEx * 2 < list.length) report(where, 'words', `примеры (ex) у ${withEx} из ${list.length} слов, нужно хотя бы у половины`);
     });
@@ -200,25 +231,44 @@ function validate(ECA) {
       if (!topic || typeof topic !== 'object') return report(where, '', 'тема должна быть объектом');
       topicHead(where, topic, lvl.id);
       if (topic.sections !== undefined) report(where, 'sections', 'старый формат sections не поддерживается — перенесите всё во вкладки (tabs)');
-      tabbedTopic(where, topic);
-      quizCheck(where, topic);
+      const dgt = lvl.id === DGT;
+      tabbedTopic(where, topic, dgt);
+      quizCheck(where, topic, dgt);
     });
   });
   return errors;
 
-  function quizCheck(where, topic) {
+  function quizCheck(where, topic, dgt) {
       const quiz = Array.isArray(topic.quiz) ? topic.quiz : [];
-      if (quiz.length < QUIZ_MIN || quiz.length > QUIZ_MAX) report(where, 'quiz', `вопросов ${quiz.length}, нужно ${QUIZ_MIN}–${QUIZ_MAX}`);
+      const [qMin, qMax] = dgt ? [DGT_QUIZ_MIN, DGT_QUIZ_MAX] : [QUIZ_MIN, QUIZ_MAX];
+      if (quiz.length < qMin || quiz.length > qMax) report(where, 'quiz', `вопросов ${quiz.length}, нужно ${qMin}–${qMax}`);
+      if (topic.quizCount !== undefined && (!Number.isInteger(topic.quizCount) || topic.quizCount < 5)) report(where, 'quizCount', 'quizCount — целое число от 5');
+      const seenQ = new Set();
       quiz.forEach((q, qi) => {
         const f = `quiz[${qi}]`;
         if (!q || typeof q !== 'object') return report(where, f, 'вопрос должен быть объектом');
         both(where, q.prompt, `${f}.prompt`);
         both(where, q.explain, `${f}.explain`);
         if (q.es !== undefined && !nonEmpty(q.es)) report(where, `${f}.es`, 'пустое поле');
+        if (dgt) {
+          if (!nonEmpty(q.es)) report(where, `${f}.es`, 'у вопроса DGT нужен испанский оригинал (es)');
+          else {
+            spanish(where, `${f}.es`, q.es);
+            const key = q.es.trim().toLowerCase();
+            if (seenQ.has(key)) report(where, `${f}.es`, 'такой вопрос уже есть в теме');
+            seenQ.add(key);
+          }
+          if (q.sign !== undefined) signCode(where, `${f}.sign`, q.sign);
+          if (q.img !== undefined) imgPath(where, `${f}.img`, q.img);
+        }
         const opts = Array.isArray(q.options) ? q.options : [];
+        const optEs = opts.map((o) => (o && typeof o === 'object' ? o.es : o));
         if (opts.length < 3 || opts.length > 4) report(where, `${f}.options`, `вариантов ${opts.length}, нужно 3–4`);
-        if (opts.some((o) => !nonEmpty(o))) report(where, `${f}.options`, 'пустой вариант');
-        if (new Set(opts.map((o) => String(o).trim())).size !== opts.length) report(where, `${f}.options`, 'варианты повторяются');
+        opts.forEach((o, oi) => {
+          if (o && typeof o === 'object') { trio(where, o, `${f}.options[${oi}]`); spanish(where, `${f}.options[${oi}].es`, o.es); }
+        });
+        if (optEs.some((o) => !nonEmpty(o))) report(where, `${f}.options`, 'пустой вариант');
+        if (new Set(optEs.map((o) => String(o).trim())).size !== opts.length) report(where, `${f}.options`, 'варианты повторяются');
         if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer >= opts.length) {
           report(where, `${f}.answer`, `answer = ${q.answer}, а варианты пронумерованы 0–${Math.max(opts.length - 1, 0)}`);
         }
@@ -226,7 +276,7 @@ function validate(ECA) {
   }
 
   // Tabbed format: hero + 4–6 tabs of typed blocks (see CONTENT.md, «Тема грамматики»).
-  function tabbedTopic(where, topic) {
+  function tabbedTopic(where, topic, dgt) {
     if (topic.summary !== undefined) both(where, topic.summary, 'summary');
     if (!topic.hero || typeof topic.hero !== 'object') report(where, 'hero', 'нужен hero: { es, sub: { ru, en } }');
     else {
@@ -235,7 +285,8 @@ function validate(ECA) {
     }
     if (!Array.isArray(topic.tabs)) return report(where, 'tabs', 'нет вкладок — нужен список tabs (см. CONTENT.md, «Тема грамматики»)');
     const tabs = topic.tabs;
-    if (tabs.length < TABS_MIN || tabs.length > TABS_MAX) report(where, 'tabs', `вкладок ${tabs.length}, нужно ${TABS_MIN}–${TABS_MAX} (плюс «Тест», его не описывают)`);
+    const tabsMin = dgt ? DGT_TABS_MIN : TABS_MIN;
+    if (tabs.length < tabsMin || tabs.length > TABS_MAX) report(where, 'tabs', `вкладок ${tabs.length}, нужно ${tabsMin}–${TABS_MAX} (плюс «Тест», его не описывают)`);
     const ids = new Set();
     let examples = 0;
     tabs.forEach((tab, ti) => {
@@ -261,7 +312,7 @@ function validate(ECA) {
         check(where, b, bf);
       });
     });
-    if (examples < EXAMPLES_MIN) report(where, 'examples', `примеров ${examples}, нужно не меньше ${EXAMPLES_MIN} (блоки type: 'examples')`);
+    if (!dgt && examples < EXAMPLES_MIN) report(where, 'examples', `примеров ${examples}, нужно не меньше ${EXAMPLES_MIN} (блоки type: 'examples')`);
   }
 }
 
@@ -291,7 +342,7 @@ if (require.main === module) {
     console.error('Файл данных не загрузился: ' + (e && e.stack ? e.stack.split('\n').slice(0, 3).join('\n') : e));
     process.exit(1);
   }
-  const errors = validate(result.ECA);
+  const errors = validate(result.ECA, { fileExists: (rel) => fs.existsSync(path.join(rootDir, rel)) });
   result.missing.forEach((f) => errors.push(`${f} — файл не подключён в index.html, на сайте его не будет видно`));
   result.notFound.forEach((f) => errors.push(`${f} — подключён в index.html, но файла нет`));
   if (errors.length) {

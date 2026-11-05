@@ -2,7 +2,7 @@
   'use strict';
   var ECA = (root.ECA = root.ECA || {});
 
-  var LEVEL_RE = /^[abc][12]$/i;
+  var LEVEL_RE = /^([abc][12]|dgt)$/i;
 
   function parseRoute(hash) {
     var path = String(hash || '').replace(/^#/, '').replace(/^\/+|\/+$/g, '');

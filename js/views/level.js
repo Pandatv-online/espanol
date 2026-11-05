@@ -7,12 +7,16 @@
     ru: {
       'level.pick': 'Уровень',
       'level.progress': 'Выучено {n} из {m} слов · тестов пройдено {k} из {l}',
+      'level.progressDgt': 'Выучено {n} из {m} знаков · тестов пройдено {k} из {l}',
+      'level.signsLead': 'Все знаки из официального каталога (BOE, RD 465/2025): карточки, список и тест.',
       'level.topics': 'Тем: {n}',
       'level.current': '{code}, {name}'
     },
     en: {
       'level.pick': 'Level',
       'level.progress': 'Learned {n} of {m} words · tests passed {k} of {l}',
+      'level.progressDgt': 'Learned {n} of {m} signs · tests passed {k} of {l}',
+      'level.signsLead': 'Every sign from the official catalogue (BOE, RD 465/2025): flashcards, list and test.',
       'level.topics': 'Topics: {n}',
       'level.current': '{code}, {name}'
     }
@@ -44,7 +48,7 @@
       el('span', { class: 'topic-card__icon', 'aria-hidden': 'true' }, ui.topicIcon(topic.icon)),
       el('span', { class: 'topic-card__title', text: i18n.pick(topic.title) }),
       el('span', { class: 'topic-card__meta' }, [
-        ui.badge(i18n.t('badge.words', { n: learned, m: topic.words.length }), learned && learned === topic.words.length ? 'done' : null)
+        ui.badge(i18n.t(topic.kind === 'signs' ? 'badge.signs' : 'badge.words', { n: learned, m: topic.words.length }), learned && learned === topic.words.length ? 'done' : null)
       ].concat(ui.quizBadges('words:' + topic.id), ui.doneBadge('words', topic) || []))
     ])));
   }
@@ -63,18 +67,19 @@
     ])));
   }
 
-  function section(key, count, body) {
+  function section(key, count, body, lead) {
     var id = 'section-' + key;
     return ui.el('section', { class: 'topic-section', 'aria-labelledby': id }, [
       ui.el('h2', { class: 'section-title', id: id }, [
         i18n.t('section.' + key),
         count ? ui.el('span', { class: 'section-title__count', text: String(count) }) : null
       ]),
+      lead ? ui.el('p', { class: 'section-lead', text: lead }) : null,
       body
     ]);
   }
 
-  function progressLine(levelId, vocab, grammar) {
+  function progressLine(levelId, vocab, grammar, dgt) {
     var total = 0, learned = 0, passed = 0;
     vocab.forEach(function (t) {
       total += t.words.length;
@@ -86,7 +91,7 @@
     return ui.el('div', { class: 'level-progress' }, [
       ui.el('div', { class: 'meter', 'aria-hidden': 'true' },
         ui.el('span', { class: 'meter__fill', style: 'width:' + (ratio * 100).toFixed(1) + '%' })),
-      ui.el('p', { class: 'level-progress__text', text: i18n.t('level.progress', { n: learned, m: total, k: passed, l: vocab.length + grammar.length }) })
+      ui.el('p', { class: 'level-progress__text', text: i18n.t(dgt ? 'level.progressDgt' : 'level.progress', { n: learned, m: total, k: passed, l: vocab.length + grammar.length }) })
     ]);
   }
 
@@ -95,6 +100,7 @@
     var level = ctx.level;
     var vocab = data.vocab(level.id);
     var grammar = data.grammar(level.id);
+    var dgt = level.kind === 'dgt';
 
     container.appendChild(el('section', { class: 'level-hero' }, [
       levelPicker(level.id),
@@ -104,7 +110,7 @@
           i18n.pick(level.name)
         ]),
         el('p', { class: 'level-intro__cando', text: i18n.pick(level.canDo) }),
-        vocab.length || grammar.length ? progressLine(level.id, vocab, grammar) : null
+        vocab.length || grammar.length ? progressLine(level.id, vocab, grammar, dgt) : null
       ])
     ]));
 
@@ -114,12 +120,12 @@
     }
 
     // Grammar first, then words.
-    container.appendChild(section('grammar', grammar.length, grammar.length
+    container.appendChild(section(dgt ? 'theory' : 'grammar', grammar.length, grammar.length
       ? el('ul', { class: 'topic-list', role: 'list' }, grammar.map(function (t, i) { return grammarRow(level.id, t, i); }))
       : ui.emptyState({ title: i18n.t('empty.level'), telegram: true })));
 
-    container.appendChild(section('words', vocab.length, vocab.length
+    container.appendChild(section(dgt ? 'signs' : 'words', vocab.length, vocab.length
       ? el('ul', { class: 'topic-grid', role: 'list' }, vocab.map(function (t, i) { return wordCard(level.id, t, i); }))
-      : ui.emptyState({ title: i18n.t('empty.level'), telegram: true })));
+      : ui.emptyState({ title: i18n.t('empty.level'), telegram: true }), dgt ? i18n.t('level.signsLead') : null));
   });
 })(typeof window !== 'undefined' ? window : globalThis);

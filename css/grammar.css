@@ -88,3 +88,15 @@
 .ex-row__es, .ex-row__tr { margin: 0; overflow-wrap: anywhere; }
 
 .grammar-panel .grammar-quiz { margin-top: 0; }
+
+/* ---------- DGT questions: a sign or a figure next to the question, translated options ---------- */
+.grammar-question--pic { grid-template-columns: auto 1fr; align-items: start; gap: var(--space-4); }
+.grammar-question__text { display: grid; gap: var(--space-2); min-width: 0; }
+.grammar-question__sign { width: 6.5rem; height: 6.5rem; padding: var(--space-1); }
+.grammar-question__figure { width: 12rem; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--sign-bg); }
+@media (max-width: 560px) {
+  .grammar-question--pic { grid-template-columns: 1fr; justify-items: start; }
+}
+.grammar-option__text { display: grid; gap: 2px; min-width: 0; }
+.grammar-option__tr { color: var(--ink-soft); font-size: var(--step--1); font-weight: 400; }
+.section-lead { color: var(--ink-soft); max-width: 60ch; margin-bottom: var(--space-3); }

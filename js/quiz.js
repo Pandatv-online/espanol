@@ -56,6 +56,21 @@
       var fromKey = esFirst ? 'es' : lang;
       var toKey = esFirst ? lang : 'es';
       var others = words.filter(function (w) { return w !== word; });
+      if (word.sign) {
+        // Road sign: the picture is the question; answers alternate between Spanish names and the learner's language.
+        var key = esFirst ? 'es' : lang;
+        var wrongSign = distractors(word, 'sign', key, [others, levelWords], 3, rng);
+        var signOptions = shuffle([side(word, key)].concat(wrongSign), rng);
+        return {
+          prompt: '',
+          promptLang: null,
+          img: word.sign,
+          options: signOptions,
+          optionsLang: key === 'es' ? 'es' : lang,
+          answer: signOptions.indexOf(side(word, key)),
+          explain: side(word, 'es') + ' — ' + side(word, lang)
+        };
+      }
       var wrong = distractors(word, fromKey, toKey, [others, levelWords], 3, rng);
       var options = shuffle([side(word, toKey)].concat(wrong), rng);
       return {
@@ -79,16 +94,26 @@
     opts = opts || {};
     var lang = opts.lang === 'ru' ? 'ru' : 'en';
     var rng = opts.rng || Math.random;
-    return ((topic && topic.quiz) || []).map(function (item) {
+    var items = (topic && topic.quiz) || [];
+    // Large question banks (DGT): one run takes a random `count` of them.
+    var count = opts.count > 0 ? opts.count : topic && topic.quizCount > 0 ? topic.quizCount : 0;
+    if (count && items.length > count) items = shuffle(items, rng).slice(0, count);
+    return items.map(function (item) {
       var order = shuffle(item.options.map(function (_, i) { return i; }), rng);
+      // An option is a Spanish string, or { es, ru, en } — Spanish text plus a translation.
       var q = {
         prompt: pickLang(item.prompt, lang),
         promptLang: lang,
-        options: order.map(function (i) { return item.options[i]; }),
+        options: order.map(function (i) { var o = item.options[i]; return typeof o === 'string' ? o : o.es; }),
         optionsLang: 'es',
         answer: order.indexOf(item.answer)
       };
+      if (item.options.some(function (o) { return o && typeof o === 'object'; })) {
+        q.optionsTr = order.map(function (i) { var o = item.options[i]; return typeof o === 'string' ? '' : pickLang(o, lang); });
+      }
       if (item.es) q.es = item.es;
+      if (item.sign) q.img = item.sign;
+      if (item.img) q.figure = item.img;
       if (item.explain) q.explain = pickLang(item.explain, lang);
       return q;
     });

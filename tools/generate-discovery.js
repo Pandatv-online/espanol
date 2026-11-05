@@ -24,6 +24,11 @@ function plain(value) {
   return String(value == null ? '' : value).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 }
 
+// Crawlable pages cover the CEFR levels; the DGT driving-theory track lives in the app only.
+function cefrLevels(data) {
+  return data.levels().filter((level) => level.kind !== 'dgt');
+}
+
 function pick(value, lang) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value[lang] : value;
 }
@@ -95,7 +100,7 @@ function catalogPage(base, lang, data) {
   const rel = `learn/${lang}/index.html`;
   const title = lang === 'ru' ? 'Испанский по уровням A1–C2: все темы' : 'Learn Spanish A1–C2: all topics';
   const description = lang === 'ru' ? 'Бесплатные уроки испанской грамматики и словарь с примерами для уровней A1–C2.' : 'Free Spanish grammar lessons and vocabulary with examples for levels A1–C2.';
-  const body = `<h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><ul class="level-list">${data.levels().map((level) => `<li><a href="${escapeHtml(localHref(rel, `learn/${lang}/${level.id.toLowerCase()}/index.html`))}"><strong>${level.id}</strong> — ${escapeHtml(pick(level.name, lang))}</a><p>${escapeHtml(pick(level.canDo, lang))}</p></li>`).join('')}</ul>`;
+  const body = `<h1>${escapeHtml(title)}</h1><p class="lead">${escapeHtml(description)}</p><ul class="level-list">${cefrLevels(data).map((level) => `<li><a href="${escapeHtml(localHref(rel, `learn/${lang}/${level.id.toLowerCase()}/index.html`))}"><strong>${level.id}</strong> — ${escapeHtml(pick(level.name, lang))}</a><p>${escapeHtml(pick(level.canDo, lang))}</p></li>`).join('')}</ul>`;
   const alt = { ru: 'learn/ru/index.html', en: 'learn/en/index.html' };
   return { rel, html: page({ base, lang, rel, title, description, body, alternates: alt }) };
 }
@@ -109,7 +114,7 @@ function bilingual(value) {
 
 function fullMarkdown(base, data) {
   const lines = ['# Español con amigos — complete learning content', '', 'Free Spanish vocabulary and grammar for levels A1–C2. Each entry links to a readable lesson and an interactive exercise.', ''];
-  for (const level of data.levels()) {
+  for (const level of cefrLevels(data)) {
     lines.push(`## ${level.id} — ${level.name.ru} / ${level.name.en}`, '', `${level.canDo.ru} / ${level.canDo.en}`, '');
     for (const kind of ['grammar', 'words']) {
       for (const topic of (kind === 'grammar' ? data.grammar(level.id) : data.vocab(level.id))) {
@@ -158,7 +163,7 @@ function generate(siteUrl, outputDir = root) {
   const pages = [];
   for (const lang of langs) {
     pages.push(catalogPage(base, lang, data));
-    for (const level of data.levels()) {
+    for (const level of cefrLevels(data)) {
       pages.push(levelPage(base, lang, level, data));
       for (const kind of ['grammar', 'words']) for (const topic of (kind === 'grammar' ? data.grammar(level.id) : data.vocab(level.id))) pages.push(topicPage(base, lang, level, kind, topic));
     }
@@ -175,7 +180,7 @@ function generate(siteUrl, outputDir = root) {
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((rel) => `  <url><loc>${xml(url(base, rel))}</loc></url>`).join('\n')}\n</urlset>\n`);
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${url(base, 'sitemap.xml')}\n`);
   const llms = ['# Español con amigos', '', '> Free Spanish vocabulary and grammar lessons from A1 to C2, with Russian and English explanations, examples, flashcards, and quizzes.', '', 'The pages below are readable without JavaScript. Interactive lessons are linked from each topic page.', '', '## Levels', ''];
-  for (const level of data.levels()) llms.push(`- [${level.id} — ${level.name.ru}](${url(base, `learn/ru/${level.id.toLowerCase()}/index.html`)}): Grammar and vocabulary topics for ${level.id}.`);
+  for (const level of cefrLevels(data)) llms.push(`- [${level.id} — ${level.name.ru}](${url(base, `learn/ru/${level.id.toLowerCase()}/index.html`)}): Grammar and vocabulary topics for ${level.id}.`);
   llms.push('', '## English', '', `- [All topics in English](${url(base, 'learn/en/index.html')}): English explanations and translations.`, '', '## Full content', '', `- [Complete text](${url(base, 'llms-full.txt')}): All vocabulary and grammar content in Markdown.`, '');
   write('llms.txt', llms.join('\n'));
   write('llms-full.txt', fullMarkdown(base, data));

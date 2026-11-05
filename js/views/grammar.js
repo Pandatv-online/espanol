@@ -26,7 +26,8 @@
       'grammar.retry': 'Ещё раз',
       'grammar.tabTest': 'Тест',
       'grammar.tabsLabel': 'Разделы темы',
-      'grammar.notPassedTabs': 'Для зачёта нужно 80% верных ответов. Перечитайте вкладки темы и попробуйте ещё раз.'
+      'grammar.notPassedTabs': 'Для зачёта нужно 80% верных ответов. Перечитайте вкладки темы и попробуйте ещё раз.',
+      'grammar.signAlt': 'Знак {code}'
     },
     en: {
       'grammar.check': 'Check yourself',
@@ -48,7 +49,8 @@
       'grammar.retry': 'Try again',
       'grammar.tabTest': 'Test',
       'grammar.tabsLabel': 'Topic sections',
-      'grammar.notPassedTabs': 'You need 80% correct answers to pass. Reread the topic tabs and try again.'
+      'grammar.notPassedTabs': 'You need 80% correct answers to pass. Reread the topic tabs and try again.',
+      'grammar.signAlt': 'Sign {code}'
     }
   });
 
@@ -96,7 +98,40 @@
     return list;
   }
 
+  // Road signs of the DGT track, looked up by catalogue code (word topics with `sign`).
+  var signIndex = null;
+  function signWord(code) {
+    if (!signIndex) {
+      signIndex = {};
+      ECA.data.vocab('DGT').forEach(function (topic) {
+        (topic.words || []).forEach(function (w) { if (w.sign && !signIndex[w.sign]) signIndex[w.sign] = w; });
+      });
+    }
+    return signIndex[code] || null;
+  }
+
   var BLOCKS = {
+    // { type: 'signs', items: ['R-1', { code: 'R-2', note: {ru, en} }] } — a grid of signs with their names.
+    signs: function (b, lang) {
+      return el('ul', { class: 'sign-grid', role: 'list' }, b.items.map(function (it) {
+        var code = typeof it === 'string' ? it : it.code;
+        var w = signWord(code);
+        return el('li', { class: 'sign-tile' }, [
+          ui.signImg(code, 'sign-tile__img', ''),
+          el('span', { class: 'sign-tile__code', text: code }),
+          w ? el('span', { class: 'sign-tile__es', lang: 'es', text: w.es }) : null,
+          w ? el('span', { class: 'sign-tile__tr', text: pick(w, lang) }) : null,
+          it.note ? rich('span', pick(it.note, lang), { class: 'sign-tile__note' }) : null
+        ]);
+      }));
+    },
+    // { type: 'figure', src: 'img/dgt/x.svg', alt: {ru, en}, caption?: {ru, en} } — an illustration of our own.
+    figure: function (b, lang) {
+      return el('figure', { class: 'dgt-figure' }, [
+        el('img', { class: 'dgt-figure__img', src: b.src, alt: pick(b.alt, lang), loading: 'lazy', decoding: 'async' }),
+        b.caption ? rich('figcaption', pick(b.caption, lang), { class: 'dgt-figure__cap' }) : null
+      ]);
+    },
     text: function (b, lang) {
       var ps = paras(b.body, lang).map(function (p) { return rich('p', p); });
       return b.color ? el('div', { class: cls('rule-box', colorClass(b.color)) }, ps) : el('div', { class: 'prose' }, ps);
@@ -250,6 +285,7 @@
 
     function paintIntro() {
       var n = (topic.quiz || []).length;
+      if (topic.quizCount > 0 && n > topic.quizCount) n = topic.quizCount;
       ui.append(quizBody, [
         el('p', { class: 'grammar-quiz__lead', text: t('grammar.checkLead', { n: n }) }),
         el('div', { class: 'btn-row' }, el('button', {
@@ -293,7 +329,10 @@
           on: { click: function () { choose(i); } }
         }, [
           el('span', { class: 'grammar-option__key', 'aria-hidden': 'true', text: String(i + 1) }),
-          el('span', { lang: q.optionsLang === 'es' ? 'es' : null, text: text }),
+          q.optionsTr && q.optionsTr[i] ? el('span', { class: 'grammar-option__text' }, [
+            el('span', { lang: 'es', text: text }),
+            el('span', { class: 'grammar-option__tr', text: q.optionsTr[i] })
+          ]) : el('span', { lang: q.optionsLang === 'es' ? 'es' : null, text: text }),
           mark ? el('span', { class: 'visually-hidden', text: ' ' + mark }) : null
         ]);
       });
@@ -313,9 +352,13 @@
         el('p', { class: 'grammar-quiz__progress', text: t('grammar.progress', { n: s.index + 1, m: qs.length }) }),
         el('div', { class: 'meter', 'aria-hidden': 'true' },
           el('div', { class: 'meter__fill', style: 'width:' + Math.round((s.index + (answered ? 1 : 0)) / qs.length * 100) + '%' })),
-        el('div', { class: 'grammar-question', id: 'grammar-prompt', tabindex: '-1' }, [
-          el('p', { class: 'grammar-question__prompt', text: q.prompt }),
-          q.es ? el('p', { class: 'grammar-question__es', lang: 'es', text: q.es }) : null
+        el('div', { class: 'grammar-question' + (q.img || q.figure ? ' grammar-question--pic' : ''), id: 'grammar-prompt', tabindex: '-1' }, [
+          q.img ? ui.signImg(q.img, 'grammar-question__sign', t('grammar.signAlt', { code: q.img })) : null,
+          q.figure ? el('img', { class: 'grammar-question__figure', src: q.figure, alt: '', loading: 'lazy' }) : null,
+          el('div', { class: 'grammar-question__text' }, [
+            el('p', { class: 'grammar-question__prompt', text: q.prompt }),
+            q.es ? el('p', { class: 'grammar-question__es', lang: 'es', text: q.es }) : null
+          ])
         ]),
         el('div', { class: 'options', role: 'group', 'aria-labelledby': 'grammar-prompt' }, options),
         feedback,

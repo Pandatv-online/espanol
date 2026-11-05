@@ -11,7 +11,10 @@
       ru: {
         'section.words': 'Слова',
         'section.grammar': 'Грамматика',
+        'section.theory': 'Теория и тесты',
+        'section.signs': 'Знаки',
         'badge.words': '{n}/{m} слов',
+        'badge.signs': '{n}/{m} знаков',
         'badge.test': 'тест: {score}/{total}',
         'badge.passed': '✓ пройдено',
         'badge.noTest': 'тест не пройден',
@@ -28,7 +31,10 @@
       en: {
         'section.words': 'Words',
         'section.grammar': 'Grammar',
+        'section.theory': 'Theory and tests',
+        'section.signs': 'Road signs',
         'badge.words': '{n}/{m} words',
+        'badge.signs': '{n}/{m} signs',
         'badge.test': 'test: {score}/{total}',
         'badge.passed': '✓ passed',
         'badge.noTest': 'test not taken',
@@ -121,7 +127,14 @@
   }
 
   // Word topic icon from js/icons.js (Phosphor duotone, currentColor); unknown name → its text, e.g. an emoji.
+  // Road-sign picture from the BOE catalogue: img/signs/<code>.png.
+  function signSrc(code) { return 'img/signs/' + encodeURIComponent(code) + '.png'; }
+  function signImg(code, cls, alt) {
+    return el('img', { class: 'sign-img' + (cls ? ' ' + cls : ''), src: signSrc(code), alt: alt || '', loading: 'lazy', decoding: 'async' });
+  }
+
   function topicIcon(name) {
+    if (/^sign:/.test(name || '')) return signImg(name.slice(5), 'icon--topic');
     var spec = ECA.icons && ECA.icons[name];
     if (!spec) return document.createTextNode(name || '\u2022');
     var svg = document.createElementNS(SVG_NS, 'svg');
@@ -165,7 +178,8 @@
   }
 
   function backLink(levelId, section) {
-    var sectionName = section === 'grammar' ? t('section.grammar') : t('section.words');
+    var dgt = String(levelId).toUpperCase() === 'DGT';
+    var sectionName = section === 'grammar' ? t(dgt ? 'section.theory' : 'section.grammar') : t(dgt ? 'section.signs' : 'section.words');
     return el('a', { class: 'backlink', href: href(levelId), text: t('back.to', { level: levelId, section: sectionName }) });
   }
 
@@ -317,6 +331,8 @@
     clear: clear,
     icon: icon,
     topicIcon: topicIcon,
+    signSrc: signSrc,
+    signImg: signImg,
     telegramLink: telegramLink,
     emptyState: emptyState,
     href: href,

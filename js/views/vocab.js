@@ -64,6 +64,10 @@
       'vocab.lead': '{m} слов · выучено {n}',
       'vocab.left': 'Осталось {n} из {m}',
       'vocab.flipHint': 'Нажмите, чтобы перевернуть',
+      'vocab.signHint': 'Что означает этот знак? Нажмите, чтобы проверить',
+      'vocab.quiz.signEs': 'Как называется этот знак по-испански?',
+      'vocab.quiz.signLang': 'Что означает этот знак?',
+      'vocab.signAlt': 'Знак {code}',
       'vocab.back': 'Назад',
       'vocab.again': 'Повторить',
       'vocab.know': 'Знаю',
@@ -110,6 +114,10 @@
       'vocab.lead': '{m} words · {n} learned',
       'vocab.left': '{n} of {m} left',
       'vocab.flipHint': 'Tap to flip',
+      'vocab.signHint': 'What does this sign mean? Tap to check',
+      'vocab.quiz.signEs': 'What is this sign called in Spanish?',
+      'vocab.quiz.signLang': 'What does this sign mean?',
+      'vocab.signAlt': 'Sign {code}',
       'vocab.back': 'Back',
       'vocab.again': 'Again',
       'vocab.know': 'I know it',
@@ -288,11 +296,17 @@
       var tr = i18n.pick(word);
       var ex = word.ex;
 
-      var front = el('span', { class: 'flashcard__face flashcard__face--front' }, [
+      // A road sign: the picture is the front; the name and the official description are on the back.
+      var front = el('span', { class: 'flashcard__face flashcard__face--front' }, word.sign ? [
+        ui.signImg(word.sign, 'flashcard__sign', t('vocab.signAlt', { code: word.sign })),
+        el('span', { class: 'flashcard__hint', text: t('vocab.signHint') })
+      ] : [
         el('span', { class: 'flashcard__word', lang: 'es', text: es }),
         el('span', { class: 'flashcard__hint', text: t('vocab.flipHint') })
       ]);
-      var back = el('span', { class: 'flashcard__face flashcard__face--back' }, [
+      var back = el('span', { class: 'flashcard__face flashcard__face--back' + (word.sign ? ' flashcard__face--sign' : '') }, [
+        word.sign ? ui.signImg(word.sign, 'flashcard__sign flashcard__sign--small', '') : null,
+        word.sign ? el('span', { class: 'flashcard__code', text: word.sign }) : null,
         el('span', { class: 'flashcard__es', lang: 'es', text: es }),
         el('span', { class: 'flashcard__tr', text: tr }),
         ex ? el('span', { class: 'example flashcard__ex' }, [
@@ -312,7 +326,7 @@
         state.flipped = !state.flipped;
         setFlipped(state.flipped);
         if (state.flipped) ui.announce(es + ' — ' + tr + (ex ? '. ' + ex.es + ' — ' + i18n.pick(ex) : ''));
-        else ui.announce(es);
+        else ui.announce(word.sign ? t('vocab.signAlt', { code: word.sign }) : es);
       }
       setFlipped(!!state.flipped);
 
@@ -446,7 +460,10 @@
           el('div', { class: 'meter quiz__meter', 'aria-hidden': 'true' },
             el('span', { class: 'meter__fill', style: 'width:' + ((s.index + (answered ? 1 : 0)) / qs.length * 100).toFixed(1) + '%' }))
         ]),
-        el('div', { class: 'quiz__card' }, [
+        q.img ? el('div', { class: 'quiz__card quiz__card--sign' }, [
+          el('p', { class: 'quiz__ask', id: 'quiz-prompt', tabindex: '-1', text: q.optionsLang === 'es' ? t('vocab.quiz.signEs') : t('vocab.quiz.signLang') }),
+          ui.signImg(q.img, 'quiz__sign', t('vocab.signAlt', { code: q.img }))
+        ]) : el('div', { class: 'quiz__card' }, [
           el('p', { class: 'quiz__ask', text: q.promptLang === 'es' ? t('vocab.quiz.toLang') : t('vocab.quiz.toEs') }),
           el('p', { class: 'quiz__prompt', id: 'quiz-prompt', tabindex: '-1', lang: q.promptLang === 'es' ? 'es' : null, text: q.prompt })
         ]),
@@ -476,7 +493,8 @@
       var mistakes = r.mistakes.map(function (i) {
         var q = qs[i];
         return el('li', { class: 'mistake' }, [
-          el('span', { class: 'mistake__q', lang: q.promptLang === 'es' ? 'es' : null, text: q.prompt }),
+          q.img ? el('span', { class: 'mistake__q' }, ui.signImg(q.img, 'mistake__sign', t('vocab.signAlt', { code: q.img })))
+            : el('span', { class: 'mistake__q', lang: q.promptLang === 'es' ? 'es' : null, text: q.prompt }),
           el('span', { class: 'mistake__arrow', 'aria-hidden': 'true', text: '→' }),
           el('span', { class: 'mistake__a', lang: q.optionsLang === 'es' ? 'es' : null, text: q.options[q.answer] })
         ]);
@@ -513,7 +531,9 @@
         var id = 'learned-' + i;
         var on = isLearned(w.es);
         return el('tr', { class: on ? 'is-learned' : null }, [
-          el('td', { class: 'words-table__es', lang: 'es', text: w.es }),
+          el('td', { class: 'words-table__es', lang: 'es' }, w.sign ? [
+            el('span', { class: 'words-table__sign' }, [ui.signImg(w.sign, 'words-table__img', ''), el('span', { text: w.es })])
+          ] : w.es),
           el('td', { class: 'words-table__tr', text: i18n.pick(w) }),
           el('td', { class: 'words-table__mark' }, el('label', { class: 'learn-toggle', for: id }, [
             el('input', { type: 'checkbox', id: id, checked: on, on: { change: function (e) {
