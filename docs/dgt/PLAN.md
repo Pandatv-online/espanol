@@ -42,20 +42,25 @@
 - [x] Источник картинок знаков: каталог BOE, 457 знаков (стр. 35–149), `tools/extract-signs.py`
 - [x] Каркас: уровень DGT, маршрут, валидатор, блоки `signs`/`figure`, вопросы с картинкой и переводом (commit 166e841)
 - [x] Знаки: `img/signs/*.png` + `data/dgt-signs-{a,b,c}.js` — 10 тем, 457 знаков, RU/EN, описание из BOE
-- [ ] Темы теории — по 17 темам официального учебника DGT «lectura fácil», ТЗ: `docs/dgt/THEORY-SPEC.md`.
+- [x] Темы теории — по 17 темам официального учебника DGT «lectura fácil», ТЗ: `docs/dgt/THEORY-SPEC.md`.
   Файл `data/dgt-theory-NN-<slug>.js`, картинки `img/dgt/<slug>-*.svg`. После готовности — подключить в `index.html`.
   Справочные тексты (пересоздать, если контейнер новый): учебник lectura fácil (ZIP с sede DGT) → `pdftotext -layout`,
   разрезать по «Tema N.»; Manual I 2025 (sede DGT); RGC/LSV/RGCond (BOE consolidado) → `pdftotext -layout`.
   - [x] 01 definiciones · [x] 02 documentacion · [x] 03 conductor · [x] 04 obligaciones · [x] 05 seguridad
-  - [x] 06 elementos · [x] 07 luces · [x] 08 senales · [ ] 09 via · [x] 10 velocidad · [x] 11 maniobras
-  - [x] 12 preferencia · [ ] 13 transporte · [x] 14 conducir-seguro · [x] 15 mecanica · [ ] 16 accidentes · [ ] 17 eficiente
+  - [x] 06 elementos · [x] 07 luces · [x] 08 senales · [x] 09 via · [x] 10 velocidad · [x] 11 maniobras
+  - [x] 12 preferencia · [x] 13 transporte · [x] 14 conducir-seguro · [x] 15 mecanica · [x] 16 accidentes · [x] 17 eficiente
 - [x] Пробный экзамен: `data/dgt-examen.js` собирает вопросы всех тем, за заход 30
 - [x] Папка `private/` (в .gitignore) для материалов только для себя: сайт подхватывает `private/dgt-private.js`, если файл есть
-- [ ] e2e-сценарии и скриншоты, обновить CLAUDE.md и CONTENT.md
-- [ ] Только для себя: тесты Revista DGT → Google Drive (не в репозиторий)
+- [x] e2e-сценарии и скриншоты, обновить CLAUDE.md и CONTENT.md
+- [x] Тесты Revista DGT: 252 вопроса в `data/dgt-revista.js` (тексты со ссылкой на журнал), 11 вопросов с фото — в `private/` (архив отправлен пользователю)
 
 ## Статус на 05.11 23:00 UTC (после сброса лимита)
 - Субагенты возобновлены: темы 09, 13, 16, 17 и импорт тестов Revista DGT (`data/dgt-revista.js` + `private/`).
 - Коммит готовых тем: скрипт проверяет каждый `data/dgt-theory-*.js` отдельно, подключает валидные в `index.html`
   (перед `data/dgt-examen.js`), коммитит их вместе с упомянутыми SVG и проверяет чистую копию ветки.
 - e2e: падает только старая проверка `theme-color` (#AA151B из коммита cbd063e, не связано с DGT).
+
+## Статус на 05.11 23:20 UTC — раздел готов
+- 17 тем теории (≈600 вопросов), 457 знаков в 10 темах, 252 вопроса журнала DGT, пробный экзамен (30 из ≈850).
+- Идеи на потом: тесты журнала 224–261 (распарсены, но правила до 2022 года — нужна сверка); каталог разметки
+  (BOE, стр. ~640–684, другая вёрстка таблиц); сверить факты, которые агенты отметили как «не проверено по закону».
