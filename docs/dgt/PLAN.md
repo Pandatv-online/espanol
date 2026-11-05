@@ -46,10 +46,16 @@
   Файл `data/dgt-theory-NN-<slug>.js`, картинки `img/dgt/<slug>-*.svg`. После готовности — подключить в `index.html`.
   Справочные тексты (пересоздать, если контейнер новый): учебник lectura fácil (ZIP с sede DGT) → `pdftotext -layout`,
   разрезать по «Tema N.»; Manual I 2025 (sede DGT); RGC/LSV/RGCond (BOE consolidado) → `pdftotext -layout`.
-  - [ ] 01 definiciones · [ ] 02 documentacion · [ ] 03 conductor · [ ] 04 obligaciones · [ ] 05 seguridad
-  - [ ] 06 elementos · [ ] 07 luces · [ ] 08 senales · [ ] 09 via · [ ] 10 velocidad · [ ] 11 maniobras
-  - [ ] 12 preferencia · [ ] 13 transporte · [ ] 14 conducir-seguro · [ ] 15 mecanica · [ ] 16 accidentes · [ ] 17 eficiente
-- [ ] Пробный экзамен: 30 вопросов из всех тем, не больше 3 ошибок
-- [ ] Папка `private/` (в .gitignore) для материалов только для себя: сайт подхватывает `private/dgt-private.js`, если файл есть
+  - [x] 01 definiciones · [x] 02 documentacion · [x] 03 conductor · [x] 04 obligaciones · [x] 05 seguridad
+  - [x] 06 elementos · [x] 07 luces · [x] 08 senales · [ ] 09 via · [x] 10 velocidad · [x] 11 maniobras
+  - [x] 12 preferencia · [ ] 13 transporte · [x] 14 conducir-seguro · [x] 15 mecanica · [ ] 16 accidentes · [ ] 17 eficiente
+- [x] Пробный экзамен: `data/dgt-examen.js` собирает вопросы всех тем, за заход 30
+- [x] Папка `private/` (в .gitignore) для материалов только для себя: сайт подхватывает `private/dgt-private.js`, если файл есть
 - [ ] e2e-сценарии и скриншоты, обновить CLAUDE.md и CONTENT.md
 - [ ] Только для себя: тесты Revista DGT → Google Drive (не в репозиторий)
+
+## Статус на 05.11 23:00 UTC (после сброса лимита)
+- Субагенты возобновлены: темы 09, 13, 16, 17 и импорт тестов Revista DGT (`data/dgt-revista.js` + `private/`).
+- Коммит готовых тем: скрипт проверяет каждый `data/dgt-theory-*.js` отдельно, подключает валидные в `index.html`
+  (перед `data/dgt-examen.js`), коммитит их вместе с упомянутыми SVG и проверяет чистую копию ветки.
+- e2e: падает только старая проверка `theme-color` (#AA151B из коммита cbd063e, не связано с DGT).
