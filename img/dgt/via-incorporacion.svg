@@ -21,13 +21,13 @@
   <text x="300" y="230" font-size="17" fill="#ffffff" font-weight="bold">carril de aceleración</text>
   <text x="96" y="430" font-size="17" fill="#1f2630" font-weight="bold">vía de acceso</text>
   <!-- traffic on the main carriageway -->
-  <rect x="120" y="125" width="84" height="36" rx="9" fill="#3d7dd8"/>
-  <rect x="182" y="131" width="16" height="24" rx="3" fill="#2f3a48"/>
+  <rect x="200" y="125" width="84" height="36" rx="9" fill="#3d7dd8"/>
+  <rect x="262" y="131" width="16" height="24" rx="3" fill="#2f3a48"/>
   <rect x="470" y="52" width="84" height="36" rx="9" fill="#2aa198"/>
   <rect x="532" y="58" width="16" height="24" rx="3" fill="#2f3a48"/>
   <g fill="#ffffff">
     <path d="M640 62 h50 v-8 l22 12 l-22 12 v-8 h-50 z"/>
-    <path d="M640 134 h50 v-8 l22 12 l-22 12 v-8 h-50 z"/>
+    <path d="M400 134 h50 v-8 l22 12 l-22 12 v-8 h-50 z"/>
   </g>
   <!-- joining car and its path -->
   <rect x="262" y="194" width="84" height="36" rx="9" fill="#d65a4a" transform="translate(-140 60) rotate(-28 304 212)"/>
