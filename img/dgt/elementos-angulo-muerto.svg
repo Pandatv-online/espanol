@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" font-family="sans-serif">
+  <rect x="0" y="20" width="760" height="380" fill="#5b6470"/>
+  <line x1="0" y1="26" x2="760" y2="26" stroke="#ffffff" stroke-width="4"/>
+  <line x1="0" y1="394" x2="760" y2="394" stroke="#ffffff" stroke-width="4"/>
+  <line x1="0" y1="148" x2="760" y2="148" stroke="#ffffff" stroke-width="4" stroke-dasharray="30 22"/>
+  <line x1="0" y1="272" x2="760" y2="272" stroke="#ffffff" stroke-width="4" stroke-dasharray="30 22"/>
+  <!-- mirror fields of view -->
+  <polygon points="503,178 30,168 30,92" fill="#8ec5ff" fill-opacity="0.55"/>
+  <polygon points="503,242 30,252 30,328" fill="#8ec5ff" fill-opacity="0.55"/>
+  <polygon points="470,210 30,178 30,242" fill="#8ec5ff" fill-opacity="0.35"/>
+  <!-- blind spots -->
+  <polygon points="500,177 485,58 315,58 315,144" fill="#e4572e" fill-opacity="0.6"/>
+  <polygon points="500,243 485,362 315,362 315,276" fill="#e4572e" fill-opacity="0.6"/>
+  <!-- car hidden in the blind spot -->
+  <rect x="345" y="70" width="110" height="50" rx="12" fill="#f2b33d" stroke="#1f2937" stroke-width="2"/>
+  <rect x="420" y="76" width="22" height="38" rx="5" fill="#1f2937" fill-opacity="0.55"/>
+  <!-- own car -->
+  <rect x="420" y="183" width="130" height="54" rx="14" fill="#2b6cb0" stroke="#1f2937" stroke-width="2"/>
+  <rect x="500" y="189" width="26" height="42" rx="6" fill="#0f2747"/>
+  <rect x="432" y="190" width="18" height="40" rx="5" fill="#0f2747"/>
+  <rect x="498" y="172" width="12" height="9" rx="2" fill="#1f2937"/>
+  <rect x="498" y="239" width="12" height="9" rx="2" fill="#1f2937"/>
+  <!-- direction arrow -->
+  <line x1="570" y1="210" x2="690" y2="210" stroke="#ffffff" stroke-width="6"/>
+  <polygon points="690,198 716,210 690,222" fill="#ffffff"/>
+  <text x="575" y="196" font-size="18" fill="#ffffff" font-weight="bold">sentido de la marcha</text>
+  <!-- labels -->
+  <text x="320" y="50" font-size="20" fill="#ffffff" font-weight="bold">ángulo muerto</text>
+  <text x="320" y="386" font-size="20" fill="#ffffff" font-weight="bold">ángulo muerto</text>
+  <text x="40" y="138" font-size="17" fill="#ffffff">retrovisor exterior</text>
+  <text x="40" y="216" font-size="17" fill="#ffffff">retrovisor interior</text>
+  <text x="40" y="298" font-size="17" fill="#ffffff">retrovisor exterior</text>
+</svg>

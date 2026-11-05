@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 352" width="760" height="352" font-family="sans-serif">
+  <title>Distancia de detención = distancia de reacción + distancia de frenado, a 50 y a 100 km/h</title>
+  <!-- legend -->
+  <rect x="20" y="12" width="22" height="16" rx="3" fill="#e0a526"/>
+  <text x="50" y="26" font-size="17" fill="#1f2a37">reacción (≈ 1 s)</text>
+  <rect x="230" y="12" width="22" height="16" rx="3" fill="#e0643f"/>
+  <text x="260" y="26" font-size="17" fill="#1f2a37">frenado (asfalto seco)</text>
+  <!-- row 1: 50 km/h -->
+  <g transform="translate(0,48)">
+    <text x="20" y="18" font-size="20" font-weight="bold" fill="#1f2a37">50 km/h</text>
+    <text x="740" y="18" font-size="18" text-anchor="end" fill="#1f2a37">distancia de detención ≈ <tspan font-weight="bold">28 m</tspan></text>
+    <rect x="20" y="28" width="720" height="50" fill="#5b6470"/>
+    <line x1="20" y1="32" x2="740" y2="32" stroke="#ffffff" stroke-width="3"/>
+    <line x1="20" y1="74" x2="740" y2="74" stroke="#ffffff" stroke-width="3"/>
+    <rect x="40" y="40" width="60" height="26" rx="7" fill="#2f6fb3"/>
+    <rect x="72" y="44" width="16" height="18" rx="3" fill="#cfe3f5"/>
+    <line x1="100" y1="28" x2="100" y2="104" stroke="#1f2a37" stroke-width="2" stroke-dasharray="4 3"/>
+    <line x1="205" y1="28" x2="205" y2="104" stroke="#1f2a37" stroke-width="2" stroke-dasharray="4 3"/>
+    <line x1="310" y1="28" x2="310" y2="104" stroke="#1f2a37" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect x="100" y="86" width="105" height="16" fill="#e0a526"/>
+    <rect x="205" y="86" width="105" height="16" fill="#e0643f"/>
+    <text x="152" y="124" font-size="17" text-anchor="middle" fill="#1f2a37">≈ 14 m</text>
+    <text x="257" y="124" font-size="17" text-anchor="middle" fill="#1f2a37">≈ 14 m</text>
+  </g>
+  <!-- row 2: 100 km/h -->
+  <g transform="translate(0,188)">
+    <text x="20" y="18" font-size="20" font-weight="bold" fill="#1f2a37">100 km/h</text>
+    <text x="740" y="18" font-size="18" text-anchor="end" fill="#1f2a37">distancia de detención ≈ <tspan font-weight="bold">83 m</tspan></text>
+    <rect x="20" y="28" width="720" height="50" fill="#5b6470"/>
+    <line x1="20" y1="32" x2="740" y2="32" stroke="#ffffff" stroke-width="3"/>
+    <line x1="20" y1="74" x2="740" y2="74" stroke="#ffffff" stroke-width="3"/>
+    <rect x="40" y="40" width="60" height="26" rx="7" fill="#2f6fb3"/>
+    <rect x="72" y="44" width="16" height="18" rx="3" fill="#cfe3f5"/>
+    <line x1="100" y1="28" x2="100" y2="104" stroke="#1f2a37" stroke-width="2" stroke-dasharray="4 3"/>
+    <line x1="310" y1="28" x2="310" y2="104" stroke="#1f2a37" stroke-width="2" stroke-dasharray="4 3"/>
+    <line x1="722" y1="28" x2="722" y2="104" stroke="#1f2a37" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect x="100" y="86" width="210" height="16" fill="#e0a526"/>
+    <rect x="310" y="86" width="412" height="16" fill="#e0643f"/>
+    <text x="205" y="124" font-size="17" text-anchor="middle" fill="#1f2a37">≈ 28 m (× 2)</text>
+    <text x="516" y="124" font-size="17" text-anchor="middle" fill="#1f2a37">≈ 55 m (× 4)</text>
+  </g>
+  <text x="100" y="344" font-size="16" fill="#1f2a37">ve el peligro</text>
+  <text x="310" y="344" font-size="16" fill="#1f2a37">pisa el freno</text>
+  <text x="722" y="344" font-size="16" text-anchor="end" fill="#1f2a37">se detiene</text>
+</svg>

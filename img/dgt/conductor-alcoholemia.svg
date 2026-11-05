@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" font-family="sans-serif">
+  <title>Curva ilustrativa de alcoholemia en sangre a lo largo de las horas</title>
+  <!-- axes: x 80..680 for 0..8 h (75 px/h); y 340..60 for 0..1.0 g/l (280 px per 1 g/l) -->
+  <g stroke="#c9ced6" stroke-width="1">
+    <line x1="80" y1="270" x2="680" y2="270"/><line x1="80" y1="200" x2="680" y2="200"/>
+    <line x1="80" y1="130" x2="680" y2="130"/><line x1="80" y1="60" x2="680" y2="60"/>
+  </g>
+  <line x1="80" y1="340" x2="690" y2="340" stroke="#1f2a44" stroke-width="2"/>
+  <line x1="80" y1="340" x2="80" y2="50" stroke="#1f2a44" stroke-width="2"/>
+  <g font-size="16" fill="#1f2a44" text-anchor="end">
+    <text x="72" y="345">0</text><text x="72" y="275">0,25</text><text x="72" y="205">0,5</text><text x="72" y="135">0,75</text><text x="72" y="65">1,0</text>
+  </g>
+  <g font-size="16" fill="#1f2a44" text-anchor="middle">
+    <text x="80" y="362">0</text><text x="155" y="362">1</text><text x="230" y="362">2</text><text x="305" y="362">3</text><text x="380" y="362">4</text>
+    <text x="455" y="362">5</text><text x="530" y="362">6</text><text x="605" y="362">7</text><text x="680" y="362">8</text>
+  </g>
+  <text x="680" y="388" text-anchor="end" font-size="17" fill="#1f2a44">horas desde que empiezas a beber</text>
+  <text x="20" y="34" font-size="17" fill="#1f2a44">alcohol en sangre (g/l)</text>
+  <!-- limits -->
+  <line x1="80" y1="200" x2="680" y2="200" stroke="#c0392b" stroke-width="3" stroke-dasharray="10 6"/>
+  <text x="676" y="192" text-anchor="end" font-size="17" fill="#c0392b" font-weight="bold">0,5 g/l · límite general</text>
+  <line x1="80" y1="256" x2="680" y2="256" stroke="#d07a12" stroke-width="3" stroke-dasharray="4 5"/>
+  <text x="120" y="249" font-size="17" fill="#b5650a" font-weight="bold">0,3 g/l · noveles y profesionales</text>
+  <!-- curve: start 0 at 0h, peak 0.8 at 1h (y=116), then -0.12 g/l per h (33.6 px/h) to 0 at ~7.67h -->
+  <path d="M 80 340 C 105 240, 125 125, 155 116 L 655 340" fill="none" stroke="#1f6fb2" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="155" cy="116" r="6" fill="#1f6fb2"/>
+  <text x="168" y="104" font-size="17" fill="#1f2a44" font-weight="bold">pico: aprox. 1 hora</text>
+  <text x="300" y="150" font-size="17" fill="#1f2a44">baja despacio, unos 0,1–0,15 g/l por hora</text>
+  <text x="96" y="318" font-size="16" fill="#5b6470">absorción</text>
+</svg>

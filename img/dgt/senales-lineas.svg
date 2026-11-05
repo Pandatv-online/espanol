@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="sans-serif">
+  <title>Marcas viales longitudinales</title>
+  <!-- 4 tramos de calzada vistos desde arriba -->
+  <g>
+    <rect x="20" y="20" width="170" height="270" rx="6" fill="#5b6470"/>
+    <rect x="220" y="20" width="170" height="270" rx="6" fill="#5b6470"/>
+    <rect x="420" y="20" width="170" height="270" rx="6" fill="#5b6470"/>
+    <rect x="620" y="20" width="170" height="270" rx="6" fill="#5b6470"/>
+  </g>
+  <g fill="#ffffff">
+    <!-- 1 continua -->
+    <rect x="101" y="20" width="8" height="270"/>
+    <!-- 2 discontinua -->
+    <rect x="301" y="30" width="8" height="40"/><rect x="301" y="100" width="8" height="40"/>
+    <rect x="301" y="170" width="8" height="40"/><rect x="301" y="240" width="8" height="40"/>
+    <!-- 3 mixta: continua a la izquierda, discontinua a la derecha -->
+    <rect x="494" y="20" width="7" height="270"/>
+    <rect x="509" y="30" width="7" height="40"/><rect x="509" y="100" width="7" height="40"/>
+    <rect x="509" y="170" width="7" height="40"/><rect x="509" y="240" width="7" height="40"/>
+    <!-- 4 cebreado -->
+    <path d="M705,40 L725,40 L725,270 L705,270 Z" fill="none" stroke="#ffffff" stroke-width="6"/>
+  </g>
+  <clipPath id="zebra"><rect x="705" y="40" width="20" height="230"/></clipPath>
+  <g clip-path="url(#zebra)" stroke="#ffffff" stroke-width="6">
+    <line x1="700" y1="60" x2="730" y2="30"/><line x1="700" y1="90" x2="730" y2="60"/>
+    <line x1="700" y1="120" x2="730" y2="90"/><line x1="700" y1="150" x2="730" y2="120"/>
+    <line x1="700" y1="180" x2="730" y2="150"/><line x1="700" y1="210" x2="730" y2="180"/>
+    <line x1="700" y1="240" x2="730" y2="210"/><line x1="700" y1="270" x2="730" y2="240"/>
+    <line x1="700" y1="300" x2="730" y2="270"/>
+  </g>
+  <!-- coches en la línea mixta: A del lado discontinuo, B del lado continuo -->
+  <g font-size="22" font-weight="bold" text-anchor="middle">
+    <rect x="536" y="170" width="34" height="58" rx="9" fill="#2563eb" stroke="#ffffff" stroke-width="2"/>
+    <text x="553" y="206" fill="#ffffff">A</text>
+    <rect x="440" y="70" width="34" height="58" rx="9" fill="#dc2626" stroke="#ffffff" stroke-width="2"/>
+    <text x="457" y="106" fill="#ffffff">B</text>
+  </g>
+  <g stroke="#ffffff" stroke-width="4" fill="#ffffff">
+    <line x1="553" y1="165" x2="553" y2="140"/><path d="M545,142 L553,128 L561,142 z"/>
+    <line x1="457" y1="133" x2="457" y2="158"/><path d="M449,156 L457,170 L465,156 z"/>
+  </g>
+  <g font-size="18" text-anchor="middle" fill="#1f2937">
+    <text x="105" y="320" font-weight="bold">Línea continua</text>
+    <text x="105" y="346">No se puede cruzar</text>
+    <text x="305" y="320" font-weight="bold">Línea discontinua</text>
+    <text x="305" y="346">Se puede cruzar</text>
+    <text x="505" y="320" font-weight="bold">Línea mixta</text>
+    <text x="505" y="346">A puede, B no</text>
+    <text x="705" y="320" font-weight="bold">Cebreado</text>
+    <text x="705" y="346">No entrar</text>
+  </g>
+</svg>

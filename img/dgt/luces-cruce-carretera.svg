@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" font-family="sans-serif">
+  <!-- panel 1: dipped beam -->
+  <text x="20" y="26" font-size="20" fill="#1f2937" font-weight="bold">Luz de cruce (corto alcance)</text>
+  <text x="740" y="26" font-size="17" fill="#1f2937" text-anchor="end">hay vehículos de frente</text>
+  <rect x="0" y="40" width="760" height="140" fill="#5b6470"/>
+  <line x1="0" y1="44" x2="760" y2="44" stroke="#ffffff" stroke-width="3"/>
+  <line x1="0" y1="176" x2="760" y2="176" stroke="#ffffff" stroke-width="3"/>
+  <line x1="0" y1="110" x2="760" y2="110" stroke="#ffffff" stroke-width="3" stroke-dasharray="26 18"/>
+  <polygon points="112,132 112,158 330,174 330,116" fill="#ffe680" fill-opacity="0.8"/>
+  <rect x="30" y="124" width="84" height="42" rx="11" fill="#2b6cb0" stroke="#1f2937" stroke-width="2"/>
+  <rect x="88" y="130" width="18" height="30" rx="4" fill="#0f2747"/>
+  <rect x="560" y="56" width="84" height="42" rx="11" fill="#d9534f" stroke="#1f2937" stroke-width="2"/>
+  <rect x="568" y="62" width="18" height="30" rx="4" fill="#5a1d1b"/>
+  <polygon points="518,77 543,67 543,87" fill="#ffffff"/>
+  <text x="360" y="150" font-size="18" fill="#ffffff" font-weight="bold">no deslumbra</text>
+  <!-- panel 2: main beam -->
+  <text x="20" y="236" font-size="20" fill="#1f2937" font-weight="bold">Luz de carretera (largo alcance)</text>
+  <text x="740" y="236" font-size="17" fill="#1f2937" text-anchor="end">vía libre, fuera de poblado</text>
+  <rect x="0" y="250" width="760" height="140" fill="#5b6470"/>
+  <line x1="0" y1="254" x2="760" y2="254" stroke="#ffffff" stroke-width="3"/>
+  <line x1="0" y1="386" x2="760" y2="386" stroke="#ffffff" stroke-width="3"/>
+  <line x1="0" y1="320" x2="760" y2="320" stroke="#ffffff" stroke-width="3" stroke-dasharray="26 18"/>
+  <polygon points="112,342 112,368 750,386 750,258" fill="#ffe680" fill-opacity="0.8"/>
+  <rect x="30" y="334" width="84" height="42" rx="11" fill="#2b6cb0" stroke="#1f2937" stroke-width="2"/>
+  <rect x="88" y="340" width="18" height="30" rx="4" fill="#0f2747"/>
+  <text x="140" y="410" font-size="17" fill="#1f2937">ilumina mucho más lejos, pero deslumbra: cambia a cruce al cruzarte</text>
+</svg>
