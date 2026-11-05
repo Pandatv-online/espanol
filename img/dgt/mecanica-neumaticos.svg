@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" font-family="sans-serif">
+  <!-- road -->
+  <rect x="0" y="232" width="760" height="14" fill="#5b6470"/>
+  <!-- correct pressure -->
+  <text x="127" y="30" font-size="20" fill="#1f2937" font-weight="bold" text-anchor="middle">presión correcta</text>
+  <path d="M57,232 L57,90 Q57,60 87,60 L167,60 Q197,60 197,90 L197,232 Z" fill="#2d3239"/>
+  <rect x="85" y="88" width="84" height="120" rx="10" fill="#9aa3ad"/>
+  <!-- low pressure -->
+  <text x="380" y="30" font-size="20" fill="#1f2937" font-weight="bold" text-anchor="middle">presión baja</text>
+  <path d="M302,232 Q286,200 300,150 L306,90 Q306,62 336,62 L424,62 Q454,62 454,90 L460,150 Q474,200 458,232 L438,232 Q380,214 322,232 Z" fill="#2d3239"/>
+  <rect x="338" y="90" width="84" height="110" rx="10" fill="#9aa3ad"/>
+  <!-- high pressure -->
+  <text x="633" y="30" font-size="20" fill="#1f2937" font-weight="bold" text-anchor="middle">presión alta</text>
+  <path d="M573,180 L573,90 Q573,58 603,58 L663,58 Q693,58 693,90 L693,180 Q690,222 650,232 L616,232 Q576,222 573,180 Z" fill="#2d3239"/>
+  <rect x="591" y="86" width="84" height="110" rx="10" fill="#9aa3ad"/>
+  <!-- tread strips (worn parts in red) -->
+  <rect x="57" y="270" width="140" height="44" rx="6" fill="#2d3239"/>
+  <rect x="302" y="270" width="156" height="44" rx="6" fill="#2d3239"/>
+  <rect x="302" y="270" width="36" height="44" rx="6" fill="#e4572e"/>
+  <rect x="422" y="270" width="36" height="44" rx="6" fill="#e4572e"/>
+  <rect x="573" y="270" width="120" height="44" rx="6" fill="#2d3239"/>
+  <rect x="610" y="270" width="46" height="44" fill="#e4572e"/>
+  <g stroke="#9aa3ad" stroke-width="3">
+    <line x1="92" y1="274" x2="92" y2="310"/><line x1="127" y1="274" x2="127" y2="310"/><line x1="162" y1="274" x2="162" y2="310"/>
+    <line x1="360" y1="274" x2="360" y2="310"/><line x1="400" y1="274" x2="400" y2="310"/>
+    <line x1="595" y1="274" x2="595" y2="310"/><line x1="671" y1="274" x2="671" y2="310"/>
+  </g>
+  <text x="127" y="346" font-size="18" fill="#1f2937" text-anchor="middle">desgaste uniforme</text>
+  <text x="380" y="346" font-size="18" fill="#1f2937" text-anchor="middle">se gastan los bordes</text>
+  <text x="633" y="346" font-size="18" fill="#1f2937" text-anchor="middle">se gasta el centro</text>
+  <text x="380" y="385" font-size="17" fill="#e4572e" text-anchor="middle" font-weight="bold">rojo = zona con más desgaste</text>
+</svg>

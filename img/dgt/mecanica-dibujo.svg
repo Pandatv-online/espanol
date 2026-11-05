@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 320" width="700" height="320" font-family="sans-serif">
+  <text x="20" y="30" font-size="20" fill="#1f2937" font-weight="bold">Banda de rodamiento (corte)</text>
+  <!-- tyre rubber with grooves -->
+  <path d="M40,90 L150,90 L150,190 L210,190 L210,90 L330,90 L330,190 L390,190 L390,90 L510,90 L510,190 L570,190 L570,90 L660,90 L660,260 L40,260 Z" fill="#2d3239"/>
+  <!-- wear indicator inside groove -->
+  <rect x="330" y="160" width="60" height="30" fill="#f2b33d"/>
+  <!-- depth arrow -->
+  <line x1="180" y1="98" x2="180" y2="182" stroke="#e4572e" stroke-width="4"/>
+  <polygon points="170,104 180,90 190,104" fill="#e4572e"/>
+  <polygon points="170,176 180,190 190,176" fill="#e4572e"/>
+  <text x="30" y="80" font-size="18" fill="#1f2937">profundidad del dibujo</text>
+  <text x="20" y="300" font-size="22" fill="#e4572e" font-weight="bold">mínimo 1,6 mm (turismos)</text>
+  <line x1="390" y1="160" x2="470" y2="60" stroke="#1f2937" stroke-width="2"/>
+  <text x="420" y="52" font-size="18" fill="#1f2937">testigo de desgaste</text>
+  <text x="360" y="300" font-size="18" fill="#1f2937">al llegar al testigo: cambiar</text>
+</svg>

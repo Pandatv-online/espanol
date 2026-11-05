@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" width="700" height="520" font-family="sans-serif">
+  <title>Cruce sin señales: prioridad a la derecha</title>
+  <rect x="280" y="0" width="140" height="520" fill="#5b6470"/>
+  <rect x="0" y="190" width="700" height="140" fill="#5b6470"/>
+  <g stroke="#ffffff" stroke-width="5" stroke-dasharray="26 20">
+    <line x1="350" y1="0" x2="350" y2="180"/>
+    <line x1="350" y1="340" x2="350" y2="520"/>
+    <line x1="0" y1="260" x2="270" y2="260"/>
+    <line x1="430" y1="260" x2="700" y2="260"/>
+  </g>
+  <g font-size="26" font-weight="bold" text-anchor="middle" fill="#ffffff">
+    <!-- A: hacia arriba -->
+    <rect x="367" y="380" width="36" height="62" rx="9" fill="#2563eb"/>
+    <text x="385" y="420">A</text>
+    <!-- B: hacia la izquierda -->
+    <rect x="460" y="207" width="62" height="36" rx="9" fill="#dc2626"/>
+    <text x="491" y="234">B</text>
+    <!-- C: hacia abajo -->
+    <rect x="297" y="90" width="36" height="62" rx="9" fill="#0d9488"/>
+    <text x="315" y="130">C</text>
+  </g>
+  <g fill="#ffffff">
+    <path d="M375,372 L385,352 L395,372 z"/>
+    <path d="M452,215 L432,225 L452,235 z"/>
+    <path d="M305,160 L315,180 L325,160 z"/>
+  </g>
+  <g font-size="22" fill="#1f2937">
+    <text x="20" y="40" font-weight="bold">Cruce sin señales</text>
+    <text x="20" y="70">Cede el paso a quien</text>
+    <text x="20" y="96">viene por tu derecha</text>
+    <text x="440" y="400">Orden: C → B → A</text>
+  </g>
+</svg>
