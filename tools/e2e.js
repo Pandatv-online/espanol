@@ -335,7 +335,7 @@ check('grammarBlocks.render draws every block type from the schema', async (page
     });
     return { types: ECA.grammarBlocks.types, r };
   });
-  assert.deepEqual(out.types.sort(), ['conj', 'examples', 'markers', 'rules', 'table', 'text', 'tip', 'triggers']);
+  assert.deepEqual(out.types.sort(), ['conj', 'examples', 'figure', 'markers', 'rules', 'signs', 'table', 'text', 'tip', 'triggers']);
   const want = { text: /prose|rule-box/, rules: /rule-grid/, triggers: /trigger-list/, conj: /conj-grid/, table: /table-wrap/, markers: /kw-grid/, examples: /ex-box/, tip: /^tip$/ };
   for (const [type, re] of Object.entries(want)) {
     assert.ok(out.r[type], `${type} rendered`);
@@ -482,7 +482,8 @@ check('a storage write failing mid-session shows "progress is not saved"', async
 
 check('all 6 levels have word and grammar topics; each topic opens cleanly', async (page) => {
   await page.goto(url + '#/a1');
-  const topics = await page.evaluate(() => ECA.data.levels().map((l) => ({
+  // CEFR levels; the DGT track has its own checks below.
+  const topics = await page.evaluate(() => ECA.data.levels().filter((l) => l.kind !== 'dgt').map((l) => ({
     level: l.id,
     words: ECA.data.vocab(l.id).map((t) => [t.id, ECA.i18n.pick(t.title)]),
     grammar: ECA.data.grammar(l.id).map((t) => [t.id, t.hero ? t.hero.es.replace(/<[^>]*>/g, '') : ECA.i18n.pick(t.title)])
@@ -699,8 +700,8 @@ check('markers without colour are neutral; a table without heading is a named re
 check('all 28 grammar topics: every tab, mini-tabs and the test work (320px, dark)', async (page) => {
   await page.goto(url + '#/a1');
   const topics = await page.evaluate(() => ECA.data.levels().flatMap((l) => ECA.data.grammar(l.id).map((t) =>
-    ({ hash: `#/${l.id.toLowerCase()}/grammar/${t.id}`, tabs: t.tabs.map((x) => x.id) }))));
-  assert.equal(topics.length, 28);
+    ({ hash: `#/${l.id.toLowerCase()}/grammar/${t.id}`, tabs: t.tabs.map((x) => x.id), dgt: l.kind === 'dgt' }))));
+  assert.equal(topics.filter((t) => !t.dgt).length, 28);
   for (const t of topics) {
     await page.goto(url + t.hash);
     for (const id of t.tabs) {
@@ -784,6 +785,63 @@ const outlineOf = (page, selector) => page.$eval(selector, (node) => {
   };
 });
 const settle = (page) => page.waitForTimeout(900);
+
+// ---------- DGT driving-theory track ----------
+
+check('DGT: separate tile under the staircase; theory first, then signs with pictures', async (page) => {
+  await page.goto(url + '#/a1');
+  await page.click('a.track-tile[data-level="DGT"]');
+  await page.waitForSelector('#section-signs');
+  assert.equal(new URL(page.url()).hash, '#/dgt');
+  assert.equal(await page.getAttribute('a.track-tile', 'aria-current'), 'page');
+  assert.equal(await page.locator('.level-tile[aria-current]').count(), 0);
+  assert.ok(await page.locator('#section-theory').count());
+  const icons = await page.locator('#section-signs ~ ul .topic-card__icon img.sign-img, .topic-grid .topic-card__icon img.sign-img').count();
+  assert.ok(icons >= 10, 'sign pictures as topic icons: ' + icons);
+  const broken = await page.$$eval('img.sign-img', (imgs) => imgs.filter((i) => i.complete && i.naturalWidth === 0).map((i) => i.src));
+  assert.deepEqual(broken, []);
+});
+
+check('DGT signs: the card front is the picture, the back has the Spanish name; the test asks by picture', async (page) => {
+  await page.goto(url + '#/dgt/words/dgt-signs-peligro');
+  await page.waitForSelector('.flashcard__face--front img.sign-img');
+  assert.equal(await page.locator('.flashcard__face--front .flashcard__word').count(), 0);
+  await page.click('.flashcard');
+  assert.ok((await page.textContent('.flashcard__face--back .flashcard__es')).trim().length > 3);
+  await page.goto(url + '#/dgt/words/dgt-signs-peligro/quiz');
+  await page.waitForSelector('.quiz__card--sign img.quiz__sign');
+  await page.locator('.quiz .option').first().click();
+  assert.ok(await page.locator('.quiz .feedback').count());
+});
+
+check('DGT theory: every topic opens, its question shows the Spanish original and translated options', async (page) => {
+  await page.goto(url + '#/dgt');
+  const ids = await page.evaluate(() => ECA.data.grammar('DGT').map((t) => t.id));
+  for (const id of ids) {
+    await page.goto(url + '#/dgt/grammar/' + id + '/test');
+    await page.waitForSelector('.grammar-quiz .btn--primary');
+    await page.locator('.grammar-quiz .btn--primary').click();
+    await page.waitForSelector('.grammar-question__es');
+    const tr = await page.locator('.grammar-option__tr').count();
+    assert.ok(tr >= 3, id + ': translated options');
+  }
+  const blocks = await page.evaluate(() => {
+    const out = [];
+    ECA.data.grammar('DGT').forEach((t) => t.tabs.forEach((tab) => tab.blocks.forEach((b) => {
+      if (b.type === 'signs' || b.type === 'figure') out.push('#/dgt/grammar/' + t.id + '/' + tab.id);
+    })));
+    return [...new Set(out)];
+  });
+  for (const hash of blocks) {
+    await page.goto(url + hash);
+    await page.waitForSelector('.grammar-panel .gblock');
+    const broken = await page.$$eval('.grammar-panel img', async (imgs) => {
+      await Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+      return imgs.filter((i) => i.naturalWidth === 0).map((i) => i.getAttribute('src'));
+    });
+    assert.deepEqual(broken, [], hash + ': pictures load');
+  }
+});
 
 check('hover draws the outline: two lines from opposite corners meet; leaving erases it', async (page) => {
   await page.goto(url + '#/a1');
