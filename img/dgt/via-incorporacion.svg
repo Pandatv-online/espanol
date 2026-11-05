@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 440" width="780" height="440" font-family="sans-serif">
+  <!-- motorway carriageway, traffic left to right; right lane at the bottom -->
+  <rect x="0" y="0" width="780" height="30" fill="#9cc58a"/>
+  <rect x="0" y="30" width="780" height="150" fill="#5b6470"/>
+  <rect x="0" y="34" width="780" height="3" fill="#ffffff"/>
+  <line x1="0" y1="105" x2="780" y2="105" stroke="#ffffff" stroke-width="4" stroke-dasharray="36 28"/>
+  <!-- slip road curving up into the acceleration lane -->
+  <path d="M0 400 C 140 400, 170 215, 260 212" stroke="#5b6470" stroke-width="62" fill="none"/>
+  <!-- acceleration lane, tapering to the right -->
+  <path d="M240 180 L600 180 L720 180 L600 243 L240 243 Z" fill="#5b6470"/>
+  <!-- line between right lane and acceleration lane (broken, wide) -->
+  <line x1="250" y1="180" x2="610" y2="180" stroke="#ffffff" stroke-width="6" stroke-dasharray="14 10"/>
+  <!-- solid edge before the lane starts -->
+  <rect x="0" y="177" width="250" height="5" fill="#ffffff"/>
+  <!-- outer edge of acceleration lane -->
+  <path d="M260 243 L600 243 L720 182" stroke="#ffffff" stroke-width="4" fill="none"/>
+  <g font-size="17" fill="#ffffff">
+    <text x="14" y="76">carril izquierdo</text>
+    <text x="14" y="148">carril derecho</text>
+  </g>
+  <text x="300" y="230" font-size="17" fill="#ffffff" font-weight="bold">carril de aceleración</text>
+  <text x="96" y="430" font-size="17" fill="#1f2630" font-weight="bold">vía de acceso</text>
+  <!-- traffic on the main carriageway -->
+  <rect x="120" y="125" width="84" height="36" rx="9" fill="#3d7dd8"/>
+  <rect x="182" y="131" width="16" height="24" rx="3" fill="#2f3a48"/>
+  <rect x="470" y="52" width="84" height="36" rx="9" fill="#2aa198"/>
+  <rect x="532" y="58" width="16" height="24" rx="3" fill="#2f3a48"/>
+  <g fill="#ffffff">
+    <path d="M640 62 h50 v-8 l22 12 l-22 12 v-8 h-50 z"/>
+    <path d="M640 134 h50 v-8 l22 12 l-22 12 v-8 h-50 z"/>
+  </g>
+  <!-- joining car and its path -->
+  <rect x="262" y="194" width="84" height="36" rx="9" fill="#d65a4a" transform="translate(-140 60) rotate(-28 304 212)"/>
+  <path d="M290 212 L520 212 C 580 212, 610 150, 680 145" stroke="#ffd27a" stroke-width="5" fill="none" stroke-dasharray="10 8"/>
+  <path d="M694 144 l-18 -9 v20 z" fill="#ffd27a"/>
+  <!-- step markers -->
+  <g font-size="18" font-weight="bold" text-anchor="middle">
+    <circle cx="270" cy="290" r="17" fill="#e0a526"/><text x="270" y="296" fill="#1f2630">1</text>
+    <circle cx="520" cy="290" r="17" fill="#e0a526"/><text x="520" y="296" fill="#1f2630">2</text>
+    <circle cx="690" cy="200" r="17" fill="#e0a526"/><text x="690" y="206" fill="#1f2630">3</text>
+  </g>
+  <line x1="270" y1="273" x2="270" y2="246" stroke="#e0a526" stroke-width="3"/>
+  <line x1="520" y1="273" x2="520" y2="246" stroke="#e0a526" stroke-width="3"/>
+  <g font-size="16" fill="#1f2630">
+    <text x="296" y="296">comprueba</text>
+    <text x="546" y="296">acelera</text>
+    <text x="546" y="318">e indica</text>
+    <text x="640" y="236">incorpórate</text>
+  </g>
+</svg>
