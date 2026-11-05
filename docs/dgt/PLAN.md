@@ -39,28 +39,17 @@
 - Картинки знаков: `python3 -I tools/extract-signs.py BOE-A-2025-12199.pdf <out>` → `signs.json` + PNG.
 
 ## Задачи
-- [x] Найти источник картинок знаков: каталог BOE, 457 знаков (страницы 35–149), `tools/extract-signs.py`
-- [ ] Каркас: уровень DGT, маршрут, валидатор, блоки `signs`/`figure`, вопросы с картинкой и переводом
-- [ ] Знаки: `img/signs/*.png` + `data/dgt-signs.js` (группы каталога, перевод RU/EN, описание из BOE как пример)
-- [ ] Темы теории (по 25–40 вопросов в каждой):
-  - [ ] 1 Vía pública, usuarios, vehículos (определения)
-  - [ ] 2 Señales: jerarquía, agentes, semáforos, marcas viales
-  - [ ] 3 Velocidad (límites, adecuación)
-  - [ ] 4 Posición en la vía, carriles, sentido
-  - [ ] 5 Prioridad de paso (intersecciones, glorietas, estrechamientos)
-  - [ ] 6 Adelantamientos
-  - [ ] 7 Maniobras: incorporación, cambio de dirección, marcha atrás
-  - [ ] 8 Parada y estacionamiento
-  - [ ] 9 Alumbrado y señalización óptica; advertencias
-  - [ ] 10 Autopistas, autovías, túneles, pasos a nivel
-  - [ ] 11 Documentación, permiso por puntos, sanciones
-  - [ ] 12 Alcohol, drogas, fatiga, distracciones, medicamentos
-  - [ ] 13 Seguridad pasiva: cinturón, SRI, casco
-  - [ ] 14 Vehículo: mantenimiento, neumáticos, carga, remolque
-  - [ ] 15 Conducción eficiente y medio ambiente
-  - [ ] 16 Accidentes y primeros auxilios (PAS)
-  - [ ] 17 Usuarios vulnerables: peatones, ciclistas, VMP
-- [ ] Иллюстрации SVG к темам (`img/dgt/`): перекрёстки, круговое движение, разметка, дистанция
+- [x] Источник картинок знаков: каталог BOE, 457 знаков (стр. 35–149), `tools/extract-signs.py`
+- [x] Каркас: уровень DGT, маршрут, валидатор, блоки `signs`/`figure`, вопросы с картинкой и переводом (commit 166e841)
+- [x] Знаки: `img/signs/*.png` + `data/dgt-signs-{a,b,c}.js` — 10 тем, 457 знаков, RU/EN, описание из BOE
+- [ ] Темы теории — по 17 темам официального учебника DGT «lectura fácil», ТЗ: `docs/dgt/THEORY-SPEC.md`.
+  Файл `data/dgt-theory-NN-<slug>.js`, картинки `img/dgt/<slug>-*.svg`. После готовности — подключить в `index.html`.
+  Справочные тексты (пересоздать, если контейнер новый): учебник lectura fácil (ZIP с sede DGT) → `pdftotext -layout`,
+  разрезать по «Tema N.»; Manual I 2025 (sede DGT); RGC/LSV/RGCond (BOE consolidado) → `pdftotext -layout`.
+  - [ ] 01 definiciones · [ ] 02 documentacion · [ ] 03 conductor · [ ] 04 obligaciones · [ ] 05 seguridad
+  - [ ] 06 elementos · [ ] 07 luces · [ ] 08 senales · [ ] 09 via · [ ] 10 velocidad · [ ] 11 maniobras
+  - [ ] 12 preferencia · [ ] 13 transporte · [ ] 14 conducir-seguro · [ ] 15 mecanica · [ ] 16 accidentes · [ ] 17 eficiente
 - [ ] Пробный экзамен: 30 вопросов из всех тем, не больше 3 ошибок
+- [ ] Папка `private/` (в .gitignore) для материалов только для себя: сайт подхватывает `private/dgt-private.js`, если файл есть
 - [ ] e2e-сценарии и скриншоты, обновить CLAUDE.md и CONTENT.md
 - [ ] Только для себя: тесты Revista DGT → Google Drive (не в репозиторий)
