@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="sans-serif">
+  <title>Distintivos ambientales de la DGT: 0 emisiones, ECO, C y B</title>
+  <!-- 0 emisiones: blue -->
+  <circle cx="100" cy="110" r="78" fill="#1f6fb5" stroke="#1f2a44" stroke-width="2"/>
+  <text x="100" y="118" font-size="64" font-weight="bold" fill="#ffffff" text-anchor="middle">0</text>
+  <text x="100" y="152" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">EMISIONES</text>
+  <!-- ECO: blue + green -->
+  <path d="M222 110 A78 78 0 0 1 378 110 Z" fill="#1f6fb5"/>
+  <path d="M222 110 A78 78 0 0 0 378 110 Z" fill="#3a9a4a"/>
+  <circle cx="300" cy="110" r="78" fill="none" stroke="#1f2a44" stroke-width="2"/>
+  <text x="300" y="128" font-size="48" font-weight="bold" fill="#ffffff" text-anchor="middle">ECO</text>
+  <!-- C: green -->
+  <circle cx="500" cy="110" r="78" fill="#3a9a4a" stroke="#1f2a44" stroke-width="2"/>
+  <text x="500" y="132" font-size="64" font-weight="bold" fill="#ffffff" text-anchor="middle">C</text>
+  <!-- B: yellow -->
+  <circle cx="700" cy="110" r="78" fill="#f2c200" stroke="#1f2a44" stroke-width="2"/>
+  <text x="700" y="132" font-size="64" font-weight="bold" fill="#1f2a44" text-anchor="middle">B</text>
+  <!-- captions -->
+  <g font-size="16" fill="#1f2a44" text-anchor="middle">
+    <text x="100" y="222">eléctricos (BEV),</text>
+    <text x="100" y="244">enchufables con</text>
+    <text x="100" y="266">≥ 40 km eléctricos,</text>
+    <text x="100" y="288">pila de hidrógeno</text>
+
+    <text x="300" y="222">híbridos (HEV),</text>
+    <text x="300" y="244">enchufables con</text>
+    <text x="300" y="266">&lt; 40 km eléctricos,</text>
+    <text x="300" y="288">gas (GNC, GNL, GLP)</text>
+
+    <text x="500" y="222">gasolina</text>
+    <text x="500" y="244">Euro 4, 5 y 6;</text>
+    <text x="500" y="266">diésel Euro 6</text>
+
+    <text x="700" y="222">gasolina Euro 3;</text>
+    <text x="700" y="244">diésel</text>
+    <text x="700" y="266">Euro 4 y 5</text>
+  </g>
+  <g font-size="18" fill="#1f2a44">
+    <text x="400" y="340" text-anchor="middle"><tspan font-weight="bold">Sin distintivo (A):</tspan> vehículos más antiguos y contaminantes</text>
+    <text x="400" y="370" text-anchor="middle">Se pega en el ángulo inferior derecho del parabrisas, por dentro</text>
+  </g>
+</svg>

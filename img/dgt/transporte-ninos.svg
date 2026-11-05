@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" font-family="sans-serif">
+  <title>Dónde van los niños de hasta 135 cm: en el asiento trasero con sistema de retención infantil</title>
+  <!-- car from above, front to the left -->
+  <rect x="60" y="80" width="460" height="230" rx="60" fill="#5b6470"/>
+  <rect x="80" y="96" width="420" height="198" rx="44" fill="#e8ecf1"/>
+  <text x="96" y="70" font-size="17" fill="#1f2a44">← delante</text>
+  <!-- front seats -->
+  <rect x="190" y="110" width="80" height="70" rx="12" fill="#9aa6b5"/>
+  <rect x="190" y="210" width="80" height="70" rx="12" fill="#9aa6b5"/>
+  <text x="230" y="250" text-anchor="middle" font-size="16" fill="#1f2a44">conductor</text>
+  <!-- airbag mark on front passenger -->
+  <circle cx="150" cy="145" r="20" fill="#ffffff" stroke="#d32f2f" stroke-width="3"/>
+  <text x="150" y="151" text-anchor="middle" font-size="14" font-weight="bold" fill="#d32f2f">OFF</text>
+  <!-- rear bench -->
+  <rect x="340" y="110" width="110" height="170" rx="12" fill="#9aa6b5"/>
+  <!-- rear-facing seat (baby) and forward-facing booster -->
+  <rect x="350" y="118" width="88" height="62" rx="14" fill="#2e8b57"/>
+  <path d="M 366 149 L 420 149" stroke="#ffffff" stroke-width="4"/><path d="M 408 139 L 424 149 L 408 159" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <rect x="350" y="210" width="88" height="62" rx="14" fill="#e9a23b"/>
+  <path d="M 420 241 L 366 241" stroke="#ffffff" stroke-width="4"/><path d="M 378 231 L 362 241 L 378 251" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <!-- labels -->
+  <g font-size="17" fill="#1f2a44">
+    <text x="540" y="130" font-weight="bold">bebé: silla</text>
+    <text x="540" y="152" font-weight="bold">a contramarcha</text>
+    <text x="540" y="232" font-weight="bold">niño: alzador</text>
+    <text x="540" y="254">con cinturón</text>
+  </g>
+  <line x1="438" y1="149" x2="532" y2="140" stroke="#1f2a44" stroke-width="2"/>
+  <line x1="438" y1="241" x2="532" y2="238" stroke="#1f2a44" stroke-width="2"/>
+  <text x="360" y="340" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f2a44">≤ 135 cm → SRI homologado, en el asiento trasero</text>
+  <text x="360" y="366" text-anchor="middle" font-size="17" fill="#1f2a44">delante a contramarcha solo con el airbag desactivado</text>
+</svg>

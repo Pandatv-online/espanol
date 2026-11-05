@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" width="760" height="320" font-family="sans-serif">
+  <title>Adelantar a un ciclista: ocupar el carril contrario y dejar al menos 1,5 m</title>
+  <defs>
+    <marker id="ad" markerWidth="18" markerHeight="16" refX="16" refY="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L18,8 L0,16 Z" fill="#1f2a37"/></marker>
+    <marker id="ag" markerWidth="18" markerHeight="16" refX="16" refY="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L18,8 L0,16 Z" fill="#7fd39b"/></marker>
+  </defs>
+  <text x="380" y="28" font-size="18" text-anchor="middle" fill="#1f2a37">fuera de poblado: al menos <tspan font-weight="bold">20 km/h menos</tspan> que el límite</text>
+  <!-- road -->
+  <rect x="20" y="50" width="720" height="200" fill="#5b6470"/>
+  <line x1="20" y1="54" x2="740" y2="54" stroke="#ffffff" stroke-width="3"/>
+  <line x1="20" y1="246" x2="740" y2="246" stroke="#ffffff" stroke-width="3"/>
+  <line x1="20" y1="150" x2="740" y2="150" stroke="#ffffff" stroke-width="4" stroke-dasharray="26 18"/>
+  <text x="34" y="80" font-size="16" fill="#ffffff">carril contrario</text>
+  <text x="34" y="236" font-size="16" fill="#ffffff">mi carril</text>
+  <!-- car path -->
+  <path d="M 70 200 C 200 200, 230 100, 330 100 L 520 100 C 610 100, 620 200, 720 200" fill="none" stroke="#7fd39b" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#ag)"/>
+  <!-- car overtaking -->
+  <rect x="400" y="78" width="96" height="44" rx="10" fill="#2f6fb3"/>
+  <rect x="456" y="84" width="22" height="32" rx="4" fill="#cfe3f5"/>
+  <!-- cyclist (top view) -->
+  <rect x="404" y="206" width="56" height="10" rx="5" fill="#1f2a37"/>
+  <ellipse cx="432" cy="211" rx="12" ry="17" fill="#e0a526"/>
+  <circle cx="436" cy="211" r="8" fill="#c8453b"/>
+  <!-- lateral gap -->
+  <line x1="560" y1="126" x2="560" y2="190" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 3"/>
+  <line x1="460" y1="122" x2="580" y2="122" stroke="#ffffff" stroke-width="2"/>
+  <line x1="460" y1="194" x2="580" y2="194" stroke="#ffffff" stroke-width="2"/>
+  <rect x="572" y="140" width="96" height="36" rx="6" fill="#ffffff"/>
+  <text x="620" y="165" font-size="20" font-weight="bold" text-anchor="middle" fill="#1f2a37">≥ 1,5 m</text>
+  <text x="380" y="280" font-size="17" text-anchor="middle" fill="#1f2a37">ocupar parte o todo el carril contrario · con dos carriles por sentido:</text>
+  <text x="380" y="304" font-size="17" text-anchor="middle" fill="#1f2a37">cambiar de carril por completo</text>
+</svg>
