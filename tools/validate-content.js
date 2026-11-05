@@ -260,6 +260,7 @@ function validate(ECA, opts) {
           }
           if (q.sign !== undefined) signCode(where, `${f}.sign`, q.sign);
           if (q.img !== undefined) imgPath(where, `${f}.img`, q.img);
+          if (q.photo !== undefined && !/^private\/[\w./-]+$/.test(String(q.photo))) report(where, `${f}.photo`, 'photo — только локальный файл из private/');
         }
         const opts = Array.isArray(q.options) ? q.options : [];
         const optEs = opts.map((o) => (o && typeof o === 'object' ? o.es : o));
@@ -323,6 +324,7 @@ function loadSite(rootDir) {
   if (fs.existsSync(indexPath)) {
     const html = fs.readFileSync(indexPath, 'utf8');
     files = [...html.matchAll(/<script[^>]+src="(data\/[^"]+\.js)"/g)].map((m) => m[1]);
+    // private/*.js is local-only and optional: validated when present, never required.
   }
   const onDisk = fs.readdirSync(path.join(rootDir, 'data')).filter((f) => f.endsWith('.js')).map((f) => 'data/' + f);
   const missing = onDisk.filter((f) => !files.includes(f));
@@ -330,6 +332,8 @@ function loadSite(rootDir) {
   require(path.join(rootDir, 'js', 'data.js'));
   if (fs.existsSync(path.join(rootDir, 'js', 'icons.js'))) require(path.join(rootDir, 'js', 'icons.js'));
   files.concat(missing).forEach((f) => { if (fs.existsSync(path.join(rootDir, f))) require(path.join(rootDir, f)); });
+  const local = path.join(rootDir, 'private', 'dgt-private.js');
+  if (fs.existsSync(local)) require(local);
   return { ECA: globalThis.ECA, missing, notFound };
 }
 

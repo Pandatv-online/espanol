@@ -30,7 +30,7 @@ const url = 'file://' + path.join(__dirname, '..', 'index.html');
         const page = await browser.newPage({ viewport: { width, height: 900 }, colorScheme: scheme, locale: 'ru-RU' });
         const errors = [];
         page.on('pageerror', (e) => errors.push(e.message));
-        page.on('console', (m) => { if (m.type() === 'error' && !/fonts\.g/.test(m.text())) errors.push(m.text()); });
+        page.on('console', (m) => { if (m.type() === 'error' && !/fonts\.g|net::ERR/.test(m.text())) errors.push(m.text()); });
         await page.goto(url + hash);
         await page.waitForTimeout(400);
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

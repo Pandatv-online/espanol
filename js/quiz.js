@@ -114,6 +114,7 @@
       if (item.es) q.es = item.es;
       if (item.sign) q.img = item.sign;
       if (item.img) q.figure = item.img;
+      if (item.photo) q.figure = item.photo; // local-only picture (private/)
       if (item.explain) q.explain = pickLang(item.explain, lang);
       return q;
     });

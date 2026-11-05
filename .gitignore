@@ -6,3 +6,6 @@ __pycache__/
 .DS_Store
 .autopilot/serve.*
 dist/
+
+# Local-only study materials (third-party images, personal copies): never published
+private/
