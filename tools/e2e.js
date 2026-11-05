@@ -67,7 +67,7 @@ async function openGrammarTable(page, hash) {
 
 async function finishGrammarQuiz(page) {
   await page.locator('.grammar-quiz .btn--primary').click();
-  for (let i = 0; i < 20 && (await page.locator('#grammar-result').count()) === 0; i++) {
+  for (let i = 0; i < 60 && (await page.locator('#grammar-result').count()) === 0; i++) {
     await page.locator('.grammar-quiz .option').first().click();
     await page.locator('[data-next]').click();
   }
@@ -309,7 +309,7 @@ check('tabbed grammar: the test is the last tab and survives switching tabs', as
   await page.click('#tab-diff');
   await page.click('#tab-test');
   assert.equal(await page.textContent('.grammar-quiz__progress'), progress, 'the attempt goes on');
-  for (let i = 0; i < 20 && (await page.locator('#grammar-result').count()) === 0; i++) {
+  for (let i = 0; i < 60 && (await page.locator('#grammar-result').count()) === 0; i++) {
     await page.locator('.grammar-quiz .option').first().click();
     await page.locator('[data-next]').click();
   }
