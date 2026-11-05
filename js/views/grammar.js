@@ -9,6 +9,7 @@
     ru: {
       'grammar.check': 'Проверь себя',
       'grammar.checkLead': '{n} вопросов с вариантами ответа. После каждого — пояснение, почему так.',
+      'grammar.checkLeadBank': '{n} случайных вопросов из {m}: каждый заход — новый набор. После каждого вопроса — пояснение, почему так.',
       'grammar.start': 'Начать тест',
       'grammar.progress': 'Вопрос {n} из {m}',
       'grammar.keys': 'Клавиши 1–{n} — выбрать ответ, Enter или пробел — дальше.',
@@ -32,6 +33,7 @@
     en: {
       'grammar.check': 'Check yourself',
       'grammar.checkLead': '{n} multiple-choice questions. After each one you’ll see why the answer is right.',
+      'grammar.checkLeadBank': '{n} random questions out of {m}: every attempt is a new set. After each one you’ll see why the answer is right.',
       'grammar.start': 'Start the test',
       'grammar.progress': 'Question {n} of {m}',
       'grammar.keys': 'Keys 1–{n} pick an answer, Enter or Space goes on.',
@@ -284,10 +286,10 @@
     }
 
     function paintIntro() {
-      var n = (topic.quiz || []).length;
+      var total = (topic.quiz || []).length, n = total;
       if (topic.quizCount > 0 && n > topic.quizCount) n = topic.quizCount;
       ui.append(quizBody, [
-        el('p', { class: 'grammar-quiz__lead', text: t('grammar.checkLead', { n: n }) }),
+        el('p', { class: 'grammar-quiz__lead', text: n < total ? t('grammar.checkLeadBank', { n: n, m: total }) : t('grammar.checkLead', { n: n }) }),
         el('div', { class: 'btn-row' }, el('button', {
           class: 'btn btn--primary', type: 'button', text: t('grammar.start'), on: { click: begin }
         }))
