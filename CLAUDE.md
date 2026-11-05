@@ -8,10 +8,11 @@
 | Команда | Что делает |
 |---------|------------|
 | открыть `index.html` в браузере | Запустить сайт, сервер не нужен |
-| `node --test tests/` | Все юнит-тесты (54) через `tests/index.js` |
+| `node --test tests/` | Все юнит-тесты (59) через `tests/index.js` |
 | `node --test tests/store.test.js` | Один файл тестов |
 | `node tools/icons.js` | Пересобрать `js/icons.js` (иконки Phosphor Duotone, которые темы слов называют в `icon`); качает `@phosphor-icons/core` через `npm pack` |
-| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 6, тем слов 52, тем грамматики 28» или список ошибок и код 1 |
+| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 7, тем слов 62, тем грамматики 46» или список ошибок и код 1 |
+| `python3 -I tools/extract-signs.py BOE-A-2025-12199.pdf <out>` | Вырезать знаки из каталога BOE: `<out>/img/*.png` + `signs.json` (нужны poppler и Pillow) |
 | `npx -y -p playwright@1.63.0 node tools/e2e.js` | 41 браузерный сценарий по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
 | `npx -y -p playwright@1.63.0 node tools/screenshot.js "$TMPDIR/eca-shots" '#/a1' '#/a2/grammar/a2-perfecto-indefinido/conj'` | Скриншоты 375/1280 × светлая/тёмная; код 1 при горизонтальном скролле или ошибке в консоли |
 | `npx -y playwright@1.63.0 install chromium` | Поставить браузер, если Playwright его не нашёл |
@@ -22,10 +23,15 @@
 index.html     единственная страница: шапка, #screen, футер; шрифты Google Fonts; фиксирует порядок всех <script>
 js/            data, i18n, store, quiz, icons (генерируется tools/icons.js) — без DOM; ui.js — DOM-хелперы и реестр экранов; app.js — роутер
 js/views/      экраны: level.js (уровень), vocab.js (тема слов), grammar.js (тема грамматики + ECA.grammarBlocks)
-data/          контент: levels.js, vocab-<lvl>.js, grammar-<lvl>.js (+ grammar-a2-more.js, grammar-b1-more.js)
+data/          контент: levels.js, vocab-<lvl>.js, grammar-<lvl>.js (+ grammar-a2-more.js, grammar-b1-more.js);
+               DGT: dgt-level.js, dgt-signs-{a,b,c}.js (знаки), dgt-theory-NN-<slug>.js (17 тем), dgt-examen.js (пробный экзамен)
+img/signs/     457 знаков из каталога BOE (RD 465/2025), PNG по коду: img/signs/R-301.png
+img/dgt/       свои SVG-схемы к темам DGT
+private/       (в .gitignore) материалы только для себя; сайт грузит private/dgt-private.js, если файл есть
+docs/dgt/      PLAN.md (план и прогресс раздела DGT), THEORY-SPEC.md (ТЗ на тему), signs-boe.json (каталог знаков)
 css/           base.css — токены, общие компоненты и компоненты блоков грамматики; vocab.css, grammar.css — экраны
 tests/         node:test, *.test.js; index.js — точка входа для `node --test tests/`
-tools/         только для разработки: validate-content.js, icons.js, e2e.js, screenshot.js
+tools/         только для разработки: validate-content.js, icons.js, e2e.js, screenshot.js, generate-discovery.js, extract-signs.py
 archive/       старые HTML-страницы грамматики (образец стиля); PORT-CHECKLIST.md — что куда перенесено; сайт их не подключает
 docs/adr/      решения: статика без сборки, hash-роутинг, контент как JS, ru/en в данных, localStorage, node:test + Playwright
 CONTENT.md     инструкция автора контента: слова, «Как записывать слова», «Тема грамматики» (полная схема, типы блоков, правила оформления)
@@ -50,6 +56,8 @@ CONTENT.md     инструкция автора контента: слова, �
 - `ECA.store` — один JSON в `localStorage['eca:v1']`: `prefs` (`lang`, `theme`, `level`), `learned` (ключ `topicId|es`), `scores` (ключи `words:<id>`, `grammar:<id>` → лучший `{score,total}`); `recordScore` → `true` при новом рекорде; `resetProgress` сохраняет `lang` и `theme`; без хранилища — `onUnavailable` показывает заметку в футере.
 - `ECA.quiz`: `fromVocab` — 10 вопросов, направления es→язык и язык→es чередуются, отвлекающие варианты — из той же темы, затем из других тем уровня; `fromGrammar` — вопросы из `topic.quiz` с перемешанными вариантами.
 - `Question = { prompt, promptLang, es?, options (3–4), optionsLang, answer (индекс), explain? }`.
+- Трек DGT (права в Испании): «уровень» `DGT` с `kind: 'dgt'`, адрес `#/dgt`; плитка под лестницей A1–C2 (`.track-tile`). Теория — темы грамматики `addGrammar('DGT')`, знаки — темы слов `addVocab('DGT')` с `kind: 'signs'` и `sign: '<код>'` у слова; иконка темы `icon: 'sign:<код>'`. В `learn/` и sitemap DGT не попадает.
+- Вопрос DGT: `{ es, prompt:{ru,en}, options:[{es,ru,en}], answer, explain:{ru,en}, sign?, img?, photo? }` → в тесте испанский оригинал, перевод вариантов (`q.optionsTr`), картинка знака или схемы; `quizCount` — сколько вопросов берётся за заход из банка. Блоки `signs` и `figure` — только для DGT-тем по смыслу, но доступны везде.
 - Маршруты: `#/<lvl>` · `#/<lvl>/words/<id>` · `#/<lvl>/words/<id>/quiz` · `#/<lvl>/grammar/<id>` · `#/<lvl>/grammar/<id>/<tab>`; в URL `a1`…`c2`, внутри `A1`…`C2`.
 - Вкладка грамматики: id вкладки из данных или `test` (тест, всегда последняя); нет вкладки → первая; неизвестная → первая и адрес чистится `replaceState`; переключение — `replaceState` (без записи в историю).
 - Пустой hash → `store.pref('level')` или `A1` через `replaceState`; неразобранный адрес → «Такой страницы нет»; темы нет или её `level` ≠ уровню из URL → «Такой темы нет»; экран бросил исключение → «Что-то пошло не так»; экран не зарегистрирован → «скоро».
@@ -99,6 +107,9 @@ CONTENT.md     инструкция автора контента: слова, �
 - e2e — `tools/e2e.js`: свой мини-раннер (`check(name, fn, opts)`), Chromium по `file://`, падает на ошибках консоли (кроме шрифтов и `net::ERR`) и горизонтальном скролле; фильтра по одному сценарию нет.
 
 ## Подводные камни
+
+- `data/dgt-examen.js` собирает банк из всех DGT-тем, загруженных раньше него: новые `dgt-theory-*.js` подключать в `index.html` до него.
+- Чужие тесты и картинки (testruta, autoviatest, фото Revista DGT) в репозиторий не кладём — только в `private/`.
 
 - Node 22 не раскрывает каталог в `node --test tests/` — вход идёт через `tests/index.js`, не удалять.
 - Новое имя в `icon` темы слов — сначала `node tools/icons.js`, иначе валидатор: «иконки … нет в js/icons.js»; `js/icons.js` руками не правят.
