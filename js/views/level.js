@@ -9,7 +9,7 @@
       'level.progress': 'Выучено {n} из {m} слов · тестов пройдено {k} из {l}',
       'level.progressDgt': 'Выучено {n} из {m} знаков · тестов пройдено {k} из {l}',
       'level.trackNote': 'DGT, permiso B · теория, знаки, тесты',
-      'level.signsLead': 'Все знаки из официального каталога (BOE, RD 465/2025): карточки, список и тест.',
+      'level.signsLead': 'Все знаки и разметка: карточки, список и тест.',
       'level.topics': 'Тем: {n}',
       'level.current': '{code}, {name}'
     },
@@ -18,7 +18,7 @@
       'level.progress': 'Learned {n} of {m} words · tests passed {k} of {l}',
       'level.progressDgt': 'Learned {n} of {m} signs · tests passed {k} of {l}',
       'level.trackNote': 'DGT, permiso B · theory, signs, tests',
-      'level.signsLead': 'Every sign from the official catalogue (BOE, RD 465/2025): flashcards, list and test.',
+      'level.signsLead': 'Every sign and road marking: flashcards, list and test.',
       'level.topics': 'Topics: {n}',
       'level.current': '{code}, {name}'
     }
