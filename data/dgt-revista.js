@@ -291,7 +291,7 @@ ECA.data.addGrammar('DGT', [
         { es: "No, porque pueden dificultar la conducción.", ru: "Нет, они мешают управлять.", en: "No, they make riding harder." }
       ],
       answer: 1,
-      explain: { ru: "Перчатки не обязательны по закону, но при падении первыми страдают руки, поэтому их советуют носить всегда. Fuente: Tráfico y Seguridad Vial, test nº 263.", en: "Gloves are not legally required, but hands are hurt first in a fall, so wearing them is always advised. Source: Tráfico y Seguridad Vial magazine, test no. 263." } },
+      explain: { ru: "С 1 октября 2026 года перчатки обязательны водителю и пассажиру мотоцикла за городом (RGC, ст. 118.1), но не на всех дорогах. В городе их тоже советуют носить: при падении первыми страдают руки. Fuente: Tráfico y Seguridad Vial, test nº 263; RD 518/2026.", en: "Since 1 October 2026 gloves are compulsory for motorcycle riders and passengers on interurban roads (RGC art. 118.1), but not on every road. They are advised in town too: hands are hurt first in a fall. Source: Tráfico y Seguridad Vial magazine, test no. 263; RD 518/2026." } },
     { es: "La señal indica que...",
       prompt: { ru: "Этот знак означает, что…", en: "This sign means that…" },
       options: [
