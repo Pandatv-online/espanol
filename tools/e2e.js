@@ -335,7 +335,7 @@ check('grammarBlocks.render draws every block type from the schema', async (page
     });
     return { types: ECA.grammarBlocks.types, r };
   });
-  assert.deepEqual(out.types.sort(), ['conj', 'examples', 'figure', 'markers', 'rules', 'signs', 'table', 'text', 'tip', 'triggers']);
+  assert.deepEqual(out.types.sort(), ['conj', 'examples', 'figure', 'links', 'markers', 'rules', 'signs', 'table', 'text', 'tip', 'triggers']);
   const want = { text: /prose|rule-box/, rules: /rule-grid/, triggers: /trigger-list/, conj: /conj-grid/, table: /table-wrap/, markers: /kw-grid/, examples: /ex-box/, tip: /^tip$/ };
   for (const [type, re] of Object.entries(want)) {
     assert.ok(out.r[type], `${type} rendered`);

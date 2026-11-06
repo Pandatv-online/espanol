@@ -134,6 +134,15 @@
         b.caption ? rich('figcaption', pick(b.caption, lang), { class: 'dgt-figure__cap' }) : null
       ]);
     },
+    // { type: 'links', items: [{ href: 'relative/path.pdf#page=3', label: { ru, en }, note? }] } — local files only.
+    links: function (b, lang) {
+      return el('ul', { class: 'link-list', role: 'list' }, b.items.map(function (it) {
+        return el('li', { class: 'link-list__item' }, [
+          el('a', { class: 'link-list__a', href: it.href, target: '_blank', rel: 'noopener', text: pick(it.label, lang) }),
+          it.note ? el('span', { class: 'link-list__note', text: ' — ' + pick(it.note, lang) }) : null
+        ]);
+      }));
+    },
     text: function (b, lang) {
       var ps = paras(b.body, lang).map(function (p) { return rich('p', p); });
       return b.color ? el('div', { class: cls('rule-box', colorClass(b.color)) }, ps) : el('div', { class: 'prose' }, ps);

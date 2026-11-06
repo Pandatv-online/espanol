@@ -22,6 +22,7 @@ const DGT = 'DGT';
 const DGT_QUIZ_MIN = 10;
 const DGT_QUIZ_MAX = 10000; // the mock exam pools every topic
 const DGT_TABS_MIN = 2;
+const DGT_TABS_MAX = 7; // + a «More» tab added by a local overlay
 const SIGN_CODE = /^[A-Z]{1,3}-\d+[a-z]?(\.\d+)?[a-z]?$/;
 
 // opts.fileExists(relPath) → bool: when given, sign pictures and figures must exist on disk.
@@ -110,7 +111,7 @@ function validate(ECA, opts) {
     if (fileExists && !fileExists(`img/signs/${code}.png`)) report(where, field, `нет картинки img/signs/${code}.png`);
   };
   const imgPath = (where, field, src) => {
-    if (!nonEmpty(src) || !/^img\/[a-z0-9/_.-]+\.(svg|png|jpg|webp)$/i.test(src)) return report(where, field, `путь «${src}» — нужен относительный img/…(.svg|.png|.jpg|.webp)`);
+    if (!nonEmpty(src) || !/^(img|private)\/[a-z0-9/_.-]+\.(svg|png|jpg|jpeg|webp|gif)$/i.test(src)) return report(where, field, `путь «${src}» — нужен относительный img/… или private/…(.svg|.png|.jpg|.webp)`);
     if (fileExists && !fileExists(src)) report(where, field, `файла ${src} нет`);
   };
   const BLOCKS = {
@@ -120,6 +121,12 @@ function validate(ECA, opts) {
       if (!it || typeof it !== 'object') return report(w, g, 'нужен код знака или { code, note: { ru, en } }');
       signCode(w, `${g}.code`, it.code);
       if (it.note !== undefined) richBoth(w, it.note, `${g}.note`);
+    }),
+    links: (w, b, f) => list(w, `${f}.items`, b.items).forEach((it, i) => {
+      const g = `${f}.items[${i}]`;
+      if (!it || !nonEmpty(it.href) || /^[a-z]+:/i.test(it.href) || it.href.startsWith('/')) report(w, `${g}.href`, 'нужна относительная ссылка на локальный файл');
+      plainBoth(w, it.label, `${g}.label`);
+      if (it.note !== undefined) plainBoth(w, it.note, `${g}.note`);
     }),
     figure: (w, b, f) => {
       imgPath(w, `${f}.src`, b.src);
@@ -287,7 +294,8 @@ function validate(ECA, opts) {
     if (!Array.isArray(topic.tabs)) return report(where, 'tabs', 'нет вкладок — нужен список tabs (см. CONTENT.md, «Тема грамматики»)');
     const tabs = topic.tabs;
     const tabsMin = dgt ? DGT_TABS_MIN : TABS_MIN;
-    if (tabs.length < tabsMin || tabs.length > TABS_MAX) report(where, 'tabs', `вкладок ${tabs.length}, нужно ${tabsMin}–${TABS_MAX} (плюс «Тест», его не описывают)`);
+    const tabsMax = dgt ? DGT_TABS_MAX : TABS_MAX;
+    if (tabs.length < tabsMin || tabs.length > tabsMax) report(where, 'tabs', `вкладок ${tabs.length}, нужно ${tabsMin}–${tabsMax} (плюс «Тест», его не описывают)`);
     const ids = new Set();
     let examples = 0;
     tabs.forEach((tab, ti) => {
@@ -332,7 +340,7 @@ function loadSite(rootDir) {
   require(path.join(rootDir, 'js', 'data.js'));
   if (fs.existsSync(path.join(rootDir, 'js', 'icons.js'))) require(path.join(rootDir, 'js', 'icons.js'));
   files.concat(missing).forEach((f) => { if (fs.existsSync(path.join(rootDir, f))) require(path.join(rootDir, f)); });
-  ['dgt-private.js', 'testruta.js', 'local.js'].forEach((f) => {
+  ['dgt-private.js', 'testruta.js', 'local.js', 'extra.js'].forEach((f) => {
     const local = path.join(rootDir, 'private', f);
     if (fs.existsSync(local)) require(local);
   });

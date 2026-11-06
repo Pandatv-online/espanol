@@ -100,3 +100,8 @@
 .grammar-option__text { display: grid; gap: 2px; min-width: 0; }
 .grammar-option__tr { color: var(--ink-soft); font-size: var(--step--1); font-weight: 400; }
 .section-lead { color: var(--ink-soft); max-width: 60ch; margin-bottom: var(--space-3); }
+
+.link-list { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.link-list__item { line-height: 1.5; }
+.link-list__a { font-weight: 600; color: var(--link); }
+.link-list__note { color: var(--ink-soft); font-size: var(--step--1); }
