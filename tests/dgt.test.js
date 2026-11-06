@@ -81,3 +81,13 @@ test('validator: DGT topics accept question banks, sign blocks and sign words; d
   const badSign = validate({ data }, { fileExists: (p) => !p.includes('R-2') });
   assert.ok(badSign.some((e) => /img\/signs\/R-2\.png/.test(e)));
 });
+
+test('data.remove drops a topic so a local overlay can merge it elsewhere', () => {
+  require('../js/data.js');
+  const { data } = globalThis.ECA;
+  data.addGrammar('ZZ', [{ id: 'zz-a', level: 'ZZ' }, { id: 'zz-b', level: 'ZZ' }]);
+  assert.equal(data.remove('grammar', 'zz-a'), true);
+  assert.deepEqual(data.grammar('ZZ').map((t) => t.id), ['zz-b']);
+  assert.equal(data.find('grammar', 'zz-a'), null);
+  assert.equal(data.remove('grammar', 'zz-a'), false);
+});

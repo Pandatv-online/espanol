@@ -332,7 +332,7 @@ function loadSite(rootDir) {
   require(path.join(rootDir, 'js', 'data.js'));
   if (fs.existsSync(path.join(rootDir, 'js', 'icons.js'))) require(path.join(rootDir, 'js', 'icons.js'));
   files.concat(missing).forEach((f) => { if (fs.existsSync(path.join(rootDir, f))) require(path.join(rootDir, f)); });
-  ['dgt-private.js', 'testruta.js'].forEach((f) => {
+  ['dgt-private.js', 'testruta.js', 'local.js'].forEach((f) => {
     const local = path.join(rootDir, 'private', f);
     if (fs.existsSync(local)) require(local);
   });
