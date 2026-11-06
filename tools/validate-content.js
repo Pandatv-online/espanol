@@ -20,7 +20,7 @@ const COLORS = ['blue', 'amber', 'teal', 'coral', 'purple'];
 // DGT track (driving theory): question banks, sign pictures, fewer formal requirements.
 const DGT = 'DGT';
 const DGT_QUIZ_MIN = 10;
-const DGT_QUIZ_MAX = 2000; // the mock exam pools every topic
+const DGT_QUIZ_MAX = 10000; // the mock exam pools every topic
 const DGT_TABS_MIN = 2;
 const SIGN_CODE = /^[A-Z]{1,3}-\d+[a-z]?(\.\d+)?[a-z]?$/;
 
