@@ -100,7 +100,7 @@ ECA.data.addGrammar('DGT', [
           { color: 'amber', label: { ru: 'Лёгкий прицеп', en: 'Light trailer' }, title: { ru: 'До 750 кг', en: 'Up to 750 kg' }, es: 'remolque ligero',
             body: { ru: 'MMA не больше <b>750 кг</b>: хватает прав B, не нужно своё регистрационное свидетельство и отдельная страховка. Сзади — <b>номер тягача</b>.', en: 'MMA no more than <b>750 kg</b>: a B licence is enough, no separate registration certificate or insurance is needed. At the back — the <b>towing vehicle’s plate</b>.' } },
           { color: 'amber', label: { ru: 'Тяжелее 750 кг', en: 'Over 750 kg' }, title: { ru: 'Свой номер и документы', en: 'Own plate and papers' },
-            body: { ru: 'Сзади — <b>свой номер</b> прицепа и номер тягача; нужны свои документы, ИТВ и страховка. С правами B — только если сцепка не больше 3500 кг, иначе B+E.', en: 'At the back — the trailer’s <b>own plate</b> and the towing vehicle’s plate; it needs its own papers, ITV and insurance. On a B licence — only if the combination is ≤ 3,500 kg, otherwise B+E.' } },
+            body: { ru: 'Сзади — <b>свой номер</b> прицепа и номер тягача; нужны свои документы, ИТВ и страховка. С правами B — только если сцепка не больше 3500 кг (до 4250 кг — после доп. экзамена или курса, код 96 в правах), иначе B+E (RGCond, ст. 4 и 5.5).', en: 'At the back — the trailer’s <b>own plate</b> and the towing vehicle’s plate; it needs its own papers, ITV and insurance. On a B licence — only if the combination is ≤ 3,500 kg (up to 4,250 kg after an extra test or course, code 96 on the licence), otherwise B+E (RGCond arts. 4 and 5.5).' } },
           { color: 'amber', label: { ru: 'Скорость', en: 'Speed' }, title: { ru: '90 / 80 км/ч', en: '90 / 80 km/h' }, es: 'automóvil con remolque',
             body: { ru: 'Автомобиль с прицепом: <b>90 км/ч</b> на autopista/autovía и <b>80 км/ч</b> на обычной дороге (RGC, ст. 48).', en: 'A car with a trailer: <b>90 km/h</b> on autopistas/autovías and <b>80 km/h</b> on ordinary roads (RGC art. 48).' } },
           { color: 'purple', label: { ru: 'Мото и мопед', en: 'Moto and moped' }, title: { ru: 'Прицеп до 50 %', en: 'Trailer up to 50 %' },
@@ -127,7 +127,7 @@ ECA.data.addGrammar('DGT', [
       { id: 'plates', label: { ru: 'Таблички', en: 'Plates' }, blocks: [
         { type: 'rules', items: [
           { color: 'blue', label: { ru: 'V-13', en: 'V-13' }, title: { ru: 'Новичок', en: 'New driver' }, es: 'conductor novel',
-            body: { ru: 'Зелёная табличка с белой «L» на заднем стекле: стаж прав меньше <b>1 года</b>.', en: 'A green plate with a white “L” on the rear window: the licence is less than <b>1 year</b> old.' } },
+            body: { ru: 'Зелёная табличка с белой «L» сзади слева, на видном месте (обычно на заднем стекле): стаж прав меньше <b>1 года</b>.', en: 'A green plate with a white “L” at the rear left, clearly visible (usually on the rear window): the licence is less than <b>1 year</b> old.' } },
           { color: 'blue', label: { ru: 'V-20', en: 'V-20' }, title: { ru: 'Выступающий груз', en: 'Projecting load' }, es: 'carga sobresaliente',
             body: { ru: 'Красно-белая полосатая панель на конце груза, который выступает назад.', en: 'A red-and-white striped panel at the end of a load that sticks out at the back.' } },
           { color: 'blue', label: { ru: 'V-4', en: 'V-4' }, title: { ru: 'Ограничение скорости', en: 'Speed limit' }, es: 'limitación de velocidad',

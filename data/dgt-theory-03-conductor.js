@@ -255,7 +255,7 @@ ECA.data.addGrammar('DGT', [
           { es: 'Pérdida de 6 puntos y puede ser delito.', ru: 'Минус 6 баллов, и это может быть преступлением.', en: 'Losing 6 points, and it can be a crime.' }
         ],
         answer: 2,
-        explain: { ru: 'Отказ — очень серьёзное нарушение (6 баллов), а по Уголовному кодексу (ст. 383) — преступление. Машину могут задержать. LSV, ст. 77 d; прил. II.', en: 'Refusing is a very serious offence (6 points) and, under the Criminal Code (art. 383), a crime. The vehicle may be immobilised. LSV art. 77 d; Annex II.' } },
+        explain: { ru: 'Отказ — очень серьёзное нарушение (6 баллов), а по Уголовному кодексу (ст. 383) — преступление: тюрьма от 6 месяцев до 1 года и лишение прав на 1–4 года. Машину могут задержать. LSV, ст. 77 d; прил. II.', en: 'Refusing is a very serious offence (6 points) and, under the Criminal Code (art. 383), a crime: 6 months to 1 year in prison and a 1–4 year driving ban. The vehicle may be immobilised. LSV art. 77 d; Annex II.' } },
       { es: 'Un conductor da 0,65 mg/l en aire espirado. ¿Qué ha cometido?',
         prompt: { ru: 'Водитель показал 0,65 мг/л в выдыхаемом воздухе. Что он совершил?', en: 'A driver blows 0.65 mg/l. What has he committed?' },
         options: [
@@ -264,7 +264,7 @@ ECA.data.addGrammar('DGT', [
           { es: 'Nada, si no ha causado un accidente.', ru: 'Ничего, если не было ДТП.', en: 'Nothing, if he caused no accident.' }
         ],
         answer: 0,
-        explain: { ru: 'Больше 0,60 мг/л воздуха (1,2 г/л крови) — преступление: суд, лишение прав, штраф или работы. Código Penal, ст. 379.2.', en: 'Over 0.60 mg/l breath (1.2 g/l blood) is a crime: court, licence ban, fine or community work. Criminal Code art. 379.2.' } },
+        explain: { ru: 'Больше 0,60 мг/л воздуха (1,2 г/л крови) — преступление: суд, лишение прав на 1–4 года и, на выбор суда, тюрьма 3–6 месяцев, штраф или общественные работы. Código Penal, ст. 379.2.', en: 'Over 0.60 mg/l breath (1.2 g/l blood) is a crime: court, a 1–4 year driving ban and, as the court decides, 3–6 months in prison, a fine or community work. Criminal Code art. 379.2.' } },
       { es: '¿Qué multa corresponde a quien conduce con más del doble de la tasa de alcohol permitida, sin llegar a delito?',
         prompt: { ru: 'Какой штраф за езду с уровнем алкоголя больше чем вдвое выше нормы (без преступления)?', en: 'What fine applies for driving with more than double the alcohol limit (short of a crime)?' },
         options: [

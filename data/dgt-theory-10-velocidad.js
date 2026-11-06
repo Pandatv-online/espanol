@@ -65,8 +65,8 @@ ECA.data.addGrammar('DGT', [
               [{ ru: 'Любое авто с прицепом', en: 'Any vehicle + trailer' }, '90', '80']
             ] },
           { type: 'text', color: 'coral', body: {
-            ru: ['<b>Обгон — не повод превышать.</b> Раньше при обгоне на обычной дороге разрешалось превысить лимит на 20 км/ч. С <b>2019 года этой поблажки нет</b>: обгонять можно только в пределах лимита. А обгоняя вне города велосипедистов и других уязвимых участников, нужно, наоборот, <b>ехать на 20 км/ч ниже</b> лимита (RGC, ст. 51 отменена; ст. 85.4).'],
-            en: ['<b>Overtaking is no excuse to speed.</b> Drivers used to be allowed 20 km/h over the limit while overtaking on ordinary roads. Since <b>2019 that allowance is gone</b>: you overtake within the limit. And when overtaking cyclists and other vulnerable users outside built-up areas you must go <b>at least 20 km/h below</b> the limit (RGC art. 51 repealed; art. 85.4).'] } },
+            ru: ['<b>Обгон — не повод превышать.</b> Раньше при обгоне на обычной дороге разрешалось превысить лимит на 20 км/ч. С <b>21 марта 2022 года этой поблажки нет</b>: обгонять можно только в пределах лимита. А обгоняя вне города велосипедистов и других уязвимых участников, нужно, наоборот, <b>ехать на 20 км/ч ниже</b> лимита (Ley 18/2021: LSV, ст. 21.4 и RGC, ст. 51 отменены; RGC, ст. 85.4).'],
+            en: ['<b>Overtaking is no excuse to speed.</b> Drivers used to be allowed 20 km/h over the limit while overtaking on ordinary roads. Since <b>21 March 2022 that allowance is gone</b>: you overtake within the limit. And when overtaking cyclists and other vulnerable users outside built-up areas you must go <b>at least 20 km/h below</b> the limit (Ley 18/2021: LSV art. 21.4 and RGC art. 51 repealed; RGC art. 85.4).'] } },
           { type: 'table', heading: { ru: 'Особые случаи вне города', en: 'Special cases outside built-up areas' },
             head: [{ ru: 'Кто или где', en: 'Who or where' }, { ru: 'Лимит', en: 'Limit' }],
             rows: [
@@ -344,7 +344,7 @@ ECA.data.addGrammar('DGT', [
           { es: 'No, nunca se puede superar el límite para adelantar.', ru: 'Нет, превышать лимит для обгона нельзя никогда.', en: 'No, you may never exceed the limit to overtake.' }
         ],
         answer: 2,
-        explain: { ru: 'Поблажку «+20 км/ч при обгоне» отменили в 2019 году (ст. 51 RGC отменена). Обгон — только в пределах лимита.', en: 'The “+20 km/h when overtaking” allowance was abolished in 2019 (RGC art. 51 repealed). You overtake within the limit.' } },
+        explain: { ru: 'Поблажку «+20 км/ч при обгоне» отменили с 21 марта 2022 года (Ley 18/2021: LSV, ст. 21.4 и RGC, ст. 51 отменены). Обгон — только в пределах лимита.', en: 'The “+20 km/h when overtaking” allowance was abolished on 21 March 2022 (Ley 18/2021: LSV art. 21.4 and RGC art. 51 repealed). You overtake within the limit.' } },
       { es: '¿Cuál es la velocidad mínima en autopistas y autovías para los vehículos a motor?',
         prompt: { ru: 'Какая минимальная скорость для механических транспортных средств на autopista и autovía?', en: 'What is the minimum speed for motor vehicles on autopistas and autovías?' },
         options: [

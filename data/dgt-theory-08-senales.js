@@ -196,7 +196,7 @@ ECA.data.addGrammar('DGT', [
           ] },
           { type: 'signs', heading: { ru: 'Указательные — буква S', en: 'Information — letter S' }, items: [
             'S-1', { code: 'S-7', note: { ru: 'рекомендация, не запрет', en: 'advice, not a limit' } }, 'S-13', 'S-17',
-            { code: 'S-28', note: { ru: 'жилая зона: не быстрее 20 км/ч', en: 'residential zone: max 20 km/h' } }, 'S-51a'
+            { code: 'S-28', note: { ru: 'зона отдыха и игр: не быстрее 10 км/ч', en: 'home zone (play street): max 10 km/h' } }, 'S-51a'
           ] }
         ]
       },

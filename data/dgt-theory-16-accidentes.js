@@ -64,9 +64,9 @@ ECA.data.addGrammar('DGT', [
       { id: 'law', label: { ru: 'Закон', en: 'The law' }, blocks: [
         { type: 'text', color: 'purple', body: {
           ru: ['Каждый, кто <b>участвовал</b> в аварии, <b>видел</b> её или <b>узнал</b> о ней, обязан помочь пострадавшим или вызвать помощь, не допустить новых опасностей и помочь выяснить, что произошло (LSV, ст. 51; RGC, ст. 129).',
-               'Не помочь, когда это можно сделать без риска для себя, не вызвать помощь или скрыться с места — преступление <b>omisión de socorro</b> (неоказание помощи), вплоть до тюрьмы.'],
+               'Не помочь человеку в опасности, когда это можно сделать без риска для себя, или не вызвать помощь, если помочь сам не можешь, — преступление <b>omisión del deber de socorro</b> (Código Penal, ст. 195); если аварию вызвал ты сам — тюрьма. Уехать с места аварии с погибшими или тяжело ранеными — отдельное преступление <b>abandono del lugar del accidente</b> (ст. 382 bis), тоже с тюрьмой.'],
           en: ['Anyone <b>involved</b> in a crash, who <b>witnesses</b> it or <b>learns</b> of it, must help the victims or call for help, prevent further danger and help establish what happened (LSV art. 51; RGC art. 129).',
-               'Failing to help when you can do so safely, failing to call for help or fleeing the scene is the crime of <b>omisión de socorro</b> (failure to assist), punishable with prison.'] } },
+               'Failing to help a person in danger when you can do so safely, or failing to call for help when you cannot help yourself, is the crime of <b>omisión del deber de socorro</b> (Criminal Code art. 195); if you caused the crash, it means prison. Leaving the scene of a crash with dead or seriously injured victims is a separate crime, <b>abandono del lugar del accidente</b> (art. 382 bis), also punished with prison.'] } },
         { type: 'table', heading: { ru: 'Участник аварии обязан', en: 'A driver involved must' },
           head: [{ ru: 'Что', en: 'What' }, { ru: 'Статья', en: 'Article' }],
           rows: [
@@ -85,8 +85,8 @@ ECA.data.addGrammar('DGT', [
                'You need not wait for the police if injuries are clearly minor, traffic is flowing again and nobody involved asks for them.'] } },
         { type: 'rules', heading: { ru: 'Европротокол', en: 'Accident report form' }, items: [
           { color: 'purple', title: { ru: 'Parte amistoso', en: 'Parte amistoso' }, es: 'declaración amistosa de accidente',
-            body: { ru: 'Общий бланк для страховых: схема, обстоятельства, подписи обоих водителей, у каждого своя копия. Заполнять <b>в безопасном месте вне дороги</b>, никогда на проезжей части (RGC, ст. 130.5). В страховую — в течение 7 дней.',
-                    en: 'A shared form for the insurers: sketch, circumstances, both drivers’ signatures, a copy each. Fill it in <b>somewhere safe off the road</b>, never on the carriageway (RGC art. 130.5). Send it to your insurer within 7 days.' } }
+            body: { ru: 'Общий бланк для страховых: схема, обстоятельства, подписи обоих водителей, у каждого своя копия. Заполнять <b>в безопасном месте вне дороги</b>, никогда на проезжей части (RGC, ст. 130.5). Сообщить о случае в страховую — в течение <b>7 дней</b>, если полис не даёт больше (Ley 50/1980, ст. 16).',
+                    en: 'A shared form for the insurers: sketch, circumstances, both drivers’ signatures, a copy each. Fill it in <b>somewhere safe off the road</b>, never on the carriageway (RGC art. 130.5). Report the claim to your insurer within <b>7 days</b>, unless the policy allows longer (Ley 50/1980 art. 16).' } }
         ] }
       ] },
       { id: 'firstaid', label: { ru: 'Помощь', en: 'First aid' }, blocks: [
@@ -410,8 +410,8 @@ ECA.data.addGrammar('DGT', [
           { es: 'Conducción temeraria.', ru: 'Опасное вождение.', en: 'Reckless driving.' },
           { es: 'Omisión del deber de socorro.', ru: 'Неоказание помощи (omisión de socorro).', en: 'Failure to assist (omisión de socorro).' }
         ], answer: 2,
-        explain: { ru: 'Это преступление по Уголовному кодексу (ст. 195), вплоть до тюрьмы; то же — если не вызвал помощь или скрылся с места (учебник DGT, тема 16).',
-                   en: 'It is a crime under the Penal Code (art. 195), which can mean prison; the same applies to not calling for help or fleeing the scene (DGT manual, topic 16).' } },
+        explain: { ru: 'Это преступление по Уголовному кодексу (ст. 195): штраф, а если пострадавший — жертва аварии, которую вызвал ты сам, — тюрьма. То же, если помочь не можешь и не вызвал помощь. Уехать с места аварии с погибшими или ранеными — отдельное преступление (ст. 382 bis).',
+                   en: 'It is a crime under the Penal Code (art. 195): a fine, or prison if the victim was hurt in a crash you caused. The same applies if you cannot help and fail to call for help. Leaving the scene of a crash with dead or injured victims is a separate crime (art. 382 bis).' } },
       { es: 'Ha tenido un accidente con solo daños materiales y el otro conductor le pide sus datos. ¿Está obligado a dárselos?',
         prompt: { ru: 'Авария без пострадавших, только повреждения. Другой водитель просит ваши данные. Обязаны ли вы их дать?', en: 'A crash with only material damage; the other driver asks for your details. Must you give them?' },
         options: [

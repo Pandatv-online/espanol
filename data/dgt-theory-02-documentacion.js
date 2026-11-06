@@ -56,11 +56,11 @@ ECA.data.addGrammar('DGT', [
           { color: 'coral', label: { ru: 'Потеря', en: 'Loss' }, title: { ru: 'Только серьёзные', en: 'Only serious offences' }, es: 'pérdida de puntos',
             body: { ru: 'Баллы снимают за некоторые <b>graves</b> и <b>muy graves</b> нарушения. За один день — не больше <b>8</b> баллов (кроме алкоголя, наркотиков, отказа от теста, езды навстречу и т. п.).', en: 'Points are taken for some <b>graves</b> and <b>muy graves</b> offences. In one day — no more than <b>8</b> points (except alcohol, drugs, refusing the test, wrong-way driving, etc.).' } },
           { color: 'teal', label: { ru: 'Возврат', en: 'Recovery' }, title: { ru: '2 года или курс', en: '2 years or a course' }, es: 'recuperación',
-            body: { ru: '<b>2 года</b> без санкций — снова 12 баллов. Или курс <i>sensibilización y reeducación vial</i> (около 12 ч) — до <b>+6</b> баллов, раз в 2 года.', en: '<b>2 years</b> without sanctions — back to 12 points. Or a <i>sensibilización y reeducación vial</i> course (about 12 h) — up to <b>+6</b> points, once every 2 years.' } }
+            body: { ru: '<b>2 года</b> без санкций — снова 12 баллов. Или курс <i>sensibilización y reeducación vial</i> (12 ч; по закону не больше 15 ч) — до <b>+6</b> баллов, раз в 2 года (профессионалам — раз в год).', en: '<b>2 years</b> without sanctions — back to 12 points. Or a <i>sensibilización y reeducación vial</i> course (12 h; by law at most 15 h) — up to <b>+6</b> points, once every 2 years (professionals — once a year).' } }
         ] },
         { type: 'text', color: 'coral', body: {
-          ru: '<b>0 баллов</b> — права теряют силу (<i>pérdida de vigencia</i>). Новые можно получить не раньше чем через <b>6 месяцев</b> (профессионалы — 3), после курса и теоретического экзамена.',
-          en: '<b>0 points</b> — the licence loses its validity (<i>pérdida de vigencia</i>). A new one can be obtained after <b>6 months</b> at the earliest (professionals — 3), after a course and the theory exam.' } },
+          ru: '<b>0 баллов</b> — права теряют силу (<i>pérdida de vigencia</i>). Новые можно получить не раньше чем через <b>6 месяцев</b> (профессионалы — 3), после курса (24 ч; по закону не больше 30 ч) и теоретического экзамена (LSV, ст. 71 и прил. III).',
+          en: '<b>0 points</b> — the licence loses its validity (<i>pérdida de vigencia</i>). A new one can be obtained after <b>6 months</b> at the earliest (professionals — 3), after a course (24 h; by law at most 30 h) and the theory exam (LSV art. 71 and Annex III).' } },
         { type: 'table', heading: { ru: 'Сколько баллов снимают (LSV, прил. II)', en: 'Points lost (LSV Annex II)' },
           head: [{ ru: 'Нарушение', en: 'Offence' }, { ru: 'Баллы', en: 'Points' }],
           rows: [
@@ -363,7 +363,7 @@ ECA.data.addGrammar('DGT', [
           { es: 'Blanca con una L roja.', ru: 'Белая с красной буквой L.', en: 'White with a red L.' }
         ],
         answer: 0,
-        explain: { ru: 'Знак V-13 «conductor novel» — зелёный прямоугольник с белой L, на заднем стекле, первый год после получения прав. Manual DGT, тема 2; RGVeh., прил. XI.', en: 'Sign V-13 “conductor novel” — a green rectangle with a white L on the rear window during the first year. DGT manual, topic 2; RGVeh. Annex XI.' } },
+        explain: { ru: 'Знак V-13 «conductor novel» — зелёный прямоугольник с белой L сзади слева (обычно на заднем стекле), первый год после получения прав. Manual DGT, тема 2; RGVeh., прил. XI.', en: 'Sign V-13 “conductor novel” — a green rectangle with a white L at the rear left (usually on the rear window) during the first year. DGT manual, topic 2; RGVeh. Annex XI.' } },
       { es: '¿Qué documentos debe llevar en el vehículo cuando conduce?',
         prompt: { ru: 'Какие документы нужно иметь в машине во время поездки?', en: 'Which documents must you carry in the vehicle while driving?' },
         options: [

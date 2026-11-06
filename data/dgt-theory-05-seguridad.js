@@ -76,11 +76,12 @@ ECA.data.addGrammar('DGT', [
             [{ ru: 'Водитель: задний ход, парковка', en: 'Driver reversing or parking' }, { ru: 'везде', en: 'anywhere' }],
             [{ ru: 'Медицинская справка', en: 'Medical certificate' }, { ru: 'везде', en: 'anywhere' }],
             [{ ru: 'Экстренные службы', en: 'Emergency vehicles' }, { ru: 'только в населённом пункте', en: 'only in built-up areas' }],
+            [{ ru: 'Медик в салоне скорой', en: 'Medic in ambulance rear' }, { ru: 'везде, на вызове', en: 'anywhere, on a call' }],
             [{ ru: 'Дети < 135 см в такси', en: 'Children < 135 cm in a taxi' }, { ru: 'в городе, только сзади', en: 'in town, rear seat only' }]
           ] },
         { type: 'tip', title: { ru: 'Запомните', en: 'Remember' }, body: {
-          ru: 'Исключения про ремень работают <b>только в городе</b>, кроме двух: задний ход/парковка и медицинская справка. На трассе, autovía и autopista пристёгнуты все.',
-          en: 'The seat-belt exemptions apply <b>only in town</b>, except two: reversing/parking and a medical certificate. On roads, autovías and autopistas everyone is belted.' } }
+          ru: 'Исключения про ремень работают <b>только в городе</b>, кроме трёх: задний ход/парковка, медицинская справка и медики, которые помогают пациенту в салоне скорой на вызове. Таксисты, развозчики и инструкторы автошкол с 1 октября 2026 года пристёгиваются всегда (RGC, ст. 119). На трассе, autovía и autopista пристёгнуты все остальные.',
+          en: 'The seat-belt exemptions apply <b>only in town</b>, except three: reversing/parking, a medical certificate, and staff treating a patient in the back of an ambulance on an emergency call. Since 1 October 2026 taxi drivers, delivery drivers and driving instructors must always buckle up (RGC art. 119). On roads, autovías and autopistas everyone else is belted.' } }
       ] },
       { id: 'children', label: { ru: 'Дети', en: 'Children' }, blocks: [
         { type: 'text', color: 'coral', body: {
@@ -149,9 +150,9 @@ ECA.data.addGrammar('DGT', [
             [{ ru: 'Самокат (VMP)', en: 'E-scooter (VMP)' }, { ru: 'на всех дорогах', en: 'on all roads' }]
           ] },
         { type: 'text', color: 'teal', body: {
-          ru: ['Мотоциклист и пассажир (RGC, ст. 118): <b>застёгнутый</b> омологированный шлем (UNECE R22) везде, <b>перчатки</b> — за городом, <b>закрытая обувь</b> — везде. Исключение — модели с защитной рамой и ремнями: там пристёгиваются ремнём.',
+          ru: ['Мотоциклист и пассажир (RGC, ст. 118): <b>застёгнутый</b> омологированный шлем (UNECE R22) везде, <b>перчатки</b> — за городом, <b>закрытая обувь</b> — везде (перчатки и обувь — с 1 октября 2026 года). Исключение — модели с защитной рамой и ремнями: там пристёгиваются ремнём.',
                'Лучший шлем — <b>интегральный</b> (закрывает подбородок), светлый, по размеру, с пометкой об омологации. Краска и наклейки могут ухудшить его свойства.'],
-          en: ['Motorcyclist and passenger (RGC art. 118): a <b>fastened</b> approved helmet (UNECE R22) everywhere, <b>gloves</b> outside towns, <b>closed shoes</b> everywhere. Exception: models with a protective frame and seat belts, where the belt is worn instead.',
+          en: ['Motorcyclist and passenger (RGC art. 118): a <b>fastened</b> approved helmet (UNECE R22) everywhere, <b>gloves</b> outside towns, <b>closed shoes</b> everywhere (gloves and shoes since 1 October 2026). Exception: models with a protective frame and seat belts, where the belt is worn instead.',
                'The best helmet is a <b>full-face</b> one (covers the chin), light-coloured, the right size and with an approval label. Paint and stickers can weaken it.'] } },
         { type: 'rules', heading: { ru: 'Обязательно в машине', en: 'Must be in the car' }, items: [
           { color: 'purple', title: { ru: 'Маячок V-16', en: 'V-16 beacon' }, es: 'dispositivo V-16',
@@ -406,8 +407,8 @@ ECA.data.addGrammar('DGT', [
           { es: 'Guantes de protección y calzado cerrado.', ru: 'Защитные перчатки и закрытую обувь.', en: 'Protective gloves and closed shoes.' },
           { es: 'Rodilleras homologadas.', ru: 'Омологированные наколенники.', en: 'Approved knee pads.' }
         ], answer: 1,
-        explain: { ru: 'RGC, ст. 118.1 (действующая редакция): перчатки — за городом, закрытая обувь — на всех дорогах.',
-                   en: 'RGC art. 118.1 (current wording): gloves on interurban roads, closed shoes on all roads.' } },
+        explain: { ru: 'RGC, ст. 118.1 (редакция RD 518/2026, с 01.10.2026): перчатки — за городом, закрытая обувь — на всех дорогах; нарушение — 200 €.',
+                   en: 'RGC art. 118.1 (as amended by RD 518/2026, from 01.10.2026): gloves on interurban roads, closed shoes on all roads; breaking it costs €200.' } },
       { es: '¿Cuándo debe ponerse el chaleco reflectante el conductor de un turismo?',
         prompt: { ru: 'Когда водитель легкового автомобиля должен надеть светоотражающий жилет?', en: 'When must a car driver put on the reflective vest?' },
         options: [

@@ -97,8 +97,8 @@ ECA.data.addGrammar('DGT', [
             body: { ru: 'В <b>правом нижнем углу лобового стекла</b>, изнутри; у машин без стекла — на видном месте. Категория A (без метки) — самые загрязняющие машины.',
                     en: 'In the <b>bottom right corner of the windscreen</b>, inside; on vehicles without one, somewhere visible. Category A (no label) covers the most polluting cars.' } },
           { color: 'amber', title: { ru: 'Зоны низких выбросов', en: 'Low-emission zones' }, es: 'zona de bajas emisiones (ZBE)',
-            body: { ru: 'Город может пускать в <b>ZBE</b> только машины с определёнными метками; въезд показывает знак <b>R-120</b> с табличкой. Обязательны в городах от 50 000 жителей (закон об изменении климата 7/2021).',
-                    en: 'A town may admit only vehicles with certain labels into a <b>ZBE</b>; the entrance has sign <b>R-120</b> with a panel. They are compulsory in towns of 50,000+ people (climate change law 7/2021).' } },
+            body: { ru: 'Город может пускать в <b>ZBE</b> только машины с определёнными метками; въезд показывает знак <b>R-120</b> с табличкой. Создать их обязаны муниципалитеты с населением <b>больше 50 000</b> жителей и островные территории (Ley 7/2021 об изменении климата, ст. 14.3).',
+                    en: 'A town may admit only vehicles with certain labels into a <b>ZBE</b>; the entrance has sign <b>R-120</b> with a panel. Municipalities with <b>more than 50,000</b> inhabitants and island territories must set them up (climate change law 7/2021, art. 14.3).' } },
           { color: 'amber', title: { ru: 'Льготы', en: 'Perks' }, es: 'carril VAO',
             body: { ru: 'Машинам «0 emisiones» могут разрешить полосу <b>VAO</b> (для машин с пассажирами) даже с одним водителем, скидки на парковку и въезд в дни сильного загрязнения.',
                     en: '“0 emisiones” cars may be allowed in the <b>VAO</b> (high-occupancy) lane even with only the driver, plus parking discounts and access on high-pollution days.' } }
