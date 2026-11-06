@@ -11,7 +11,7 @@
 | `node --test tests/` | Все юнит-тесты (59) через `tests/index.js` |
 | `node --test tests/store.test.js` | Один файл тестов |
 | `node tools/icons.js` | Пересобрать `js/icons.js` (иконки Phosphor Duotone, которые темы слов называют в `icon`); качает `@phosphor-icons/core` через `npm pack` |
-| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 7, тем слов 62, тем грамматики 47» (без private/) или список ошибок и код 1 |
+| `node tools/validate-content.js` | Проверка `data/`: «OK: уровней 7, тем слов 64, тем грамматики 48» (без private/) или список ошибок и код 1 |
 | `python3 -I tools/extract-signs.py BOE-A-2025-12199.pdf <out>` | Вырезать знаки из каталога BOE: `<out>/img/*.png` + `signs.json` (нужны poppler и Pillow) |
 | `npx -y -p playwright@1.63.0 node tools/e2e.js` | 41 браузерный сценарий по `file://` (в т.ч. все 28 тем грамматики, 320/375/1280 px); `--shots <папка>` — плюс скриншоты ключевых экранов |
 | `npx -y -p playwright@1.63.0 node tools/screenshot.js "$TMPDIR/eca-shots" '#/a1' '#/a2/grammar/a2-perfecto-indefinido/conj'` | Скриншоты 375/1280 × светлая/тёмная; код 1 при горизонтальном скролле или ошибке в консоли |
@@ -24,7 +24,7 @@ index.html     единственная страница: шапка, #screen, �
 js/            data, i18n, store, quiz, icons (генерируется tools/icons.js) — без DOM; ui.js — DOM-хелперы и реестр экранов; app.js — роутер
 js/views/      экраны: level.js (уровень), vocab.js (тема слов), grammar.js (тема грамматики + ECA.grammarBlocks)
 data/          контент: levels.js, vocab-<lvl>.js, grammar-<lvl>.js (+ grammar-a2-more.js, grammar-b1-more.js);
-               DGT: dgt-level.js, dgt-signs-{a,b,c}.js (знаки), dgt-theory-NN-<slug>.js (17 тем), dgt-examen.js (пробный экзамен)
+               DGT: dgt-level.js, dgt-signs-{a,b,c,d}.js (знаки и разметка), dgt-theory-NN-<slug>.js (17 тем + 18 экзамен по вождению), dgt-revista.js (тесты журнала DGT), dgt-examen.js (пробный экзамен; темы с noExam: true не входят)
 img/signs/     457 знаков из каталога BOE (RD 465/2025), PNG по коду: img/signs/R-301.png
 img/dgt/       свои SVG-схемы к темам DGT
 private/       (в .gitignore) материалы только для себя; сайт грузит private/dgt-private.js, если файл есть
