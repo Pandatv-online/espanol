@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" font-family="sans-serif">
+  <title>STOP: primera detención en la línea, segunda donde hay visibilidad</title>
+  <defs>
+    <marker id="ar" markerWidth="16" markerHeight="14" refX="14" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L16,7 L0,14 Z" fill="#ffffff"/></marker>
+  </defs>
+  <!-- main road (horizontal) -->
+  <rect x="0" y="60" width="720" height="130" fill="#5b6470"/>
+  <line x1="0" y1="125" x2="720" y2="125" stroke="#ffffff" stroke-width="4" stroke-dasharray="24 18"/>
+  <!-- side road (vertical) -->
+  <rect x="300" y="190" width="120" height="230" fill="#5b6470"/>
+  <line x1="360" y1="190" x2="360" y2="420" stroke="#ffffff" stroke-width="4" stroke-dasharray="20 16"/>
+  <!-- building blocking view -->
+  <rect x="120" y="200" width="170" height="200" fill="#c9b79c"/>
+  <text x="205" y="305" text-anchor="middle" font-size="18" fill="#1f2a44">edificio</text>
+  <!-- stop line -->
+  <rect x="362" y="262" width="56" height="8" fill="#ffffff"/>
+  <text x="390" y="380" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">STOP</text>
+  <!-- car positions -->
+  <rect x="372" y="276" width="36" height="60" rx="8" fill="#2a6fb0" fill-opacity="0.45"/>
+  <rect x="372" y="196" width="36" height="60" rx="8" fill="#2a6fb0"/>
+  <!-- labels -->
+  <circle cx="470" cy="300" r="16" fill="#e08a00"/><text x="470" y="307" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">1</text>
+  <text x="494" y="296" font-size="18" fill="#1f2a44">en la línea de</text>
+  <text x="494" y="318" font-size="18" fill="#1f2a44">detención (si no: L)</text>
+  <circle cx="470" cy="226" r="16" fill="#c0392b"/><text x="470" y="233" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">2</text>
+  <text x="494" y="222" font-size="18" fill="#1f2a44">donde hay visibilidad</text>
+  <text x="494" y="244" font-size="18" fill="#1f2a44">(si no: E)</text>
+  <!-- traffic on main road -->
+  <rect x="60" y="138" width="70" height="38" rx="8" fill="#d23b2f"/>
+  <line x1="140" y1="157" x2="230" y2="157" stroke="#ffffff" stroke-width="5" marker-end="url(#ar)"/>
+  <!-- sightline -->
+  <line x1="390" y1="200" x2="100" y2="150" stroke="#e08a00" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="360" y="40" text-anchor="middle" font-size="20" fill="#1f2a44">Sin visibilidad en la línea: <tspan font-weight="bold">dos detenciones</tspan></text>
+</svg>

@@ -4,6 +4,7 @@
   var seen = {};
   var bank = [];
   ECA.data.grammar('DGT').forEach(function (topic) {
+    if (topic.noExam) return; // e.g. the practical driving test: not part of the theory exam
     (topic.quiz || []).forEach(function (q) {
       var key = String(q.es || '').trim().toLowerCase();
       if (!key || seen[key]) return;
